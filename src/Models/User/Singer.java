@@ -7,9 +7,9 @@ public class Singer extends Artist {
     private ArrayList<Album> albums;
 
     public Singer(String username, String password, String name, String email, String phoneNumber,
-                  java.util.Date dateOfBirth, double income, String biography, ArrayList<Album> albums) {
+                  java.util.Date dateOfBirth, double income, String biography) {
         super(username, password, name, email, phoneNumber, dateOfBirth, income, biography);
-        this.albums = albums;
+        this.albums = new ArrayList<>();
     }
     public ArrayList<Album> getAlbums() {
         return albums;

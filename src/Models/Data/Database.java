@@ -8,9 +8,38 @@ import java.util.ArrayList;
 
 public class Database {
     private static Database instance;
+    private User logedInUser;
+    private int logedInUserIndx;
+    public int getLogedInUserIndx()
+    {
+        return logedInUserIndx;
+    }
+    public void setLogedInUserIndx(int indx)
+    {
+        this.logedInUserIndx = indx;
+    }
+    public User getLogedInUser() {
+        return logedInUser;
+    }
+    public void setLogedInUser(User logedInUser) {
+        this.logedInUser = logedInUser;
+    }
     private ArrayList<User> users;
     private ArrayList<Report> reports;
     private ArrayList<Audio> audios;
+    public void addUser(User user)
+    {
+        users.add(user);
+    }
+    public void addAudio(Audio audio)
+    {
+        audios.add(audio);
+    }
+    public void addReport(Report report)
+    {
+        reports.add(report);
+    }
+
     public ArrayList<User> getUsers() {
         return users;
     }
@@ -35,7 +64,7 @@ public class Database {
         this.audios = audios;
     }
 
-    private static Database getInstance()
+    public static Database getInstance()
     {
         if(instance==null) instance = new Database();
         return instance;
