@@ -19,10 +19,10 @@ public abstract class Artist extends UserAccount
     public void setIncome(double income) {
         this.income = income;
     }
-    public ArrayList<UserAccount> getFollowes() {
+    public ArrayList<UserAccount> getFollowers() {
         return followers;
     }
-    public void setFollowes(ArrayList<UserAccount> followes) {
+    public void setFollowers(ArrayList<UserAccount> followes) {
         this.followers = followes;
     }
     public String getBiography() {
