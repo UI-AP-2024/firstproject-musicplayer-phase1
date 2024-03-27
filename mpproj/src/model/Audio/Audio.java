@@ -1,4 +1,4 @@
-package model;
+package model.Audio;
 import model.*;
 import java.util.Date;
 public abstract class Audio {
