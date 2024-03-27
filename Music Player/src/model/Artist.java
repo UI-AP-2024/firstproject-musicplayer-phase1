@@ -7,7 +7,7 @@ public abstract class Artist extends UserAccount
 {
     double income;
     String biography;
-    ArrayList<UserAccount> followes = new ArrayList<UserAccount>();
+    ArrayList<UserAccount> followers = new ArrayList<UserAccount>();
     public Artist(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord , String biography)
     {
         super(email, name, phoneNumber, dateOfBirth, userName, passWord);
@@ -20,10 +20,10 @@ public abstract class Artist extends UserAccount
         this.income = income;
     }
     public ArrayList<UserAccount> getFollowes() {
-        return followes;
+        return followers;
     }
     public void setFollowes(ArrayList<UserAccount> followes) {
-        this.followes = followes;
+        this.followers = followes;
     }
     public String getBiography() {
         return biography;
