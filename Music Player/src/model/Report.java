@@ -2,25 +2,24 @@ package model;
 
 public class Report
 {
-    private String reportingUser;
-    private String reportedArtist;
+    private UserAccount reportingUser;
+    private Artist reportedArtist;
     private String description;
-    public Report(String reportingUser, String reportedArtist, String description)
-    {
+    public Report(UserAccount reportingUser, Artist reportedArtist, String description) {
         this.reportingUser = reportingUser;
         this.reportedArtist = reportedArtist;
         this.description = description;
     }
-    public String getReportingUser() {
+    public UserAccount getReportingUser() {
         return reportingUser;
     }
-    public void setReportingUser(String reportingUser) {
+    public void setReportingUser(UserAccount reportingUser) {
         this.reportingUser = reportingUser;
     }
-    public String getReportedArtist() {
+    public Artist getReportedArtist() {
         return reportedArtist;
     }
-    public void setReportedArtist(String reportedArtist) {
+    public void setReportedArtist(Artist reportedArtist) {
         this.reportedArtist = reportedArtist;
     }
     public String getDescription() {
