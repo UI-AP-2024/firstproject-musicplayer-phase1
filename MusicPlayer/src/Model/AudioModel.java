@@ -60,6 +60,14 @@ abstract public class AudioModel {
         return cover;
     }
 
+    public int getIDCount() {
+        return IDCount;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
     public static void setID(int ID) {
         AudioModel.ID = ID;
     }

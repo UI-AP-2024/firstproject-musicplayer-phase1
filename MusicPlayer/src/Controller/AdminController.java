@@ -1,5 +1,6 @@
 package Controller;
 import Model.AdminModel;
+import Model.ArtistModel;
 import Model.Database;
 import Model.User;
 
@@ -27,6 +28,14 @@ public class AdminController extends User{
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
             show.append("Audio Name: "+ Database.getDatabase().getAudios().get(i).getAudioName() + "\nArtist Name: " + Database.getDatabase().getAudios().get(i).getArtistName() + "\nAudio ID: "+Database.getDatabase().getAudios().get(i).getIDCount() +"\n");
+        }
+        return show.toString();
+    }
+    public String showArtistInfo(){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().getClass().equals(ArtistModel.class))
+                show.append("Artist Name: "+Database.getDatabase().getUsers().get(i).getFullName()+ "\n");
         }
         return show.toString();
     }
