@@ -30,7 +30,7 @@ public class ListenerController extends User{
             return "Weak password! Pleas use better password.";
 
         model = new FreeModel(username, password, fullName, email, phoneNumber, birthDate);
-
+        model.setCredit(50);
         return "Done!";
     }
     public String logIn(String username, String password){
