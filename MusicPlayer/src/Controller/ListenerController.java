@@ -18,7 +18,7 @@ public class ListenerController extends User{
         }
         Pattern emailPattern = Pattern.compile(".*@.*(\\.com|\\.ir|\\.org)$");
         Matcher matcherEmail = emailPattern.matcher(email);
-        Pattern phonepattern = Pattern.compile("^\\d{6,11}$");
+        Pattern phonepattern = Pattern.compile("^\\d{8,11}$");
         Matcher matcherPhone = phonepattern.matcher(phoneNumber);
         Pattern passwordPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,16}$");
         Matcher matcherPassword = passwordPattern.matcher(password);
