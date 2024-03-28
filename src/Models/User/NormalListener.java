@@ -7,7 +7,7 @@ public class NormalListener extends Listener {
     private static final int PLAYLIST_LIMIT = 3;
 
     public NormalListener(String username, String password, String name, String email, String phoneNumber,
-                          Date dateOfBirth, double credit, Date expirementDate, ArrayList<Genre> favoriteGenres) {
+                          LocalDate dateOfBirth, double credit, LocalDate expirementDate, ArrayList<Genre> favoriteGenres) {
         super(username, password, name, email, phoneNumber, dateOfBirth, credit, expirementDate, favoriteGenres);
     }
     public int getSongsPerPlaylistLimit() {

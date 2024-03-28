@@ -9,24 +9,42 @@ import java.util.ArrayList;
 public class Database {
     private static Database instance;
     private User logedInUser;
-    private int logedInUserIndx;
-    public int getLogedInUserIndx()
-    {
-        return logedInUserIndx;
-    }
-    public void setLogedInUserIndx(int indx)
-    {
-        this.logedInUserIndx = indx;
-    }
-    public User getLogedInUser() {
-        return logedInUser;
-    }
-    public void setLogedInUser(User logedInUser) {
-        this.logedInUser = logedInUser;
-    }
     private ArrayList<User> users;
     private ArrayList<Report> reports;
     private ArrayList<Audio> audios;
+    public User getLogedInUser() {
+        return logedInUser;
+    }
+
+    public void setLogedInUser(User logedInUser) {
+        this.logedInUser = logedInUser;
+    }
+    public void updateUser(User user)
+    {
+        int tmpIndx = 0;
+        for(User tmpUser : this.users)
+        {
+            if(tmpUser.getUsername().equals(user.getUsername()))
+            {
+                this.users.set(tmpIndx, user);
+                break;
+            }
+            tmpIndx++;
+        }
+    }
+
+    public void removeUser(User user)
+    {
+        int tmpIndx = 0;
+        for(User tmpUser : this.users)
+        {
+            if(tmpUser.getUsername().equals(user.getUsername()))
+                break;
+            tmpIndx++;
+        }
+        this.users.remove(tmpIndx);
+    }
+
     public void addUser(User user)
     {
         users.add(user);

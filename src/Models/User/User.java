@@ -1,6 +1,6 @@
 package Models.User;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class User {
     private String username;
@@ -8,9 +8,9 @@ public abstract class User {
     private String name;
     private String email;
     private String phoneNumber;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
-    public User(String username, String password, String name, String email, String phoneNumber, Date dateOfBirth) {
+    public User(String username, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -58,11 +58,11 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

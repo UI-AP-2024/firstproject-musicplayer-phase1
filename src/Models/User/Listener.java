@@ -1,23 +1,23 @@
 package Models.User;
 
 import Models.Audio.Audio;
+import Models.Data.Database;
 import Models.Genre;
 import Models.Playlist;
-
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Listener extends User {
+public abstract class Listener extends User {
     private double credit;
     private ArrayList<Playlist> playlists;
     private Map<Audio, Integer> audiosPlayed;
-    private Date expirementDate;
+    private LocalDate expirementDate;
     private ArrayList<Genre> favoriteGenres;
 
-    public Listener(String username, String password, String name, String email, String phoneNumber, Date dateOfBirth,
-                    double credit, Date expirementDate, ArrayList<Genre> favoriteGenres) {
+    public Listener(String username, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth,
+                    double credit, LocalDate expirementDate, ArrayList<Genre> favoriteGenres) {
         super(username, password, name, email, phoneNumber, dateOfBirth);
         this.credit = credit;
         if(this instanceof NormalListener) this.expirementDate = null;
@@ -50,11 +50,11 @@ public class Listener extends User {
         this.audiosPlayed = audiosPlayed;
     }
 
-    public Date getExpirementDate() {
+    public LocalDate getExpirementDate() {
         return expirementDate;
     }
 
-    public void setExpirementDate(Date expirementDate) {
+    public void setExpirementDate(LocalDate expirementDate) {
         this.expirementDate = expirementDate;
     }
 
@@ -65,5 +65,6 @@ public class Listener extends User {
     public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
     }
+
 
 }

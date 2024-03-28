@@ -1,7 +1,7 @@
 package Models.Audio;
 import Models.Genre;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public abstract class Audio {
     private int id;
@@ -9,12 +9,12 @@ public abstract class Audio {
     private String artistName;
     private int playCount;
     private int likesCount;
-    private Date publishDate;
+    private LocalDate publishDate;
     private Genre genre;
     private String audioLink;
     private String cover;
 
-    public Audio(int id, String fileName, String artistName, int playCount, int likesCount, Date publishDate,
+    public Audio(int id, String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
                  Genre genre, String audioLink, String cover) {
         this.id = id;
         this.fileName = fileName;
@@ -67,11 +67,11 @@ public abstract class Audio {
         this.likesCount = likesCount;
     }
 
-    public Date getPublishDate() {
+    public LocalDate getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(LocalDate publishDate) {
         this.publishDate = publishDate;
     }
 

@@ -1,13 +1,13 @@
 package Models.User;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Artist extends User {
     private double income;
     private ArrayList<User> followers;
     private String biography;
 
-    public Artist(String username, String password, String name, String email, String phoneNumber, Date dateOfBirth,
+    public Artist(String username, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth,
                   double income, String biography) {
         super(username, password, name, email, phoneNumber, dateOfBirth);
         this.income = income;

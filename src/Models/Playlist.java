@@ -6,16 +6,17 @@ import Models.Audio.Audio;
 import java.util.ArrayList;
 
 public class Playlist {
+    private static int idUpdater = 0;
     private int id;
     private String playlistName;
     private String ownerUserName;
     private ArrayList<Audio> audioFiles;
 
-    public Playlist(int id, String playlistName, String ownerUserName, ArrayList<Audio> audioFiles) {
-        this.id = id;
+    public Playlist(String playlistName, String ownerUserName) {
+        this.id = idUpdater++;
         this.playlistName = playlistName;
         this.ownerUserName = ownerUserName;
-        this.audioFiles = audioFiles;
+        this.audioFiles = new ArrayList<>();
     }
 
     public int getId() {
@@ -44,6 +45,10 @@ public class Playlist {
 
     public ArrayList<Audio> getAudioFiles() {
         return audioFiles;
+    }
+    public void addAudioFiles(Audio audio)
+    {
+        audioFiles.add(audio);
     }
 
     public void setAudioFiles(ArrayList<Audio> audioFiles) {

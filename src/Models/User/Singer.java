@@ -7,7 +7,7 @@ public class Singer extends Artist {
     private ArrayList<Album> albums;
 
     public Singer(String username, String password, String name, String email, String phoneNumber,
-                  java.util.Date dateOfBirth, double income, String biography) {
+                  java.time.LocalDate dateOfBirth, double income, String biography) {
         super(username, password, name, email, phoneNumber, dateOfBirth, income, biography);
         this.albums = new ArrayList<>();
     }
