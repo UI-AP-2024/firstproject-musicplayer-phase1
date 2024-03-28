@@ -6,9 +6,11 @@ public class Database {
     private static Database database;
     private ArrayList<User> users;
     private ArrayList<AudioModel> audios;
+    private ArrayList<Report> reports;
     private Database(){
         this.users = new ArrayList<>();
         this.audios = new ArrayList<>();
+        this.reports = new ArrayList<>();
     }
     public static Database getDatabase(){
         if(database==null)
@@ -30,5 +32,9 @@ public class Database {
 
     public void setAudios(ArrayList<AudioModel> audios) {
         this.audios = audios;
+    }
+
+    public ArrayList<Report> getReports() {
+        return reports;
     }
 }
