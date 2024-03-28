@@ -7,7 +7,7 @@ public class Album
     private int j = 0;
     private String name;
     private String artistName;
-    ArrayList<Audio> album = new ArrayList<Audio>();
+    ArrayList<Music> album = new ArrayList<Music>();
 
     public Album(String name, String artistName) {
         this.name = name;
@@ -39,11 +39,11 @@ public class Album
         this.artistName = artistName;
     }
 
-    public ArrayList<Audio> getAlbum() {
+    public ArrayList<Music> getAlbum() {
         return album;
     }
 
-    public void setAlbum(ArrayList<Audio> album) {
+    public void setAlbum(ArrayList<Music> album) {
         this.album = album;
     }
 }
