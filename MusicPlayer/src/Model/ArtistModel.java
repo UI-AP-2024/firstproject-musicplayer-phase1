@@ -1,0 +1,37 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class ArtistModel extends User{
+    private double salary;
+    private ArrayList<User> followers;
+    private String biography;
+
+    public ArtistModel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, double salary,String biography){
+        super(username,password,fullName,email,phoneNumber,birthDate);
+        this.biography = biography;
+        this.salary = salary;
+        followers = new ArrayList<>();
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public ArrayList<User> getFollowers() {
+        return followers;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+}
