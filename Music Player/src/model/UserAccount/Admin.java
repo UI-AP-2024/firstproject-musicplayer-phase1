@@ -1,4 +1,4 @@
-package model;
+package model.UserAccount;
 
 import java.time.LocalDate;
 

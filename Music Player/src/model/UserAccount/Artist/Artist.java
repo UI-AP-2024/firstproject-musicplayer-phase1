@@ -1,4 +1,6 @@
-package model;
+package model.UserAccount.Artist;
+
+import model.UserAccount.UserAccount;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

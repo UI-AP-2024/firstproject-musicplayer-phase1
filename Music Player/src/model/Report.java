@@ -1,5 +1,8 @@
 package model;
 
+import model.UserAccount.Artist.Artist;
+import model.UserAccount.UserAccount;
+
 public class Report
 {
     private UserAccount reportingUser;

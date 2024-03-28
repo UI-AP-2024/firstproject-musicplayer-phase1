@@ -1,9 +1,12 @@
-package model;
+package model.UserAccount.Artist;
+
+import model.Audio.Podcast;
+import model.UserAccount.Artist.Artist;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Podcaster extends Artist{
+public class Podcaster extends Artist {
 
     private ArrayList<Podcast> podcasts = new ArrayList<Podcast>();
     public Podcaster(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord, String biography) {

@@ -1,4 +1,8 @@
-package model;
+package model.UserAccount.Listener;
+
+import model.Genre;
+import model.Playlist;
+import model.UserAccount.UserAccount;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

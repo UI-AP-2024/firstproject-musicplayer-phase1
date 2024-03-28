@@ -1,5 +1,7 @@
 package model;
-import model.UserAccount;
+import model.Audio.Audio;
+import model.UserAccount.UserAccount;
+
 import java.util.ArrayList;
 
 public class Playlist
