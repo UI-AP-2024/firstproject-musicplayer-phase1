@@ -13,7 +13,7 @@ public class AdminController extends User{
     private AdminController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
         super(username,password,fullName,email,phoneNumber,birthDate);
     }
-    public boolean enterUserPanel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
+    public boolean enterUserPanel(String username, String password){
         return AdminModel.getAdmin().getUsername().equals(username) && AdminModel.getAdmin().getPassword().equals(password);
     }
     public String showPopularSongs(){

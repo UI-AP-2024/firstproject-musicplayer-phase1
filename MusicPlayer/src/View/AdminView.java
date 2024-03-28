@@ -19,7 +19,7 @@ public class AdminView extends User{
         String password = sin.next();
         if(view.enterUserPanel(username,password)) {
             System.out.println("Correct!");
-
+            showSecondMenu();
         }
         else{
             System.out.println("username or password is wrong!");
