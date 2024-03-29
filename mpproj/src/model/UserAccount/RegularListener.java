@@ -8,8 +8,8 @@ public class RegularListener extends Listener{
     final private int playListLimit;
     final private int addLimit;
 
-    public RegularListener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth, SubscriptionPlan subscription, SubscriptionPlan subscriptionPlan) {
-        super(username, password, fullName, email, phoneNumber, dateOfBirth, subscription, subscriptionPlan);
+    public RegularListener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
+        super(username, password, fullName, email, phoneNumber, dateOfBirth);
         playListLimit=3;//???????????
         addLimit=3;//??????????
     }

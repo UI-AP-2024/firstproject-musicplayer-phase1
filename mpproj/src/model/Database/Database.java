@@ -15,7 +15,7 @@ public class Database {
         users=new ArrayList<>();
         reports=new ArrayList<>();
     }
-    public Database getDatabase(){
+    public static Database getDatabase(){
         if(database==null)
             database=new Database();
         return database;

@@ -9,13 +9,22 @@ public class Playlist {
     private String name;
     private String creatorUsername;
     private ArrayList<Audio> audios;
+    private static int idcounter;
 
     //cons???
-    public Playlist(int id, String name, String creatorUsername, ArrayList<Audio> audios) {
+    public Playlist(int id, String name, String creatorUsername) {
         this.id = id;
         this.name = name;
         this.creatorUsername = creatorUsername;
-        this.audios = audios;
+        this.audios = new ArrayList<>();
+    }
+
+    public static int getIdcounter() {
+        return idcounter;
+    }
+
+    public static void setIdcounter(int idcounter) {
+        Playlist.idcounter = idcounter;
     }
 
     public int getId() {

@@ -2,7 +2,7 @@ package model.UserAccount;
 import model.SubscriptionPlan;
 
 import java.util.Date;
-public class User {
+abstract public class User {
     private String username;
     private String password;
     private String fullName;
@@ -10,16 +10,15 @@ public class User {
     private String phoneNumber;
     private Date dateOfBirth;
     private SubscriptionPlan subscription;
-
+    private User user;
     //cons??
-    public User(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth, SubscriptionPlan subscription) {
+    public User(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
-        this.subscription = subscription;
     }
 
     public String getUsername() {

@@ -6,12 +6,12 @@ import model.SubscriptionPlan;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Podcaster extends User{
+public class Podcaster extends Artist{
     ArrayList<Podcast> podcasts;
 
-    public Podcaster(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth, SubscriptionPlan subscription, ArrayList<Podcast> podcasts) {
-        super(username, password, fullName, email, phoneNumber, dateOfBirth, subscription);
-        this.podcasts = podcasts;
+    public Podcaster(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
+        super(username, password, fullName, email, phoneNumber, dateOfBirth);
+        this.podcasts =new ArrayList<>() ;
     }
 
     public ArrayList<Podcast> getPodcasts() {
