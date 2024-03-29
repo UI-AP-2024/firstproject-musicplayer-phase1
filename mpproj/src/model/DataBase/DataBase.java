@@ -1,5 +1,5 @@
-package model.DataBase;
+package model.Database;
 
-public class DataBase {
+public class Database {
     
 }
