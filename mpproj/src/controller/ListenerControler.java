@@ -109,5 +109,24 @@ public class ListenerControler {
         }
         return "not found";
     }
-
+    public String showFollowing(){
+        StringBuilder result=new StringBuilder("you are following :\n");
+        for(Artist artist:listenerr.getFollowings()){
+            result.append(artist.getFullName()).append("\n");
+        }
+        return String.valueOf(result);
+    }
+    public String reportArtist(String artistusername,String explanation){
+        for(User artist:Database.getDatabase().getUsers()){
+            if(artist instanceof Artist){
+                if (artist.getUsername().equals(artistusername)){
+                    ArrayList<Report> reports=Database.getDatabase().getReports();
+                    Report report=new Report(listenerr, (Artist) artist,explanation);
+                    reports.add(report);
+                    return "report send";
+                }
+            }
+        }
+        return "error";
+    }
 }
