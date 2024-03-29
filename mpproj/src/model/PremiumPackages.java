@@ -11,7 +11,7 @@ public enum PremiumPackages {
         this.days = days;
     }
 
-    private int getDays() {
+    public int getDays() {
         return this.days;
     }
 
