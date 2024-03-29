@@ -1,6 +1,8 @@
 package Controller;
 import Model.*;
 
+import java.lang.reflect.Array;
+import java.util.Collections;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -128,5 +130,36 @@ public class ListenerController extends User{
         }
         return show.toString();
     }
-    
+    public void sortingAudioFilesBasedOnLikes(){
+
+        for (int i = 0; i < Database.getDatabase().getAudios().size() - 1; i++) {
+            int likeBefore = Database.getDatabase().getAudios().get(i).getLikeCount();
+            for (int j = i + 1; j < Database.getDatabase().getAudios().size(); j++) {
+                int likeAfter = Database.getDatabase().getAudios().get(j).getLikeCount();
+                if(likeAfter > likeBefore){
+                    int temp = likeAfter;
+                    likeAfter = likeBefore;
+                    likeBefore = temp;
+                }
+            }
+
+        }
+
+    }
+    public void sortingAudioFilesBasedOnPlayCount(){
+
+        for (int i = 0; i < Database.getDatabase().getAudios().size() - 1; i++) {
+            int playCountBefore = Database.getDatabase().getAudios().get(i).getPlayedCount();
+            for (int j = i + 1; j < Database.getDatabase().getAudios().size(); j++) {
+                int playCountAfter = Database.getDatabase().getAudios().get(j).getPlayedCount();
+                if(playCountAfter > playCountBefore){
+                    int temp = playCountAfter;
+                    playCountAfter = playCountBefore;
+                    playCountBefore = temp;
+                }
+            }
+
+        }
+
+    }
 }
