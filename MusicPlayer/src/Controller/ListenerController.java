@@ -108,5 +108,25 @@ public class ListenerController extends User{
             }
         }
     }
+    public String searchAudioByName(String audioName){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(audioName)){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show.append("Audio name: " + audio.getAudioName() + " Artist: " + audio.getArtistName() + " Genre: " + audio.getGenre() + "\n");
+            }
+        }
+        return show.toString();
+    }
+    public String searchAudioByArtist(String artistName){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getArtistName().equals(artistName)){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show.append("Audio name: " + audio.getAudioName() + " Artist: " + audio.getArtistName() + " Genre: " + audio.getGenre() + "\n");
+            }
+        }
+        return show.toString();
+    }
     
 }
