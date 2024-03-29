@@ -1,4 +1,4 @@
-package model;
+package model.Playlist;
 
 public class Playlist {
 }

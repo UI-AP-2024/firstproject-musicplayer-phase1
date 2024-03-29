@@ -1,4 +1,4 @@
-package model;
+package model.Album;
 
 public class Album {
 }

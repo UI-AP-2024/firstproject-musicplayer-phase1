@@ -1,4 +1,4 @@
-package model;
+package model.UserAccounts;
 
 public abstract class userAccount {
 }
