@@ -11,7 +11,7 @@ public class RegularListener extends Listener{
     public RegularListener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
         super(username, password, fullName, email, phoneNumber, dateOfBirth);
         playListLimit=3;//???????????
-        addLimit=3;//??????????
+        addLimit=10;//??????????
     }
 
     public int getPlayListLimit() {

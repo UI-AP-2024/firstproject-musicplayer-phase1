@@ -27,7 +27,8 @@ public class ListenerControler {
         }
         Listener listener=new Listener(username,pasword,name,email,phoneNum,birthDate,50);
         setListenerr(listener);
-        //add to data base
+        //add to database
+        listener.setIsLogin(true);
         return showgenre()+"\n"+"listener accaount successfully created .";
     }
     String showgenre(){
@@ -37,7 +38,10 @@ public class ListenerControler {
         ArrayList<User>users=Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                if(listenerr.getIsLogin()==true)
+                    return "you are in already in your profile .";
                 setListenerr((Listener) user);
+                listenerr.setIsLogin(true);
                 return "login successful .";
             }
         }
@@ -45,12 +49,12 @@ public class ListenerControler {
     }
     public String logout(){
         ArrayList<User>users=Database.getDatabase().getUsers();
-            //??
+        listenerr.setIsLogin(false);
         return "logout successfull";
     }
     public String makePlaylist(String playlistName) {
         for (Playlist playlist : listenerr.getPlaylists()) {
-            if (playlist.getName() == playlistName) {
+            if (playlist.getName().equals (playlistName)) {
                 return "this play list already exist.";
             }
         }
@@ -63,7 +67,47 @@ public class ListenerControler {
         listenerr.getPlaylists().add(new Playlist(generateIdPlaylist(), playlistName, listenerr.getFullName()));
         return "play list added .";
     }
+    public boolean islogin(){
+        return listenerr.getIsLogin();
+    }
     private int generateIdPlaylist(){
         return listenerr.getPlaylistcounter()+ Playlist.getIdcounter();
     }
+    public String AddAudio(String playListname,int auidioId) {
+        for (Playlist playlist : listenerr.getPlaylists()) {
+            if (playlist.getName().equals(playListname)) {
+                if (listenerr instanceof RegularListener) {
+                    if (playlist.getAudios().size() >= ((RegularListener) listenerr).getAddLimit()) {
+                        return "maximum add is 10.";
+                    }
+                }
+                for (Audio audio : Database.getDatabase().getAudios()) {
+                    if (audio.getId() == auidioId) {
+                        playlist.getAudios().add(audio);
+                        return "audio successfully added . ";
+                    }
+                }
+            }
+        }
+        return "error: no match for audio id or play list name .";
+    }
+    public String playAudio(int audioId){
+        for (Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getId()==audioId){
+                audio.setPlayCount(audio.getPlayCount()+1);
+                return "playing "+audio.getTitle();
+            }
+        }
+        return "not found";
+    }
+    public String likeAudio(int audioId){
+        for (Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getId()==audioId){
+                audio.setLikes(audio.getLikes()+1);
+                return "liked "+audio.getTitle();
+            }
+        }
+        return "not found";
+    }
+
 }

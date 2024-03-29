@@ -12,11 +12,22 @@ public class Listener extends User{
     private int credit;
     private Genre favoriteGenre;
     private  int playlistcounter;
+    private ArrayList<Artist>followings;
 //ارΟخ اتمام اشتراک )از نوع کلاس  - Dateدر صورتی که حساب شنونده عادی است،
 //اΞن فیلد  nullخواهد بود.
     public Listener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth,int credit) {
         super(username, password, fullName, email, phoneNumber, dateOfBirth);
         this.credit=credit;
+        playlists=new ArrayList<>();
+        followings=new ArrayList<>();
+    }
+
+    public ArrayList<Artist> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(ArrayList<Artist> followings) {
+        this.followings = followings;
     }
 
     public int getPlaylistcounter() {

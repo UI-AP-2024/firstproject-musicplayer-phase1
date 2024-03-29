@@ -10,11 +10,10 @@ public class Artist extends User{
     private ArrayList<User> followers;
     private String biography;
 
-    public Artist(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth, SubscriptionPlan subscription, double income, ArrayList<User> followers, String biography) {
-        super(username, password, fullName, email, phoneNumber, dateOfBirth, subscription);
+    public Artist(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
+        super(username, password, fullName, email, phoneNumber, dateOfBirth);
         this.income = income;
-        this.followers = followers;
-        this.biography = biography;
+        this.followers = new ArrayList<>();
     }
 
     public double getIncome() {

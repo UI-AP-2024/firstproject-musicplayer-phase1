@@ -11,6 +11,7 @@ abstract public class User {
     private Date dateOfBirth;
     private SubscriptionPlan subscription;
     private User user;
+    private boolean isLogin;//true=login  false =logout
     //cons??
     public User(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth) {
         this.username = username;
@@ -19,6 +20,15 @@ abstract public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        isLogin=true;
+    }
+
+    public boolean getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean login) {
+        isLogin = login;
     }
 
     public String getUsername() {
