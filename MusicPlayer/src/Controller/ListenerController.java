@@ -66,12 +66,12 @@ public class ListenerController extends User{
     public String addMusicToPlaylist(String playlistName,String musicName){
         if(model.getClass().equals(PremiumSubscription.class)){
             searchAndAdd(playlistName,musicName);
-            return "Music added successfully.";
+            return "Music added to playlist successfully.";
         }
         else if(model.musicCount < 10){
             searchAndAdd(playlistName,musicName);
             model.musicCount++;
-            return "Music added successfully.";
+            return "Music added to playlist successfully.";
         }
         return "Sorry! You can't add more than 10 Songs to the playlist with freeAccount.";
     }
@@ -86,4 +86,27 @@ public class ListenerController extends User{
             }
         }
     }
+    public String playAudio(String audioName){
+        String show = "";
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(audioName)){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show = "Audio: " + audioName + " Artis: " + audio.getArtistName() + " Likes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + " Release Date: " + audio.getReleaseDate() + " ID: " + audio.getIDCount();
+                audio.setPlayedCount(audio.getPlayedCount() + 1);
+                model.Count++;
+                model.getPlayCount().put(audio,model.Count);
+            }
+        }
+        return show;
+    }
+    public void likeAudio(String audioName){
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(audioName)){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                audio.setLikeCount(audio.getLikeCount() + 1);
+                break;
+            }
+        }
+    }
+    
 }
