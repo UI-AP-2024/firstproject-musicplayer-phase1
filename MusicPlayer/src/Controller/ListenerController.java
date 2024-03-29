@@ -182,5 +182,25 @@ public class ListenerController extends User{
         }
         return show.toString();
     }
+    public String filterAudioFilesBasedOnDate(Date releaseDate){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getDate().getYear()==releaseDate.getYear()){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show.append("Audio: "+audio + " Artist: "+audio.getArtistName()+" ID: "+audio.getIDCount()+"\n");
+            }
+        }
+        return show.toString();
+    }
+    public String filterAudioFilesBasedAmongDate(Date releaseDate1,Date releaseDate2){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(releaseDate1.getYear() <= Database.getDatabase().getAudios().get(i).getDate().getYear() && Database.getDatabase().getAudios().get(i).getDate().getYear()<=releaseDate2.getYear()){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show.append("Audio: "+audio + " Artist: "+audio.getArtistName()+" ID: "+audio.getIDCount()+"\n");
+            }
+        }
+        return show.toString();
+    }
     
 }
