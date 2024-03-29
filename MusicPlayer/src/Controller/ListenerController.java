@@ -48,4 +48,42 @@ public class ListenerController extends User{
             count++;
         }
     }
+    public String makeNewPlaylist(String playlistName,String userName){
+        Playlists playlists = new Playlists(playlistName,userName);
+
+        if(model.getClass().equals(PremiumSubscription.class)) {
+            model.getPlaylists().add(playlists);
+            return "Playlist made successfully";
+        }
+        else if(model.playlistCount < 3){
+            model.getPlaylists().add(playlists);
+            model.playlistCount++;
+            return "Playlist made successfully";
+        }
+
+        return "Sorry! You can't creat more than 3 playlists with freeAccount.";
+    }
+    public String addMusicToPlaylist(String playlistName,String musicName){
+        if(model.getClass().equals(PremiumSubscription.class)){
+            searchAndAdd(playlistName,musicName);
+            return "Music added successfully.";
+        }
+        else if(model.musicCount < 10){
+            searchAndAdd(playlistName,musicName);
+            model.musicCount++;
+            return "Music added successfully.";
+        }
+        return "Sorry! You can't add more than 10 Songs to the playlist with freeAccount.";
+    }
+    private void searchAndAdd(String playlistName,String musicName){
+        for (int i = 0; i < model.getPlaylists().size(); i++) {
+            if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
+                for (int j = 0; j < Database.getDatabase().getAudios().size(); j++) {
+                    if(Database.getDatabase().getAudios().get(j).getAudioName().equals(musicName)){
+                        model.getPlaylists().get(i).getAudio().add(Database.getDatabase().getAudios().get(j));
+                    }
+                }
+            }
+        }
+    }
 }

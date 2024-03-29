@@ -9,6 +9,8 @@ public class ListenerModel extends User{
     private Map<AudioModel, Integer> playCount;
     public Date subscriptionExpirDate;
     private Genre[] favoriteGenres;
+    public int playlistCount=0;
+    public int musicCount=0;
     public ListenerModel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
         super(username,password,fullName,email,phoneNumber,birthDate);
         Database.getDatabase().getUsers().add(this);
@@ -54,5 +56,9 @@ public class ListenerModel extends User{
 
     public void setFavoriteGenres(Genre[] favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
+    }
+
+    public int getPlaylistCount() {
+        return playlistCount;
     }
 }
