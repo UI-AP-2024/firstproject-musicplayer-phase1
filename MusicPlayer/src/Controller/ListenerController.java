@@ -57,7 +57,7 @@ public class ListenerController extends User{
             model.getPlaylists().add(playlists);
             return "Playlist made successfully";
         }
-        else if(model.playlistCount < 3){
+        else if(model.playlistCount < FreeModel.maxPlaylist){
             model.getPlaylists().add(playlists);
             model.playlistCount++;
             return "Playlist made successfully";
@@ -70,7 +70,7 @@ public class ListenerController extends User{
             searchAndAdd(playlistName,musicName);
             return "Music added to playlist successfully.";
         }
-        else if(model.musicCount < 10){
+        else if(model.musicCount < FreeModel.maxAudio){
             searchAndAdd(playlistName,musicName);
             model.musicCount++;
             return "Music added to playlist successfully.";
@@ -202,5 +202,31 @@ public class ListenerController extends User{
         }
         return show.toString();
     }
-    
+    public String showFollowing(){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < model.getFallowingArtist().size(); i++) {
+            show.append("Artist: "+ model.getFallowingArtist().get(i)+"\n");
+        }
+        return show.toString();
+    }
+    public String showArtistList(){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().get(i).getClass().equals(ArtistModel.class)){
+                show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
+            }
+        }
+        return show.toString();
+    }
+    public String showArtist(String userName){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().get(i).getClass().equals(ArtistModel.class) && Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
+                show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
+                break;
+            }
+        }
+        return show.toString();
+    }
+
 }

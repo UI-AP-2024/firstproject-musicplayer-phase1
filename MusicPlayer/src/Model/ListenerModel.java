@@ -9,6 +9,7 @@ public class ListenerModel extends User{
     private Map<AudioModel, Integer> playCount;
     public Date subscriptionExpirDate;
     private Genre[] favoriteGenres;
+    private ArrayList<ArtistModel> fallowingArtist;
     public int playlistCount=0;
     public int musicCount=0;
     public int Count=0;
@@ -17,6 +18,7 @@ public class ListenerModel extends User{
         Database.getDatabase().getUsers().add(this);
         playCount = new HashMap<>();
         favoriteGenres = new Genre[4];
+        fallowingArtist = new ArrayList<>();
     }
 
     public double getCredit() {
@@ -61,5 +63,9 @@ public class ListenerModel extends User{
 
     public int getPlaylistCount() {
         return playlistCount;
+    }
+
+    public ArrayList<ArtistModel> getFallowingArtist() {
+        return fallowingArtist;
     }
 }
