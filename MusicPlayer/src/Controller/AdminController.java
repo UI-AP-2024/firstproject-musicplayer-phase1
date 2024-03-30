@@ -1,8 +1,5 @@
 package Controller;
-import Model.AdminModel;
-import Model.ArtistModel;
-import Model.Database;
-import Model.User;
+import Model.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,11 +28,31 @@ public class AdminController extends User{
         }
         return show.toString();
     }
+    public String showOneAudioInfo(int ID){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                show.append("Audio name: "+audio.getAudioName()+" Artist name: "+audio.getArtistName() + "\n");
+                break;
+            }
+        }
+        return show.toString();
+    }
     public String showArtistInfo(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
             if(Database.getDatabase().getUsers().getClass().equals(ArtistModel.class))
                 show.append("Artist Name: "+Database.getDatabase().getUsers().get(i).getFullName()+ "\n");
+        return show.toString();
+    }
+    public String showOneArtistInfo(){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
+            if(Database.getDatabase().getUsers().getClass().equals(ArtistModel.class)) {
+                ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
+                show.append("Name: " + artist.getFullName()+" email:"+artist.getEmail()+" phone number: "+artist.getPhoneNumber()+" salary: "+artist.getSalary()+"\nBiography"+artist.getBiography()+"\n");
+            }
         return show.toString();
     }
     public String showReports(){

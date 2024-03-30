@@ -14,7 +14,7 @@ abstract public class AudioModel {
     private String audioLink;
     private String cover;
     public AudioModel(String audioName, String artistName, Genre genre, String audioLink, String cover) {
-        IDCount=++ID;
+        IDCount=ID++;
         this.audioName = audioName;
         this.artistName = artistName;
         this.genre = genre;
