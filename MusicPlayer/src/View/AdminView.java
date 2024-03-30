@@ -10,50 +10,42 @@ public class AdminView extends User{
         super(username,password,fullName,email,phoneNumber,birthDate);
     }
 
-    public void showLoginMenu(){
-        System.out.println("1) log in");
+    public void Login(){
+
         Scanner sin = new Scanner(System.in);
-        sin.nextLine();
-        System.out.println("Enter Your username & password:");
-        String username = sin.next() ;
-        String password = sin.next();
-        if(view.enterUserPanel(username,password)) {
-            System.out.println("Correct!");
-            showSecondMenu();
-        }
-        else{
-            System.out.println("username or password is wrong!");
-            System.out.println("Try Again!");
-            showLoginMenu();
+        String entry=sin.nextLine();
+        String[] enter = entry.split("-");
+        if(enter[0].equals("Login")) {
+            if (view.enterUserPanel(enter[1], enter[2])) {
+                System.out.println("Correct!");
+                second();
+            } else {
+                System.out.println("username or password is wrong!");
+                System.out.println("Try Again!");
+                Login();
+            }
         }
     }
-    private void showSecondMenu(){
+    private void second(){
         System.out.println("1) Statistics: Most Poplar Songs\n2) Audios: Audios Information\n3) Artists: Artists Information\n4) Reports\n5) UserInfo\n6) log out");
         Scanner sin = new Scanner(System.in);
-        String command = sin.nextLine();
-        while ((!command.equals("log out"))) {
-            switch (command) {
-                case "Statistics":
-                    System.out.println(view.showPopularSongs());
-                    break;
-                case "Audios":
-                    System.out.println(view.showAudioInfo());
-                    break;
-                case "Artists":
-                    System.out.println(view.showArtistInfo());
-                    break;
-                case "Reports":
-                    System.out.println(view.showReports());
-                    break;
-                case "UserInfo":
-                    System.out.println(view.showUserInfo());
-                    break;
-                default:
-                    System.out.println("Enter Valid command!");
-            }
-            showSecondMenu();
+       String command="";
+        while ((!command.equals("Logout"))) {
             command = sin.nextLine();
+            String[] commands = command.split("-");
+            if(commands[0].equals("Statistics"))
+                System.out.println(view.showPopularSongs());
+            else if(commands[0].equals("Audios"))
+                System.out.println(view.showAudioInfo());
+            else if(commands[0].equals("Audio"))
+                System.out.println(view.showOneAudioInfo(Integer.parseInt(commands[1])));
+            else if(commands[0].equals("Artists"))
+                System.out.println(view.showArtistInfo());
+            else if(commands[0].equals("Artist"))
+                System.out.println(view.showOneArtistInfo(commands[1]));
+            else if(commands[0].equals("Reports"))
+                System.out.println(view.showReports());
         }
-        showLoginMenu();
+        Login();
     }
 }

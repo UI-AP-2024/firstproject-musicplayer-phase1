@@ -46,12 +46,13 @@ public class AdminController extends User{
                 show.append("Artist Name: "+Database.getDatabase().getUsers().get(i).getFullName()+ "\n");
         return show.toString();
     }
-    public String showOneArtistInfo(){
+    public String showOneArtistInfo(String userName){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
-            if(Database.getDatabase().getUsers().getClass().equals(ArtistModel.class)) {
+            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)) {
                 ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
                 show.append("Name: " + artist.getFullName()+" email:"+artist.getEmail()+" phone number: "+artist.getPhoneNumber()+" salary: "+artist.getSalary()+"\nBiography"+artist.getBiography()+"\n");
+                break;
             }
         return show.toString();
     }
