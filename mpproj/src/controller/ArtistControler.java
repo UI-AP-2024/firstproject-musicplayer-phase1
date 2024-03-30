@@ -1,5 +1,6 @@
 package controller;
 
+import model.Album;
 import model.Audio.Audio;
 import model.Audio.Music;
 import model.Audio.Podcast;
@@ -21,7 +22,7 @@ public class ArtistControler {
         this.artist = artist;
     }
 
-    public String signUpListener(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
+    public String signUpArtist(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
         ArrayList<User> users= Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username)){
@@ -66,14 +67,16 @@ public class ArtistControler {
         StringBuilder str=new StringBuilder(" view static: \n");
         int totalplayCount=0;
         if(artist instanceof Singer){
-            for(Music music:((Singer) artist).getMusics()){
-                str.append(" music name :").append(music.getTitle()).append(" view : ").append(music.getPlayCount());
-                totalplayCount+= music.getPlayCount();
+            for(Album album:((Singer) artist).getAlbums()){
+                for(Music music:album.getSongs()) {
+                    str.append(" music name :").append(music.getTitle()).append(" view : ").append(music.getPlayCount());
+                    totalplayCount += music.getPlayCount();
+                }
             }
         }
         if(artist instanceof Podcaster){
             for(Podcast podcast:((Podcaster) artist).getPodcasts()){
-                str.append(" music name :").append(podcast.getTitle()).append(" view : ").append(podcast.getPlayCount());
+                str.append(" podcast name :").append(podcast.getTitle()).append(" view : ").append(podcast.getPlayCount());
                 totalplayCount+= podcast.getPlayCount();
             }
         }
@@ -82,8 +85,10 @@ public class ArtistControler {
     public String calculateEarning(){
         double total=0;
         if(artist instanceof Singer){
-            for(Music music:((Singer) artist).getMusics()){
+            for(Album album:((Singer) artist).getAlbums()){
+                for(Music music:album.getSongs()) {
                 total+= music.getPlayCount()*0.4;
+                }
             }
         }
         if(artist instanceof Podcaster){

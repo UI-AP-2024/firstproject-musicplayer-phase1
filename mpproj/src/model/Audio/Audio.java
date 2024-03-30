@@ -11,6 +11,7 @@ public abstract class Audio {
     private Genre genre;
     private String audioFileLink;
     private String cover;
+    private static int idcounter;
 
     //cuns???????????
     public Audio(int id, String title, String artistName, int playCount, int likes, Date releaseDate, Genre genre, String audioFileLink, String cover) {
@@ -24,6 +25,15 @@ public abstract class Audio {
         this.audioFileLink = audioFileLink;
         this.cover = cover;
     }
+
+    public static int getIdcounter() {
+        return idcounter;
+    }
+
+    public static void setIdcounter(int idcounter) {
+        Audio.idcounter = idcounter;
+    }
+
     @Override
     public String toString(){
         StringBuilder result=new StringBuilder("artist name");

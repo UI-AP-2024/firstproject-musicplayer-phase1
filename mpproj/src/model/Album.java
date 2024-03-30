@@ -1,6 +1,7 @@
 package model;
 
 import model.Audio.Audio;
+import model.Audio.Music;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,8 @@ public class Album {
     private int id;
     private String name;
     private String singerName;
-    private ArrayList<Audio> songs;
+    private ArrayList<Music> songs;
+    private static int albumCounter;
 
     //cons???
     public Album(int id, String name, String singerName) {
@@ -27,6 +29,14 @@ public class Album {
         return String.valueOf(res);
     }
 
+    public static void setAlbumCounter(int albumCounter) {
+        Album.albumCounter = albumCounter;
+    }
+
+    public static int getAlbumCounter() {
+        return albumCounter;
+    }
+
     public int getId() {
         return id;
     }
@@ -39,7 +49,7 @@ public class Album {
         return singerName;
     }
 
-    public ArrayList<Audio> getSongs() {
+    public ArrayList<Music> getSongs() {
         return songs;
     }
 
@@ -55,7 +65,7 @@ public class Album {
         this.singerName = singerName;
     }
 
-    public void setSongs(ArrayList<Audio> songs) {
+    public void setSongs(ArrayList<Music> songs) {
         this.songs = songs;
     }
 }

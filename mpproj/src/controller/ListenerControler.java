@@ -149,8 +149,8 @@ public class ListenerControler {
                 result.append("artis name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers()).append(" biography : ").append(((Artist) artist).getBiography()).append("\n");
                 if(artist instanceof Singer){
                     result.append("musics : ");
-                    for(Music music: ((Singer) artist).getMusics()){
-                        result.append(music.getTitle());
+                    for(Album album: ((Singer) artist).getAlbums()){
+                        result.append(album.toString());
                     }
                 }
                 if(artist instanceof Podcaster){

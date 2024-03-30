@@ -1,6 +1,9 @@
 package controller;
 
+import model.Audio.Audio;
+import model.Audio.Podcast;
 import model.Database.Database;
+import model.Genre;
 import model.UserAccount.Podcaster;
 import model.UserAccount.RegularListener;
 import model.UserAccount.User;
@@ -8,15 +11,14 @@ import model.UserAccount.User;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PodcasterControler {
-    public String signUpPodcaster(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
-        ArrayList<User> users= Database.getDatabase().getUsers();
-        for(User user:users){
-            if(user.getUsername()==username){
-                return "error : this user name already exist .";
-            }
+public class PodcasterControler extends ArtistControler{
+    public  String publishPodcast(String title,String genre,String caption,String link,String cover){
+        if (artist instanceof Podcaster){
+            Podcast podcast0=new Podcast(Podcast.getIdcounter(),title,artist.getFullName(),0,0,new Date(), Genre.valueOf(genre),link,cover,caption);
+            Audio.setIdcounter(Audio.getIdcounter()+1);
+            ((Podcaster) artist).getPodcasts().add(podcast0);
+            Database.getDatabase().getAudios().add(podcast0);
         }
-        Podcaster podcaster=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
-        return "Podcasteer accaount successfully created .";
+        return "podcast added";
     }
 }
