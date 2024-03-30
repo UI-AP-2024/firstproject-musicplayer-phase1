@@ -1,12 +1,16 @@
 package model.DataBase;
 
+import model.Audio.Audio;
+import model.Report;
+import model.UserAcount.UserAcount;
+
 import java.util.ArrayList;
 
 public class DataBase {
 
-    private ArrayList<Users> users;
-    private ArrayList<Aoudios> aoudios;
-    private ArrayList<Reports> reports;
+    private ArrayList<UserAcount> users;
+    private ArrayList<Audio> audios;
+    private ArrayList<Report> reports;
     private static DataBase dataBase;
 
     public static DataBase getDataBase() {
@@ -15,27 +19,27 @@ public class DataBase {
         return dataBase;
     }
 
-    public ArrayList<Users> getUsers() {
+    public ArrayList<UserAcount> getUsers() {
         return users;
     }
 
-    public ArrayList<Aoudios> getAoudios() {
-        return aoudios;
+    public ArrayList<Audio> getAoudios() {
+        return audios;
     }
 
-    public ArrayList<Reports> getReports() {
+    public ArrayList<Report> getReports() {
         return reports;
     }
 
-    public void setUsers(ArrayList<Users> users) {
+    public void setUsers(ArrayList<UserAcount> users) {
         this.users = users;
     }
 
-    public void setAoudios(ArrayList<Aoudios> aoudios) {
-        this.aoudios = aoudios;
+    public void setAoudios(ArrayList<Audio> audio) {
+        this.audios = audio;
     }
 
-    public void setReports(ArrayList<Reports> reports) {
+    public void setReports(ArrayList<Report> reports) {
         this.reports = reports;
     }
 }
