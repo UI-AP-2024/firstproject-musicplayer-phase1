@@ -1,5 +1,5 @@
 package model;
 
 public class Music extends Audio{
-    String musicLyrics;
+    private String musicLyrics;
 }

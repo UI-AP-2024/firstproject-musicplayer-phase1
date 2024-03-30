@@ -14,8 +14,8 @@ public class Database {
     public static Database getData() {
         return data;
     }
-    ArrayList<UserAccount> allUsers = new ArrayList<>();
-    ArrayList<Audio> allAudios = new ArrayList<>();
-    ArrayList<Report> reports = new ArrayList<>();
+    private ArrayList<UserAccount> allUsers = new ArrayList<>();
+    private ArrayList<Audio> allAudios = new ArrayList<>();
+    private ArrayList<Report> reports = new ArrayList<>();
 
 }

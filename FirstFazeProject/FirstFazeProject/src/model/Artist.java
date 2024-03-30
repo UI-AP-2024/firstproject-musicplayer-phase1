@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Artist extends UserAccount{
-    Double income;
-    ArrayList<UserAccount> followers = new ArrayList<>();
-    String biography;
+    private Double income;
+    private ArrayList<UserAccount> followers = new ArrayList<>();
+    private String biography;
 
 }

@@ -1,7 +1,7 @@
 package model;
 
 public class Report {
-    UserAccount reporterUser;
-    Artist reportedArtist;
-    String caption;
+    private UserAccount reporterUser;
+    private Artist reportedArtist;
+    private String caption;
 }

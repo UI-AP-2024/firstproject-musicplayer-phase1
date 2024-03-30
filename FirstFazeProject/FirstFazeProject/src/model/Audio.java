@@ -3,13 +3,13 @@ package model;
 import java.util.Date;
 
 abstract public class Audio {
-    int uniqueId;
-    String audioName;
-    String artistName;
-    int timesPlayed;
-    int likes;
-    Date releaseTime;
-    Genre genre;
-    String musicLink;
-    String cover;
+    private int uniqueId;
+    private String audioName;
+    private String artistName;
+    private int timesPlayed;
+    private int likes;
+    private Date releaseTime;
+    private Genre genre;
+    private String musicLink;
+    private String cover;
 }

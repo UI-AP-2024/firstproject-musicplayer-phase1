@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class Playlist {
-    int id;
-    String playListName;
-    String userGeneratorName;
-    ArrayList<Audio> audioList = new ArrayList<>();
+    private int id;
+    private String playListName;
+    private String userGeneratorName;
+    private ArrayList<Audio> audioList = new ArrayList<>();
 }

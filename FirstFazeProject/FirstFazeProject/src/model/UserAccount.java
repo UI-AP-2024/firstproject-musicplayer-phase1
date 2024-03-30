@@ -3,10 +3,10 @@ package model;
 import java.util.Date;
 
 abstract public class UserAccount {
-    String uniqueUserName;
-    String password;
-    String fullName;
-    String email;
-    String phoneNumber;
-    Date birthDate;
+    private String uniqueUserName;
+    private String password;
+    private String fullName;
+    private String email;
+    private String phoneNumber;
+    private Date birthDate;
 }

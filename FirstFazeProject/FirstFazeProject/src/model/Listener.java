@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Listener extends UserAccount{
-    Double accountCredit;
-    ArrayList<Playlist> playlists = new ArrayList<>();
-    Map<Audio,Integer> audioTimesPlayed = new HashMap<>();
-    Date shareExpireTime;
-    ArrayList<Genre> favoriteGenres = new ArrayList<>();
+    private Double accountCredit;
+    private ArrayList<Playlist> playlists = new ArrayList<>();
+    private Map<Audio,Integer> audioTimesPlayed = new HashMap<>();
+    private Date shareExpireTime;
+    private ArrayList<Genre> favoriteGenres = new ArrayList<>();
 }
