@@ -10,6 +10,15 @@ abstract public class UserAccount {
     private String phoneNumber;
     private Date birthDate;
 
+    public UserAccount(String uniqueUserName, String password, String fullName, String email, String phoneNumber, Date birthDate) {
+        this.uniqueUserName = uniqueUserName;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+    }
+
     public String getUniqueUserName() {
         return uniqueUserName;
     }

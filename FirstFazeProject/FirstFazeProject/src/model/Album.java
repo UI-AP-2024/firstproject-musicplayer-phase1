@@ -8,6 +8,11 @@ public class Album {
     private String singerName;
     private ArrayList<Audio> audioList = new ArrayList<>();
 
+    public Album(String albumName, String singerName) {
+        this.albumName = albumName;
+        this.singerName = singerName;
+    }
+
     public int getUniqueId() {
         return uniqueId;
     }

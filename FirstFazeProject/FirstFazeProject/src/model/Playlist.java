@@ -8,6 +8,12 @@ public class Playlist {
     private String userGeneratorName;
     private ArrayList<Audio> audioList = new ArrayList<>();
 
+    public Playlist(int id, String playListName, String userGeneratorName) {
+        this.id = id;
+        this.playListName = playListName;
+        this.userGeneratorName = userGeneratorName;
+    }
+
     public int getId() {
         return id;
     }

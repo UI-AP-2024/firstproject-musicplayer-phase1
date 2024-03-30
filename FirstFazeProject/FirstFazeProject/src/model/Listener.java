@@ -12,6 +12,10 @@ public class Listener extends UserAccount{
     private Date shareExpireTime;
     private ArrayList<Genre> favoriteGenres = new ArrayList<>();
 
+    public Listener(String uniqueUserName, String password, String fullName, String email, String phoneNumber, Date birthDate) {
+        super(uniqueUserName, password, fullName, email, phoneNumber, birthDate);
+    }
+
     public Double getAccountCredit() {
         return accountCredit;
     }

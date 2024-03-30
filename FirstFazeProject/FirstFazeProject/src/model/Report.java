@@ -5,6 +5,12 @@ public class Report {
     private Artist reportedArtist;
     private String caption;
 
+    public Report(UserAccount reporterUser, Artist reportedArtist, String caption) {
+        this.reporterUser = reporterUser;
+        this.reportedArtist = reportedArtist;
+        this.caption = caption;
+    }
+
     public UserAccount getReporterUser() {
         return reporterUser;
     }
