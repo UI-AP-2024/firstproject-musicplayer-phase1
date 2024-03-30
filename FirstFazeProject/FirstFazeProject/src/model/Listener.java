@@ -11,4 +11,44 @@ public class Listener extends UserAccount{
     private Map<Audio,Integer> audioTimesPlayed = new HashMap<>();
     private Date shareExpireTime;
     private ArrayList<Genre> favoriteGenres = new ArrayList<>();
+
+    public Double getAccountCredit() {
+        return accountCredit;
+    }
+
+    public void setAccountCredit(Double accountCredit) {
+        this.accountCredit = accountCredit;
+    }
+
+    public ArrayList<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(ArrayList<Playlist> playlists) {
+        this.playlists = playlists;
+    }
+
+    public Map<Audio, Integer> getAudioTimesPlayed() {
+        return audioTimesPlayed;
+    }
+
+    public void setAudioTimesPlayed(Map<Audio, Integer> audioTimesPlayed) {
+        this.audioTimesPlayed = audioTimesPlayed;
+    }
+
+    public Date getShareExpireTime() {
+        return shareExpireTime;
+    }
+
+    public void setShareExpireTime(Date shareExpireTime) {
+        this.shareExpireTime = shareExpireTime;
+    }
+
+    public ArrayList<Genre> getFavoriteGenres() {
+        return favoriteGenres;
+    }
+
+    public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
+        this.favoriteGenres = favoriteGenres;
+    }
 }
