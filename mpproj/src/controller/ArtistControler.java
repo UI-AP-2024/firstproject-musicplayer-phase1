@@ -1,10 +1,11 @@
 package controller;
 
+import model.Audio.Audio;
+import model.Audio.Music;
+import model.Audio.Podcast;
 import model.Database.Database;
 import model.Report;
-import model.UserAccount.Artist;
-import model.UserAccount.Listener;
-import model.UserAccount.User;
+import model.UserAccount.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +52,46 @@ public class ArtistControler {
         artist.setIsLogin(false);
         return "logout successfull";
     }
-
+    public  String artistInfo(){
+        return artist.toString();
+    }
+    public String showFollowers(){
+        StringBuilder result=new StringBuilder(" followers : ");
+        for(User user: artist.getFollowers()){
+            result.append(user.getUsername()).append(" ");
+        }
+        return artist.getFollowers().size()+String.valueOf(result);
+    }
+    public String viewStatic(){
+        StringBuilder str=new StringBuilder(" view static: \n");
+        int totalplayCount=0;
+        if(artist instanceof Singer){
+            for(Music music:((Singer) artist).getMusics()){
+                str.append(" music name :").append(music.getTitle()).append(" view : ").append(music.getPlayCount());
+                totalplayCount+= music.getPlayCount();
+            }
+        }
+        if(artist instanceof Podcaster){
+            for(Podcast podcast:((Podcaster) artist).getPodcasts()){
+                str.append(" music name :").append(podcast.getTitle()).append(" view : ").append(podcast.getPlayCount());
+                totalplayCount+= podcast.getPlayCount();
+            }
+        }
+        return "total view : "+ totalplayCount+String.valueOf(str);
+    }
+    public String calculateEarning(){
+        double total=0;
+        if(artist instanceof Singer){
+            for(Music music:((Singer) artist).getMusics()){
+                total+= music.getPlayCount()*0.4;
+            }
+        }
+        if(artist instanceof Podcaster){
+            for(Podcast podcast:((Podcaster) artist).getPodcasts()){
+                total+= podcast.getPlayCount()*0.5;
+            }
+        }
+        return String.valueOf(total);
+    }
 
 }

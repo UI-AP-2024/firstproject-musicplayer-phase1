@@ -101,6 +101,18 @@ public class ListenerControler {
         }
         return "not found";
     }
+    public String followArtist(String artistusername){
+        for(User user:Database.getDatabase().getUsers()){
+            if(user.getUsername().equals(artistusername)){
+                if(user instanceof Artist){
+                    ((Artist) user).getFollowers().add(listenerr);
+                    listenerr.getFollowings().add((Artist) user);
+                    return "followed";
+                }
+            }
+        }
+        return "error";
+    }
     public String likeAudio(int audioId){
         for (Audio audio:Database.getDatabase().getAudios()){
             if(audio.getId()==audioId){
