@@ -1,4 +1,7 @@
 package model.UserAccount;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import model.Audio.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,9 +9,9 @@ import java.util.Map;
 import model.*;
 
 public class Listener extends User{
-
+    private Date endSubDate;
     private ArrayList<Playlist> playlists;
-    private Map<Audio, Integer> listeningHistory;
+    private Map<Integer, Integer> listeningHistory;
     private int credit;
     private ArrayList<Genre> favoriteGenre;
     private  int playlistcounter;
@@ -21,6 +24,7 @@ public class Listener extends User{
         playlists=new ArrayList<>();
         favoriteGenre=new ArrayList<>();
         followings=new ArrayList<>();
+        endSubDate=new Date();
     }
     @Override
     public String toString() {
@@ -32,6 +36,18 @@ public class Listener extends User{
     }
     public ArrayList<Genre> getFavoriteGenre() {
         return favoriteGenre;
+    }
+
+    public void setPlaylistcounter(int playlistcounter) {
+        this.playlistcounter = playlistcounter;
+    }
+
+    public void setEndSubDate(Date endSubDate) {
+        this.endSubDate = endSubDate;
+    }
+
+    public Date getEndSubDate() {
+        return endSubDate;
     }
 
     public void setFavoriteGenre(ArrayList<Genre> favoriteGenre) {
@@ -58,7 +74,7 @@ public class Listener extends User{
         this.playlists = playlists;
     }
 
-    public void setListeningHistory(Map<Audio, Integer> listeningHistory) {
+    public void setListeningHistory(Map<Integer, Integer> listeningHistory) {
         this.listeningHistory = listeningHistory;
     }
 
@@ -68,7 +84,7 @@ public class Listener extends User{
         return playlists;
     }
 
-    public Map<Audio, Integer> getListeningHistory() {
+    public Map<Integer, Integer> getListeningHistory() {
         return listeningHistory;
     }
 

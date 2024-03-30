@@ -7,9 +7,6 @@ import java.util.Date;
 public class PrimiumListener extends Listener {
     private int numOfSub;
 
-    public PrimiumListener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth,  SubscriptionPlan subscriptionPlan) {
-        super(username, password, fullName, email, phoneNumber, dateOfBirth);
-    }
 
     public PrimiumListener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth, int credit) {
         super(username, password, fullName, email, phoneNumber, dateOfBirth, credit);

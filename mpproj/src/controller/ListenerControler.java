@@ -3,9 +3,10 @@ import model.Audio.*;
 import model.Database.Database;
 import model.UserAccount.*;
 import model.*;
-
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class ListenerControler {
     Listener listenerr;
@@ -176,6 +177,73 @@ public class ListenerControler {
         return "error : not foound play llist";
     }
 //● مشاهدۀ فال صوتیهای ͖یشنهاد شده به کاربر با توجه به ژانر و آرتیست مورد علاقۀ او
-//● مشاهدۀ اطلاعات حساب کاربری
-// خرید یا تمدید اشتراک متفاوت برای عادی ورموم و افزایش اعتبار حساب کاربری
+    public  String increaseCredit(int increaseAmount){
+        listenerr.setCredit(listenerr.getCredit()+increaseAmount);
+        return "increased";
+    }
+    public String buySub(SubscriptionPlan subscriptionPlan){
+        String str=listenerr.getEndSubDate().toString();
+        if(listenerr instanceof  RegularListener){
+            int tmpindex=0;
+            ArrayList<User> users=new ArrayList<>();
+            for(User user : Database.getDatabase().getUsers()){
+                if(user.getUsername().equals(listenerr)){
+                    PrimiumListener tmplistenerr=new PrimiumListener(listenerr.getUsername(),listenerr.getPassword(),listenerr.getFullName(),listenerr.getEmail(),listenerr.getPhoneNumber(),listenerr.getDateOfBirth(),listenerr.getCredit());
+                    tmplistenerr.setSubscription(subscriptionPlan);
+                    Calendar calendar=Calendar.getInstance();
+                    calendar.setTime(tmplistenerr.getEndSubDate());
+                    if(subscriptionPlan.equals(SubscriptionPlan.Onemonth)){
+                        calendar.add(Calendar.MONTH,1);
+                        tmplistenerr.setEndSubDate(calendar.getTime());
+                    }else if(subscriptionPlan.equals(SubscriptionPlan.TwoMonth)){
+                        calendar.add(Calendar.MONTH,2);
+                        tmplistenerr.setEndSubDate(calendar.getTime());
+                    } else if (subscriptionPlan.equals(SubscriptionPlan.SixMonth)) {
+                        calendar.add(Calendar.MONTH,6);
+                        tmplistenerr.setEndSubDate(calendar.getTime());
+                    }
+                    listenerr=tmplistenerr;
+                    users.add(listenerr);
+                }else
+                    users.add(user);
+                tmpindex++;
+            }
+            Database.getDatabase().setUsers(users);
+        }
+        if(listenerr instanceof  PrimiumListener){
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTime(listenerr.getEndSubDate());
+            if(subscriptionPlan.equals(SubscriptionPlan.Onemonth)){
+                calendar.add(Calendar.MONTH,1);
+                listenerr.setEndSubDate(calendar.getTime());
+            }else if(subscriptionPlan.equals(SubscriptionPlan.TwoMonth)){
+                calendar.add(Calendar.MONTH,2);
+                listenerr.setEndSubDate(calendar.getTime());
+            } else if (subscriptionPlan.equals(SubscriptionPlan.SixMonth)) {
+                calendar.add(Calendar.MONTH,6);
+                listenerr.setEndSubDate(calendar.getTime());
+            }
+        }
+        return "befor :"+str+"now :"+listenerr.getEndSubDate().toString();
+    }
+    public String suggestAudio(int n){
+        n=10;
+        Map.Entry<Integer,Integer>[] arrmap=listenerr.getListeningHistory().entrySet().toArray(new Map.Entry[listenerr.getListeningHistory().size()]);
+        for (int i = 0; i <arrmap.length-1 ; i++) {
+            for (int j = 0; j < arrmap.length-1-i; j++) {
+                if (arrmap[j].getValue()<arrmap[j+1].getValue()) {
+                    Map.Entry<Integer,Integer>tmp=arrmap[j];
+                    arrmap[j]=arrmap[j+1];
+                    arrmap[j+1]=tmp;
+                }
+            }
+        }
+        for(Audio audio:Database.getDatabase().getAudios()) {
+            if(arrmap[0].getKey().equals(audio.getId())){
+                for (User artist:Database.getDatabase().getUsers()){
+  ///??????????????????????????????????????????
+                }
+            }
+        }
+    }
 }

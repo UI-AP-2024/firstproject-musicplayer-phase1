@@ -20,6 +20,10 @@ public class Database {
             database=new Database();
         return database;
     }
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("play list name : ");
+    }
 
     public ArrayList<User> getUsers() {
         return users;
