@@ -5,7 +5,7 @@ import model.Genre.Genre;
 import java.util.Date;
 
 public class Music extends Audio{
-    String lyric;
+    private String lyric;
     public Music(String fileName, String artistName, Date dateOfRelease, Genre genre, String fileLink, String cover,String lyric) {
         super(fileName, artistName, dateOfRelease, genre, fileLink, cover);
         this.lyric = lyric;
