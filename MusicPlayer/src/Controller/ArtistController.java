@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
 
 public class ArtistController extends User{
     private ArtistModel model;
-    public ArtistController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate) {
+    public ArtistController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, String bio) {
         super(username, password, fullName, email, phoneNumber, birthDate);
     }
 
-    public String signUp(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
+    public String signUp(String username, String password, String fullName, String email, String phoneNumber, Date birthDate,String bio){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){
                 return "This Username already used!";
@@ -29,7 +29,7 @@ public class ArtistController extends User{
             return "The phone number is not valid!";
         else if(!matcherPassword.matches())
             return "Weak password! Pleas use better password.";
-
+        model = new ArtistModel(username, password, fullName, email, phoneNumber, birthDate,bio);
         return "Done!";
     }
 

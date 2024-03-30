@@ -6,6 +6,13 @@ import Model.Genre;
 import java.util.*;
 public class ListenerView {
      private ListenerController view;
+     private static ListenerView listener;
+     private ListenerView(){}
+     public static ListenerView getListener(){
+         if(listener==null)
+             listener = new ListenerView();
+         return listener;
+     }
      public void signUp(){
          Scanner sin = new Scanner(System.in);
          String entry=sin.nextLine();
@@ -52,8 +59,10 @@ public class ListenerView {
          String entry=sin.nextLine();
          String[] enter = entry.split("-");
          if(enter[0].equals("Login")){
-             if(!view.logIn(enter[2],enter[3]).equals("Done!"))
+             if(!view.logIn(enter[2],enter[3]).equals("Done!")) {
+                 System.out.println(view.logIn(enter[2],enter[3]));
                  login();
+             }
              System.out.println(view.logIn(enter[2],enter[3]));
              second();
          }

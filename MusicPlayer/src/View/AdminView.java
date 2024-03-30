@@ -4,12 +4,16 @@ import Model.User;
 
 import java.util.Date;
 import java.util.Scanner;
-public class AdminView extends User{
-    private AdminController view;
-    private AdminView(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
-        super(username,password,fullName,email,phoneNumber,birthDate);
+public class AdminView {
+    private  AdminController view;
+    private static AdminView admin;
+    private AdminView(){
     }
-
+    public static AdminView getAdmin(){
+        if(admin==null)
+            admin = new AdminView();
+        return admin;
+    }
     public void Login(){
 
         Scanner sin = new Scanner(System.in);
