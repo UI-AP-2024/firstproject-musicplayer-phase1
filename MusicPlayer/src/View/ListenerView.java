@@ -110,15 +110,36 @@ public class ListenerView {
                      else
                          System.out.println(view.filterAudioFilesBasedOnDate(new Date(commands[2])));
              }
-             else if(commands[0].equals("Add")){
-                 System.out.println(view.makeNewPlaylist(commands[1],"playlist"));
+             else if(commands[0].equals("Add"))
                  System.out.println(view.addMusicToPlaylist(commands[1],Integer.parseInt(commands[2])));
-             }
              else if(commands[0].equals("ShowPlaylists"))
                  System.out.println(view.showPlaylists());
              else if(commands[0].equals("SelectPlaylist"))
                  System.out.println(view.selectPlaylist(commands[1]));
-             
+             else if(commands[0].equals("Play"))
+                 System.out.println(view.playAudio(Integer.parseInt(commands[1])));
+             else if(commands[0].equals("Like")){
+                 view.likeAudio(Integer.parseInt(commands[1]));
+                 System.out.println("Done!");
+             }
+             else if(commands[0].equals("Lyric"))
+                 System.out.println(view.showLyric(Integer.parseInt(commands[1])));
+             else if(commands[0].equals("NewPlaylist"))
+                 System.out.println(view.makeNewPlaylist(commands[1],"playlist"));
+             else if(commands[0].equals("Followings"))
+                 System.out.println(view.showFollowing());
+             else if(commands[0].equals("Report")){
+                 view.ArtistReport(commands[1],commands[2]);
+                 System.out.println("Done!");
+             }
+             else if(commands[0].equals("IncreaseCredit")){
+                 view.increaseCredit(Integer.parseInt(commands[1]));
+                 System.out.println("Done!");
+             }
+             else if(commands[0].equals(" GetPremium"))
+                 System.out.println(view.buyOrExtendSubscription(Integer.parseInt(commands[1])));
+             else
+                 System.out.println("Wrong command!");
          }
      }
 }

@@ -89,12 +89,12 @@ public class ListenerController extends User{
             }
         }
     }
-    public String playAudio(String audioName){
+    public String playAudio(int ID){
         String show = "";
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(audioName)){
+            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show = "Audio: " + audioName + " Artis: " + audio.getArtistName() + " Likes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + " Release Date: " + audio.getReleaseDate() + " ID: " + audio.getIDCount();
+                show = "Audio: " + audio.getAudioName() + " Artis: " + audio.getArtistName() + " Likes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + " Release Date: " + audio.getReleaseDate() + " ID: " + audio.getIDCount();
                 audio.setPlayedCount(audio.getPlayedCount() + 1);
                 model.Count++;
                 model.getPlayCount().put(audio,model.Count);
@@ -102,14 +102,24 @@ public class ListenerController extends User{
         }
         return show;
     }
-    public void likeAudio(String audioName){
+    public void likeAudio(int ID){
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(audioName)){
+            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
                 audio.setLikeCount(audio.getLikeCount() + 1);
                 break;
             }
         }
+    }
+    public String showLyric(int ID){
+        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
+            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
+                AudioModel audio = Database.getDatabase().getAudios().get(i);
+                if(audio.getClass().equals(Music.class))
+                    return ((Music) audio).getLyrics();
+            }
+        }
+        return "Audio Not Found!";
     }
     public String searchAudio(String name){
         StringBuilder show = new StringBuilder();
