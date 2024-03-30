@@ -31,4 +31,9 @@ public class Report
     public void setDescription(String description) {
         this.description = description;
     }
+    @Override
+    public String toString()
+    {
+        return "RiportingUser: "+getReportingUser()+"\t"+"ReportedArtist: "+getReportedArtist()+"\t"+"Report: "+getDescription();
+    }
 }

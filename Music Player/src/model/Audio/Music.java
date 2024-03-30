@@ -8,8 +8,9 @@ import java.time.LocalDate;
 public abstract class Music extends Audio
 {
     private String lyrics;
-    public Music(String artistName, int year, int month, int day, LocalDate dateOfRelease, Genre genre, String name, String audioLink, String cover) {
-        super(artistName, year, month, day, dateOfRelease, genre, name, audioLink, cover);
+    public Music(String name,Genre genre,String artistName, int year, int month, int day, LocalDate dateOfRelease, String lyrics,String audioLink,String cover) {
+        super(name,genre,artistName,year,month,day,dateOfRelease,audioLink,cover);
+        this.lyrics = lyrics;
     }
     public String getLyrics() {
         return lyrics;

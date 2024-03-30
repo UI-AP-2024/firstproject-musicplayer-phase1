@@ -17,8 +17,8 @@ public class Listener extends UserAccount
     private Genre[] genres = new Genre[4];
     private ArrayList<Playlist> playlists = new ArrayList<Playlist>();
     private Map<String,Integer> map = new HashMap<>();
-    public Listener(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord,Genre[] genres) {
-        super(email, name, phoneNumber, dateOfBirth, userName, passWord);
+    public Listener(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth,Genre[] genres) {
+        super(userName,passWord,name,email,phoneNumber,dateOfBirth);
         this.genres = genres;
     }
     public int getAccountCredit() {
@@ -59,5 +59,10 @@ public class Listener extends UserAccount
 
     public void setMap(Map<String, Integer> map) {
         this.map = map;
+    }
+    @Override
+    public String toString()
+    {
+        return "UserName: " + getUserName()+"\t"+"PassWord: "+getPassWord()+"\t"+"Name: "+getName()+"\t"+"Email: "+getEmail()+"\t"+"PhoneNumber: "+getPhoneNumber()+"\t"+"Birth Date: "+getDateOfBirth()+"\t"+"Favorite Genres: "+getGenres();
     }
 }

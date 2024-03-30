@@ -48,4 +48,10 @@ public class Album
     public void setAlbum(ArrayList<Music> album) {
         this.album = album;
     }
+    @Override
+    public String toString()
+    {
+        return "AlbumName: "+getName()+"\t"+"Artist of album: "+getArtistName();
+    }
 }
+

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Singer extends Artist {
     private ArrayList<Album> albums = new ArrayList<Album>();
-    public Singer(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord, String biography) {
-        super(email, name, phoneNumber, dateOfBirth, userName, passWord, biography);
+    public Singer(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth,String biography) {
+        super(userName, passWord, name, email, phoneNumber, dateOfBirth, biography);
     }
 
     public ArrayList<Album> getAlbums() {
@@ -18,5 +18,9 @@ public class Singer extends Artist {
 
     public void setAlbums(ArrayList<Album> albums) {
         this.albums = albums;
+    }
+    @Override
+    public String toString() {
+        return "UserName: " + getUserName() + "\t" + "PassWord: " + getPassWord() + "\t" + "Name: " + getName() + "\t" + "Email: " + getEmail() + "\t" + "PhoneNumber: " + getPhoneNumber() + "\t" + "Birth Date: " + getDateOfBirth() + "\t" + "Biography: " + getBiography();
     }
 }

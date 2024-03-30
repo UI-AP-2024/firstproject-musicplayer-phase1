@@ -11,7 +11,7 @@ public abstract class UserAccount
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    public UserAccount(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord)
+    public UserAccount(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth)
     {
         this.email = email;
         this.name = name;
@@ -68,4 +68,10 @@ public abstract class UserAccount
     {
         this.dateOfBirth = dateOfBirth;
     }
+    @Override
+    public String toString()
+    {
+        return "UserName: " + getUserName()+"\t"+"PassWord: "+getPassWord()+"\t"+"Name: "+getName()+"\t"+"Email: "+getEmail()+"\t"+"PhoneNumber: "+getPhoneNumber()+"\t"+"Birth Date: "+getDateOfBirth();
+    }
+
 }

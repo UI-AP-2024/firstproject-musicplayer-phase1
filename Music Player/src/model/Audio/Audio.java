@@ -16,7 +16,7 @@ public abstract class Audio
     private Genre genre;
     private String audioLink;
     private String cover;
-    public Audio(String artistName, int year, int month, int day, LocalDate dateOfRelease, Genre genre,String name, String audioLink, String cover) {
+    public Audio(String name,Genre genre,String artistName, int year, int month, int day, LocalDate dateOfRelease, String audioLink, String cover) {
         this.artistName = artistName;
         this.year = year;
         this.month = month;

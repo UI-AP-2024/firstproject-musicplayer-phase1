@@ -1,20 +1,23 @@
 package model.UserAccount.Artist;
 
+
+import model.Album;
 import model.UserAccount.UserAccount;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class Artist extends UserAccount
+public class Artist extends UserAccount
 {
     double income;
     String biography;
     ArrayList<UserAccount> followers = new ArrayList<UserAccount>();
-    public Artist(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord , String biography)
+    public Artist(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth,String biography)
     {
-        super(email, name, phoneNumber, dateOfBirth, userName, passWord);
+        super(userName,passWord,name,email,phoneNumber,dateOfBirth);
         this.biography = biography;
     }
+    Artist artist;
     public double getIncome() {
         return income;
     }
@@ -24,13 +27,18 @@ public abstract class Artist extends UserAccount
     public ArrayList<UserAccount> getFollowers() {
         return followers;
     }
-    public void setFollowers(ArrayList<UserAccount> followes) {
-        this.followers = followes;
+    public void setFollowers(ArrayList<UserAccount> followers) {
+        this.followers = followers;
     }
     public String getBiography() {
         return biography;
     }
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+    @Override
+    public String toString()
+    {
+        return "UserName: " + getUserName()+"\t"+"PassWord: "+getPassWord()+"\t"+"Name: "+getName()+"\t"+"Email: "+getEmail()+"\t"+"PhoneNumber: "+getPhoneNumber()+"\t"+"Birth Date: "+getDateOfBirth()+"\t"+"Biography: "+getBiography();
     }
 }

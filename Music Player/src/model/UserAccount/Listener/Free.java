@@ -12,8 +12,8 @@ public class Free extends Listener
 {
     private final ArrayList<Playlist> playlists = new ArrayList<Playlist>(3);
     private final ArrayList<Audio> audio = new ArrayList<Audio>(10);
-    public Free(String email, String name, String phoneNumber, LocalDate dateOfBirth, String userName, String passWord, Genre[] genres) {
-        super(email, name, phoneNumber, dateOfBirth, userName, passWord, genres);
+    public Free(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth,Genre[] genres) {
+        super(userName,passWord,name,email,phoneNumber,dateOfBirth,genres);
     }
     @Override
     public ArrayList<Playlist> getPlaylists() {
@@ -21,5 +21,10 @@ public class Free extends Listener
     }
     public ArrayList<Audio> getAudio() {
         return audio;
+    }
+    @Override
+    public String toString()
+    {
+        return "UserName: " + getUserName()+"\t"+"PassWord: "+getPassWord()+"\t"+"Name: "+getName()+"\t"+"Email: "+getEmail()+"\t"+"PhoneNumber: "+getPhoneNumber()+"\t"+"Birth Date: "+getDateOfBirth()+"\t"+"Favorite Genres: "+getGenres();
     }
 }

@@ -68,4 +68,8 @@ public class Playlist
     public void setPlayList(ArrayList<Audio> playList) {
         this.playList = playList;
     }
+    public String toString()
+    {
+        return "PlayList ID: "+getId()+"\t"+"PlayList name: "+getName();
+    }
 }
