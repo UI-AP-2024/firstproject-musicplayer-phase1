@@ -27,6 +27,7 @@ public class Playlist {
         context.append(playListName);
         context.append("\ncreating user name : ");
         context.append(creatingUserName);
+        context.append("\n");
         for(Audio audio:audioList){
             context.append(audio.toString());
         }

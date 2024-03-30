@@ -25,6 +25,7 @@ public class Album {
         context.append(albumName);
         context.append("\nsinger name : ");
         context.append(singerName);
+        context.append("\n");
         for(Music music:musicList){
             context.append(music.toString());
         }
