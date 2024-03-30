@@ -24,6 +24,12 @@ public abstract class Audio {
         this.audioFileLink = audioFileLink;
         this.cover = cover;
     }
+    @Override
+    public String toString(){
+        StringBuilder result=new StringBuilder("artist name");
+        result.append(artistName).append(" llikes : ").append(likes).append("play count").append(" title : ").append(title);
+        return String.valueOf(result);
+    }
 
     public int getId() {
         return id;

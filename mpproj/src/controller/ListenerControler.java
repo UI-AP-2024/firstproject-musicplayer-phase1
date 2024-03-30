@@ -129,4 +129,26 @@ public class ListenerControler {
         }
         return "error";
     }
+    public String showArtists(){
+        StringBuilder result=new StringBuilder("Artis:\n");
+        for(User artist:Database.getDatabase().getUsers()) {
+            if (artist instanceof Artist) {
+                result.append("artis name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers()).append(" biography : ").append(((Artist) artist).getBiography()).append("\n");
+                if(artist instanceof Singer){
+                    result.append("musics : ");
+                    for(Music music: ((Singer) artist).getMusics()){
+                        result.append(music.getTitle());
+                    }
+                }
+                if(artist instanceof Podcaster){
+                    result.append("podcasts : ");
+                    for(Podcast podcast: ((Podcaster) artist).getPodcasts()){
+                        result.append(podcast.getTitle());
+                    }
+                }
+            }
+        }
+        return String.valueOf(result);
+    }
+
 }

@@ -11,7 +11,10 @@ public class Podcast extends Audio{
         super(id, title, artistName, playCount, likes, releaseDate, genre, audioFileLink, cover);
         this.caption = caption;
     }
-
+    public String toString(){
+        StringBuilder res=new StringBuilder(" podcast caption");
+        return super.toString()+"\n"+String.valueOf(res);
+    }
     public String getCaption() {
         return caption;
     }
