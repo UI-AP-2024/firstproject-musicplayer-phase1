@@ -29,7 +29,6 @@ public class AdminView extends User{
             System.out.println("Wrong command!");
     }
     private void second(){
-        System.out.println("1) Statistics: Most Poplar Songs\n2) Audios: Audios Information\n3) Artists: Artists Information\n4) Reports\n5) UserInfo\n6) log out");
         Scanner sin = new Scanner(System.in);
        String command="";
         while ((!command.equals("Logout"))) {
