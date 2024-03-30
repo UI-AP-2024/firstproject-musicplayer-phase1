@@ -86,29 +86,40 @@ public class ListenerView {
                      System.out.println(view.filterAudioFilesBasedOnArtist(commands[2]));
                  else if(commands[1].equals("G")){
                      if(commands[2].equals(Genre.Country.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Country);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Country));
                      else if(commands[2].equals(Genre.Pop.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Pop);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Pop));
                      else if(commands[2].equals(Genre.HipHop.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.HipHop);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.HipHop));
                      else if(commands[2].equals(Genre.History.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.History);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.History));
                      else if(commands[2].equals(Genre.Interview.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Interview);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Interview));
                      else if(commands[2].equals(Genre.Jazz.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Jazz);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Jazz));
                      else if(commands[2].equals(Genre.Rock.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Rock);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Rock));
                      else if(commands[2].equals(Genre.Society.name()))
-                         view.filterAudioFilesBasedOnGenres(Genre.Society);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.Society));
                      else
-                         view.filterAudioFilesBasedOnGenres(Genre.TrueCrime);
+                         System.out.println(view.filterAudioFilesBasedOnGenres(Genre.TrueCrime));
                  }
                  else
-                     ;
-                 }
-
+                     if(commands[3]!=null)
+                         System.out.println(view.filterAudioFilesBasedAmongDate(new Date(commands[2]),new Date(commands[3])));
+                     else
+                         System.out.println(view.filterAudioFilesBasedOnDate(new Date(commands[2])));
              }
+             else if(commands[0].equals("Add")){
+                 System.out.println(view.makeNewPlaylist(commands[1],"playlist"));
+                 System.out.println(view.addMusicToPlaylist(commands[1],Integer.parseInt(commands[2])));
+             }
+             else if(commands[0].equals("ShowPlaylists"))
+                 System.out.println(view.showPlaylists());
+             else if(commands[0].equals("SelectPlaylist"))
+                 System.out.println(view.selectPlaylist(commands[1]));
+             
          }
      }
+}
 

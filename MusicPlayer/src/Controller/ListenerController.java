@@ -66,23 +66,23 @@ public class ListenerController extends User{
 
         return "Sorry! You can't creat more than 3 playlists with freeAccount.";
     }
-    public String addMusicToPlaylist(String playlistName,String musicName){
+    public String addMusicToPlaylist(String playlistName,int ID){
         if(model.getClass().equals(PremiumSubscription.class)){
-            searchAndAdd(playlistName,musicName);
+            searchAndAdd(playlistName,ID);
             return "Music added to playlist successfully.";
         }
         else if(model.musicCount < FreeModel.maxAudio){
-            searchAndAdd(playlistName,musicName);
+            searchAndAdd(playlistName,ID);
             model.musicCount++;
             return "Music added to playlist successfully.";
         }
         return "Sorry! You can't add more than 10 Songs to the playlist with freeAccount.";
     }
-    private void searchAndAdd(String playlistName,String musicName){
+    private void searchAndAdd(String playlistName,int ID){
         for (int i = 0; i < model.getPlaylists().size(); i++) {
             if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
                 for (int j = 0; j < Database.getDatabase().getAudios().size(); j++) {
-                    if(Database.getDatabase().getAudios().get(j).getAudioName().equals(musicName)){
+                    if(Database.getDatabase().getAudios().get(j).getIDCount()==ID){
                         model.getPlaylists().get(i).getAudio().add(Database.getDatabase().getAudios().get(j));
                     }
                 }
