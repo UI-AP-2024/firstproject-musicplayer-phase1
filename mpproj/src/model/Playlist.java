@@ -18,7 +18,15 @@ public class Playlist {
         this.creatorUsername = creatorUsername;
         this.audios = new ArrayList<>();
     }
-
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("play list name : ");
+        res.append(name).append(", id : ").append(id).append(", creator user name : ").append(creatorUsername).append(" my audio : \n");
+        for (Audio audio:audios){
+            res.append(audio.getTitle()).append(" , ");
+        }
+        return String.valueOf(res);
+    }
     public static int getIdcounter() {
         return idcounter;
     }

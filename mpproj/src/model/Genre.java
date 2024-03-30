@@ -10,5 +10,4 @@ public enum Genre {
     Society,
     Interview,
     History;
-
 }

@@ -11,6 +11,12 @@ public class Report {
         this.reportedArtist = reportedArtist;
         this.description = description;
     }
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("reporter name : ");
+        res.append(reportingUser.getFullName()).append(", artist reported : ").append(reportedArtist.getFullName()).append( " , exeplenation : ").append(description);
+        return String.valueOf(res);
+    }
 
     public User getReportingUser() {
         return reportingUser;

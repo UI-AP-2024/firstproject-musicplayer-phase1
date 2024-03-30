@@ -11,11 +11,20 @@ public class Album {
     private ArrayList<Audio> songs;
 
     //cons???
-    public Album(int id, String name, String singerName, ArrayList<Audio> songs) {
+    public Album(int id, String name, String singerName) {
         this.id = id;
         this.name = name;
         this.singerName = singerName;
-        this.songs = songs;
+        this.songs = new ArrayList<>();
+    }
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("album name");
+        res.append(name).append("singer name : ").append(singerName).append("\n songs : ");
+        for(Audio audio : songs){
+            res.append(audio.getTitle());
+        }
+        return String.valueOf(res);
     }
 
     public int getId() {
