@@ -23,6 +23,7 @@ abstract public class AudioModel {
         this.playedCount = 0;
         this.likeCount = 0;
         this.releaseDate = new Date();
+        Database.getDatabase().getAudios().add(this);
     }
     public static int getID() {
         return ID;

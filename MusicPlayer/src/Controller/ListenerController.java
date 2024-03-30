@@ -202,6 +202,16 @@ public class ListenerController extends User{
         }
         return show.toString();
     }
+    public void ArtistReport(String userName,String description){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
+            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
+                ArtistModel artist = Database.getDatabase().getArtists().get(i);
+                Database.getDatabase().getReports().add(new Report(model,artist,description));
+                break;
+            }
+        }
+    }
     public String showFollowing(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < model.getFallowingArtist().size(); i++) {
@@ -220,13 +230,67 @@ public class ListenerController extends User{
     }
     public String showArtist(String userName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getClass().equals(ArtistModel.class) && Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
-                show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
+        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
+            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
+                show.append("Artist Name: " + Database.getDatabase().getArtists().get(i).getFullName() + "\n");
+                if(Database.getDatabase().getArtists().get(i).getClass().equals(SingerModel.class)){
+                    for (int r = 0; r < Database.getDatabase().getSinger().get(i).getAlbums().size(); r++) {
+                        show.append("Albums Name: "+ Database.getDatabase().getSinger().get(i).getAlbums().get(r)+"\n");
+                    }
+                }
+                else{
+                    for (int j = 0; j < Database.getDatabase().getPodcaster().get(i).getPodcasts().size(); j++) {
+                        show.append("Podcasts Name: " + Database.getDatabase().getPodcaster().get(i).getPodcasts().get(j)+"\n");
+                    }
+                }
                 break;
             }
         }
         return show.toString();
     }
+    public void fallowArtist(String userName){
+        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
+            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
+                model.getFallowingArtist().add(Database.getDatabase().getArtists().get(i));
+                Database.getDatabase().getArtists().get(i).getFollowers().add(model);
+                break;
+            }
+        }
+    }
+    public String showPlaylists(){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < model.getPlaylists().size(); i++) {
+            show.append("Playlist name: "+model.getPlaylists().get(i).getPlaylistName());
+        }
+        return show.toString();
+    }
+    public String selectPlaylist(String playlistName){
+        StringBuilder show = new StringBuilder();
+        for (int i = 0; i < model.getPlaylists().size(); i++){
+            if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
+                for (int j = 0; j < model.getPlaylists().get(i).getAudio().size(); j++) {
+                    show.append("Audio name; "+model.getPlaylists().get(i).getAudio().get(j).getAudioName() + " Artist Name: " +model.getPlaylists().get(i).getAudio().get(j).getArtistName()+"\n");
+                }
+            }
+        }
+        return show.toString();
+    }
+    public String getSuggestions(int n){
+        StringBuilder show = new StringBuilder();
+        int count=0;
+        while (count<n){
+            for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
+                if(Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[0]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[1]) ||  Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[2]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[3])){
+                    show.append("Audio name: "+Database.getDatabase().getAudios().get(i).getAudioName() + " Artist name: "+Database.getDatabase().getAudios().get(i).getArtistName() + " Genre: " + Database.getDatabase().getAudios().get(i).getGenre()+"\n");
+                    count++;
+                }
+            }
+        }
 
+        return show.toString();
+    }
+    public String showUserInfo(){
+        return "Name: "+model.getFullName() + " Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
+    }
+    
 }

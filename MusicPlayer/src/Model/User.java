@@ -14,6 +14,7 @@ abstract public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
+        Database.getDatabase().getUsers().add(this);
     }
 
     public String getUsername() {

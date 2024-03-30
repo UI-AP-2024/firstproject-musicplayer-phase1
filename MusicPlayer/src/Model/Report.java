@@ -9,6 +9,7 @@ public class Report {
         this.user = user;
         this.reportedArtist = reportedArtist;
         this.description = description;
+        Database.getDatabase().getReports().add(this);
     }
 
     public User getUser() {

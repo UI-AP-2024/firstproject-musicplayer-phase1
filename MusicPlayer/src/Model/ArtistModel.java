@@ -13,6 +13,8 @@ public class ArtistModel extends User{
         this.biography = biography;
         this.salary = salary;
         followers = new ArrayList<>();
+        Database.getDatabase().getUsers().add(this);
+        Database.getDatabase().getArtists().add(this);
     }
 
     public double getSalary() {
