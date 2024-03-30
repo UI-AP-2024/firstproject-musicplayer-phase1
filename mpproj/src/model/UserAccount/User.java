@@ -23,6 +23,12 @@ abstract public class User {
         isLogin=true;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder result=new StringBuilder("name : ");
+        result.append(fullName).append(" phone number : ").append(phoneNumber).append(" email : ").append(email).append(" user name : ").append(username);
+        return String.valueOf(result);
+    }
     public boolean getIsLogin() {
         return isLogin;
     }
