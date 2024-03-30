@@ -15,7 +15,8 @@ public class SingerController extends ArtistModel {
     public void publishMusic(String audioName, Genre genre,String lyric,String link,String cover,int albumID){
         for (int i = 0; i < model.getAlbums().size(); i++) {
             if(model.getAlbums().get(i).getIDCount()==albumID){
-                model.getAlbums().get(i).getMusics().add(new Music(audioName, model.getFullName(),genre,link,cover,lyric));
+                Music music = new Music(audioName, model.getFullName(),genre,link,cover,lyric);
+                model.getAlbums().get(i).getMusics().add(music);
             }
         }
     }
