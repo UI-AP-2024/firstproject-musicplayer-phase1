@@ -10,5 +10,5 @@ public class Listener extends UserAccount{
     ArrayList<Playlist> playlists = new ArrayList<>();
     Map<Audio,Integer> audioTimesPlayed = new HashMap<>();
     Date shareExpireTime;
-    Genre favoriteGenre;
+    ArrayList<Genre> favoriteGenres = new ArrayList<>();
 }
