@@ -33,6 +33,6 @@ public abstract class ArtistController {
         database = Database.getInstance();
         artistModel = (Artist) database.getLogedInUser();
     }
-
+    public abstract double calculateIncome();
 
 }

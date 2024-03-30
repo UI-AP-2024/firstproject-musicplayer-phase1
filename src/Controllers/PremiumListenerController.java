@@ -64,11 +64,27 @@ public class PremiumListenerController extends ListenerController{
         return "Your account credit is not enough";
     }
 
+    public void repurchasePremium()
+    {
+        PremiumListener premiumModel = (PremiumListener) this.getListenerModel();
+        this.getDatabase().removeUser(this.getListenerModel());
+        NormalListener normalModel = (NormalListener) this.getListenerModel();
+        normalModel.setExpirementDate(null);
+        this.getDatabase().addUser(normalModel);
+        this.getDatabase().setLogedInUser(normalModel);
+    }
+
     private void daySubtracter()
     {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1); // 1 : number of threads in the thread pool
         executor.scheduleAtFixedRate(() -> {
             PremiumListener premiumModel = (PremiumListener) this.getListenerModel();
+            if(premiumModel.getRemainingDays() == 0)
+            {
+                executor.shutdown();
+                repurchasePremium();
+                return;
+            }
             premiumModel.setRemainingDays(premiumModel.getRemainingDays()-1);
             this.setListenerModel(premiumModel);
             this.getDatabase().updateUser(premiumModel);

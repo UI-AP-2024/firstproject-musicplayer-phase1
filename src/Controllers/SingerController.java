@@ -9,15 +9,21 @@ import Extra.Extra;
 import java.util.ArrayList;
 
 public class SingerController extends ArtistController {
-    public String addAudio(Song song, Album album)
+    public String addSong(Song song, int albumId)
     {
         Singer singerModel = (Singer)this.getArtistModel();
-        int indx = Extra.findIndxOf(singerModel.getAlbums(), album);
-        if(indx == -1) return "No such album found";
-        ArrayList<Album> albums = singerModel.getAlbums();
-        ArrayList<Song> songs = album.getSongs();
-        songs.add(song);
-        albums.set
-                // don't forget set  and  add to database
+        ArrayList<Album> singerModelAlbums = singerModel.getAlbums();
+        int tmpIndx = 0;
+        for(Album tmpAlbum : singerModelAlbums)
+        {
+            if(tmpAlbum.getId() == albumId) break;
+            tmpIndx++;
+        }
+        if(tmpIndx == singerModelAlbums.size()) return "No such album found";
+
+        Album selectedAlbum = singerModelAlbums.get(tmpIndx);
+        ArrayList<Song> selectedAlbumSongs = selectedAlbum.getSongs();
+        selectedAlbumSongs.add(song);
+        return "song added to the album successfully";
     }
 }
