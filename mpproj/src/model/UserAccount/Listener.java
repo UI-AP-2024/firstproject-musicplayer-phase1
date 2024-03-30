@@ -22,7 +22,14 @@ public class Listener extends User{
         favoriteGenre=new ArrayList<>();
         followings=new ArrayList<>();
     }
-
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("favorite genre : ");
+        for(Genre genre:favoriteGenre){
+            res.append(String.valueOf(genre));
+        }
+        return super.toString()+"\n"+" credit:  "+credit+"\n"+String.valueOf(res);
+    }
     public ArrayList<Genre> getFavoriteGenre() {
         return favoriteGenre;
     }

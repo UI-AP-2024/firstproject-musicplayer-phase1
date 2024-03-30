@@ -27,7 +27,15 @@ public class Singer extends Artist{
     public ArrayList<Music> getMusics() {
         return musics;
     }
-
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("biography : ");
+        res.append(bio).append(" musics : ");
+        for(Music music:musics){
+            res.append(music.getTitle());
+        }
+        return super.toString()+"\n"+String.valueOf(res);
+    }
     public void setMusics(ArrayList<Music> musics) {
         this.musics = musics;
     }

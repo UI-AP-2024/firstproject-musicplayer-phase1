@@ -15,7 +15,12 @@ public class Artist extends User{
         this.income = income;
         this.followers = new ArrayList<>();
     }
-
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("incom : ");
+        res.append(income);
+        return super.toString()+"\n"+String.valueOf(res);
+    }
     public double getIncome() {
         return income;
     }
