@@ -2,13 +2,13 @@ package model.DataBase;
 
 import model.Audio.Audio;
 import model.Report;
-import model.UserAcount.UserAcount;
+import model.UserAccount.UserAccount;
 
 import java.util.ArrayList;
 
 public class DataBase {
 
-    private ArrayList<UserAcount> users;
+    private ArrayList<UserAccount> users;
     private ArrayList<Audio> audios;
     private ArrayList<Report> reports;
     private static DataBase dataBase;
@@ -19,11 +19,11 @@ public class DataBase {
         return dataBase;
     }
 
-    public ArrayList<UserAcount> getUsers() {
+    public ArrayList<UserAccount> getUsers() {
         return users;
     }
 
-    public ArrayList<Audio> getAoudios() {
+    public ArrayList<Audio> getAudios() {
         return audios;
     }
 
@@ -31,11 +31,11 @@ public class DataBase {
         return reports;
     }
 
-    public void setUsers(ArrayList<UserAcount> users) {
+    public void setUsers(ArrayList<UserAccount> users) {
         this.users = users;
     }
 
-    public void setAoudios(ArrayList<Audio> audio) {
+    public void setAudios(ArrayList<Audio> audio) {
         this.audios = audio;
     }
 

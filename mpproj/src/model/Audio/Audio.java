@@ -1,5 +1,5 @@
 package model.Audio;
 
-public class Audio {
+public abstract class Audio {
 
 }
