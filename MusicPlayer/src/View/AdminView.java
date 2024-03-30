@@ -25,6 +25,8 @@ public class AdminView extends User{
                 Login();
             }
         }
+        else
+            System.out.println("Wrong command!");
     }
     private void second(){
         System.out.println("1) Statistics: Most Poplar Songs\n2) Audios: Audios Information\n3) Artists: Artists Information\n4) Reports\n5) UserInfo\n6) log out");
@@ -45,7 +47,9 @@ public class AdminView extends User{
                 System.out.println(view.showOneArtistInfo(commands[1]));
             else if(commands[0].equals("Reports"))
                 System.out.println(view.showReports());
+            else
+                System.out.println("Wrong command!");
         }
-        Login();
+        //go to main menu
     }
 }

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class ListenerController extends User{
     private ListenerModel model;
+    private int count=0;
     public ListenerController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate) {
         super(username, password, fullName, email, phoneNumber, birthDate);
     }
@@ -44,8 +45,8 @@ public class ListenerController extends User{
         return "Username or password is wrong!";
     }
     public void selectGenres(Genre genre){
-        int count=0;
-        while(genre!=null && count < 4){
+
+        if( count < 4 ){
             model.getFavoriteGenres()[count] = genre;
             count++;
         }
