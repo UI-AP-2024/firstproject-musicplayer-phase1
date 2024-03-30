@@ -3,16 +3,15 @@ package model.UserAccounts;
 import java.util.Date;
 
 public abstract class userAccount {
-    private int userId;
-    private static int userIdCounter= 0;
+    private String userId;
     private String password;
     private String fullName;
     private String email;
     private String phoneNumber;
     private Date birthday;
 
-    public userAccount(String password, String fullName, String email, String phoneNumber, Date birthday) {
-        this.userId = ++userIdCounter;
+    public userAccount(String userId,String password, String fullName, String email, String phoneNumber, Date birthday) {
+        this.userId = userId;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
@@ -41,16 +40,9 @@ public abstract class userAccount {
         context.append(birthday.getDate());
         return context.toString();
     }
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
-
-
-    public static int getUserIdCounter() {
-        return userIdCounter;
-    }
-
-
     public String getPassword() {
         return password;
     }

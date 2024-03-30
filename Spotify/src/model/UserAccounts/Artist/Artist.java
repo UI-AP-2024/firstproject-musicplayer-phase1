@@ -10,8 +10,8 @@ public class Artist extends userAccount {
     private double income;
     private ArrayList<userAccount> followersList;
     private String biograghy;
-    public Artist(String password, String fullName, String email, String phoneNumber, Date birthday,double income,ArrayList<userAccount> followersList,String biograghy) {
-        super(password, fullName, email, phoneNumber, birthday);
+    public Artist(String userId,String password, String fullName, String email, String phoneNumber, Date birthday,double income,ArrayList<userAccount> followersList,String biograghy) {
+        super(userId,password, fullName, email, phoneNumber, birthday);
         this.income = income;
         this.followersList = followersList;
         this.biograghy = biograghy;

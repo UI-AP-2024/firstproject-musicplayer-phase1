@@ -7,8 +7,8 @@ import java.util.Date;
 
 public class Podcaster extends Artist{
     private ArrayList<Podcast> podcastsList;
-    public Podcaster(String password, String fullName, String email, String phoneNumber, Date birthday, double income, ArrayList<userAccount> followersList, String biograghy,ArrayList<Podcast> podcastsList) {
-        super(password, fullName, email, phoneNumber, birthday, income, followersList, biograghy);
+    public Podcaster(String userId,String password, String fullName, String email, String phoneNumber, Date birthday, double income, ArrayList<userAccount> followersList, String biograghy,ArrayList<Podcast> podcastsList) {
+        super(userId,password, fullName, email, phoneNumber, birthday, income, followersList, biograghy);
         this.podcastsList = podcastsList;
     }
 
