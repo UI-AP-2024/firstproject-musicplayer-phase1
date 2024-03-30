@@ -8,14 +8,14 @@ public class Database {
     private List<Audio> audiofiles;
     private List<Report> reports;
 
- //*********************************************
+    //*********************************************
    private Database(){
        users = new ArrayList<>();
        audiofiles = new ArrayList<>();
        reports = new ArrayList<>();
 
    }
- //*********************************************
+    //*********************************************
 
 public static Database getInstance(){
        if(instance = null){
