@@ -8,4 +8,8 @@ public enum PremiumSubscription {
     private PremiumSubscription(int subPrize){
         this.subPrize = subPrize;
     }
+
+    public int getSubPrize() {
+        return subPrize;
+    }
 }

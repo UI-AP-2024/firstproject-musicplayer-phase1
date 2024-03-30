@@ -8,7 +8,6 @@ public class SingerModel extends ArtistModel{
     public SingerModel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, double salary, String biography){
         super(username,password,fullName,email,phoneNumber,birthDate,salary,biography);
         albums = new ArrayList<>();
-        Database.getDatabase().getSinger().add(this);
     }
 
     public ArrayList<Album> getAlbums() {

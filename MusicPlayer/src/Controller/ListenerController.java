@@ -204,9 +204,9 @@ public class ListenerController extends User{
     }
     public void ArtistReport(String userName,String description){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
-            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
-                ArtistModel artist = Database.getDatabase().getArtists().get(i);
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
+                ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
                 Database.getDatabase().getReports().add(new Report(model,artist,description));
                 break;
             }
@@ -230,17 +230,20 @@ public class ListenerController extends User{
     }
     public String showArtist(String userName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
-            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
-                show.append("Artist Name: " + Database.getDatabase().getArtists().get(i).getFullName() + "\n");
-                if(Database.getDatabase().getArtists().get(i).getClass().equals(SingerModel.class)){
-                    for (int r = 0; r < Database.getDatabase().getSinger().get(i).getAlbums().size(); r++) {
-                        show.append("Albums Name: "+ Database.getDatabase().getSinger().get(i).getAlbums().get(r)+"\n");
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
+                ArtistModel artist = (ArtistModel) Database.getDatabase().getUsers().get(i);
+                show.append("Artist Name: " + artist.getFullName() + "\n");
+                if(Database.getDatabase().getUsers().get(i).getClass().equals(SingerModel.class)){
+                    SingerModel singer = (SingerModel) artist;
+                    for (int r = 0; r < singer.getAlbums().size(); r++) {
+                        show.append("Albums Name: "+ singer.getAlbums().get(r)+"\n");
                     }
                 }
                 else{
-                    for (int j = 0; j < Database.getDatabase().getPodcaster().get(i).getPodcasts().size(); j++) {
-                        show.append("Podcasts Name: " + Database.getDatabase().getPodcaster().get(i).getPodcasts().get(j)+"\n");
+                    PodcasterModel podcaster = (PodcasterModel) artist;
+                    for (int j = 0; j < podcaster.getPodcasts().size(); j++) {
+                        show.append("Podcasts Name: " + podcaster.getPodcasts().get(j)+"\n");
                     }
                 }
                 break;
@@ -248,11 +251,12 @@ public class ListenerController extends User{
         }
         return show.toString();
     }
-    public void fallowArtist(String userName){
-        for (int i = 0; i < Database.getDatabase().getArtists().size(); i++) {
-            if(Database.getDatabase().getArtists().get(i).getUsername().equals(userName)){
-                model.getFallowingArtist().add(Database.getDatabase().getArtists().get(i));
-                Database.getDatabase().getArtists().get(i).getFollowers().add(model);
+    public void followArtist(String userName){
+        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
+            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
+                ArtistModel artist = (ArtistModel) Database.getDatabase().getUsers().get(i);
+                model.getFallowingArtist().add(artist);
+                artist.getFollowers().add(model);
                 break;
             }
         }
@@ -294,21 +298,34 @@ public class ListenerController extends User{
     }
     public String buyOrExtendSubscription(int day){
         if(model.getClass().equals(FreeModel.class)){
-            if(model.getCredit() < day)
-                return "Your credit is low!";
-            else{
-                model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
-                ((PremiumModel) model).setRemainingSubscriptionDay(day);
-                return "Done!";
-            }
+            model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+            ((PremiumModel) model).setRemainingSubscriptionDay(day);
+            return check(day);
         }
         else{
-            if(model.getCredit() < day)
-                return "Your credit is low!";
-            else {
-                ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel)model).getRemainingSubscriptionDay()+day);
-                return "Done!";
-            }
+            ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel)model).getRemainingSubscriptionDay()+day);
+            return check(day);
         }
+    }
+    private String check(int day){
+        if(day==30) {
+            if(model.getCredit()-PremiumSubscription.DAYS30.getSubPrize() < 0)
+                return "Your credit is low!";
+            model.setCredit(model.getCredit() - PremiumSubscription.DAYS30.getSubPrize());
+        }
+        else if(day==60) {
+            if(model.getCredit()-PremiumSubscription.DAYS60.getSubPrize() < 0)
+                return "Your credit is low!";
+            model.setCredit(model.getCredit() - PremiumSubscription.DAYS60.getSubPrize());
+        }
+        else {
+            if(model.getCredit()-PremiumSubscription.DAYS180.getSubPrize() < 0)
+                return "Your credit is low!";
+            model.setCredit(model.getCredit() - PremiumSubscription.DAYS180.getSubPrize());
+        }
+        return "Done!";
+    }
+    public void increaseCredit(int value){
+        model.setCredit(model.getCredit()+value);
     }
 }

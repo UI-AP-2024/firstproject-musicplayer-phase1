@@ -8,7 +8,6 @@ public class PodcasterModel extends ArtistModel{
     public PodcasterModel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate,double salary,String biography){
         super(username,password,fullName,email,phoneNumber,birthDate,salary,biography);
         podcasts = new ArrayList<>();
-        Database.getDatabase().getPodcaster().add(this);
     }
 
     public ArrayList<Podcast> getPodcasts() {

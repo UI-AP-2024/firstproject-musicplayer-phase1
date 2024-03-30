@@ -63,6 +63,7 @@ public class ArtistController extends User{
             if(Database.getDatabase().getAudios().get(i).getArtistName().equals(model.getFullName())){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
                 model.setPlayCount(model.getPlayCount()+audio.getPlayedCount());
+                audio.setPlayedCount(0);
             }
         }
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
@@ -77,5 +78,9 @@ public class ArtistController extends User{
             }
         }
     }
-    
+    public String showUserInfo(){
+        CalculateEarnings();
+        return "Name: "+model.getFullName() + " Salary: "+model.getSalary()+" Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
+    }
+
 }

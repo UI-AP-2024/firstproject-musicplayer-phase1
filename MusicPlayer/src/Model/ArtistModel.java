@@ -7,6 +7,7 @@ public class ArtistModel extends User{
     private double salary;
     private ArrayList<User> followers;
     private String biography;
+    private int playCount=0;
 
     public ArtistModel(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, double salary,String biography){
         super(username,password,fullName,email,phoneNumber,birthDate);
@@ -14,7 +15,6 @@ public class ArtistModel extends User{
         this.salary = salary;
         followers = new ArrayList<>();
         Database.getDatabase().getUsers().add(this);
-        Database.getDatabase().getArtists().add(this);
     }
 
     public double getSalary() {
@@ -35,5 +35,13 @@ public class ArtistModel extends User{
 
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(int playCount) {
+        this.playCount = playCount;
     }
 }
