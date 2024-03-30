@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ListenerController extends User{
-    private FreeModel model;
+    private ListenerModel model;
     public ListenerController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate) {
         super(username, password, fullName, email, phoneNumber, birthDate);
     }
@@ -292,5 +292,23 @@ public class ListenerController extends User{
     public String showUserInfo(){
         return "Name: "+model.getFullName() + " Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
     }
-    
+    public String buyOrExtendSubscription(int day){
+        if(model.getClass().equals(FreeModel.class)){
+            if(model.getCredit() < day)
+                return "Your credit is low!";
+            else{
+                model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+                ((PremiumModel) model).setRemainingSubscriptionDay(day);
+                return "Done!";
+            }
+        }
+        else{
+            if(model.getCredit() < day)
+                return "Your credit is low!";
+            else {
+                ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel)model).getRemainingSubscriptionDay()+day);
+                return "Done!";
+            }
+        }
+    }
 }

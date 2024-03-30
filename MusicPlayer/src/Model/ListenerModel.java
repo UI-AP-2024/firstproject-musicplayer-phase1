@@ -19,6 +19,7 @@ public class ListenerModel extends User{
         playCount = new HashMap<>();
         favoriteGenres = new Genre[4];
         fallowingArtist = new ArrayList<>();
+        new FreeModel(username,password,fullName,email,phoneNumber,birthDate);
     }
 
     public double getCredit() {
