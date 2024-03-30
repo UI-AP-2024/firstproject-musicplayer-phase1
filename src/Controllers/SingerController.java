@@ -26,4 +26,11 @@ public class SingerController extends ArtistController {
         selectedAlbumSongs.add(song);
         return "song added to the album successfully";
     }
+
+    public double calculateIncome()
+    {
+        int playedCount = ArtistController.getPlayedCount(this.getArtistModel());
+        this.getArtistModel().setIncome(0.4 * playedCount);
+        return this.getArtistModel().getIncome();
+    }
 }

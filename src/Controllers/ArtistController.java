@@ -4,8 +4,11 @@ import Models.Album;
 import Models.Audio.Audio;
 import Models.Data.Database;
 import Models.User.Artist;
+import Models.User.Listener;
+import Models.User.User;
 
 import javax.xml.crypto.Data;
+import java.util.Map;
 
 public abstract class ArtistController {
     private Database database;
@@ -34,5 +37,25 @@ public abstract class ArtistController {
         artistModel = (Artist) database.getLogedInUser();
     }
     public abstract double calculateIncome();
-
+    public static int getPlayedCount(Artist artist)
+    {
+        Database tmpDatabase = Database.getInstance();
+        int playedCount = 0;
+        for(User tmpUser : tmpDatabase.getUsers())
+        {
+            if(tmpUser instanceof Listener)
+            {
+                Listener tmpListener = (Listener) tmpUser;
+                for(Map.Entry tmpEntry : tmpListener.getAudiosPlayed().entrySet())
+                {
+                    Audio tmpAudio = (Audio)tmpEntry.getKey();
+                    if(tmpAudio.getArtistName().equals(artist.getName()))
+                    {
+                        playedCount += (Integer) tmpEntry.getValue();
+                    }
+                }
+            }
+        }
+        return playedCount;
+    }
 }
