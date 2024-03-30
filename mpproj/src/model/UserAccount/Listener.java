@@ -10,7 +10,7 @@ public class Listener extends User{
     private ArrayList<Playlist> playlists;
     private Map<Audio, Integer> listeningHistory;
     private int credit;
-    private Genre favoriteGenre;
+    private ArrayList<Genre> favoriteGenre;
     private  int playlistcounter;
     private ArrayList<Artist>followings;
 //ارΟخ اتمام اشتراک )از نوع کلاس  - Dateدر صورتی که حساب شنونده عادی است،
@@ -19,7 +19,16 @@ public class Listener extends User{
         super(username, password, fullName, email, phoneNumber, dateOfBirth);
         this.credit=credit;
         playlists=new ArrayList<>();
+        favoriteGenre=new ArrayList<>();
         followings=new ArrayList<>();
+    }
+
+    public ArrayList<Genre> getFavoriteGenre() {
+        return favoriteGenre;
+    }
+
+    public void setFavoriteGenre(ArrayList<Genre> favoriteGenre) {
+        this.favoriteGenre = favoriteGenre;
     }
 
     public ArrayList<Artist> getFollowings() {
@@ -48,10 +57,6 @@ public class Listener extends User{
 
 
 
-    public void setFavoriteGenre(Genre favoriteGenre) {
-        this.favoriteGenre = favoriteGenre;
-    }
-
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
     }
@@ -68,7 +73,4 @@ public class Listener extends User{
         this.credit = credit;
     }
 
-    public Genre getFavoriteGenre() {
-        return favoriteGenre;
-    }
 }

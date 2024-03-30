@@ -150,5 +150,32 @@ public class ListenerControler {
         }
         return String.valueOf(result);
     }
-
+    public String userInfo(){
+        return listenerr.toString();
+    }
+    //جستجو، مرتبسازی و فیلتر فالهای صوتی
+    public String showmyPlaylist(){
+        ArrayList<Playlist>myList=listenerr.getPlaylists();
+        StringBuilder result=new StringBuilder("my play list : \n");
+        for(Playlist playlist:myList){
+            result.append(playlist.getName()).append(" , ");
+        }
+        return String.valueOf(result);
+    }
+    public  String myListInfo(String playlistName){
+        ArrayList<Playlist>myList=listenerr.getPlaylists();
+        for(Playlist playlist:myList){
+            if(playlistName.equals(playlist.getName())){
+                StringBuilder result=new StringBuilder("my song on this  play list : \n");
+                for (Audio audio:playlist.getAudios()){
+                    result.append(audio.getTitle()).append(" , ");
+                }
+                return String.valueOf(result);
+            }
+        }
+        return "error : not foound play llist";
+    }
+//● مشاهدۀ فال صوتیهای ͖یشنهاد شده به کاربر با توجه به ژانر و آرتیست مورد علاقۀ او
+//● مشاهدۀ اطلاعات حساب کاربری
+// خرید یا تمدید اشتراک متفاوت برای عادی ورموم و افزایش اعتبار حساب کاربری
 }
