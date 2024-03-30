@@ -5,6 +5,7 @@ import model.Report;
 import model.UserAccount.UserAccount;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DataBase {
 
@@ -13,12 +14,17 @@ public class DataBase {
     private ArrayList<Report> reports;
     private static DataBase dataBase;
 
+    public DataBase() {
+        this.users = new ArrayList<>();
+        this.audios = new ArrayList<>();
+        this.reports = new ArrayList<>();
+    }
+
     public static DataBase getDataBase() {
         if (dataBase == null)
             dataBase = new DataBase();
         return dataBase;
     }
-
     public ArrayList<UserAccount> getUsers() {
         return users;
     }
