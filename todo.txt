@@ -13,3 +13,8 @@ Your password must be have at least
 1 uppercase & 1 lowercase character
 1 number
 ///////////
+sign up input one by one getting
+and getting error for each part that is needed
+///////////
+enter user name 
+error for user name until it gets valid;&so on

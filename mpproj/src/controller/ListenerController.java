@@ -50,8 +50,8 @@ public class ListenerController {
         }
         return true;
     }
-    public String signupNewListener(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
-            Date birthDate){
+    public String signupNewListener(String username,String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+            int birthyear ,int birthMonth, int birthday){
         if(!(emailPassRegex(emailAddress))){
             return"Please enter a valid email address";
         }
@@ -64,6 +64,8 @@ public class ListenerController {
         if(!(usernameIsUnic(username))){
             return"This username is alredy taken ! Please enter another one";
         }
+        @SuppressWarnings("deprecation")
+        Date birthDate = new Date(birthyear,birthMonth,birthday);
         FreeListener tmp = new FreeListener(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, 50);
         Database.getDatabase().addToAllUsers(tmp);
         return "Thanks for signing up. Your account has been created";
