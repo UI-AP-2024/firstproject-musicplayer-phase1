@@ -51,6 +51,15 @@ public class AccountView {
             case 3:
                 System.out.println("The podcast account was successfully added 😎");
                 showFirstMenu();
+            case 4:
+                System.out.println("Login was successfully done 😎");
+                AccountController.getAccountController().loginPanel(answer);
+            case 5:
+                System.out.println("Your name or password is wrong please try again 🙏");
+                showFirstMenu();
+            case 6:
+                System.out.println("You must first signup or login to be able to use the music player 😓");
+                showFirstMenu();
         }
     }
     public void showGenresMenu(){
@@ -59,5 +68,10 @@ public class AccountView {
         AccountController.getAccountController().addFavoriteGenres(inp.nextLine());
         System.out.println("Favorite genres were added successfully");
         showMainMenu();
+    }
+    public void showLoginPanel(UserAccount person){
+        System.out.println("You have login to your panel, now you can use the program ✌");
+        String answer = inp.nextLine();
+        AccountController.getAccountController().loginPanelOrders(person,answer);
     }
 }

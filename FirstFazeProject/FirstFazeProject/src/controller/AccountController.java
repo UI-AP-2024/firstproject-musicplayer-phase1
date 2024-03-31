@@ -1,5 +1,6 @@
 package controller;
 import model.*;
+import view.AccountView;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -15,8 +16,11 @@ public class AccountController {
     }
     public int signUp(String answer){
         String[] answers = answer.split(" -");
-        String[] dateInfo = answers[7].split("\\.");
-        Date date = new Date(Integer.parseInt(dateInfo[0]),Integer.parseInt(dateInfo[1])-1,Integer.parseInt(dateInfo[2]));
+        Date date = null;
+        if (answers.length>3) {
+            String[] dateInfo = answers[7].split("\\.");
+            date = new Date(Integer.parseInt(dateInfo[0]), Integer.parseInt(dateInfo[1]) - 1, Integer.parseInt(dateInfo[2]));
+        }
         switch (answers[0]){
             case "Signup":
                 for (UserAccount user : Database.getData().getAllUsers()){
@@ -51,12 +55,17 @@ public class AccountController {
                         addUserToDatabase(podcastPerson);
                         return 3;
                 }
-                break;
             case "Login":
-                break;
+                for (UserAccount userAccount : Database.getData().getAllUsers()){
+                    if (Objects.equals(userAccount.getUniqueUserName(), answers[1])){
+                        if(Objects.equals(userAccount.getPassword(), answers[2])){
+                            return 4;
+                        }
+                    }
+                }
+                return 5;
         }
-
-        return 5;
+        return 6;
     }
     private void addUserToDatabase(UserAccount userAccount){
         ArrayList<UserAccount> backUp =Database.getData().getAllUsers();
@@ -69,7 +78,7 @@ public class AccountController {
         StringBuilder result = new StringBuilder("The genres are : ");
         Genre[] genres = Genre.values();
         for (Genre genre : genres){
-            result.append(counter).append("_").append(genre.name()).append(" ");
+            result.append(counter++).append("_").append(genre.name()).append(" ");
         }
         return result;
     }
@@ -86,5 +95,18 @@ public class AccountController {
             }
         }
         person.setFavoriteGenres(result);
+    }
+    public void loginPanel(String answer){
+        String[] answers = answer.split(" -");
+        for (UserAccount userAccount : Database.getData().getAllUsers()){
+            if (Objects.equals(userAccount.getUniqueUserName(), answers[1])){
+                if(Objects.equals(userAccount.getPassword(), answers[2])){
+                    AccountView.getAccountView().showLoginPanel(userAccount);
+                }
+            }
+        }
+    }
+    public void loginPanelOrders(UserAccount user, String answer){
+        
     }
 }
