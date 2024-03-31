@@ -5,7 +5,7 @@ public class PlayList {
     private String id;
     private String playListName;
     private String createrName;
-    ArrayList<Audio> audioList;
+    private ArrayList<Audio> audioList;
     private static long playlistCounter=0;
     public PlayList(String playListName, String createrName) {
         playlistCounter++;
@@ -39,8 +39,8 @@ public class PlayList {
     public void setCreaterName(String createrName) {
         this.createrName = createrName;
     }
-    public void setAudioList(ArrayList<Audio> audioList) {
-        this.audioList = audioList;
+    public void setAudioList(Audio audio) {
+        this.audioList.add(audio);
     }
     public static void setPlaylistCounter(long playlistCounter) {
         PlayList.playlistCounter = playlistCounter;

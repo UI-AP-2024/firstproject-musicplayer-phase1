@@ -6,7 +6,7 @@ public class Album {
     private final long id;
     private String albumName;
     private String artistName;
-    ArrayList<Music> musicList;
+    private ArrayList<Music> musicList;
     private static long albumCounter=0;
     public Album(String albumName, String artistName) {
         albumCounter++;
@@ -36,8 +36,11 @@ public class Album {
     public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
-    public void setMusicList(ArrayList<Music> musicList) {
-        this.musicList = musicList;
+    // public void setMusicList(ArrayList<Music> musicList) {//change to add
+    //     this.musicList = musicList;
+    // }
+    public void setMusicList(Music music) {//change to add
+        this.musicList.add(music);
     }
     public static void setAlbumCounter(long albumCounter) {
         Album.albumCounter = albumCounter;
