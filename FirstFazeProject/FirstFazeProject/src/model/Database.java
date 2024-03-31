@@ -1,8 +1,4 @@
-package database;
-
-import model.Audio;
-import model.Report;
-import model.UserAccount;
+package model;
 
 import java.util.ArrayList;
 
@@ -23,7 +19,7 @@ public class Database {
         return allUsers;
     }
 
-    public void setAllUsers(ArrayList<UserAccount> allUsers) {
+    public void setAllUsers (ArrayList<UserAccount> allUsers){
         this.allUsers = allUsers;
     }
 

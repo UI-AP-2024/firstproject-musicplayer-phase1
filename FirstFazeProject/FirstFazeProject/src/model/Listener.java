@@ -14,6 +14,7 @@ public class Listener extends UserAccount{
 
     public Listener(String uniqueUserName, String password, String fullName, String email, String phoneNumber, Date birthDate) {
         super(uniqueUserName, password, fullName, email, phoneNumber, birthDate);
+        this.accountCredit = 50D;
     }
 
     public Double getAccountCredit() {
