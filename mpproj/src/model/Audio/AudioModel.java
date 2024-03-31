@@ -1,6 +1,6 @@
 package model.Audio;
 
-import model.Genre;
+import model.GenreModel;
 
 import java.util.Date;
 
@@ -12,11 +12,11 @@ public abstract class AudioModel {
     private int playsCount;
     private int likesCount;
     private final Date releaseDate;
-    private Genre genre;
+    private GenreModel genre;
     private String audioLink;
     private String cover;
 
-    public AudioModel(int id, String audioTitle, String artistName, Date releaseDate, Genre genre, String audioLink, String cover) {
+    public AudioModel(int id, String audioTitle, String artistName, Date releaseDate, GenreModel genre, String audioLink, String cover) {
         this.id = ++tempID;
         this.audioTitle = audioTitle;
         this.artistName = artistName;
@@ -50,7 +50,7 @@ public abstract class AudioModel {
         return releaseDate;
     }
 
-    public Genre getGenre() {
+    public GenreModel getGenre() {
         return genre;
     }
 
@@ -78,7 +78,7 @@ public abstract class AudioModel {
         this.artistName = artistName;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(GenreModel genre) {
         this.genre = genre;
     }
 

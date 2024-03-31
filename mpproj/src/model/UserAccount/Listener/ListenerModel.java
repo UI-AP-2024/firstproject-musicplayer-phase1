@@ -1,11 +1,11 @@
 package model.UserAccount.Listener;
 
 import model.Audio.AudioModel;
-import model.Genre;
-import model.Playlist;
+
+import model.GenreModel;
+import model.PlaylistModel;
 import model.UserAccount.UserAccountModel;
 
-import java.lang.reflect.AnnotatedArrayType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,10 +14,10 @@ import java.util.Map;
 
 public class ListenerModel extends UserAccountModel {
     private int accountCredit;
-    private ArrayList<Playlist> playlists;
+    private ArrayList<PlaylistModel> playlists;
     private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
-    private ArrayList<Genre> favoriteGenres;
+    private ArrayList<GenreModel> favoriteGenres;
     public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, int accountCredit) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = accountCredit;
@@ -31,7 +31,7 @@ public class ListenerModel extends UserAccountModel {
         return accountCredit;
     }
 
-    public ArrayList<Playlist> getPlaylists() {
+    public ArrayList<PlaylistModel> getPlaylists() {
         return playlists;
     }
 
@@ -43,7 +43,7 @@ public class ListenerModel extends UserAccountModel {
         return subscriptionExpirationDate;
     }
 
-    public ArrayList<Genre> getFavoriteGenres() {
+    public ArrayList<GenreModel> getFavoriteGenres() {
         return favoriteGenres;
     }
 
@@ -55,11 +55,11 @@ public class ListenerModel extends UserAccountModel {
         this.playsCount = playsCount;
     }
 
-    public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
+    public void setFavoriteGenres(ArrayList<GenreModel> favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
     }
 
-    public void setPlaylists(ArrayList<Playlist> playlists) {
+    public void setPlaylists(ArrayList<PlaylistModel> playlists) {
         this.playlists = playlists;
     }
 }
