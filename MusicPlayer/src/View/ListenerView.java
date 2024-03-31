@@ -17,38 +17,40 @@ public class ListenerView {
      }
      public void signUp(String userName,String password,String name,String email,String phoneNumber,Date birthDate){
          Scanner sin = new Scanner(System.in);
-         System.out.println(view.signUp(userName, password, name, email, phoneNumber, birthDate));
          if(view.signUp(userName, password, name, email, phoneNumber, birthDate).equals("Done!")) {
+             System.out.println("Done!");
              String entry = sin.nextLine();
-             String[] enters = entry.split("-");
+             String[] enters = entry.split("[-,]");
              if (enters[0].equals("FavouriteGenres")) {
-                 String[] command = enters[1].split(",");
-                 for (int i = 0; i < command.length; i++) {
-                     if (command[i].equals(Genre.Country.name()))
+
+                 for (int i = 0; i < enters.length - 1; i++) {
+                     if (enters[i+1].equals(Genre.Country.name()))
                          view.selectGenres(Genre.Country);
-                     else if (command[i].equals(Genre.Pop.name()))
+                     else if (enters[i+1].equals(Genre.Pop.name()))
                          view.selectGenres(Genre.Pop);
-                     else if (command[i].equals(Genre.HipHop.name()))
+                     else if (enters[i+1].equals(Genre.HipHop.name()))
                          view.selectGenres(Genre.HipHop);
-                     else if (command[i].equals(Genre.History.name()))
+                     else if (enters[i+1].equals(Genre.History.name()))
                          view.selectGenres(Genre.History);
-                     else if (command[i].equals(Genre.Interview.name()))
+                     else if (enters[i+1].equals(Genre.Interview.name()))
                          view.selectGenres(Genre.Interview);
-                     else if (command[i].equals(Genre.Jazz.name()))
+                     else if (enters[i+1].equals(Genre.Jazz.name()))
                          view.selectGenres(Genre.Jazz);
-                     else if (command[i].equals(Genre.Rock.name()))
+                     else if (enters[i+1].equals(Genre.Rock.name()))
                          view.selectGenres(Genre.Rock);
-                     else if (command[i].equals(Genre.Society.name()))
+                     else if (enters[i+1].equals(Genre.Society.name()))
                          view.selectGenres(Genre.Society);
                      else
                          view.selectGenres(Genre.TrueCrime);
                  }
-                 login(userName, password);
+                 System.out.println("Done!");
              } else {
                  System.out.println("Wrong command!");
                  signUp(userName, password, name, email, phoneNumber, birthDate);
              }
          }
+         else
+             System.out.println(view.signUp(userName, password, name, email, phoneNumber, birthDate));
 
      }
      public void login(String userName,String password){

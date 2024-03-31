@@ -9,7 +9,7 @@ public class Album {
     private String singerName;
     private ArrayList<Music> musics;
     public Album(String albumName,String singerName){
-        IDCount=ID++;
+        IDCount=++ID;
         this.albumName = albumName;
         this.singerName = singerName;
         this.musics = new ArrayList<>();

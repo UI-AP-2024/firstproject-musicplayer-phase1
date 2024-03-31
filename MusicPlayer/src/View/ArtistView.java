@@ -39,37 +39,58 @@ public class ArtistView {
             String[] commands = command.split("-");
             if(commands[0].equals("Followers"))
                 System.out.println(view.showFollowers());
-            else if(commands[1].equals("CalculateEarnings"))
+            else if(commands[0].equals("CalculateEarnings"))
                 System.out.println(view.showUserInfo());
             else if(commands[0].equals("ViewsStatistics"))
                 System.out.println(view.showPlayedCount());
-            else if(commands[0].equals("NewAlbum") && view.getClass().equals(SingerController.class)){
-                ((SingerController) view).newAlbum(commands[1]);
+            else if(commands[0].equals("NewAlbum")){
+                view.newAlbum(commands[1]);
+                System.out.println("Done!");
             }
             else if(commands[0].equals("Publish")){
                 if(commands[1].equals("M")){
-                    if(commands[3].equals(Genre.Country.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Country,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.Pop.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Pop,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.HipHop.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.HipHop,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.History.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.History,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.Interview.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Interview,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.Jazz.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Jazz,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.Rock.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Rock,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else if(commands[3].equals(Genre.Society.name()))
-                        ((SingerController) view).publishMusic(commands[2], Genre.Society,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
-                    else
-                        ((SingerController) view).publishMusic(commands[2], Genre.TrueCrime,commands[4],commands[5],commands[6],Integer.parseInt(commands[7]));
+                    if(commands[3].equals(Genre.Country.name())) {
+                        view.publishMusic(commands[2], Genre.Country, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.Pop.name())) {
+                        view.publishMusic(commands[2], Genre.Pop, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.HipHop.name())) {
+                        view.publishMusic(commands[2], Genre.HipHop, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.History.name())) {
+                        view.publishMusic(commands[2], Genre.History, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.Interview.name())) {
+                        view.publishMusic(commands[2], Genre.Interview, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.Jazz.name())) {
+                        view.publishMusic(commands[2], Genre.Jazz, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.Rock.name())) {
+                        view.publishMusic(commands[2], Genre.Rock, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.Society.name())) {
+                        view.publishMusic(commands[2], Genre.Society, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
+                    else if(commands[3].equals(Genre.TrueCrime.name())){
+                        view.publishMusic(commands[2], Genre.TrueCrime, commands[4], commands[5], commands[6], Integer.parseInt(commands[7]));
+                        System.out.println("Done!");
+                    }
 
                 }
-                else
-                    ((PodcasterController) view).publishPodcast(commands[2], Genre.TrueCrime,commands[4],commands[5],commands[6]);
+                else {
+                    view.publishPodcast(commands[2], Genre.TrueCrime, commands[4], commands[5], commands[6]);
+                    System.out.println("Done!");
+                }
             }
             else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");

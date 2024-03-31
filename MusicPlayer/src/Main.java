@@ -13,22 +13,11 @@ public class Main {
         while (!entry.equals("End")){
             entry=sin.nextLine();
             String[] enter = entry.split("-");
-//            System.out.println(enter[0]);
-//            System.out.println(enter[1]);
-//            System.out.println(enter[2]);
-//            System.out.println(enter[3]);
-//            System.out.println(enter[4]);
-//            System.out.println(enter[5]);
-//            System.out.println(enter[6]);
-//            System.out.println(new Date(enter[7]));
-//            System.out.println(enter[8]);
-
             if(enter[0].equals("Signup") && enter[1]!=null && enter[2]!=null){
                 if(enter[1].equals("L"))
                     ListenerView.getListener().signUp(enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]));
-                else {
+                else{
                     ArtistView.getArtistView().signUp(enter[1], enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]), enter[8]);
-                    
                 }
             }
             else if(enter[0].equals("Login") && enter[1]!=null && enter[2]!=null){

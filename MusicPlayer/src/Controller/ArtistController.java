@@ -87,5 +87,20 @@ public class ArtistController {
         CalculateEarnings();
         return "Name: "+model.getFullName() + " Salary: "+model.getSalary()+" Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
     }
-
+    public void newAlbum(String albumName){
+       ((SingerModel)model).getAlbums().add(new Album(albumName, model.getFullName()));
+    }
+    public void publishMusic(String audioName, Genre genre,String lyric,String link,String cover,int albumID){
+        for (int i = 0; i < ((SingerModel)model).getAlbums().size(); i++) {
+            if(((SingerModel)model).getAlbums().get(i).getIDCount()==albumID){
+                Music music = new Music(audioName, model.getFullName(),genre,link,cover,lyric);
+                ((SingerModel)model).getAlbums().get(i).getMusics().add(music);
+                break;
+            }
+        }
+    }
+    public void publishPodcast(String audioName, Genre genre, String caption, String link, String cover){
+        Podcast podcast = new Podcast(audioName,model.getFullName(),genre,link,cover,caption);
+        ((PodcasterModel)model).getPodcasts().add(podcast);
+    }
 }

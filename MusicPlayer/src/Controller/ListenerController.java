@@ -30,13 +30,15 @@ public class ListenerController {
         else if(!matcherPassword.matches())
             return "Weak password! Pleas use better password.";
 
-        model = new FreeModel(username, password, fullName, email, phoneNumber, birthDate);
+        model = new ListenerModel(username, password, fullName, email, phoneNumber, birthDate);
         model.setCredit(50);
         return "Done!";
     }
     public String logIn(String username, String password){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username) && Database.getDatabase().getUsers().get(i).getPassword().equals(password)){
+                User user = Database.getDatabase().getUsers().get(i);
+
                 return "Done!";
             }
         }
@@ -50,14 +52,13 @@ public class ListenerController {
         }
     }
     public String makeNewPlaylist(String playlistName,String userName){
-        Playlists playlists = new Playlists(playlistName,userName);
 
         if(model.getClass().equals(PremiumSubscription.class)) {
-            model.getPlaylists().add(playlists);
+            model.getPlaylists().add(new Playlists(playlistName,userName));
             return "Playlist made successfully";
         }
         else if(model.playlistCount < FreeModel.maxPlaylist){
-            model.getPlaylists().add(playlists);
+            model.getPlaylists().add(new Playlists(playlistName,userName));
             model.playlistCount++;
             return "Playlist made successfully";
         }
@@ -296,15 +297,16 @@ public class ListenerController {
         return "Name: "+model.getFullName() + " Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
     }
     public String buyOrExtendSubscription(int day){
-        if(model.getClass().equals(FreeModel.class)){
+        if(model.getClass().equals(ListenerModel.class)){
             model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
             ((PremiumModel) model).setRemainingSubscriptionDay(day);
             return check(day);
         }
-        else{
+        else if(model.getClass().equals(PremiumModel.class)){
             ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel)model).getRemainingSubscriptionDay()+day);
             return check(day);
         }
+        return null;
     }
     private String check(int day){
         if(day==30) {
