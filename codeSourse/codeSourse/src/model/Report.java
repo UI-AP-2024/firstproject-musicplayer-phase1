@@ -1,6 +1,6 @@
 package model;
-import model.AcountUser.AccountUser;
-import model.AcountUser.Artist.Artist;
+import model.AccountUser.AccountUser;
+import model.AccountUser.Artist.Artist;
 
 public class Report {
     private static Report instance;
@@ -25,6 +25,7 @@ public class Report {
         }
         return instance;
     }
+
 
     public AccountUser getReportingUser() {
         return reportingUser;

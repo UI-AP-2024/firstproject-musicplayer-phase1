@@ -1,6 +1,6 @@
 package model;
 
-import model.AcountUser.AccountUser;
+import model.AccountUser.AccountUser;
 import model.Audio.Audio;
 
 import java.util.*;
