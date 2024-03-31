@@ -5,7 +5,7 @@ import model.UserAccount.UserAccountModel;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ArtistModel extends UserAccountModel {
+public abstract class ArtistModel extends UserAccountModel {
     private double income;
     private ArrayList<UserAccountModel> followers;
     private String biography;

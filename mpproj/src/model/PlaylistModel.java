@@ -45,4 +45,5 @@ public class PlaylistModel {
     public void setAudios(ArrayList<AudioModel> audios) {
         this.audios = audios;
     }
+
 }

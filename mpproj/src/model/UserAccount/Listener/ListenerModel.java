@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ListenerModel extends UserAccountModel {
+public abstract class ListenerModel extends UserAccountModel {
     private int accountCredit;
     private ArrayList<PlaylistModel> playlists;
     private Map<AudioModel, Integer> playsCount;
