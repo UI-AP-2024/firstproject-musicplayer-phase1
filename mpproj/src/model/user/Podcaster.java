@@ -1,0 +1,31 @@
+package model.user;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import model.audio.Podcast;
+
+public class Podcaster extends Artist{
+    private ArrayList<Podcast> podcastList;
+
+    
+
+    public Podcaster(String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+            Date birthDate, String biographi) {
+        super(password, firstName, lastName, emailAddress, phoneNumber, birthDate, biographi);
+        podcastList = new ArrayList<>();
+    }
+
+    public ArrayList<Podcast> getPodcastList() {
+        return podcastList;
+    }
+
+    // public void setPodcastList(ArrayList<Podcast> podcastList) {
+    //     this.podcastList = podcastList;
+    // }
+    public void setPodcastList(Podcast podcastList) {
+        this.podcastList.add(podcastList);
+    }
+    
+    
+}
