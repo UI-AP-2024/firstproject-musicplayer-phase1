@@ -9,7 +9,18 @@ import java.util.Date;
 import java.util.Map;
 
 public class ListenerControler {
-    Listener listenerr;
+    private Listener listenerr;
+    private static ListenerControler listenerControler;
+
+    private ListenerControler() {
+    }
+
+    public static ListenerControler getListenerControler() {
+        if (listenerControler == null)
+            listenerControler = new ListenerControler();
+        return listenerControler;
+    }
+
 
     public Listener getListenerr() {
         return listenerr;
@@ -30,10 +41,37 @@ public class ListenerControler {
         setListenerr(listener);
         //add to database
         listener.setIsLogin(true);
-        return showgenre()+"\n"+"listener accaount successfully created .";
+        return showgenre()+"\n";
     }
     String showgenre(){
         return Genre.Country+","+Genre.Pop+","+Genre.HipHop+","+Genre.History+","+Genre.Interview+","+Genre.Jazz+","+Genre.TrueCrime+","+Genre.Society+","+Genre.Rock;
+    }
+    public String chooseFavoriteGenre(String genre1,String genre2,String genre3,String genre4){
+        if(genre4.equals("")){
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre3));
+        } else if (genre3.equals("")&&genre4.equals("")) {
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
+        } else if (genre2.equals("")&&genre3.equals("")&&genre4.equals("")){
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
+        }else {
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre3));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre4));
+        }
+        return "listener accaount successfully created .";
+    }
+    public void chooseFavoriteGenre(String genre1,String genre2,String genre3){
+        chooseFavoriteGenre(genre1,genre2,genre3,"");
+    }
+    public void chooseFavoriteGenre(String genre1,String genre2){
+        chooseFavoriteGenre(genre1,genre2,"","");
+    }
+    public void chooseFavoriteGenre(String genre1){
+        chooseFavoriteGenre(genre1,"","","");
     }
     public String login(String username,String password){
         ArrayList<User>users=Database.getDatabase().getUsers();
