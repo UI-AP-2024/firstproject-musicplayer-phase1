@@ -1,4 +1,4 @@
-package model;
+package model.AccountUser;
 import java.util.Date;
 
 public abstract class AccountUser {

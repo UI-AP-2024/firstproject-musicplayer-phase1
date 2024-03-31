@@ -1,6 +1,5 @@
-package model.AcountUser.Artist;
-import model.AcountUser.AccountUser;
-import model.AcountUser.Artist.Artist;
+package model.AccountUser.Artist.TypeOfArtist;
+import model.AccountUser.Artist.Artist;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,8 +8,8 @@ public class Singer extends Artist {
     private List<String> albums;
 
     //*********************************************
-    public Singer(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate, double income, String biography, List<AccountUser> followers, List<String> albums) {
-        super(userName, password, fullName, email, phoneNumber,birthDate,income,biography,followers);
+    public Singer(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double income,String biography) {
+        super(userName, password, fullName, email, phoneNumber,birthDate,income,biography);
         this.albums = new ArrayList<>();
     }
     //*********************************************

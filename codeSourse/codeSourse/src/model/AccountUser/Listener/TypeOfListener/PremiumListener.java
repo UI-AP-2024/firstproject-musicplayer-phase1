@@ -1,4 +1,6 @@
-package model.AcountUser.Listener;
+package model.AccountUser.Listener.TypeOfListener;
+import model.AccountUser.Listener.Listener;
+
 import java.util.Date;
 
 public class PremiumListener extends Listener {
@@ -6,9 +8,9 @@ public class PremiumListener extends Listener {
 
     //*********************************************
 
-    public PremiumListener(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate, int remainingSubscriptionDays) {
-        super(userName, password, fullName, email, phoneNumber, birthDate);
-        this.remainingSubDays = remainingSubscriptionDays;
+    public PremiumListener(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double accountBalance,Date subEndDate,int remainingSubDays) {
+        super( userName,password,  fullName, email, phoneNumber, birthDate, accountBalance, subEndDate);
+        this.remainingSubDays = remainingSubDays;
     }
     //*********************************************
     public int getRemainingSubDays() {
@@ -23,7 +25,7 @@ public class PremiumListener extends Listener {
         return "PremiumListener{" +
                 "userName='" + getUserName() + '\'' +
                 ", fullName='" + getFullName() + '\'' +
-                ", remainingSubscriptionDays=" + remainingSubDays +
+                ", remainingSubDays=" + remainingSubDays +
                 '}';
     }
 }

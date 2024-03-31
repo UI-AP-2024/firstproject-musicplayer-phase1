@@ -1,6 +1,6 @@
-package model.AcountUser.Listener;
+package model.AccountUser.Listener;
 
-import model.AcountUser.AccountUser;
+import model.AccountUser.AccountUser;
 import model.Genre;
 import model.Playlist;
 
@@ -11,17 +11,17 @@ public class Listener extends AccountUser {
     private double accountBalance;
     private List<Playlist> playlists;
     private Map<String, Integer> playCount;
-    private Date subscriptionEndDate;
-
+    private Date subEndDate;
     private List<Genre> favoriteGenres;
 
-    public Listener(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate) {
+    //*********************************************
+    public Listener(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double accountBalance,Date subEndDate) {
         super(userName, password, fullName, email, phoneNumber, birthDate);
         this.accountBalance = 0.0;
         this.playlists = new ArrayList<>();
         this.playCount = new HashMap<>();
         this.favoriteGenres = new ArrayList<>();
-        this.subscriptionEndDate = null;
+        this.subEndDate = null;
     }
 
     //*********************************************
@@ -38,7 +38,7 @@ public class Listener extends AccountUser {
     }
 
     public Date getSubscriptionEndDate() {
-        return subscriptionEndDate;
+        return subEndDate;
     }
 
     public List<Genre> getFavoriteGenres() {
@@ -50,7 +50,6 @@ public class Listener extends AccountUser {
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
     }
-
     public void setPlaylists(List<Playlist> playlists) {
         this.playlists = playlists;
     }
@@ -60,7 +59,7 @@ public class Listener extends AccountUser {
     }
 
     public void setSubscriptionEndDate(Date subscriptionEndDate) {
-        this.subscriptionEndDate = subscriptionEndDate;
+        this.subEndDate = subscriptionEndDate;
     }
 
     public void setFavoriteGenres(List<Genre> favoriteGenres) {
@@ -87,7 +86,7 @@ public class Listener extends AccountUser {
                 ", playlists=" + playlists +
                 ", playCount=" +
                 playCount + ", subscriptionEndDate=" +
-                subscriptionEndDate +
+                subEndDate +
                 ", favoriteGenres=" + favoriteGenres +
                 '}';
     }

@@ -1,6 +1,6 @@
-package model.AcountUser.Artist;
+package model.AccountUser.Artist;
 
-import model.AcountUser.AccountUser;
+import model.AccountUser.AccountUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +11,7 @@ public class Artist extends AccountUser {
     private List<AccountUser> followers;
     private String biography;
     //*********************************************
-    public Artist(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double income,String biography,List<AccountUser> followers) {
+    public Artist(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double income,String biography) {
         super(userName, password, fullName, email, phoneNumber,birthDate);
         this.income = income;
         this.biography = biography;

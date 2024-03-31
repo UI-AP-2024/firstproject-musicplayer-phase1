@@ -1,4 +1,4 @@
-package model.AcountUser.Listener;
+package model.AccountUser.Listener.TypeOfListener;
 
 public enum premiumSub {
         ThirtyDays(5),

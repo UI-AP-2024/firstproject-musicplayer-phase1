@@ -1,5 +1,5 @@
-package model.AcountUser.Artist;
-import model.AcountUser.AccountUser;
+package model.AccountUser.Artist.TypeOfArtist;
+import model.AccountUser.Artist.Artist;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +9,8 @@ public class Podcaster extends Artist {
     private List<String> podcasts;
 
     //*********************************************
-    public Podcaster(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate, double income, String biography, List<AccountUser> followers,List<String> podcasts) {
-        super(userName, password, fullName, email, phoneNumber,birthDate,income,biography,followers);
+    public Podcaster(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double income,String biography) {
+        super(userName, password, fullName, email, phoneNumber,birthDate,income,biography);
         this.podcasts = new ArrayList<>();
     }
     //*********************************************
