@@ -6,6 +6,7 @@ import controller.ListenerController;
 import controller.UserController;
 import model.audio.Genre;
 import model.user.Listener;
+import model.user.PremiumListener;
 import model.user.User;
 
 public class DebugView {
@@ -62,6 +63,13 @@ public class DebugView {
             System.out.println(txt);
             System.out.println("get your account premium\na)30 days(5$)\nb)60 days(9$)\nc)180 days(14$)");
             ListenerController.getListenerController().getPremium(30,5);
+            ListenerController.getListenerController().getPremium(30, 5);
+            Listener x = ListenerController.getListenerController().getListener();
+            System.out.println(x.getAccountCredit());
+            System.out.println(x.getPremiumExpirationDate());
+            PremiumListener px = (PremiumListener)x; 
+            System.out.println(px.getRemainingDaysOfPremium());
+            
         }
 
     }

@@ -31,6 +31,20 @@ public class ListenerController {
     public void setListener(Listener listener){//in login
         this.listener = listener;
     }
+    // private FreeListener freeListener;
+    // public FreeListener getFreeListener(){
+    //     return freeListener;
+    // }
+    // public void setFreeListener(FreeListener freeListener){//in login
+    //     this.freeListener = freeListener;
+    // }
+    // private Listener listener;
+    // public Listener getListener(){
+    //     return listener;
+    // }
+    // public void setListener(Listener listener){//in login
+    //     this.listener = listener;
+    // }
 
     public boolean emailPassRegex(String email){
         Pattern pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -105,7 +119,9 @@ public class ListenerController {
                 cal.add(Calendar.DAY_OF_MONTH, days);
                 Date expDate = cal.getTime(); 
                 PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(), getListener().getFirstName(), getListener().getLastName(), getListener().getEmailAddress(), getListener().getPhoneNumber(), getListener().getBirthDate(), getListener().getAccountCredit(),days,expDate);
-                setListener(tmp);//exchanging two listeners in all felds they are in
+                setListener(tmp);
+                //change the method with type casting?to nut remove user
+                //exchanging two listeners in all felds they are in->database,artist,report
             }
             else{
                 Calendar cal = Calendar.getInstance();
@@ -114,6 +130,11 @@ public class ListenerController {
                 cal.add(Calendar.DAY_OF_MONTH, days);
                 Date expirationDate = cal.getTime(); 
                 getListener().setPremiumExpirationDate(expirationDate);
+                Listener tmp = getListener();
+                if(tmp instanceof PremiumListener){
+                    PremiumListener tmpp = (PremiumListener)tmp;
+                    tmpp.setRemainingDaysOfPremium(tmpp.getRemainingDaysOfPremium()+days);
+                }
             }
         }
 
