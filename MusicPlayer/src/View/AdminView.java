@@ -14,23 +14,16 @@ public class AdminView {
             admin = new AdminView();
         return admin;
     }
-    public void Login(){
+    public void login(String userName,String password){
 
-        Scanner sin = new Scanner(System.in);
-        String entry=sin.nextLine();
-        String[] enter = entry.split("-");
-        if(enter[0].equals("Login")) {
-            if (view.enterUserPanel(enter[1], enter[2])) {
-                System.out.println("Correct!");
-                second();
-            } else {
-                System.out.println("username or password is wrong!");
-                System.out.println("Try Again!");
-                Login();
-            }
+        if (view.enterUserPanel(userName,password)) {
+            System.out.println("Correct!");
+            second();
+        } else {
+            System.out.println("username or password is wrong!");
+            System.out.println("Try Again!");
         }
-        else
-            System.out.println("Wrong command!");
+
     }
     private void second(){
         Scanner sin = new Scanner(System.in);

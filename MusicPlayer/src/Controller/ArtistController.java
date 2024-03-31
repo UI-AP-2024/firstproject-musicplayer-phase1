@@ -11,7 +11,7 @@ public class ArtistController extends User{
         super(username, password, fullName, email, phoneNumber, birthDate);
     }
 
-    public String signUp(String username, String password, String fullName, String email, String phoneNumber, Date birthDate,String bio){
+    public String signUp(String artKind,String username, String password, String fullName, String email, String phoneNumber, Date birthDate,String bio){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){
                 return "This Username already used!";
@@ -29,7 +29,12 @@ public class ArtistController extends User{
             return "The phone number is not valid!";
         else if(!matcherPassword.matches())
             return "Weak password! Pleas use better password.";
-        model = new ArtistModel(username, password, fullName, email, phoneNumber, birthDate,bio);
+
+        if(artKind.equals("S"))
+            model = new SingerModel(username,password,fullName,email,phoneNumber,birthDate,bio);
+        else
+            model = new PodcasterModel(username,password,fullName,email,phoneNumber,birthDate,bio);
+
         return "Done!";
     }
 

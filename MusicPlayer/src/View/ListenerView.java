@@ -4,6 +4,7 @@ import Controller.ListenerController;
 import Model.Genre;
 import com.sun.tools.javac.Main;
 
+import javax.swing.*;
 import java.util.*;
 public class ListenerView {
      private ListenerController view;
@@ -42,7 +43,7 @@ public class ListenerView {
                      else
                          view.selectGenres(Genre.TrueCrime);
                  }
-                 login();
+                 login(userName, password);
              } else {
                  System.out.println("Wrong command!");
                  signUp(userName, password, name, email, phoneNumber, birthDate);
@@ -50,19 +51,14 @@ public class ListenerView {
          }
 
      }
-     public void login(){
-         Scanner sin = new Scanner(System.in);
-         String entry=sin.nextLine();
-         String[] enter = entry.split("-");
-         if(enter[0].equals("Login")){
-             if(!view.logIn(enter[2],enter[3]).equals("Done!")) {
-                 System.out.println(view.logIn(enter[2],enter[3]));
-                 login();
-             }
-             System.out.println(view.logIn(enter[2],enter[3]));
-             second();
-         }
+     public void login(String userName,String password){
 
+         if(view.logIn(userName, password).equals("Done!")) {
+           System.out.println(view.logIn(userName, password));
+           second();
+         }
+         else
+             System.out.println(view.logIn(userName, password));
      }
      public void second(){
          Scanner sin = new Scanner(System.in);
