@@ -19,4 +19,36 @@ public class Database {
         this.audio = new ArrayList<>();
         this.reports = new ArrayList<>();
     }
+
+    public static void setDatabase(Database database) {
+        Database.database = database;
+    }
+
+    public void setUserAccounts(ArrayList<UserAccount> userAccounts) {
+        this.userAccounts = userAccounts;
+    }
+
+    public void setAudio(ArrayList<Audio> audio) {
+        this.audio = audio;
+    }
+
+    public void setReports(ArrayList<Report> reports) {
+        this.reports = reports;
+    }
+
+    public static Database getDatabase() {
+        return database;
+    }
+
+    public ArrayList<UserAccount> getUserAccounts() {
+        return userAccounts;
+    }
+
+    public ArrayList<Audio> getAudio() {
+        return audio;
+    }
+
+    public ArrayList<Report> getReports() {
+        return reports;
+    }
 }

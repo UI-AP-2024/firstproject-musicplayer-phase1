@@ -1,5 +1,20 @@
 package model;
 
+import java.util.Date;
+
 public class Podcast extends Audio {
-    String caption;
+    private String caption;
+
+    public Podcast(long id, String name, String nameArtist, int numberOfPolys, int numberOfLikes, Date dateOfRelease, Gener gener, String audioLink, String cover, String caption) {
+        super(id, name, nameArtist, numberOfPolys, numberOfLikes, dateOfRelease, gener, audioLink, cover);
+        this.caption = caption;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 }

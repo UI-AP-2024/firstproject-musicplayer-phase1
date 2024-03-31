@@ -3,14 +3,98 @@ package model;
 import java.util.Date;
 
 public abstract class Audio {
-    long numericalId;
-    String name;
-    String nameArtist;
-    int numberOfPolys;
-    int numberOfLikes;
-    Date DateOfRelease;
-    Gener gener;
-    String audioLink;
-    String cover;
+    private long id;
+    private String name;
+    private String nameArtist;
+    private int numberOfPolys;
+    private int numberOfLikes;
+    private Date DateOfRelease;
+    private Gener gener;
+    private String audioLink;
+    private String cover;
+
+    public Audio(long id, String name, String nameArtist, int numberOfPolys, int numberOfLikes, Date dateOfRelease, Gener gener, String audioLink, String cover) {
+        this.id = id;
+        this.name = name;
+        this.nameArtist = nameArtist;
+        this.numberOfPolys = numberOfPolys;
+        this.numberOfLikes = numberOfLikes;
+        this.DateOfRelease = dateOfRelease;
+        this.gener = gener;
+        this.audioLink = audioLink;
+        this.cover = cover;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNameArtist() {
+        return nameArtist;
+    }
+
+    public int getNumberOfPolys() {
+        return numberOfPolys;
+    }
+
+    public int getNumberOfLikes() {
+        return numberOfLikes;
+    }
+
+    public Date getDateOfRelease() {
+        return DateOfRelease;
+    }
+
+    public Gener getGener() {
+        return gener;
+    }
+
+    public String getAudioLink() {
+        return audioLink;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNameArtist(String nameArtist) {
+        this.nameArtist = nameArtist;
+    }
+
+    public void setNumberOfPolys(int numberOfPolys) {
+        this.numberOfPolys = numberOfPolys;
+    }
+
+    public void setNumberOfLikes(int numberOfLikes) {
+        this.numberOfLikes = numberOfLikes;
+    }
+
+    public void setDateOfRelease(Date dateOfRelease) {
+        DateOfRelease = dateOfRelease;
+    }
+
+    public void setGener(Gener gener) {
+        this.gener = gener;
+    }
+
+    public void setAudioLink(String audioLink) {
+        this.audioLink = audioLink;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
 }
 
