@@ -13,13 +13,32 @@ import java.util.ArrayList;
 
 public class Admin2 extends UserAccount2
 {
-    Admin admin;
+    private Admin2 admin2;
+
+    public Admin2 getAdmin2() {
+        return admin2;
+    }
+
+    public void setAdmin2(Admin2 admin2) {
+        this.admin2 = admin2;
+    }
+
+    private Admin admin;
     public Admin newAdmin(String userName, String passWord, String name, String email, String phoneNumber, LocalDate dateOfBirth)
     {
         admin = newAdmin(userName,passWord,name,email,phoneNumber,dateOfBirth);
         Database.getDatabase().getUserAccounts().add(admin);
         return admin;
     }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     Artist artist;
     ArrayList<Artist> artists = new ArrayList<Artist>();
     public void addArtist(Artist artist)
