@@ -23,8 +23,8 @@ public class Podcaster extends Artist{
     // public void setPodcastList(ArrayList<Podcast> podcastList) {
     //     this.podcastList = podcastList;
     // }
-    public void setPodcastList(Podcast podcastList) {
-        this.podcastList.add(podcastList);
+    public void setPodcastList(Podcast podcast) {
+        this.podcastList.add(podcast);
     }
     
     
