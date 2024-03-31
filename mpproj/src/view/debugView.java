@@ -60,6 +60,8 @@ public class DebugView {
             System.out.println("Is listener");
             txt = ListenerController.getListenerController().ShowAccountInfo();
             System.out.println(txt);
+            System.out.println("get your account premium\na)30 days(5$)\nb)60 days(9$)\nc)180 days(14$)");
+            ListenerController.getListenerController().getPremium(30,5);
         }
 
     }

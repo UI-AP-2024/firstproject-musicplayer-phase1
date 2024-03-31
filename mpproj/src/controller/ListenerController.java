@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +10,7 @@ import model.audio.Genre;
 import model.database.Database;
 import model.user.FreeListener;
 import model.user.Listener;
+import model.user.PremiumListener;
 import model.user.User;
 
 public class ListenerController {
@@ -93,6 +95,28 @@ public class ListenerController {
         "\nbirth date : "+String.valueOf(getListener().getBirthDate())+
         "\nAccount Credit : "+String.valueOf(getListener().getAccountCredit());
         return txt;
+    }
+
+    public void getPremium(int days,int payment){
+        if(getListener().getAccountCredit()>=payment){
+            getListener().setAccountCredit(getListener().getAccountCredit()-payment);
+            if(getListener() instanceof FreeListener){
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DAY_OF_MONTH, days);
+                Date expDate = cal.getTime(); 
+                PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(), getListener().getFirstName(), getListener().getLastName(), getListener().getEmailAddress(), getListener().getPhoneNumber(), getListener().getBirthDate(), getListener().getAccountCredit(),days,expDate);
+                setListener(tmp);//exchanging two listeners in all felds they are in
+            }
+            else{
+                Calendar cal = Calendar.getInstance();
+                Date date = getListener().getPremiumExpirationDate();
+                cal.setTime(date);
+                cal.add(Calendar.DAY_OF_MONTH, days);
+                Date expirationDate = cal.getTime(); 
+                getListener().setPremiumExpirationDate(expirationDate);
+            }
+        }
+
     }
     
     
