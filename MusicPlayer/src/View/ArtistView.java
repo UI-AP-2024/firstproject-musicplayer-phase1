@@ -18,17 +18,11 @@ public class ArtistView {
             artistView = new ArtistView();
         return artistView;
     }
-    public void signUp(){
-        Scanner sin = new Scanner(System.in);
-        String entry=sin.nextLine();
-        String[] enter = entry.split("-");
-        if(enter[0].equals("Signup")){
-            view.signUp(enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]),enter[8]);
-        }
-        else if(enter[0].equals("Login"))
+    public void signUp(String artist,String userName,String password,String name,String email,String phoneNumber,Date birthDate,String bio){
+        if(view.signUp(userName, password, name, email, phoneNumber, birthDate, bio).equals("Done!")) {
+            view.signUp(userName, password, name, email, phoneNumber, birthDate, bio);
             login();
-        else
-            System.out.println("Wrong command!");
+        }
     }
     public void login(){
         Scanner sin = new Scanner(System.in);
@@ -42,7 +36,8 @@ public class ArtistView {
             System.out.println(view.logIn(enter[2],enter[3]));
             second();
         }
-
+        else
+            System.out.println("Wrong command!");
     }
     public void second(){
         Scanner sin = new Scanner(System.in);

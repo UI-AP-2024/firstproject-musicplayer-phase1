@@ -11,20 +11,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner sin = new Scanner(System.in);
         AdminModel.getAdmin("sina83m","12df34jj","sina M","sina@gamil.com","0913234",new Date(11/9/2004));
-        System.out.println("1)Admin\n2)Listener\n3)Artist\n4)Exit");
-        int n = sin.nextInt();
-        while (n!=4) {
-            switch (n) {
-                case 1:
-                    AdminView.getAdmin().Login();
-                    break;
-                case 2:
-                    ListenerView.getListener().signUp();
-                    break;
-                case 3:
-                    ArtistView.getArtistView().signUp();
-                    break;
+        String entry=sin.nextLine();
+        while (!entry.equals("End")){
+            entry=sin.nextLine();
+            String[] enter = entry.split("-");
+            if(enter[0].equals("Signup")){
+                if(enter[1].equals("L"))
+                    ListenerView.getListener().signUp(enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]));
+                else
+                    ArtistView.getArtistView().signUp(enter[1],enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]),enter[8]);
             }
+            else if(enter[0].equals("Login")){
+                ;
+            }
+            else
+                System.out.println("Wrong command!");
         }
     }
 
