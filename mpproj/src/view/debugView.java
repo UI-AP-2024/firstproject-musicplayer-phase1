@@ -3,7 +3,10 @@ package view;
 import java.util.ArrayList;
 
 import controller.ListenerController;
+import controller.UserController;
 import model.audio.Genre;
+import model.user.Listener;
+import model.user.User;
 
 public class DebugView {
 
@@ -42,6 +45,22 @@ public class DebugView {
         ListenerController.getListenerController().getFavoriteGenres(genres);
         String a =String.valueOf(ListenerController.getListenerController().getListener().getFavoriteGenres().get(0));
         System.out.println(a);
+        User tmp = UserController.getUserController().findUser("Maryap", "Maryamdar84!");
+        if(tmp == null){
+            System.out.println("not a valid username or password try again");
+        }
+        if(tmp instanceof Listener){
+            System.out.println("Is listener");
+        }
+        tmp = UserController.getUserController().findUser("Maryam", "Maryamdar84!");
+        if(tmp == null){
+            System.out.println("not a valid username or password try again");
+        }
+        if(tmp instanceof Listener){
+            System.out.println("Is listener");
+            
+        }
+
     }
     
 }

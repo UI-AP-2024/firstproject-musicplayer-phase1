@@ -79,8 +79,9 @@ public class ListenerController {
             getListener().addToFavoriteGenres(Genre.valueOf(string));
         }  
     }
-    // public String showGenres{
-    //     return Genre.toString();
-    // }
+    public void loginListener(Listener listener){
+        setListener(listener);
+    }
+    
     
 }
