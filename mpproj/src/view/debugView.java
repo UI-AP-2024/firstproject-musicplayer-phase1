@@ -1,6 +1,9 @@
 package view;
 
+import java.util.ArrayList;
+
 import controller.ListenerController;
+import model.audio.Genre;
 
 public class DebugView {
 
@@ -30,6 +33,15 @@ public class DebugView {
         System.out.println(txt);
         txt = ListenerController.getListenerController().signupNewListener("nazanin","Maryamdar84!", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 );
         System.out.println(txt);
+        txt=Genre.allGenres();
+        System.out.println(txt+"\nenter your favourite genres (at most four), each one in one line");//has next line sc.nextline;
+        ArrayList<String> genres = new ArrayList<>();
+        genres.add("POP");
+        genres.add("HIPHOP");
+        genres.add("SOCIETY");
+        ListenerController.getListenerController().getFavoriteGenres(genres);
+        String a =String.valueOf(ListenerController.getListenerController().getListener().getFavoriteGenres().get(0));
+        System.out.println(a);
     }
     
 }

@@ -2,8 +2,12 @@ package model.audio;
 
 public enum Genre {
     POP,JAZZ,HIPHOP,COUNTRY,TRUE_CRIME,SOCIETY,INTERVIEW,HISTORY;
+    public static String allGenres() {
+        return "All available genres\n-POP\n-JAZZ\n-HIPHOP\n-COUNTRY\n-TRUE_CRIME\n-SOCIETY\n-INTERVIEW\n-HISTORY";
+    }
     
 }
+
 
 /*Rock
 ○ Pop

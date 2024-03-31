@@ -1,9 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.audio.Genre;
 import model.database.Database;
 import model.user.FreeListener;
 import model.user.Listener;
@@ -68,7 +70,17 @@ public class ListenerController {
         Date birthDate = new Date(birthyear,birthMonth,birthday);
         FreeListener tmp = new FreeListener(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, 50);
         Database.getDatabase().addToAllUsers(tmp);
+        setListener(tmp);
         return "Thanks for signing up. Your account has been created";
     }
+
+    public void getFavoriteGenres(ArrayList<String> genres){
+        for (String string : genres) {
+            getListener().addToFavoriteGenres(Genre.valueOf(string));
+        }  
+    }
+    // public String showGenres{
+    //     return Genre.toString();
+    // }
     
 }
