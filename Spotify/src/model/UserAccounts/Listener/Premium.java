@@ -28,4 +28,13 @@ public class Premium extends Listener {
     public void setLeftOverDays(int leftOverDays) {
         this.leftOverDays = leftOverDays;
     }
+    @Override
+    public String toString(){
+        StringBuilder context = new StringBuilder(super.toString());
+        context.append("\n");
+        context.append("left over days : ");
+        context.append(leftOverDays);
+        context.append("\n");
+        return context.toString();
+    }
 }

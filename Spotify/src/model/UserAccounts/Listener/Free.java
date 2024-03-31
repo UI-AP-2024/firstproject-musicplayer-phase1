@@ -21,4 +21,17 @@ public class Free extends Listener {
     public static int getLimitAddMusicToPlaylist() {
         return limitAddMusicToPlaylist;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder context = new StringBuilder(super.toString());
+        context.append("\n");
+        context.append("limit Create Playlist : ");
+        context.append(limitCreatePlaylist);
+        context.append("\n");
+        context.append("limit Create Playlist : ");
+        context.append(limitCreatePlaylist);
+        context.append("\n");
+        return context.toString();
+    }
 }
