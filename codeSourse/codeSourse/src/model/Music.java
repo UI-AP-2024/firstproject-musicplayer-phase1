@@ -14,8 +14,23 @@ public class Music extends Audio {
     public String getLyrics() {
         return lyrics;
     }
-
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
+    }
+    //*********************************************
+    @Override
+    public String toString() {
+        return "Music{" +
+                "uniqueId=" + getUniqeId() +
+                ", title='" + getTitle() + '\'' +
+                ", artist='" + getArtist() + '\'' +
+                ", playCount=" + getPlayCount() +
+                ", likes=" + getLikes() +
+                ", releaseDate=" + getReleaseDate() +
+                ", genre=" + getGenre() +
+                ", audioLink='" + getAudioLink() + '\'' +
+                ", cover='" + getCover() + '\'' +
+                ", lyrics='" + lyrics + '\'' +
+                '}';
     }
 }

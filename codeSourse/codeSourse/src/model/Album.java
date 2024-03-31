@@ -24,9 +24,12 @@ public class Album {
         this.name = name;
     }
     //*********************************************
-
+   @Override
     public String toString(){
-        return "Album{" + "uniqeId=" + uniqeId + ", name='" + name + '\'' + '}' ;
+        return "Album{" +
+                "uniqeId=" + uniqeId +
+                ", name='" + name + '\'' +
+                '}' ;
     }
 
 }

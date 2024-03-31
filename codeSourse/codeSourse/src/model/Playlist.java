@@ -52,4 +52,13 @@ public class Playlist {
     public void addAudio(String audio){
         audios.add(audio);
     }
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", Username='" + userName + '\'' +
+                ", audios=" + audios +
+                '}';
+    }
 }

@@ -78,6 +78,7 @@ public abstract class Audio {
     public void setArtist(String artist) {
         this.artist = artist;
     }
+
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
@@ -101,11 +102,23 @@ public abstract class Audio {
     public void setCover(String cover) {
         this.cover = cover;
     }
+
+    //*********************************************
+    @Override
+    public String toString() {
+        return "Audio{" +
+                "uniqueId=" + uniqeId +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", playCount=" + playCount +
+                ", likes=" + likes +
+                ", releaseDate=" + releaseDate +
+                ", genre=" + genre +
+                ", audioLink='" + audioLink + '\'' +
+                ", cover='" + cover + '\'' +
+                '}';
+    }
 }
-
-
-
-
 
 
 
