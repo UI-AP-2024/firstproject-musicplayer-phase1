@@ -3,7 +3,7 @@ package model.user;
 import java.util.Date;
 
 public abstract class User {
-    private final String id;
+    private final String username;
     private String password;
     private String firstName;//type?
     private String lastName;//?
@@ -11,19 +11,19 @@ public abstract class User {
     private String phoneNumber;
     private Date birthDate;
     private static long counter =0;
-    public User(String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public User(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
             Date birthDate) {
         counter++;
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
-        this.birthDate = birthDate;
-        this.id=String.valueOf(counter)+"-"+firstName+"-"+lastName;   
+        this.birthDate = birthDate;  
     }
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
     public String getPassword() {
         return password;

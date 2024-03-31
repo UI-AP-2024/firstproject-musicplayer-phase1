@@ -10,9 +10,9 @@ public class Podcaster extends Artist{
 
     
 
-    public Podcaster(String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public Podcaster(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
             Date birthDate, String biographi) {
-        super(password, firstName, lastName, emailAddress, phoneNumber, birthDate, biographi);
+        super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, biographi);
         podcastList = new ArrayList<>();
     }
 

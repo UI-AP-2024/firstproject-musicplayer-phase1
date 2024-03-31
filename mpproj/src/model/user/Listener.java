@@ -14,9 +14,9 @@ public class Listener extends User{
     private Map<Long,Long> audioPlays;
     private Date premiumExpirationDate;
     private ArrayList<Genre> favoriteGenres;
-    public Listener(String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public Listener(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
             Date birthDate, double accountCredit) {
-        super(password, firstName, lastName, emailAddress, phoneNumber, birthDate);
+        super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate);
         this.accountCredit = accountCredit;//not sure where to initilaze it
         listOfPlayLists = new ArrayList<>();
         audioPlays = new HashMap<>();
