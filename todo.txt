@@ -3,3 +3,13 @@ toString
 data base control
 set array list -> insert to arraylist
 album artist name -> artist username or artist itself
+listener -> abstract ? first sign up -> free listener?
+Strong password builder ad offer to user
+//////////////
+for view :
+Your password must be have at least
+
+8 characters long
+1 uppercase & 1 lowercase character
+1 number
+///////////
