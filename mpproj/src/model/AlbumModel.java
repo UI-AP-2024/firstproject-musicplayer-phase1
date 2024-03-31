@@ -15,7 +15,7 @@ public class AlbumModel {
         this.id = ++tempID;
         this.albumName = albumName;
         this.artistName = artistName;
-        this.musics = new ArrayList<>();
+        this.musics = new ArrayList<MusicModel>();
     }
 
     public int getId() {

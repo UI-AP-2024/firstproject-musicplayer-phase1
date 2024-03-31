@@ -21,10 +21,10 @@ public abstract class ListenerModel extends UserAccountModel {
     public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, int accountCredit) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = accountCredit;
-        this.playlists = new ArrayList<>();
-        this.playsCount = new HashMap<>();
+        this.playlists = new ArrayList<PlaylistModel>();
+        this.playsCount = new HashMap<AudioModel, Integer>();
         this.subscriptionExpirationDate = new Date();
-        this.favoriteGenres = new ArrayList<>();
+        this.favoriteGenres = new ArrayList<GenreModel>();
     }
 
     public int getAccountCredit() {

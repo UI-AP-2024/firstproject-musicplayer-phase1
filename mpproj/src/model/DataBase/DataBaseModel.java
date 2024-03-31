@@ -12,15 +12,15 @@ public class DataBaseModel {
     private ArrayList<UserAccountModel> users;
     private ArrayList<AudioModel> audios;
     private ArrayList<ReportModel> reports;
+
+    private DataBaseModel() {
+        this.users = new ArrayList<UserAccountModel>();
+        this.audios = new ArrayList<AudioModel>();
+        this.reports = new ArrayList<ReportModel>();
+    }
     private static DataBaseModel dataBase;
 
-    public DataBaseModel() {
-        this.users = new ArrayList<>();
-        this.audios = new ArrayList<>();
-        this.reports = new ArrayList<>();
-    }
-
-    public static DataBaseModel getDataBase() {
+    private static DataBaseModel getDataBase() {
         if (dataBase == null)
             dataBase = new DataBaseModel();
         return dataBase;
@@ -41,8 +41,8 @@ public class DataBaseModel {
         this.users = users;
     }
 
-    public void setAudios(ArrayList<AudioModel> audio) {
-        this.audios = audio;
+    public void setAudios(ArrayList<AudioModel> audios) {
+        this.audios = audios;
     }
 
     public void setReports(ArrayList<ReportModel> reports) {

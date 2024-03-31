@@ -15,7 +15,7 @@ public class PlaylistModel {
         this.id = ++tempID;
         this.playlistName = playlistName;
         this.creatorName = creatorName;
-        this.audios = new ArrayList<>();
+        this.audios = new ArrayList<AudioModel>();
     }
 
     public int getId() {

@@ -11,7 +11,7 @@ public abstract class ArtistModel extends UserAccountModel {
     private String biography;
     public ArtistModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double income, String biography) {
         super(username, password, name, email, phoneNumber, birthday);
-        this.followers = new ArrayList<>();
+        this.followers = new ArrayList<UserAccountModel>();
         this.income = income;
         this.biography = biography;
     }
