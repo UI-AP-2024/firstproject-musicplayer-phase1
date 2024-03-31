@@ -13,13 +13,13 @@ public class Main {
         while (!entry.equals("End")){
             entry=sin.nextLine();
             String[] enter = entry.split("-");
-            if(enter[0].equals("Signup")){
+            if(enter[0].equals("Signup") && enter[1]!=null && enter[2]!=null && enter[3]!=null && enter[4]!=null && enter[5]!=null && enter[6]!=null && enter[7]!=null){
                 if(enter[1].equals("L"))
                     ListenerView.getListener().signUp(enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]));
-                else
+                else if(enter[8]!=null)
                     ArtistView.getArtistView().signUp(enter[1],enter[2], enter[3], enter[4], enter[5], enter[6], new Date(enter[7]),enter[8]);
             }
-            else if(enter[0].equals("Login")){
+            else if(enter[0].equals("Login") && enter[1]!=null && enter[2]!=null){
                 for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
                     if(Database.getDatabase().getUsers().get(i).getUsername().equals(enter[1])){
                         User user = Database.getDatabase().getUsers().get(i);

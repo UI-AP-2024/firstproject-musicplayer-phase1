@@ -5,13 +5,14 @@ import Model.User;
 import java.util.Date;
 import java.util.Scanner;
 public class AdminView {
-    private  AdminController view;
+    private  AdminController view = new AdminController();
     private static AdminView admin;
     private AdminView(){
     }
     public static AdminView getAdmin(){
         if(admin==null)
             admin = new AdminView();
+
         return admin;
     }
     public void login(String userName,String password){
@@ -43,7 +44,7 @@ public class AdminView {
                 System.out.println(view.showOneArtistInfo(commands[1]));
             else if(commands[0].equals("Reports"))
                 System.out.println(view.showReports());
-            else
+            else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");
         }
         //go to main menu

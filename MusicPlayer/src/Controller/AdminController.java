@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class AdminController extends User{
+public class AdminController {
     private AdminModel model ;
-    private AdminController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
-        super(username,password,fullName,email,phoneNumber,birthDate);
-    }
+    public AdminController(){};
     public boolean enterUserPanel(String username, String password){
         return AdminModel.getAdmin().getUsername().equals(username) && AdminModel.getAdmin().getPassword().equals(password);
     }
@@ -63,6 +61,6 @@ public class AdminController extends User{
         return show.toString();
     }
     public String showUserInfo(){
-        return "Username: "+ getUsername() + "\n" + "Full Name: " + getFullName() + "\nPhone Number: " + getPhoneNumber() + "\nEmail: " + getEmail() + "\nBirth: " + getBirthDate();
+        return "Username: "+ model.getUsername() + "\n" + "Full Name: " + model.getFullName() + "\nPhone Number: " + model.getPhoneNumber() + "\nEmail: " + model.getEmail() + "\nBirth: " + model.getBirthDate();
     }
 }
