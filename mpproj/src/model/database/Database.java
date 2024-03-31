@@ -1,0 +1,64 @@
+package model.database;
+
+import java.util.ArrayList;
+
+import model.audio.Audio;
+import model.user.Report;
+import model.user.User;
+
+public class Database {
+    private ArrayList<User> allUsers;
+    private ArrayList<Audio> allAudios;
+    private ArrayList<Report> allReports;
+
+    private static Database database;
+
+    private Database() {
+        allAudios = new ArrayList<>();
+        allReports = new ArrayList<>();
+        allUsers = new ArrayList<>();
+    }
+
+    public static Database getDatabase() {//semi singleton
+        if (database == null)
+            database = new Database();
+        return database;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        return allUsers;
+    }
+
+    public ArrayList<Audio> getAllAudio() {
+        return allAudios;
+    }
+
+    public ArrayList<Report> getAllReports() {
+        return allReports;
+    }
+
+    public void setAllUsers(User user) {
+        this.allUsers.add(user);
+    }
+
+    public void setAllAudio(Audio audio) {
+        this.allAudios.add(audio);
+    }
+
+    public void setAllReports(Report report) {
+        this.allReports.add(report);
+    }
+    // public void setAllUsers(ArrayList<User> allUsers) {
+    //     this.allUsers = allUsers;
+    // }
+
+    // public void setAllAudio(ArrayList<Audio> allAudio) {
+    //     this.allAudio = allAudio;
+    // }
+
+    // public void setAllReports(ArrayList<Report> allReports) {
+    //     this.allReports = allReports;
+    // }
+
+    
+}
