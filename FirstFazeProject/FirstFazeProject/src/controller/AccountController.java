@@ -3,7 +3,6 @@ import model.*;
 import view.AccountView;
 
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AccountController {
@@ -101,12 +100,33 @@ public class AccountController {
         for (UserAccount userAccount : Database.getData().getAllUsers()){
             if (Objects.equals(userAccount.getUniqueUserName(), answers[1])){
                 if(Objects.equals(userAccount.getPassword(), answers[2])){
-                    AccountView.getAccountView().showLoginPanel(userAccount);
+                    AccountView.getAccountView().successfullyLogin(userAccount);
                 }
             }
         }
     }
     public void loginPanelOrders(UserAccount user, String answer){
-        
+        if (Objects.equals(answer, "Logout")){
+            AccountView.getAccountView().showMainMenu();
+        }else if (Objects.equals(answer, "AccountInfo")){
+            StringBuilder result = new StringBuilder("Account's info :\r\n");
+            result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
+            result.append("Full Name : ").append(user.getFullName()).append("\r\n");
+            result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
+            result.append("Birth Date : ").append(user.getBirthDate()).append("\r\n");
+            result.append("Phone Number : ").append(user.getPhoneNumber());
+            AccountView.getAccountView().showAccountInfo(result);
+            AccountView.getAccountView().showLoginPanel(user);
+        }else if (Objects.equals(answer, "GetSuggestions")) {
+            if (user instanceof Listener){
+                AccountView.getAccountView().showResultGetGenres(((Listener) user).getSuggestions((Listener)user));
+                AccountView.getAccountView().showLoginPanel(user);
+            }else {
+                AccountView.getAccountView().showResultGetGenres(new StringBuilder("Your account is not the listener type"));
+                AccountView.getAccountView().showLoginPanel(user);
+            }
+        }
+        String[] answers = answer.split(" -");
+        System.out.println("here");
     }
 }

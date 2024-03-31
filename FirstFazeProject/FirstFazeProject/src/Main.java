@@ -12,3 +12,4 @@ public class Main {
 //Signup -L -masih -masihMMM83 -msaihroughai -masihmasih@gmail.com -09135111562 -2005.1.8. -ahfbkginvunbhdnjkj
 //Rock,Pop,Society,History
 //Login -masih -masihMMM83
+//date print in account info

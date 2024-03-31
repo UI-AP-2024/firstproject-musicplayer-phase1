@@ -56,4 +56,16 @@ public class Listener extends UserAccount{
     public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
     }
+    public StringBuilder getSuggestions(Listener person){
+        int counter = 1;
+        StringBuilder result = new StringBuilder("Audios you might like : ");
+        for (Audio audio : Database.getData().getAllAudios()){
+            for (Genre genre1 : person.getFavoriteGenres()){
+                if (genre1 == audio.getGenre()){
+                    result.append(counter++).append("_").append(audio.getAudioName()).append("\r\n");
+                }
+            }
+        }
+        return result;
+    }
 }
