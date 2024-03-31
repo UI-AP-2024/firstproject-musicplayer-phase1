@@ -25,6 +25,58 @@ public abstract class Audio {
         this.id=audioCounter;
         this.link = "htpps://fakepotify.com/Audio/"+String.valueOf(id)+"/"+audioName+String.valueOf(id);
     }
+    public void setAudioName(String audioName) {
+        this.audioName = audioName;
+    }
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+    public void setNumberOfPlays(long numberOfPlays) {
+        this.numberOfPlays = numberOfPlays;
+    }
+    public void setNumberOfLikes(long numberOfLikes) {
+        this.numberOfLikes = numberOfLikes;
+    }
+    public void setLink(String link) {
+        this.link = link;
+    }
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+    public static void setAudioCounter(long audioCounter) {
+        Audio.audioCounter = audioCounter;
+    }
+    public long getNumberOfLikes() {
+        return numberOfLikes;
+    }
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+    public Genre getGenre() {
+        return genre;
+    }
+    public String getLink() {
+        return link;
+    }
+    public String getCover() {
+        return cover;
+    }
+    public static long getAudioCounter() {
+        return audioCounter;
+    }
+    public long getId() {
+        return id;
+    }
+    public String getAudioName() {
+        return audioName;
+    }
+    public String getArtistName() {
+        return artistName;
+    }
+    public long getNumberOfPlays() {
+        return numberOfPlays;
+    }
+    
     
 
     
