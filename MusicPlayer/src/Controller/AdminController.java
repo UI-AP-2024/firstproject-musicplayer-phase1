@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 
 public class AdminController {
-    private AdminModel model ;
     public AdminController(){};
     public boolean enterUserPanel(String username, String password){
         return AdminModel.getAdmin().getUsername().equals(username) && AdminModel.getAdmin().getPassword().equals(password);
@@ -61,6 +60,6 @@ public class AdminController {
         return show.toString();
     }
     public String showUserInfo(){
-        return "Username: "+ model.getUsername() + "\n" + "Full Name: " + model.getFullName() + "\nPhone Number: " + model.getPhoneNumber() + "\nEmail: " + model.getEmail() + "\nBirth: " + model.getBirthDate();
+        return "Username: "+ AdminModel.getAdmin().getUsername() + "\n" + "Full Name: " + AdminModel.getAdmin().getFullName() + "\nPhone Number: " + AdminModel.getAdmin().getPhoneNumber() + "\nEmail: " + AdminModel.getAdmin().getEmail() + "\nBirth: " + AdminModel.getAdmin().getBirthDate();
     }
 }

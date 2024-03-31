@@ -74,7 +74,7 @@ public class ArtistView {
                 else
                     ((PodcasterController) view).publishPodcast(commands[2], Genre.TrueCrime,commands[4],commands[5],commands[6]);
             }
-            else
+            else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");
         }
 

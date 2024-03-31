@@ -137,9 +137,9 @@ public class ListenerView {
                  view.increaseCredit(Integer.parseInt(commands[1]));
                  System.out.println("Done!");
              }
-             else if(commands[0].equals(" GetPremium"))
+             else if(commands[0].equals("GetPremium"))
                  System.out.println(view.buyOrExtendSubscription(Integer.parseInt(commands[1])));
-             else
+             else if(!commands[0].equals("Logout"))
                  System.out.println("Wrong command!");
          }
      }
