@@ -1,6 +1,7 @@
 package model.AccountUser.Listener;
 
 import model.AccountUser.AccountUser;
+import model.Audio.Audio;
 import model.Genre;
 import model.Playlist;
 
@@ -10,7 +11,7 @@ import java.util.*;
 public class Listener extends AccountUser {
     private double accountBalance;
     private List<Playlist> playlists;
-    private Map<String, Integer> playCount;
+    private Map<Audio, Integer> playCount;
     private Date subEndDate;
     private List<Genre> favoriteGenres;
 
@@ -33,7 +34,7 @@ public class Listener extends AccountUser {
         return playlists;
     }
 
-    public Map<String, Integer> getPlayCountByAudio() {
+    public Map<Audio, Integer> getPlayCountByAudio() {
         return playCount;
     }
 
@@ -54,7 +55,7 @@ public class Listener extends AccountUser {
         this.playlists = playlists;
     }
 
-    public void setPlayCountByAudio(Map<String, Integer> playCount) {
+    public void setPlayCountByAudio(Map<Audio, Integer> playCount) {
         this.playCount = playCount;
     }
 
