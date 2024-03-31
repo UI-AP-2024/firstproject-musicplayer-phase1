@@ -37,28 +37,28 @@ public class Database {
         return allReports;
     }
 
-    public void setAllUsers(User user) {
+    public void addToAllUsers(User user) {
         this.allUsers.add(user);
     }
 
-    public void setAllAudio(Audio audio) {
+    public void addToAllAudio(Audio audio) {
         this.allAudios.add(audio);
     }
 
-    public void setAllReports(Report report) {
+    public void addToAllReports(Report report) {
         this.allReports.add(report);
     }
-    // public void setAllUsers(ArrayList<User> allUsers) {
-    //     this.allUsers = allUsers;
-    // }
+    public void setAllUsers(ArrayList<User> allUsers) {
+        this.allUsers = allUsers;
+    }
 
-    // public void setAllAudio(ArrayList<Audio> allAudio) {
-    //     this.allAudio = allAudio;
-    // }
+    public void setAllAudio(ArrayList<Audio> allAudio) {
+        this.allAudios = allAudio;
+    }
 
-    // public void setAllReports(ArrayList<Report> allReports) {
-    //     this.allReports = allReports;
-    // }
+    public void setAllReports(ArrayList<Report> allReports) {
+        this.allReports = allReports;
+    }
 
     
 }

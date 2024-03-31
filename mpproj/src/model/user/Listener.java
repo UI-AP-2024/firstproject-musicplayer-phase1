@@ -43,24 +43,24 @@ public class Listener extends User{
     public void setPremiumExpirationDate(Date premiumExpirationDate) {
         this.premiumExpirationDate = premiumExpirationDate;
     }
-    public void setListOfPlayLists(PlayList PlayList) {
+    public void setListOfPlayLists(ArrayList<PlayList> listOfPlayLists) {//better not to use
+        this.listOfPlayLists = listOfPlayLists;
+    }
+    public void setAudioPlays(Map<Long, Long> audioPlays) {//better not to use
+        this.audioPlays = audioPlays;
+    }
+    public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {//better not to use
+        this.favoriteGenres = favoriteGenres;
+    }
+    public void addToListOfPlayLists(PlayList PlayList) {
         this.listOfPlayLists.add(PlayList);
     }
-    public void setAudioPlays(long audioId,long audioPlays) {
+    public void addToAudioPlays(long audioId,long audioPlays) {
         this.audioPlays.put(audioId, audioPlays);
     }
-    public void setFavoriteGenres(Genre favoriteGenre) {
+    public void addToFavoriteGenres(Genre favoriteGenre) {
         this.favoriteGenres.add(favoriteGenre);
     }
-    // public void setListOfPlayLists(ArrayList<PlayList> listOfPlayLists) {
-    //     this.listOfPlayLists = listOfPlayLists;
-    // }
-    // public void setAudioPlays(Map<Long, Long> audioPlays) {
-    //     this.audioPlays = audioPlays;
-    // }
-    // public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
-    //     this.favoriteGenres = favoriteGenres;
-    // }
     
     
     

@@ -2,7 +2,7 @@ package model.audio;
 import java.util.ArrayList;
 
 public class PlayList {
-    private String id;
+    private final String id;
     private String playListName;
     private String createrName;
     private ArrayList<Audio> audioList;
@@ -29,12 +29,8 @@ public class PlayList {
     public static long getPlaylistCounter() {
         return playlistCounter;
     }
-    // public void setId(String id) {
-    //     this.id = id;
-    // }
     public void setPlayListName(String playListName) {
         this.playListName = playListName;
-        setId();
     }
     public void setCreaterName(String createrName) {
         this.createrName = createrName;
@@ -45,9 +41,9 @@ public class PlayList {
     public static void setPlaylistCounter(long playlistCounter) {
         PlayList.playlistCounter = playlistCounter;
     }
-    private void setId(){
-        this.id = String.valueOf(playlistCounter)+"/"+playListName;
-    }
+    // private void setId(){
+    //     this.id = String.valueOf(playlistCounter)+"/"+playListName;
+    // }
     
     
 }

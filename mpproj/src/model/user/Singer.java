@@ -17,10 +17,10 @@ public class Singer extends Artist{
         return albumList;
     }
 
-    // public void setPodcastList(ArrayList<Podcast> podcastList) {
-    //     this.podcastList = podcastList;
-    // }
-    public void setAlbumList(Album album) {
+    public void setAlbumList(ArrayList<Album> albumList) {
+        this.albumList = albumList;
+    }
+    public void addToAlbumList(Album album) {
         this.albumList.add(album);
     }
     

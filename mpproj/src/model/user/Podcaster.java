@@ -20,10 +20,10 @@ public class Podcaster extends Artist{
         return podcastList;
     }
 
-    // public void setPodcastList(ArrayList<Podcast> podcastList) {
-    //     this.podcastList = podcastList;
-    // }
-    public void setPodcastList(Podcast podcast) {
+    public void setPodcastList(ArrayList<Podcast> podcastList) {
+        this.podcastList = podcastList;
+    }
+    public void addToPodcastList(Podcast podcast) {
         this.podcastList.add(podcast);
     }
     

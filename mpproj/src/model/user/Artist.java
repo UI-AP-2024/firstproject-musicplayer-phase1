@@ -17,10 +17,10 @@ public class Artist extends User {
     public void setIncome(double income) {
         this.income = income;
     }
-    // public void setFollowers(ArrayList<User> followers) {//change to apend
-    //     this.followers = followers;
-    // }
-    public void setFollowers(User follower) {
+    public void setFollowers(ArrayList<User> followers) {//change to apend
+        this.followers = followers;
+    }
+    public void addFollowers(User follower) {
         this.followers.add(follower);
     }
     public void setBiographi(String biographi) {
