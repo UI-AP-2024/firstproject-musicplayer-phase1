@@ -36,10 +36,6 @@ public class Database {
         this.reports = reports;
     }
 
-    public static Database getDatabase() {
-        return database;
-    }
-
     public ArrayList<UserAccount> getUserAccounts() {
         return userAccounts;
     }
