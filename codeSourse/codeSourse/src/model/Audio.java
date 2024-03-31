@@ -64,43 +64,7 @@ public abstract class Audio {
     public String getCover() {
         return cover;
     }
-    //*********************************************
 
-    public int getUniqeId() {
-        return uniqeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public int getPlayCount() {
-        return playCount;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public String getAudioLink() {
-        return audioLink;
-    }
-
-    public String getCover() {
-        return cover;
-    }
     //*********************************************
 
     public void setUniqeId(int uniqeId) {
@@ -113,6 +77,9 @@ public abstract class Audio {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public void setReleaseDate(Date releaseDate) {
