@@ -70,4 +70,9 @@ public class UserController {
         }
         return "Invalid username";
     }
+
+    public void logout()
+    {
+        database.setLogedInUser(null);
+    }
 }
