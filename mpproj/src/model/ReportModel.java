@@ -1,24 +1,24 @@
 package model;
 
-import model.UserAccount.Artist.Artist;
-import model.UserAccount.UserAccount;
+import model.UserAccount.Artist.ArtistModel;
+import model.UserAccount.UserAccountModel;
 
-public class Report {
-    private UserAccount reporterUser;
-    private Artist reportedArtist;
+public class ReportModel {
+    private UserAccountModel reporterUser;
+    private ArtistModel reportedArtist;
     private String reportDescription;
 
-    public Report(UserAccount reporterUser, Artist reportedArtist, String reportDescription) {
+    public ReportModel(UserAccountModel reporterUser, ArtistModel reportedArtist, String reportDescription) {
         this.reporterUser = reporterUser;
         this.reportedArtist = reportedArtist;
         this.reportDescription = reportDescription;
     }
 
-    public UserAccount getReporterUser() {
+    public UserAccountModel getReporterUser() {
         return reporterUser;
     }
 
-    public Artist getReportedArtist() {
+    public ArtistModel getReportedArtist() {
         return reportedArtist;
     }
 
@@ -26,11 +26,11 @@ public class Report {
         return reportDescription;
     }
 
-    public void setReporterUser(UserAccount reporterUser) {
+    public void setReporterUser(UserAccountModel reporterUser) {
         this.reporterUser = reporterUser;
     }
 
-    public void setReportedArtist(Artist reportedArtist) {
+    public void setReportedArtist(ArtistModel reportedArtist) {
         this.reportedArtist = reportedArtist;
     }
 

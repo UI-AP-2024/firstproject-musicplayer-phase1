@@ -1,24 +1,23 @@
 package model.UserAccount;
 
-import model.DataBase.DataBase;
-
 import java.util.Date;
 
-public abstract class UserAccount {
+public abstract class UserAccountModel {
     private String username;
     private String password;
     private StringBuilder name;
     private String email;
     private String phoneNumber;
-    private final Date birthday;
+    private Date birthday;
 
-    public UserAccount(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
+
+    public UserAccountModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.birthday = new Date();
+        this.birthday = birthday;
     }
 
     public String getUsername() {
@@ -36,7 +35,6 @@ public abstract class UserAccount {
     public String getEmail() {
         return email;
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -64,4 +62,9 @@ public abstract class UserAccount {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 }
+

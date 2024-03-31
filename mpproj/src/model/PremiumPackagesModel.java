@@ -1,12 +1,12 @@
 package model;
-public enum PremiumPackages {
+public enum PremiumPackagesModel {
     FIRST(5, 30), SECOND(9, 60), THIRD(14, 180);
 
     private final int cash;
     private final int days;
 
 
-    PremiumPackages(int cash, int days) {
+    PremiumPackagesModel(int cash, int days) {
         this.cash = cash;
         this.days = days;
     }

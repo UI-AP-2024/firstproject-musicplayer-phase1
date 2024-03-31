@@ -1,9 +1,9 @@
 package model.UserAccount.Listener;
 
-import model.Audio.Audio;
+import model.Audio.AudioModel;
 import model.Genre;
 import model.Playlist;
-import model.UserAccount.UserAccount;
+import model.UserAccount.UserAccountModel;
 
 import java.lang.reflect.AnnotatedArrayType;
 import java.util.ArrayList;
@@ -12,13 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Listener extends UserAccount {
+public class ListenerModel extends UserAccountModel {
     private int accountCredit;
-    private final ArrayList<Playlist> playlists;
-    private Map<Audio, Integer> playsCount;
+    private ArrayList<Playlist> playlists;
+    private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
     private ArrayList<Genre> favoriteGenres;
-    public Listener(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, int accountCredit) {
+    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, int accountCredit) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = accountCredit;
         this.playlists = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Listener extends UserAccount {
         return playlists;
     }
 
-    public Map<Audio, Integer> getPlaysCount() {
+    public Map<AudioModel, Integer> getPlaysCount() {
         return playsCount;
     }
 
@@ -51,11 +51,15 @@ public class Listener extends UserAccount {
         this.accountCredit = accountCredit;
     }
 
-    public void setPlaysCount(Map<Audio, Integer> playsCount) {
+    public void setPlaysCount(Map<AudioModel, Integer> playsCount) {
         this.playsCount = playsCount;
     }
 
     public void setFavoriteGenres(ArrayList<Genre> favoriteGenres) {
         this.favoriteGenres = favoriteGenres;
+    }
+
+    public void setPlaylists(ArrayList<Playlist> playlists) {
+        this.playlists = playlists;
     }
 }

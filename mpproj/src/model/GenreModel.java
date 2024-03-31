@@ -1,4 +1,4 @@
 package model;
-public enum Genre {
+public enum GenreModel {
     ROCK, POP ,JAZZ ,HIPHOP ,COUNTRY,TRUE_CRIME, SOCIETY,INTERVIEW, HISTORY
 }

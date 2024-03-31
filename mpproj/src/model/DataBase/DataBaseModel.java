@@ -1,35 +1,35 @@
 package model.DataBase;
 
-import model.Audio.Audio;
+import model.Audio.AudioModel;
 import model.Report;
-import model.UserAccount.UserAccount;
+import model.UserAccount.UserAccountModel;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class DataBase {
+public class DataBaseModel {
 
-    private ArrayList<UserAccount> users;
-    private ArrayList<Audio> audios;
+    private ArrayList<UserAccountModel> users;
+    private ArrayList<AudioModel> audios;
     private ArrayList<Report> reports;
-    private static DataBase dataBase;
+    private static DataBaseModel dataBase;
 
-    public DataBase() {
+    public DataBaseModel() {
         this.users = new ArrayList<>();
         this.audios = new ArrayList<>();
         this.reports = new ArrayList<>();
     }
 
-    public static DataBase getDataBase() {
+    public static DataBaseModel getDataBase() {
         if (dataBase == null)
-            dataBase = new DataBase();
+            dataBase = new DataBaseModel();
         return dataBase;
     }
-    public ArrayList<UserAccount> getUsers() {
+    public ArrayList<UserAccountModel> getUsers() {
         return users;
     }
 
-    public ArrayList<Audio> getAudios() {
+    public ArrayList<AudioModel> getAudios() {
         return audios;
     }
 
@@ -37,11 +37,11 @@ public class DataBase {
         return reports;
     }
 
-    public void setUsers(ArrayList<UserAccount> users) {
+    public void setUsers(ArrayList<UserAccountModel> users) {
         this.users = users;
     }
 
-    public void setAudios(ArrayList<Audio> audio) {
+    public void setAudios(ArrayList<AudioModel> audio) {
         this.audios = audio;
     }
 
