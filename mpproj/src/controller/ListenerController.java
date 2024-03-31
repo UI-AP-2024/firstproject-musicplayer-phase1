@@ -82,6 +82,18 @@ public class ListenerController {
     public void loginListener(Listener listener){
         setListener(listener);
     }
+
+    public String ShowAccountInfo(){
+        String txt="Account info:"+
+        "\nuser name : "+getListener().getUsername()+
+        "\nFirst name : "+getListener().getFirstName()+
+        "\nLast name : "+getListener().getLastName()+
+        "\nemail address: "+getListener().getEmailAddress()+
+        "\npassword : "+getListener().getPassword()+
+        "\nbirth date : "+String.valueOf(getListener().getBirthDate())+
+        "\nAccount Credit : "+String.valueOf(getListener().getAccountCredit());
+        return txt;
+    }
     
     
 }

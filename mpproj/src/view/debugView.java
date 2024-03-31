@@ -58,7 +58,8 @@ public class DebugView {
         }
         if(tmp instanceof Listener){
             System.out.println("Is listener");
-            
+            txt = ListenerController.getListenerController().ShowAccountInfo();
+            System.out.println(txt);
         }
 
     }
