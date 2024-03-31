@@ -6,9 +6,7 @@ import java.util.Date;
 
 public class SingerController extends ArtistController {
     private SingerModel model;
-    public SingerController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, String biography) {
-        super(username, password, fullName, email, phoneNumber, birthDate, biography);
-    }
+
     public void newAlbum(String albumName){
         model.getAlbums().add(new Album(albumName, model.getFullName()));
     }

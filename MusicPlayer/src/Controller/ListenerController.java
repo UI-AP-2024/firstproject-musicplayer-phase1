@@ -7,12 +7,10 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ListenerController extends User{
+public class ListenerController {
     private ListenerModel model;
     private int count=0;
-    public ListenerController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate) {
-        super(username, password, fullName, email, phoneNumber, birthDate);
-    }
+
     public String signUp(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){

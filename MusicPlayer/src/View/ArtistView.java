@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class ArtistView {
-    private ArtistController view;
+    private ArtistController view=new ArtistController();
     private static ArtistView artistView;
     private ArtistView(){}
     public static ArtistView getArtistView(){
@@ -19,10 +19,7 @@ public class ArtistView {
         return artistView;
     }
     public void signUp(String artist,String userName,String password,String name,String email,String phoneNumber,Date birthDate,String bio){
-        if(view.signUp(artist,userName, password, name, email, phoneNumber, birthDate, bio).equals("Done!")) {
-            view.signUp(artist,userName, password, name, email, phoneNumber, birthDate, bio);
-            login(userName, password);
-        }
+        System.out.println(view.signUp(artist,userName, password, name, email, phoneNumber, birthDate, bio));
     }
     public void login(String userName,String password){
 

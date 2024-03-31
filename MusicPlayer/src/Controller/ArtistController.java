@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ArtistController extends User{
+public class ArtistController {
     private ArtistModel model;
-    public ArtistController(String username, String password, String fullName, String email, String phoneNumber, Date birthDate, String bio) {
-        super(username, password, fullName, email, phoneNumber, birthDate);
+
+    public ArtistController() {
     }
 
-    public String signUp(String artKind,String username, String password, String fullName, String email, String phoneNumber, Date birthDate,String bio){
+    public String signUp(String artKind, String username, String password, String fullName, String email, String phoneNumber, Date birthDate, String bio){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){
                 return "This Username already used!";

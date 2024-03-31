@@ -7,7 +7,7 @@ import com.sun.tools.javac.Main;
 import javax.swing.*;
 import java.util.*;
 public class ListenerView {
-     private ListenerController view;
+     private ListenerController view = new ListenerController();
      private static ListenerView listener;
      private ListenerView(){}
      public static ListenerView getListener(){
