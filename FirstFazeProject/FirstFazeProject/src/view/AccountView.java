@@ -77,10 +77,7 @@ public class AccountView {
         System.out.println("You have login to your panel, now you can use the program ✌");
         showLoginPanel(person);
     }
-    public void showAccountInfo(StringBuilder result){
+    public void showResult(StringBuilder result){
         System.out.println(result);
-    }
-    public void showResultGetGenres(StringBuilder answer){
-        System.out.println(answer);
     }
 }
