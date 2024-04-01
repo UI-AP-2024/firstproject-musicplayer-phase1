@@ -171,17 +171,21 @@ public class DebugView {
         }
         txt=ListenerController.getListenerController().showAllArtists();
         System.out.println(txt);
-        txt=UserController.getUserController().showArtistInfo("Maryaol");
+        txt=ListenerController.getListenerController().showArtistInfo("Maryaol");
         System.out.println(txt);
 
         txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bio);
         System.out.println(txt);
 
-        // tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
         txt=ListenerController.getListenerController().showAllArtists();
         System.out.println(txt);
-        txt=UserController.getUserController().showArtistInfo("Maryaof");
+        txt=ListenerController.getListenerController().showArtistInfo("Maryaof");
         System.out.println(txt);
+
+        // tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
+        txt = ListenerController.getListenerController().followArtist("Maryaol");
+        System.out.println(txt);
+
 
         
         

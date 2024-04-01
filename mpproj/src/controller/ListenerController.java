@@ -11,7 +11,9 @@ import model.database.Database;
 import model.user.Artist;
 import model.user.FreeListener;
 import model.user.Listener;
+import model.user.Podcaster;
 import model.user.PremiumListener;
+import model.user.Singer;
 import model.user.User;
 
 public class ListenerController {
@@ -149,6 +151,37 @@ public class ListenerController {
             }
         }
         return txt;
+    }
+
+    public String showArtistInfo(String username){
+        User user =UserController.getUserController().findUser(username);
+        
+        if(user instanceof Singer){
+            SingerController.getSingerController().setSinger((Singer)user);
+            String txt = SingerController.getSingerController().ShowSingerInfo();
+            return txt;
+        }
+        if(user instanceof Podcaster){
+            PodcasterController.getPodcasterController().setPodcaster((Podcaster)user);
+            String txt =PodcasterController.getPodcasterController().ShowPodcasterInfo();
+            return txt;
+        }
+           
+        return null;
+    }
+
+    public String followArtist(String username){
+        User user = UserController.getUserController().findUser(username);
+        if(user instanceof Artist){
+            ((Artist)user).addFollowers(getListener());
+            return"you've followed '"+username+"' succesfullly";
+        }
+        else if(user == null){
+            return"the username is not valid";
+        }
+        else{
+            return "this user is not an Artist! enter an artist username for following";
+        }
     }
 
     // public String showArtistInfo(){

@@ -104,21 +104,29 @@ public class UserController {
         }
         return null;
     }
-    public String showArtistInfo(String username){
+    public User findUser(String username){
         for(User user : Database.getDatabase().getAllUsers()){
             if(user.getUsername().equals(username)){
-                if(user instanceof Singer){
-                    SingerController.getSingerController().setSinger((Singer)user);
-                    String txt = SingerController.getSingerController().ShowSingerInfo();
-                    return txt;
-                }
-                if(user instanceof Podcaster){
-                    PodcasterController.getPodcasterController().setPodcaster((Podcaster)user);
-                    String txt =PodcasterController.getPodcasterController().ShowPodcasterInfo();
-                    return txt;
-                }
+                return user;
             }
         }
         return null;
+
     }
+    // public String showArtistInfo(String username){
+    //     User user = findUser(username);
+        
+    //     if(user instanceof Singer){
+    //         SingerController.getSingerController().setSinger((Singer)user);
+    //         String txt = SingerController.getSingerController().ShowSingerInfo();
+    //         return txt;
+    //     }
+    //     if(user instanceof Podcaster){
+    //         PodcasterController.getPodcasterController().setPodcaster((Podcaster)user);
+    //         String txt =PodcasterController.getPodcasterController().ShowPodcasterInfo();
+    //         return txt;
+    //     }
+           
+    //     return null;
+    // }
 }
