@@ -219,22 +219,22 @@ public class ListenerController {
         }
         return show.toString();
     }
-    public String showArtistList(){
+    public String showArtistList() {
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.SingerModel.class) || Database.getDatabase().getUsers().get(i).getClass().equals(Model.PodcasterModel.class)){
-                show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
+        for (User user : Database.getDatabase().getUsers()) {
+            if (user instanceof SingerModel || user instanceof PodcasterModel) {
+                show.append("Artist Name: ").append(user.getFullName()).append("\n");
             }
         }
         return show.toString();
     }
     public String showArtist(String userName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
-                ArtistModel artist = (ArtistModel) Database.getDatabase().getUsers().get(i);
+        for (User user : Database.getDatabase().getUsers()) {
+            if(user.getUsername().equals(userName)){
+                ArtistModel artist = (ArtistModel) user;
                 show.append("Artist Name: " + artist.getFullName() + "\n");
-                if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.SingerModel.class)){
+                if(user instanceof SingerModel){
                     show.append("Albums Name:\n");
                     for (int r = 0; r < ((SingerModel) artist).getAlbums().size(); r++) {
                         show.append(((SingerModel) artist).getAlbums().get(r).getAlbumName()+"\n");

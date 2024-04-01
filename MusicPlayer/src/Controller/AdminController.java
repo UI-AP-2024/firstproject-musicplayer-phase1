@@ -13,7 +13,7 @@ public class AdminController {
     public String showPopularSongs(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-             if(Database.getDatabase().getAudios().get(i).getLikeCount() > 10)
+             if(Database.getDatabase().getAudios().get(i).getLikeCount() >=1)
                  show.append(Database.getDatabase().getAudios().get(i).getAudioName());
         }
         return show.toString();
@@ -38,9 +38,9 @@ public class AdminController {
     }
     public String showArtistInfo(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
-            if(Database.getDatabase().getUsers().getClass().equals(ArtistModel.class))
-                show.append("Artist Name: "+Database.getDatabase().getUsers().get(i).getFullName()+ "\n");
+        for (User user : Database.getDatabase().getUsers())
+            if(user instanceof SingerModel || user instanceof PodcasterModel)
+                show.append("Artist Name: "+user.getFullName()+ "\n");
         return show.toString();
     }
     public String showOneArtistInfo(String userName){
