@@ -84,6 +84,15 @@ public class View
                 System.out.println(ListenerController.getListenerController().showArtist(orders[1]));
             else if(orders[0].compareTo("Follow")==0)
                 System.out.println(ListenerController.getListenerController().followArtist(orders[1]));
+            else if(orders[0].compareTo("Search")==0)
+                System.out.println(ListenerController.getListenerController().search(orders[1]));
+            else if (orders[0].compareTo("Logout")==0)
+            {
+                ListenerController.getListenerController().setListener(null);
+                break;
+            }
+            else if(orders[0].compareTo("AccountInfo")==0)
+                System.out.println(Controller.getController().getAccModel().toString());
             else
                 System.out.println("wrong order\ntry again");
         }

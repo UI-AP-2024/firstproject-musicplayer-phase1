@@ -154,4 +154,29 @@ public class ListenerController
             }
         return "artist doesn't exist";
     }
+    public String search(String audioOrArtistName)
+    {
+        boolean firstRound=true;
+        StringBuilder answer=new StringBuilder("");
+        for(AudioModel temp:Database.getDatabase().getAllAudios())
+        {
+            if(firstRound)
+                answer.append("Audios:\n");
+            if(temp!=null && temp.getAudioName().compareTo(audioOrArtistName)==0)
+                answer.append(temp).append("\n");
+            firstRound=false;
+        }
+        firstRound=true;
+        for(AccountUserModel temp :Database.getDatabase().getAllUsers())
+        {
+            if(firstRound)
+                answer.append("Artists:\n");
+            if(temp instanceof ArtistModel && temp.getFullName().compareTo(audioOrArtistName)==0)
+                answer.append(temp).append("\n");
+            firstRound=false;
+        }
+        if(answer.toString().compareTo("")!=0)
+            return answer.toString();
+        return "no result";
+    }
 }
