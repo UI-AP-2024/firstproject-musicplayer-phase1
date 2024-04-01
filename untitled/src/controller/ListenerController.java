@@ -1,14 +1,20 @@
 package controller;
 
 import model.Database;
-import model.audioRelated.AudioModel;
-import model.audioRelated.Genre;
-import model.audioRelated.PlayListModel;
+import model.audioRelated.*;
 import model.users.AccountUserModel;
 import model.users.artists.ArtistModel;
+import model.users.artists.PodcasterModel;
+import model.users.artists.SingerModel;
 import model.users.listeners.FreeListenerModel;
 import model.users.listeners.ListenerModel;
 import model.users.listeners.PremiumListenerModel;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class ListenerController
 {
@@ -136,11 +142,11 @@ public class ListenerController
                 answer.append(temp).append("\n");
         return answer.toString();
     }
-    public String showArtist(String artistUserName)
+    public Object showArtist(String artistUserName)
     {
         for(AccountUserModel temp:Database.getDatabase().getAllUsers())
             if(temp instanceof ArtistModel && temp.getUserName().compareTo(artistUserName)==0)
-                return temp.toString();
+                return temp;
         return "artist doesn't exist";
     }
     public String followArtist(String artistUserName)
@@ -208,6 +214,55 @@ public class ListenerController
                     }
                 answer.append(outPut).append("\n");
             }
+            return answer.toString();
+        }
+        else
+            return "wrong order";
+    }
+    public String doFilter(String filter,String filterBy)
+    {
+        StringBuilder answer=new StringBuilder();
+        if(filter.compareTo("A")==0)
+        {
+            ArtistModel artist=(showArtist(filterBy) instanceof ArtistModel)?(ArtistModel)showArtist(filterBy):null;
+            if(artist!=null)
+            {
+                if(artist instanceof SingerModel)
+                {
+                    for(AlbumModel albumTemp :((SingerModel) artist).getAlbums())
+                        if(albumTemp!=null)
+                            for(MusicModel musicTemp:albumTemp.getMusics())
+                                if(musicTemp!=null)
+                                    answer.append(musicTemp).append("\n");
+                }
+                else if(artist instanceof PodcasterModel)
+                {
+                    for(PodcastModel temp:((PodcasterModel)artist).getPodcasts())
+                        if(temp!=null)
+                            answer.append(temp).append("\n");
+                }
+                return answer.toString();
+            }
+            return "artist not found";
+        }
+        else if(filter.compareTo("G")==0)
+        {
+            for(AudioModel temp:Database.getDatabase().getAllAudios())
+                if(temp!= null && temp.getGenre().toString().compareTo(filterBy)==0)
+                    answer.append(temp).append("\n");
+            return answer.toString();
+        }
+        else if(filter.compareTo("D")==0)
+        {
+            String dateRegex="^\\d{4}/([1][0-2]|[1-9]|[0][1-9])/([1-2][0-9]|30|[0-9]|0[0-9])$";
+            Pattern datePattern=Pattern.compile(dateRegex);
+            if(!datePattern.matcher(filterBy).matches())
+                return "birth date isn't valid";
+            Calendar date =Calendar.getInstance();
+            date.setTime(new Date(filterBy));
+            for(AudioModel temp:Database.getDatabase().getAllAudios())
+                if(temp!=null && temp.getReleaseDate().compareTo(date)==0)
+                    answer.append(temp).append("\n");
             return answer.toString();
         }
         else
