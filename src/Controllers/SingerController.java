@@ -9,6 +9,16 @@ import Extra.Extra;
 import java.util.ArrayList;
 
 public class SingerController extends ArtistController {
+    private static  SingerController singerController;
+    private SingerController()
+    {
+        super();
+    }
+    public SingerController getSingerController()
+    {
+        if(singerController == null) singerController = new SingerController();
+        return singerController;
+    }
     public String addSong(Song song, int albumId)
     {
         Singer singerModel = (Singer)this.getArtistModel();

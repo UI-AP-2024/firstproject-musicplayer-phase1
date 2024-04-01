@@ -12,7 +12,16 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class NormalListenerController extends ListenerController {
-
+    private static NormalListenerController normalListenerController;
+    private NormalListenerController()
+    {
+        super();
+    }
+    public NormalListenerController getNormalListenerController()
+    {
+        if(normalListenerController == null) normalListenerController = new NormalListenerController();
+        return normalListenerController;
+    }
     public String makeNewPlaylist(String name)
     {
         ArrayList<Playlist> playlists = this.getListenerModel().getPlaylists();

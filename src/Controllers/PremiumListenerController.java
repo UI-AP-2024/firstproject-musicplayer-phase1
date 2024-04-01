@@ -14,10 +14,16 @@ import java.util.concurrent.TimeUnit;
 
 public class PremiumListenerController extends ListenerController{
 
-    public PremiumListenerController()
+    private static PremiumListenerController premiumListenerController;
+    private PremiumListenerController()
     {
         super();
         daySubtracter();
+    }
+    public PremiumListenerController getPremiumListenerController()
+    {
+        if(premiumListenerController == null) premiumListenerController = new PremiumListenerController();
+        return premiumListenerController;
     }
     public String makeNewPlaylist(String name)
     {
@@ -88,6 +94,6 @@ public class PremiumListenerController extends ListenerController{
             premiumModel.setRemainingDays(premiumModel.getRemainingDays()-1);
             this.setListenerModel(premiumModel);
             this.getDatabase().updateUser(premiumModel);
-        }, 0 , 1, TimeUnit.DAYS); // 0 = starts immediately after run, 1 day distance, Timeunit = day
+        }, 1 , 1, TimeUnit.DAYS); // 1 = starts one day after run, 1 day distance, Timeunit = day
     }
 }

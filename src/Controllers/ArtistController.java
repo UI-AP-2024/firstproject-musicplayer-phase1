@@ -11,6 +11,13 @@ import javax.xml.crypto.Data;
 import java.util.Map;
 
 public abstract class ArtistController {
+    // the class is abstract, hence it can't follow the singleton pattern
+    // because in singleton pattern we need to make an object of the class in constructor
+    public ArtistController()
+    {
+        database = Database.getInstance();
+        artistModel = (Artist) database.getLogedInUser();
+    }
     private Database database;
 
     public Database getDatabase() {
@@ -31,11 +38,6 @@ public abstract class ArtistController {
         this.artistModel = artistModel;
     }
 
-    public ArtistController()
-    {
-        database = Database.getInstance();
-        artistModel = (Artist) database.getLogedInUser();
-    }
     public abstract double calculateIncome();
     public static int getPlayedCount(Artist artist)
     {
