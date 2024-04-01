@@ -19,6 +19,13 @@ public class SingerController extends ArtistController {
         if(singerController == null) singerController = new SingerController();
         return singerController;
     }
+
+    public void addAlbum(Album album)
+    {
+        Singer singerModel = (Singer)this.getArtistModel();
+        ArrayList<Album> singerModelAlbums = singerModel.getAlbums();
+        singerModelAlbums.add(album);
+    }
     public String addSong(Song song, int albumId)
     {
         Singer singerModel = (Singer)this.getArtistModel();
@@ -39,7 +46,7 @@ public class SingerController extends ArtistController {
 
     public double calculateIncome()
     {
-        int playedCount = ArtistController.getPlayedCount(this.getArtistModel());
+        int playedCount = getPlayedCount();
         this.getArtistModel().setIncome(0.4 * playedCount);
         return this.getArtistModel().getIncome();
     }

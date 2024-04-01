@@ -8,6 +8,7 @@ import Models.User.Listener;
 import Models.User.User;
 
 import javax.xml.crypto.Data;
+import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class ArtistController {
@@ -39,8 +40,9 @@ public abstract class ArtistController {
     }
 
     public abstract double calculateIncome();
-    public static int getPlayedCount(Artist artist)
+    public int getPlayedCount()
     {
+        Artist artist = this.getArtistModel();
         Database tmpDatabase = Database.getInstance();
         int playedCount = 0;
         for(User tmpUser : tmpDatabase.getUsers())
@@ -59,5 +61,15 @@ public abstract class ArtistController {
             }
         }
         return playedCount;
+    }
+
+    public ArrayList<User> showFollowers()
+    {
+        return this.getArtistModel().getFollowers();
+    }
+
+    public String showArtistInfo()
+    {
+        return this.getArtistModel().toString();
     }
 }

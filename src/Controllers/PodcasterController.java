@@ -16,7 +16,7 @@ public class PodcasterController extends ArtistController{
         if(podcasterController == null) podcasterController = new PodcasterController();
         return podcasterController;
     }
-    public void addPodcast(Podcast podcast)
+    public void publishPodcast(Podcast podcast)
     {
         Podcaster podcasterModel = (Podcaster) this.getArtistModel();
         ArrayList<Podcast> podcasts = podcasterModel.getPodcasts();
@@ -25,7 +25,7 @@ public class PodcasterController extends ArtistController{
 
     public double calculateIncome()
     {
-        int playedCount = ArtistController.getPlayedCount(this.getArtistModel());
+        int playedCount = getPlayedCount();
         this.getArtistModel().setIncome(0.5 * playedCount);
         return this.getArtistModel().getIncome();
     }
