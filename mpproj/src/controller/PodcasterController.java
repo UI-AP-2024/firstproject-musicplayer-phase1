@@ -6,29 +6,28 @@ import java.util.regex.Pattern;
 
 import model.database.Database;
 import model.user.FreeListener;
-import model.user.Listener;
-import model.user.Singer;
+import model.user.Podcaster;
 import model.user.User;
 
-public class SingerController {
+public class PodcasterController {
 
-    private static SingerController singerController;
-    private SingerController(){
+    private static PodcasterController podcasterController;
+    private PodcasterController(){
 
     }
-    public static SingerController getSingerController(){
-        if(singerController==null){
-            singerController = new SingerController();
+    public static PodcasterController getPodcasterController(){
+        if(podcasterController==null){
+            podcasterController = new PodcasterController();
         }
-        return singerController;
+        return podcasterController;
     }
 
-    private static Singer singer;
-    public static Singer getSinger() {
-        return singer;
+    private static Podcaster podcaster;
+    public static Podcaster getPodcaster() {
+        return podcaster;
     }
-    public static void setSinger(Singer singer) {
-        SingerController.singer = singer;
+    public static void setPodcaster(Podcaster podcaster) {
+        PodcasterController.podcaster = podcaster;
     }
     
     public boolean emailPassRegex(String email){
@@ -53,7 +52,7 @@ public class SingerController {
         }
         return true;
     }
-    public String signupNewSinger(String username,String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public String signupNewPodcaster(String username,String password, String firstName, String lastName, String emailAddress, String phoneNumber,
             int birthyear ,int birthMonth, int birthday,String biographi){
         if(!(emailPassRegex(emailAddress))){
             return"Please enter a valid email address";
@@ -69,25 +68,25 @@ public class SingerController {
         }
         @SuppressWarnings("deprecation")
         Date birthDate = new Date(birthyear,birthMonth,birthday);
-        Singer tmp = new Singer(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate,biographi);
+        Podcaster tmp = new Podcaster(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate,biographi);
         Database.getDatabase().addToAllUsers(tmp);
-        setSinger(tmp);
+        setPodcaster(tmp);
         return "Thanks for signing up. Your account has been created";
     }
 
-    public void loginSinger(Singer singer){
-        setSinger(singer);
+    public void loginPodcaster(Podcaster podcaster){
+        setPodcaster(podcaster);
     }
 
     public String ShowAccountInfo(){
         String txt="Account info:"+
-        "\nuser name : "+getSinger().getUsername()+
-        "\nFirst name : "+getSinger().getFirstName()+
-        "\nLast name : "+getSinger().getLastName()+
-        "\nemail address: "+getSinger().getEmailAddress()+
-        "\npassword : "+getSinger().getPassword()+
-        "\nbirth date : "+String.valueOf(getSinger().getBirthDate())+
-        "\nIncome : "+String.valueOf(getSinger().getIncome());
+        "\nuser name : "+getPodcaster().getUsername()+
+        "\nFirst name : "+getPodcaster().getFirstName()+
+        "\nLast name : "+getPodcaster().getLastName()+
+        "\nemail address: "+getPodcaster().getEmailAddress()+
+        "\npassword : "+getPodcaster().getPassword()+
+        "\nbirth date : "+String.valueOf(getPodcaster().getBirthDate())+
+        "\nIncome : "+String.valueOf(getPodcaster().getIncome());
         return txt;
     }
 
