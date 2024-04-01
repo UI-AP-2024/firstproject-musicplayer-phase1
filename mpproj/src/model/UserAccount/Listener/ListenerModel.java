@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ListenerModel extends UserAccountModel {
-    private int accountCredit;
+    private double accountCredit;
     private ArrayList<PlaylistModel> playlists;
     private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
@@ -26,7 +26,7 @@ public abstract class ListenerModel extends UserAccountModel {
         this.favoriteGenres = new ArrayList<GenreModel>();
     }
 
-    public int getAccountCredit() {
+    public double getAccountCredit() {
         return accountCredit;
     }
 
@@ -46,7 +46,7 @@ public abstract class ListenerModel extends UserAccountModel {
         return favoriteGenres;
     }
 
-    public void setAccountCredit(int accountCredit) {
+    public void setAccountCredit(double accountCredit) {
         this.accountCredit = accountCredit;
     }
 
