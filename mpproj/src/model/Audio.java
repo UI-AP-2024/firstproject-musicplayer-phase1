@@ -8,7 +8,7 @@ public abstract class Audio {
     private String nameArtist;
     private int numberOfPolys;
     private int numberOfLikes;
-    private Date DateOfRelease;
+    private Date dateOfRelease;
     private Gener gener;
     private String audioLink;
     private String cover;
@@ -19,7 +19,7 @@ public abstract class Audio {
         this.nameArtist = nameArtist;
         this.numberOfPolys = numberOfPolys;
         this.numberOfLikes = numberOfLikes;
-        this.DateOfRelease = dateOfRelease;
+        this.dateOfRelease = dateOfRelease;
         this.gener = gener;
         this.audioLink = audioLink;
         this.cover = cover;
@@ -46,7 +46,7 @@ public abstract class Audio {
     }
 
     public Date getDateOfRelease() {
-        return DateOfRelease;
+        return dateOfRelease;
     }
 
     public Gener getGener() {
@@ -82,7 +82,7 @@ public abstract class Audio {
     }
 
     public void setDateOfRelease(Date dateOfRelease) {
-        DateOfRelease = dateOfRelease;
+        dateOfRelease = dateOfRelease;
     }
 
     public void setGener(Gener gener) {
