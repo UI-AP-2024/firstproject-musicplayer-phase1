@@ -19,11 +19,20 @@ public class ListenerModel extends AccountUserModel
     private Calendar subscriptionExpiration;
     private ArrayList <Genre> favGenres=new ArrayList<>();
     private ArrayList <ArtistModel> followings=new ArrayList<>();
+    private ArrayList <AudioModel> likedAudios=new ArrayList<>();
     public ListenerModel(String userName, String password, String fullName, String email, String phoneNumber, String birthDate)
     {
         super(userName,password,fullName,email,phoneNumber,birthDate);
         this.listenerCredit=50;
         this.subscriptionExpiration=null;
+    }
+    public void setLikedAudios(ArrayList<AudioModel> likedAudios)
+    {
+        this.likedAudios = likedAudios;
+    }
+    public ArrayList<AudioModel> getLikedAudios()
+    {
+        return this.likedAudios;
     }
     public void setListenerCredit(double listenerCredit)
     {
