@@ -180,21 +180,33 @@ public class ListenerControler {
         }
         return "error";
     }
-    public String showArtists(){
+    public  String showArtists(){
         StringBuilder result=new StringBuilder("Artis:\n");
         for(User artist:Database.getDatabase().getUsers()) {
             if (artist instanceof Artist) {
-                result.append("artis name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers()).append(" biography : ").append(((Artist) artist).getBiography()).append("\n");
-                if(artist instanceof Singer){
-                    result.append("musics : ");
-                    for(Album album: ((Singer) artist).getAlbums()){
-                        result.append(album.toString());
+                result.append("artis name :").append(artist.getUsername()).append("\n");
+            }
+        }
+        return String.valueOf(result);
+    }
+    public String showArtist(String userName){
+        StringBuilder result=new StringBuilder("Artis:\n");
+        for(User artist:Database.getDatabase().getUsers()) {
+            if(userName.equals(artist.getUsername())) {
+                if (artist instanceof Artist) {
+                    result.append("artis name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers()).append(" biography : ").append(((Artist) artist).getBiography()).append("\n");
+                    if (artist instanceof Singer) {
+                        result.append("musics : ");
+                        for (Album album : ((Singer) artist).getAlbums()) {
+                            result.append(album.toString());
+                        }
                     }
-                }
-                if(artist instanceof Podcaster){
-                    result.append("podcasts : ");
-                    for(Podcast podcast: ((Podcaster) artist).getPodcasts()){
-                        result.append(podcast.getTitle());
+
+                    if (artist instanceof Podcaster) {
+                        result.append("podcasts : ");
+                        for (Podcast podcast : ((Podcaster) artist).getPodcasts()) {
+                            result.append(podcast.getTitle());
+                        }
                     }
                 }
             }
@@ -276,7 +288,7 @@ public class ListenerControler {
         }
         return "befor :"+str+"now :"+listenerr.getEndSubDate().toString();
     }
-    public String suggestAudio(int n){
+    public String suggestAudio(int n){//ToDo: sugest not comlete
         n=10;
         Map.Entry<Integer,Integer>[] arrmap=listenerr.getListeningHistory().entrySet().toArray(new Map.Entry[listenerr.getListeningHistory().size()]);
         for (int i = 0; i <arrmap.length-1 ; i++) {
@@ -295,5 +307,16 @@ public class ListenerControler {
                 }
             }
         }
+    }
+    public String lyric(int audioId){
+        for(Audio audio:Database.getDatabase().getAudios()){
+            if(audioId==audio.getId()){
+                if(audio instanceof Music)
+                return ((Music) audio).getCaption();
+                if(audio instanceof Podcast)
+                    return ((Music) audio).getCaption();
+            }
+        }
+        return "error : not found";
     }
 }
