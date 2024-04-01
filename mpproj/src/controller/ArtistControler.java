@@ -43,7 +43,7 @@ public class ArtistControler {
             Podcaster artist=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
         }
         setArtist(artist);
-        //add to database
+        //todo:add to database
         artist.setIsLogin(true);
         return  "artist accaount successfully created .";
     }

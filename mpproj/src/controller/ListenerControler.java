@@ -29,7 +29,7 @@ public class ListenerControler {
     public void setListenerr(Listener listenerr) {
         this.listenerr = listenerr;
     }
-
+//todo : regex for sign up
     public String signUpListener(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
         ArrayList<User>users=Database.getDatabase().getUsers();
         for(User user:users){
@@ -108,7 +108,7 @@ public class ListenerControler {
     }
     public boolean islogin(){
         return listenerr.getIsLogin();
-    }
+    }//todo:check if user is login for cammands
     private int generateIdPlaylist(){
         return listenerr.getPlaylistcounter()+ Playlist.getIdcounter();
     }
@@ -131,7 +131,7 @@ public class ListenerControler {
         return "error: no match for audio id or play list name .";
     }
     public String playAudio(int audioId){
-        for (Audio audio:Database.getDatabase().getAudios()){
+        for (Audio audio:Database.getDatabase().getAudios()){//todo: add to history with map
             if(audio.getId()==audioId){
                 audio.setPlayCount(audio.getPlayCount()+1);
                 return "playing "+audio.getTitle();
@@ -173,7 +173,7 @@ public class ListenerControler {
                 if (artist.getUsername().equals(artistusername)){
                     ArrayList<Report> reports=Database.getDatabase().getReports();
                     Report report=new Report(listenerr, (Artist) artist,explanation);
-                    reports.add(report);
+                    Database.getDatabase().getReports().add(report);
                     return "report send";
                 }
             }
