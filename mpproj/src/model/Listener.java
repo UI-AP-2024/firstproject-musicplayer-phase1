@@ -7,7 +7,7 @@ import java.util.Map;
 public class Listener extends UserAccount{
     private int accountCredit;
     private ArrayList<Playlist> playlists;
-    private Map<Audio,Integer> numberOfPlays;
+    private Map<Audio,Integer> numberPlays;
     private Date expirationDate;
     private ArrayList<Gener> favoriteGener;
 
@@ -15,7 +15,7 @@ public class Listener extends UserAccount{
         super(userName, password, name, email, phoneNumber, dateOfBirth);
         this.accountCredit = accountCredit;
         this.playlists = playlists;
-        this.numberOfPlays = numberOfPlays;
+        this.numberPlays = numberOfPlays;
         this.expirationDate = expirationDate;
         this.favoriteGener = favoriteGener;
     }
@@ -28,8 +28,8 @@ public class Listener extends UserAccount{
         return playlists;
     }
 
-    public Map<Audio, Integer> getNumberOfPlays() {
-        return numberOfPlays;
+    public Map<Audio, Integer> getNumberPlays() {
+        return numberPlays;
     }
 
     public Date getExpirationDate() {
@@ -48,8 +48,8 @@ public class Listener extends UserAccount{
         this.playlists = playlists;
     }
 
-    public void setNumberOfPlays(Map<Audio, Integer> numberOfPlays) {
-        this.numberOfPlays = numberOfPlays;
+    public void setNumberPlays(Map<Audio, Integer> numberPlays) {
+        this.numberPlays = numberPlays;
     }
 
     public void setExpirationDate(Date expirationDate) {

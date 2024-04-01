@@ -81,4 +81,46 @@ public class ListenerController {
         } else
             return "ERORR create playlist";
     }
+
+    private static int countAddAudioPlaylist = 0;
+
+    public String addAudioToPlaylist(String nameOfPlaylist, long id) {
+        if (getUserAccount() instanceof Free) {
+            for (Playlist playlist : ((Free) getUserAccount()).getPlaylists()) {
+                if (playlist.getNameOfPlaylist().equals(nameOfPlaylist) && countAddAudioPlaylist < ((Free) getUserAccount()).getLimitAddSong()) {
+                    for (Audio audio : playlist.getListAudio()) {
+                        if (audio.getId() == id) {
+                            countPlaylist++;
+                            playlist.getListAudio().add(audio);
+                            ((Free) getUserAccount()).getPlaylists().remove(playlist);
+                            ((Free) getUserAccount()).getPlaylists().add(playlist);
+                            return "The audio file(" + id + ") was successfully entered into the playlist(" + nameOfPlaylist + ")";
+                        }
+                    }
+                }
+            }
+            if (countPlaylist >= ((Free) getUserAccount()).getLimitAddSong())
+                return "You are allowed to add only 10 audio files";
+            else
+                return "The name of the playlist or the ID of the audio file is wrong";
+        } else if (getUserAccount() instanceof Premium) {
+            for (Playlist playlist : ((Premium) getUserAccount()).getPlaylists()) {
+                if (playlist.getNameOfPlaylist().equals(nameOfPlaylist)) {
+                    for (Audio audio : playlist.getListAudio()) {
+                        if (audio.getId() == id) {
+                            countPlaylist++;
+                            playlist.getListAudio().add(audio);
+                            ((Premium) getUserAccount()).getPlaylists().remove(playlist);
+                            ((Premium) getUserAccount()).getPlaylists().add(playlist);
+                            return "The audio file(" + id + ") was successfully entered into the playlist(" + nameOfPlaylist + ")";
+                        }
+                    }
+                }
+            }
+            return "The name of the playlist or the ID of the audio file is wrong";
+        }
+        return "ERORR add audio to playlist";
+    }
+
+
 }

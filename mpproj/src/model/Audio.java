@@ -6,19 +6,19 @@ public abstract class Audio {
     private long id;
     private String name;
     private String nameArtist;
-    private int numberOfPolys;
+    private int numberOfPlays;
     private int numberOfLikes;
     private Date dateOfRelease;
     private Gener gener;
     private String audioLink;
     private String cover;
 
-    public Audio(long id, String name, String nameArtist, int numberOfPolys, int numberOfLikes, Date dateOfRelease, Gener gener, String audioLink, String cover) {
+    public Audio(long id, String name, String nameArtist, Date dateOfRelease, Gener gener, String audioLink, String cover) {
         this.id = id;
         this.name = name;
         this.nameArtist = nameArtist;
-        this.numberOfPolys = numberOfPolys;
-        this.numberOfLikes = numberOfLikes;
+        this.numberOfPlays = 0;
+        this.numberOfLikes = 0;
         this.dateOfRelease = dateOfRelease;
         this.gener = gener;
         this.audioLink = audioLink;
@@ -37,8 +37,8 @@ public abstract class Audio {
         return nameArtist;
     }
 
-    public int getNumberOfPolys() {
-        return numberOfPolys;
+    public int getNumberOfPlays() {
+        return numberOfPlays;
     }
 
     public int getNumberOfLikes() {
@@ -73,8 +73,8 @@ public abstract class Audio {
         this.nameArtist = nameArtist;
     }
 
-    public void setNumberOfPolys(int numberOfPolys) {
-        this.numberOfPolys = numberOfPolys;
+    public void setNumberOfPlays(int numberOfPlays) {
+        this.numberOfPlays = numberOfPlays;
     }
 
     public void setNumberOfLikes(int numberOfLikes) {

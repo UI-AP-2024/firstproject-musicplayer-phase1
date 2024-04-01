@@ -7,8 +7,8 @@ import java.util.Map;
 public class Premium extends Listener{
     private int daysOfSubs;
 
-    public Premium(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit, ArrayList<Playlist> playlists, Map<Audio, Integer> numberOfPlays, Date expirationDate, ArrayList<Gener> favoriteGener, int daysOfSubs) {
-        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit, playlists, numberOfPlays, expirationDate, favoriteGener);
+    public Premium(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays, Date expirationDate, ArrayList<Gener> favoriteGener, int daysOfSubs) {
+        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit, playlists, numberPlays, expirationDate, favoriteGener);
         this.daysOfSubs = daysOfSubs;
     }
 
