@@ -27,6 +27,40 @@ public class Controller
     {
         return this.accModel;
     }
+    public String logIn(String userName,String password)
+    {
+        boolean exist=false;
+        for(AccountUserModel temp: Database.getDatabase().getAllUsers())
+            if(temp!=null && temp.getUserName().compareTo(userName)==0)
+            {
+                exist=true;
+                if (password.compareTo(temp.getPassword())!=0)
+                {
+                    return "wrong password";
+                }
+                if(temp instanceof ListenerModel)
+                {
+                    ListenerController.getListenerController().setListener((ListenerModel)temp);
+                    setAccModel(ListenerController.getListenerController().getListener());
+                }
+                else if(temp instanceof SingerModel)
+                {
+                    ArtistController.getArtistController().setArtist((SingerModel)temp);
+                    setAccModel(ArtistController.getArtistController().getArtist());
+                }
+                else if(temp instanceof PodcasterModel)
+                {
+                    ArtistController.getArtistController().setArtist((PodcasterModel)temp);
+                    setAccModel(ArtistController.getArtistController().getArtist());
+                }
+                break;
+            }
+        if(!exist)
+        {
+            return "username doesn't exist";
+        }
+        return "logged in";
+    }
     public String makeNewAccount(String userName,String email, String phoneNumber, String birthDate)
     {
         for(AccountUserModel temp: Database.getDatabase().getAllUsers())
