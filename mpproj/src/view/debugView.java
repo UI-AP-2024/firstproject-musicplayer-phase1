@@ -1,5 +1,6 @@
 package view;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import controller.ListenerController;
@@ -26,7 +27,7 @@ public class DebugView {
         return debugView;
     }
 
-    public void firstMenu(){
+    public void firstMenu() throws ParseException{
         // System.out.println("1)sign up\n2)log in");
         // System.out.println("enter :\n'L' if you are listener\n'S' if you are Singer\n'P' if you are poscaster");
         // System.out.println("enter your [username] -[password] -[First name] -[Last name]-[email] -[phone number]\r\n" + //
@@ -140,9 +141,9 @@ public class DebugView {
                         "-[birthdate in year month day format] with a space in between and your biographi");
         String bio = "this is me maryam dar please supportme thanks";
         String bion = null;
-        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,'S',bio);
+        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'S',bio);
         System.out.println(txt);
-        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,'L',bion);
+        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bion);
         System.out.println(txt);
 
         User tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");

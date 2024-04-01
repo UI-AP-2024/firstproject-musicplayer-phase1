@@ -1,6 +1,9 @@
 package controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +29,11 @@ public class UserController {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+    public boolean DatePassRegex(String birthDate){
+        Pattern pattern = Pattern.compile("(^0[1-9]|[12][0-9]|3[01])-([1-9]|1[0-2])-(19[0-9]{2}|2[0-9]{3}$)");
+        Matcher matcher = pattern.matcher(birthDate);
+        return matcher.matches();
+    }
     public boolean phoneNumPassRegex(String phoneNumber){
         Pattern pattern = Pattern.compile("^09[0-9]{9}$");
         Matcher matcher = pattern.matcher(phoneNumber);
@@ -44,7 +52,7 @@ public class UserController {
         return true;
     }
     public String signupNewUser(String username,String password, String firstName, String lastName, String emailAddress, String phoneNumber,
-            int birthyear ,int birthMonth, int birthday,char type,String bio){
+    String birthDate,char type,String bio) throws ParseException{
         if(!(emailPassRegex(emailAddress))){
             return"Please enter a valid email address";
         }
@@ -57,24 +65,27 @@ public class UserController {
         if(!(usernameIsUnic(username))){
             return"This username is alredy taken ! Please enter another one";
         }
-        @SuppressWarnings("deprecation")
-        Date birthDate = new Date(birthyear,birthMonth,birthday);
+        if(!(DatePassRegex(birthDate))){
+            return"This Date is not valid !please enter a valid one";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        Date dateOfbirth = formatter.parse(birthDate);
         switch (type) {
             case 'L':
             System.out.println("L");
-            FreeListener listener = new FreeListener(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, 50);
+            FreeListener listener = new FreeListener(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth, 50);
             Database.getDatabase().addToAllUsers(listener);
                 
                 break;
         
             case 'S':
             System.out.println("S");
-            Singer singer = new Singer(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate,bio);
+            Singer singer = new Singer(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(singer);
                 break;
         
             case 'P':
-            Podcaster podcaster = new Podcaster(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate,bio);
+            Podcaster podcaster = new Podcaster(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(podcaster);
                 break;
         

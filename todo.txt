@@ -20,3 +20,5 @@ enter user name
 error for user name until it gets valid;&so on
 ///////////////
 sign up for different user so alike make it one in one class user
+///////
+premium enum
