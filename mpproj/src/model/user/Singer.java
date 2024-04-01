@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import model.audio.Album;
+import model.audio.Music;
 
 public class Singer extends Artist{
     private ArrayList<Album> albumList;
@@ -22,6 +23,16 @@ public class Singer extends Artist{
     }
     public void addToAlbumList(Album album) {
         this.albumList.add(album);
+    }
+
+    public void calculateIncome(){
+        long view =0;
+        for(Album album :albumList){
+            for(Music music : album.getMusicList()){
+                view+=music.getNumberOfPlays();
+            }
+        }
+        super.setIncome(view*0.4);
     }
     
     

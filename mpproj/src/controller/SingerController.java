@@ -90,6 +90,7 @@ public class SingerController {
     }
 
     public String ShowAccountInfo(){
+        getSinger().calculateIncome();
         String txt="Account info:"+
         "\nuser name : "+getSinger().getUsername()+
         "\nFirst name : "+getSinger().getFirstName()+
@@ -129,7 +130,7 @@ public class SingerController {
         for(Album album : getSinger().getAlbumList()){
             txt+=album.getAlbumName()+"\n";
             for(Music music:album.getMusicList()){
-                txt+=music.getAudioName()+"\n";
+                txt+="-"+music.getAudioName()+"("+String.valueOf(music.getNumberOfPlays())+")\n";
             }
         }
 

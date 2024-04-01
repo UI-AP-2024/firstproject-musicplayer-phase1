@@ -3,6 +3,8 @@ package model.user;
 import java.util.ArrayList;
 import java.util.Date;
 
+import model.audio.Album;
+import model.audio.Music;
 import model.audio.Podcast;
 
 public class Podcaster extends Artist{
@@ -25,6 +27,14 @@ public class Podcaster extends Artist{
     }
     public void addToPodcastList(Podcast podcast) {
         this.podcastList.add(podcast);
+    }
+
+    public void calculateIncome(){
+        long view =0;
+        for(Podcast podcast :podcastList){
+                view+=podcast.getNumberOfPlays();
+        }
+        super.setIncome(view*0.5);
     }
     
     

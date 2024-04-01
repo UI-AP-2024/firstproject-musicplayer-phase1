@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.database.Database;
+import model.user.Artist;
 import model.user.FreeListener;
 import model.user.Podcaster;
 import model.user.Singer;
@@ -130,5 +131,7 @@ public class UserController {
     //     return null;
     // }
 
-    
+    // public String calculate(Artist artist){
+    //     artist.calculate();
+    // }
 }

@@ -112,11 +112,16 @@ public class PodcasterController {
         return txt;
     }
 
-    public String showFollowers(){
-        String txt ="All Followers\n";
-        for(User user : getPodcaster().getFollowers()){
-            txt+="-"+user.getUsername()+"\n";
+    public String showViewsStatics(){
+        String txt="Podcasts\n";
+        if(getPodcaster().getPodcastList().size()==0){
+            txt+="No Podcast found!!";
+            return txt;
         }
+        for(Podcast podcast : getPodcaster().getPodcastList()){
+            txt+="-"+podcast.getAudioName()+"("+String.valueOf(podcast.getNumberOfPlays())+")\n";
+        }
+
         return txt;
     }
 
