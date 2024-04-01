@@ -178,8 +178,23 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Search":
-
-
+                for (UserAccount userAccount : Database.getData().getAllUsers()){
+                    if (userAccount instanceof Artist){
+                        if(Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
+                            AccountView.getAccountView().showResult(new StringBuilder("Your requested artist was found"));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                }
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (Objects.equals(audio.getAudioName(), answers[1])){
+                        AccountView.getAccountView().showResult(new StringBuilder("Your requested audio was found"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                }
+                break;
+            case "Sort":
+                
         }
     }
 
