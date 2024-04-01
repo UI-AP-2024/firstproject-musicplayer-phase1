@@ -10,10 +10,7 @@ import model.users.listeners.FreeListenerModel;
 import model.users.listeners.ListenerModel;
 import model.users.listeners.PremiumListenerModel;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class ListenerController
@@ -267,5 +264,142 @@ public class ListenerController
         }
         else
             return "wrong order";
+    }
+    public Map.Entry <Genre,Long>[] getTopTenMostPlayedGenre()
+    {
+        Map.Entry <AudioModel,Long>[] mostPlayed=getListener().getPlayingAmount().entrySet().toArray(new Map.Entry[getListener().getPlayingAmount().size()]);
+        for(int i=0;i<mostPlayed.length-1;++i)
+            for(int j=i+1;j<mostPlayed.length;++j)
+                if(mostPlayed[i].getValue()<mostPlayed[j].getValue())
+                {
+                    Map.Entry <AudioModel,Long>temp=mostPlayed[j];
+                    mostPlayed[j]=mostPlayed[i];
+                    mostPlayed[i]=temp;
+                }
+        Map <Genre,Long> mostPlayedGenre=new HashMap<>();
+        for(int i=0;i<mostPlayed.length;++i)
+            if(mostPlayed[i].getValue()>0 && i<10)         //top ten most played
+            {
+                if(!mostPlayedGenre.containsKey(mostPlayed[i].getKey().getGenre()))
+                    mostPlayedGenre.put(mostPlayed[i].getKey().getGenre(), 1L);
+                else
+                    mostPlayedGenre.replace(mostPlayed[i].getKey().getGenre(),mostPlayedGenre.get(mostPlayed[i].getKey().getGenre())+1);
+            }
+        Map.Entry <Genre,Long>[] favGenres=mostPlayedGenre.entrySet().toArray(new Map.Entry[mostPlayedGenre.size()]);
+        for(int i=0;i<favGenres.length-1;++i)
+            for(int j=i+1;j<favGenres.length;++j)
+                if(favGenres[i].getValue()<favGenres[j].getValue())
+                {
+                    Map.Entry <Genre,Long>temp=favGenres[i];
+                    favGenres[i]=favGenres[j];
+                    favGenres[j]=temp;
+                }
+        return favGenres;
+    }
+    public Map.Entry <Genre,Long>[] getGenreOfLikedAudios()
+    {
+        Map <Genre,Long> genreOfLikedAudios=new HashMap<>();
+        for(AudioModel temp: getListener().getLikedAudios())
+            if(temp!=null)
+            {
+                if(!genreOfLikedAudios.containsKey(temp.getGenre()))
+                    genreOfLikedAudios.put(temp.getGenre(),1L);
+                else
+                    genreOfLikedAudios.replace(temp.getGenre(),genreOfLikedAudios.get(temp.getGenre())+1);
+            }
+        Map.Entry <Genre,Long>[] genres=genreOfLikedAudios.entrySet().toArray(new Map.Entry[genreOfLikedAudios.size()]);
+        for(int i=0;i<genres.length-1;++i)
+            for(int j=i+1;j<genres.length;++j)
+                if(genres[i].getValue()<genres[j].getValue())
+                {
+                    Map.Entry <Genre,Long>temp=genres[i];
+                    genres[i]=genres[j];
+                    genres[j]=temp;
+                }
+        return genres;
+    }
+    public ArrayList <AudioModel> getMostPlayedAudios()
+    {
+        AudioModel[] audios;
+        audios=Database.getDatabase().getAllAudios().toArray(new AudioModel[Database.getDatabase().getAllAudios().size()]);
+        for(int i=0;i<audios.length-1;++i)
+            for(int j=i+1;j<audios.length;++j)
+                if(audios[i].getPlayAmount()<audios[j].getPlayAmount())
+                {
+                    AudioModel temp=audios[i];
+                    audios[i]=audios[j];
+                    audios[j]=temp;
+                }
+        return new ArrayList<>(Arrays.asList(audios));
+    }
+    public String getSuggestions()
+    {
+        StringBuilder answer=new StringBuilder();
+        int counter=0;
+        Map.Entry <Genre,Long>[] mostPlayedGenre=getTopTenMostPlayedGenre();
+        Map.Entry <Genre,Long>[] likedGenres=getGenreOfLikedAudios();
+        ArrayList <Genre> genres=new ArrayList<>();
+        if(mostPlayedGenre[0].getKey()!=null)
+            genres.add(mostPlayedGenre[0].getKey());
+        if(mostPlayedGenre[1].getKey()!=null)
+            genres.add(mostPlayedGenre[1].getKey());
+        if(likedGenres[0].getKey()!=null)
+            genres.add(likedGenres[0].getKey());
+        if(likedGenres[1].getKey()!=null)
+            genres.add(likedGenres[1].getKey());
+        if(getListener().getFavGenres().get(0)!=null)
+            genres.add(getListener().getFavGenres().get(0));
+        if(getListener().getFavGenres().get(1)!=null)
+            genres.add(getListener().getFavGenres().get(1));
+        for(ArtistModel temp:getListener().getFollowings())
+        {
+            if(counter==10)
+                break;
+            if(temp instanceof PodcasterModel)
+            {
+                BREAK:
+                for(PodcastModel audioTemp:((PodcasterModel)temp).getPodcasts())
+                    if(audioTemp!=null)
+                        for(Genre genreTemp:genres)
+                        {
+                            if(counter>=3)
+                                break BREAK;
+                            if(genreTemp!=null && audioTemp.getGenre().compareTo(genreTemp)==0)
+                            {
+                                answer.append(audioTemp).append("\n");
+                                counter++;
+                            }
+                        }
+            }
+            else
+            {
+                BREAK:
+                for(AlbumModel albumTemp:((SingerModel)temp).getAlbums())
+                    if(albumTemp!=null)
+                        for(MusicModel musicTemp:albumTemp.getMusics())
+                            if(musicTemp!=null)
+                                for(Genre genreTemp:genres)
+                                {
+                                    if(counter>=3)
+                                        break BREAK;
+                                    if(genreTemp!=null && musicTemp.getGenre().compareTo(genreTemp)==0)
+                                    {
+                                        answer.append(musicTemp).append("\n");
+                                        counter++;
+                                    }
+                                }
+            }
+
+        }
+        if(counter==10)
+            return answer.toString();
+        else
+        {
+            ArrayList <AudioModel>audios=getMostPlayedAudios();
+            for(int i=0;i<10-counter;++i)
+                if(audios.get(i)!=null)
+                    answer.append(audios.get(i)).append("\n");
+            return answer.toString();
+        }
     }
 }
