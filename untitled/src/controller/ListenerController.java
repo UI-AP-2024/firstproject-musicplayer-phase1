@@ -143,4 +143,15 @@ public class ListenerController
                 return temp.toString();
         return "artist doesn't exist";
     }
+    public String followArtist(String artistUserName)
+    {
+        for(AccountUserModel temp:Database.getDatabase().getAllUsers())
+            if(temp instanceof ArtistModel && temp.getUserName().compareTo(artistUserName)==0)
+            {
+                ((ArtistModel) temp).getFollowers().add(getListener());
+                getListener().getFollowings().add((ArtistModel)temp);
+                return "added to followings";
+            }
+        return "artist doesn't exist";
+    }
 }

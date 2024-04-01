@@ -83,7 +83,7 @@ public class View
             else if(orders[0].compareTo("Artist")==0)
                 System.out.println(ListenerController.getListenerController().showArtist(orders[1]));
             else if(orders[0].compareTo("Follow")==0)
-                System.out.println();
+                System.out.println(ListenerController.getListenerController().followArtist(orders[1]));
             else
                 System.out.println("wrong order\ntry again");
         }
