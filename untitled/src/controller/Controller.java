@@ -27,6 +27,17 @@ public class Controller
     {
         return this.accModel;
     }
+    public String getAccType()
+    {
+        if(this.accModel instanceof ListenerModel)
+            return "L";
+        else if(this.accModel instanceof SingerModel)
+            return "S";
+        else if(this.accModel instanceof PodcasterModel)
+            return "P";
+        else
+            return null;
+    }
     public String logIn(String userName,String password)
     {
         boolean exist=false;
