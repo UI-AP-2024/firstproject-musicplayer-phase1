@@ -3,6 +3,7 @@ package view;
 import java.util.ArrayList;
 
 import controller.ListenerController;
+import controller.SingerController;
 import controller.UserController;
 import model.audio.Genre;
 import model.user.Listener;
@@ -71,6 +72,19 @@ public class DebugView {
             System.out.println(px.getRemainingDaysOfPremium());
             
         }
+        System.out.println("1)sign up\n2)log in");
+        System.out.println("enter :\n'L' if you are listener\n'S' if you are Singer\n'P' if you are poscaster");
+        System.out.println("enter your [username] -[password] -[First name] -[Last name]-[email] -[phone number]\r\n" + //
+                        "-[birthdate in year month day format] with a space in between and your biographi");
+        String bio = "this is me maryam dar please supportme thanks";
+        txt = SingerController.getSingerController().signupNewSinger("Maryao","Maryamdar84!", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,bio);
+        System.out.println(txt);
+        txt = SingerController.getSingerController().signupNewSinger("Maryao","Maryamdar84!", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,bio);
+        System.out.println(txt);
+        txt = SingerController.getSingerController().signupNewSinger("Maryaop","Maryamdar840", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,bio);
+        System.out.println(txt);
+        txt = SingerController.getSingerController().signupNewSinger("Maryaop","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104",2005,5,10 ,bio);
+        System.out.println(txt);
 
     }
     
