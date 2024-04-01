@@ -47,7 +47,7 @@ public class View
             {
                 System.out.println(Controller.getController().logIn(orders[1],orders[2]));
                 if(Controller.getController().getAccType().compareTo("L")==0)
-                    
+                    showListenerPanel();
                 /////kxnvkabvkbvufebv
                 break;
             }
@@ -66,6 +66,24 @@ public class View
                 else
                     System.out.println("not logged in");
             }
+            else
+                System.out.println("wrong order\ntry again");
+        }
+    }
+    public void showListenerPanel()
+    {
+        while(true)
+        {
+            String order=input.nextLine();
+            String[] orders=order.split(" -");
+            if(orders[0].compareTo("Add")==0)
+                System.out.println(ListenerController.getListenerController().addToPlayList(orders[1],orders[2]));
+            else if(orders[0].compareTo("Artists")==0)
+                System.out.println(ListenerController.getListenerController().showArtists());
+            else if(orders[0].compareTo("Artist")==0)
+                System.out.println(ListenerController.getListenerController().showArtist(orders[1]));
+            else if(orders[0].compareTo("Follow")==0)
+                System.out.println();
             else
                 System.out.println("wrong order\ntry again");
         }
