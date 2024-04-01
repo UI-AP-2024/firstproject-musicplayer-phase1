@@ -128,4 +128,19 @@ public class ListenerController
         else
             return "you already added 10 audios buy premium for more";
     }
+    public String showArtists()
+    {
+        StringBuilder answer=new StringBuilder();
+        for(AccountUserModel temp:Database.getDatabase().getAllUsers())
+            if(temp instanceof ArtistModel)
+                answer.append(temp).append("\n");
+        return answer.toString();
+    }
+    public String showArtist(String artistUserName)
+    {
+        for(AccountUserModel temp:Database.getDatabase().getAllUsers())
+            if(temp instanceof ArtistModel && temp.getUserName().compareTo(artistUserName)==0)
+                return temp.toString();
+        return "artist doesn't exist";
+    }
 }
