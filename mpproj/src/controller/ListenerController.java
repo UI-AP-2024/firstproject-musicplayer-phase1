@@ -1,9 +1,7 @@
 package controller;
 
 import model.UserAccount.Listener.ListenerModel;
-import model.UserAccount.UserAccountModel;
 
-import java.util.regex.Pattern;
 
 public class ListenerController {
         private ListenerModel listener;
