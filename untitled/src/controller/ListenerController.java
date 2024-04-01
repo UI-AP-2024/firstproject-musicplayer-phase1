@@ -179,4 +179,38 @@ public class ListenerController
             return answer.toString();
         return "no result";
     }
+    public String sort(String sortType)
+    {
+        StringBuilder answer=new StringBuilder();
+        if(sortType.compareTo("L")==0)
+        {
+            for(int i=0;i<Database.getDatabase().getAllAudios().size()-1;++i)
+            {
+                AudioModel outPut=Database.getDatabase().getAllAudios().get(i);
+                for(int j=i+1;j<Database.getDatabase().getAllAudios().size();++j)
+                    if(outPut.getLikeAmount()<Database.getDatabase().getAllAudios().get(j).getLikeAmount())
+                    {
+                        outPut=Database.getDatabase().getAllAudios().get(j);
+                    }
+                answer.append(outPut).append("\n");
+            }
+            return answer.toString();
+        }
+        else if(sortType.compareTo("P")==0)
+        {
+            for(int i=0;i<Database.getDatabase().getAllAudios().size()-1;++i)
+            {
+                AudioModel outPut=Database.getDatabase().getAllAudios().get(i);
+                for(int j=i+1;j<Database.getDatabase().getAllAudios().size();++j)
+                    if(outPut.getPlayAmount()<Database.getDatabase().getAllAudios().get(j).getPlayAmount())
+                    {
+                        outPut=Database.getDatabase().getAllAudios().get(j);
+                    }
+                answer.append(outPut).append("\n");
+            }
+            return answer.toString();
+        }
+        else
+            return "wrong order";
+    }
 }

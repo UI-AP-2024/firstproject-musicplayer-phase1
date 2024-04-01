@@ -86,6 +86,8 @@ public class View
                 System.out.println(ListenerController.getListenerController().followArtist(orders[1]));
             else if(orders[0].compareTo("Search")==0)
                 System.out.println(ListenerController.getListenerController().search(orders[1]));
+            else if(orders[0].compareTo("Sort")==0)
+                System.out.println(ListenerController.getListenerController().sort(orders[1]));
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
