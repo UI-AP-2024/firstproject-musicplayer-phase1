@@ -98,4 +98,34 @@ public class ListenerController
         else
             return false;
     }
+    public String addToPlayList(String playListName,String audioID)
+    {
+        if((getListener() instanceof PremiumListenerModel) || (getListener() instanceof FreeListenerModel && (((FreeListenerModel) getListener()).getAddedAudios()<FreeListenerModel.getAddAudioLimit())))
+        {
+            boolean check=false;
+            AudioModel chosenAudio =null;
+            for(AudioModel temp:Database.getDatabase().getAllAudios())
+                if(temp!=null && temp.getAudioID()==Long.parseLong(audioID))
+                {
+                    check=true;
+                    chosenAudio=temp;
+                    break;
+                }
+            if(!check)
+                return "audio doesn't exist";
+            check=false;
+            for(PlayListModel temp:listener.getPlayLists())
+                if(temp!=null && temp.getPlayListName().compareTo(playListName)==0)
+                {
+                    temp.getAudios().add(chosenAudio);
+                    check=true;
+                    break;
+                }
+            if(!check)
+                return "playlist doesn't exist";
+            return "audio added to playlist successfully";
+        }
+        else
+            return "you already added 10 audios buy premium for more";
+    }
 }
