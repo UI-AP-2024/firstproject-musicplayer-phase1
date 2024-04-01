@@ -122,5 +122,18 @@ public class ListenerController {
         return "ERORR add audio to playlist";
     }
 
-
+    public String playAudioFile(long id) {
+        for (Audio audio : Database.getDataBase().getAudio()) {
+            if (audio.getId() == id) {
+                audio.setNumberOfPlays(audio.getNumberOfPlays() + 1);
+                if (getUserAccount() instanceof Listener)
+                    ((Listener) getUserAccount()).getNumberPlays().replace(audio, ((Listener) getUserAccount()).getNumberPlays().get(audio) + 1);
+                return "The audio file(" + audio.getName() + ") is playing";
+            }
+        }
+        if (getUserAccount() instanceof Listener == false)
+            return "You are not a listening user";
+        else
+            return "The desired audio file was not found";
+    }
 }
