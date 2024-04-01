@@ -3,11 +3,13 @@ package view;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import controller.ArtistController;
 import controller.ListenerController;
 import controller.PodcasterController;
 import controller.SingerController;
 import controller.UserController;
 import model.audio.Genre;
+import model.user.Artist;
 import model.user.Listener;
 import model.user.Podcaster;
 import model.user.PremiumListener;
@@ -209,10 +211,15 @@ public class DebugView {
         System.out.println(txt);
 
         tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");
-        SingerController.getSingerController().loginSinger((Singer)tmp);
-        txt = SingerController.getSingerController().showFollowers();
+        // SingerController.getSingerController().loginSinger((Singer)tmp);
+        // txt = SingerController.getSingerController().showFollowers();
+        // System.out.println(txt);
+        // txt = SingerController.getSingerController().showViewsStatics();
+        // System.out.println(txt);
+        ArtistController.getArtistController().loginArtist((Artist)tmp);
+        txt = ArtistController.getArtistController().showFollowers();
         System.out.println(txt);
-        txt = SingerController.getSingerController().showViewsStatics();
+        txt = ArtistController.getArtistController().showViewsStatics();
         System.out.println(txt);
 
         
