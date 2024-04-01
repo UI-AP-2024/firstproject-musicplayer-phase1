@@ -169,7 +169,22 @@ public class DebugView {
             System.out.println(px.getRemainingDaysOfPremium());
             
         }
+        txt=ListenerController.getListenerController().showAllArtists();
+        System.out.println(txt);
+        txt=UserController.getUserController().showArtistInfo("Maryaol");
+        System.out.println(txt);
 
+        txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bio);
+        System.out.println(txt);
+
+        // tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
+        txt=ListenerController.getListenerController().showAllArtists();
+        System.out.println(txt);
+        txt=UserController.getUserController().showArtistInfo("Maryaof");
+        System.out.println(txt);
+
+        
+        
     }
     
 }

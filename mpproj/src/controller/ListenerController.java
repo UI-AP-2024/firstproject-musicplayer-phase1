@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import model.audio.Genre;
 import model.database.Database;
+import model.user.Artist;
 import model.user.FreeListener;
 import model.user.Listener;
 import model.user.PremiumListener;
@@ -139,6 +140,26 @@ public class ListenerController {
         }
 
     }
+
+    public String showAllArtists(){
+        String txt = "All Artists\n";
+        for(User user:Database.getDatabase().getAllUsers()){
+            if(user instanceof Artist){
+                txt+="-"+user.getUsername()+"\n";
+            }
+        }
+        return txt;
+    }
+
+    // public String showArtistInfo(){
+    //     String txt="Artist info:"+
+    //     "\nuser name : "+getListener().getUsername()+
+    //     "\nFirst name : "+getListener().getFirstName()+
+    //     "\nLast name : "+getListener().getLastName()+
+    //     "\nFollowers : "+get
+        
+    //     return txt;
+    // }
     
     
 }

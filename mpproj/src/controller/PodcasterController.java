@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.audio.Album;
+import model.audio.Music;
+import model.audio.Podcast;
 import model.database.Database;
 import model.user.FreeListener;
 import model.user.Podcaster;
@@ -89,6 +92,26 @@ public class PodcasterController {
         "\nIncome : "+String.valueOf(getPodcaster().getIncome());
         return txt;
     }
+
+    public String ShowPodcasterInfo(){
+        String txt="Podcaster info:"+
+        "\nuser name : "+getPodcaster().getUsername()+
+        "\nFirst name : "+getPodcaster().getFirstName()+
+        "\nLast name : "+getPodcaster().getLastName()+
+        "\nFollowers : "+String.valueOf(getPodcaster().getFollowers().size())+
+        "\nBiographi : "+getPodcaster().getBiographi()+"\n";
+        if(getPodcaster().getPodcastList().size()==0){
+            txt+="No Podcast found!!";
+            return txt;
+        }
+        for(Podcast podcast : getPodcaster().getPodcastList()){
+            txt+=podcast.getAudioName()+"\n";
+            
+        }
+        
+        return txt;
+    }
+
 
     
 }

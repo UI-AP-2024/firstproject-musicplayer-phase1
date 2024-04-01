@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.audio.Album;
+import model.audio.Music;
 import model.database.Database;
 import model.user.FreeListener;
 import model.user.Listener;
@@ -88,6 +90,26 @@ public class SingerController {
         "\npassword : "+getSinger().getPassword()+
         "\nbirth date : "+String.valueOf(getSinger().getBirthDate())+
         "\nIncome : "+String.valueOf(getSinger().getIncome());
+        return txt;
+    }
+    public String ShowSingerInfo(){
+        String txt="Artist info:"+
+        "\nuser name : "+getSinger().getUsername()+
+        "\nFirst name : "+getSinger().getFirstName()+
+        "\nLast name : "+getSinger().getLastName()+
+        "\nFollowers : "+String.valueOf(getSinger().getFollowers().size())+
+        "\nBiographi : "+getSinger().getBiographi()+"\n";
+        if(getSinger().getAlbumList().size()==0){
+            txt+="No album found!!";
+            return txt;
+        }
+        for(Album album : getSinger().getAlbumList()){
+            txt+=album.getAlbumName()+"\n";
+            for(Music music:album.getMusicList()){
+                txt+=music.getAudioName()+"\n";
+            }
+        }
+        
         return txt;
     }
 
