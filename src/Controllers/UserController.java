@@ -22,6 +22,18 @@ public class UserController {
         this.database = Database.getInstance();
     }
 
+    private boolean checkName(String artistName)
+    {
+        for(User tmpUser : database.getUsers())
+        {
+            if(tmpUser instanceof Artist)
+            {
+                if(tmpUser.getName().equals(artistName)) return true;
+            }
+        }
+        return false;
+    }
+
     public String signUp(char userType, String userName, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth, String bio)
     {
         for(User tmpUser : database.getUsers())
@@ -42,9 +54,21 @@ public class UserController {
                 database.addUser(new NormalListener(userName, password, name, email, phoneNumber, dateOfBirth, 50, null, genres));
                 break;
             case 'S':
+                // since each Audio has an artistName property, artistNames must be unique
+                if(checkName(name))
+                {
+                    switchResult = "An artist with the same name already exists";
+                    break;
+                }
                 database.addUser(new Singer(userName, password, name, email, phoneNumber, dateOfBirth, 0, bio));
                 break;
             case 'P':
+                // since each Audio has an artistName property, artistNames must be unique
+                if(checkName(name))
+                {
+                    switchResult = "An artist with the same name already exists";
+                    break;
+                }
                 database.addUser(new Podcaster(userName, password, name, email, phoneNumber, dateOfBirth, 0, bio));
                 break;
             default:

@@ -1,23 +1,24 @@
 package Models;
 
 import Models.User.Artist;
+import Models.User.Listener;
 import Models.User.User;
 
 public class Report {
-    private User reportingUser;
+    private Listener reportingUser;
     private Artist reportedArtist;
     private String description;
 
-    public Report(User reportingUser, Artist reportedArtist, String description) {
+    public Report(Listener reportingUser, Artist reportedArtist, String description) {
         this.reportingUser = reportingUser;
         this.reportedArtist = reportedArtist;
         this.description = description;
     }
-    public User getReportingUser() {
+    public Listener getReportingUser() {
         return reportingUser;
     }
 
-    public void setReportingUser(User reportingUser) {
+    public void setReportingUser(Listener reportingUser) {
         this.reportingUser = reportingUser;
     }
 

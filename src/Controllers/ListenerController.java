@@ -1,15 +1,17 @@
 package Controllers;
 
 import Extra.AIRecommendor;
+import Models.*;
 import Models.Audio.Audio;
 import Models.Data.Database;
-import Models.Genre;
 import Models.PremiumPlan;
-import Models.PremiumPlan;
+import Models.User.Artist;
 import Models.User.Listener;
+import Models.User.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class ListenerController {
@@ -95,18 +97,139 @@ public abstract class ListenerController {
 
     public ArrayList<Audio> suggestedAudios(int n)
     {
-        return AIRecommendor.recommendor(n, this.listenerModel);
+        return AIRecommendor.recommendor(n, this.getListenerModel());
     }
 
     public String playAudio(String audioName)
     {
-        for(Audio audio : database.getAudios())
+        for(Audio tmpAudio : database.getAudios())
         {
-            if(audio.getFileName().equals(audioName)) return audio.getAudioLink();
+            if(tmpAudio.getFileName().equals(audioName))
+            {
+                Map<Audio, Integer> playCountMap = this.getListenerModel().getAudiosPlayed();
+                if(playCountMap.containsKey(tmpAudio))
+                {
+                    int current = playCountMap.get(tmpAudio);
+                    playCountMap.put(tmpAudio, ++current);
+                }
+                else
+                {
+                    playCountMap.put(tmpAudio, 1);
+                }
+                tmpAudio.setLikesCount(tmpAudio.getLikesCount()+1);
+                return tmpAudio.getAudioLink();
+            }
         }
         return "Audio file not found";
     }
 
+    public String likeAudio(String audioName)
+    {
+        for(Audio audio : database.getAudios())
+        {
+            if(audio.getFileName().equals(audioName))
+            {
+                audio.setLikesCount(audio.getLikesCount()+1);
+                return "Audio liked";
+            }
+        }
+        return "Audio file not found";
+    }
+
+    public ArrayList<Artist> getFollowings()
+    {
+        ArrayList<Artist> result = new ArrayList<>();
+        for(User tmpUser : database.getUsers())
+        {
+            if(tmpUser instanceof Artist)
+            {
+                Artist tmpArtist = (Artist) tmpUser;
+                if(tmpArtist.getFollowers().contains(this.getListenerModel()))
+                    result.add(tmpArtist);
+            }
+        }
+        return result;
+    }
+
+    private Artist findArtistByName(String Name)
+    {
+        Artist selectedArtist = null;
+        for(User tmpUser : database.getUsers()) if(tmpUser instanceof Artist)
+        {
+            Artist tmpArtist = (Artist) tmpUser;
+            if(tmpArtist.getName().equals(Name)) selectedArtist = tmpArtist;
+            break;
+        }
+        return selectedArtist;
+    }
+
+    public String reportArtist(String artistName, String description)
+    {
+        Artist reportedArtist = findArtistByName(artistName);
+        if(reportedArtist == null) return "No Artist found";
+        database.addReport(new Report(this.getListenerModel(), reportedArtist,  description));
+        return "Report Added successfully";
+    }
+
+    public ArrayList<Artist> getArtistsList()
+    {
+        ArrayList<Artist> result = new ArrayList<>();
+        for(User tmpUser : database.getUsers())
+        {
+            if(tmpUser instanceof Artist)
+            {
+                result.add((Artist)tmpUser);
+            }
+        }
+        return result;
+
+    }
+
+    public String getArtistInfo(String artistName)
+    {
+        Artist selectedArtist = findArtistByName(artistName);
+        if(selectedArtist == null) return "No artist found";
+        return selectedArtist.toString();
+    }
+
+    public ArrayList<Audio> getArtistAudios(String artistName)
+    {
+        ArrayList<Audio> artistAudios = new ArrayList<>();
+        Artist selectedArtist = findArtistByName(artistName);
+        if(selectedArtist == null) return artistAudios;
+        for(Audio tmpAudio : database.getAudios())
+        {
+            if(tmpAudio.getArtistName().equals(artistName)) artistAudios.add(tmpAudio);
+        }
+        return artistAudios;
+    }
+
+    public String followArtist(String artistName)
+    {
+        Artist selectedArtist = findArtistByName(artistName);
+        if(selectedArtist == null) return "No Artist found";
+        ArrayList<User> followers = selectedArtist.getFollowers();
+        followers.add(this.getListenerModel());
+        return "Artist followed by you";
+    }
+
+    public ArrayList<Playlist> showPlaylists()
+    {
+        return this.getListenerModel().getPlaylists();
+    }
+
+    public Playlist showPlaylist(String playlistName)
+    {
+        for(Playlist tmpPlaylist : this.getListenerModel().getPlaylists())
+        {
+            if(tmpPlaylist.getPlaylistName().equals(playlistName)) return tmpPlaylist;
+        }
+        return null; // in case playlistName was invalid
+    }
+    public String showUserInformation()
+    {
+        return this.getListenerModel().toString();
+    }
     public abstract String makeNewPlaylist(String name);
     public abstract String addToPlaylist(String playistName, Audio audio);
     public abstract String purchasePremium(PremiumPlan plan);
