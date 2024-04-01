@@ -216,7 +216,6 @@ public class ListenerControler {
     public String userInfo(){
         return listenerr.toString();
     }
-    //جستجو، مرتبسازی و فیلتر فالهای صوتی
     public String showmyPlaylist(){
         ArrayList<Playlist>myList=listenerr.getPlaylists();
         StringBuilder result=new StringBuilder("my play list : \n");
@@ -238,12 +237,17 @@ public class ListenerControler {
         }
         return "error : not foound play llist";
     }
-//● مشاهدۀ فال صوتیهای ͖یشنهاد شده به کاربر با توجه به ژانر و آرتیست مورد علاقۀ او
+    //todo : filter and sort
+    //جستجو، مرتبسازی و فیلتر فالهای صوتی
     public  String increaseCredit(int increaseAmount){
         listenerr.setCredit(listenerr.getCredit()+increaseAmount);
         return "increased";
     }
     public String buySub(SubscriptionPlan subscriptionPlan){
+        if(subscriptionPlan.getPrice()>listenerr.getCredit()){
+            return "not enough credit . ";
+        }
+        listenerr.setCredit(listenerr.getCredit()-subscriptionPlan.getPrice());
         String str=listenerr.getEndSubDate().toString();
         if(listenerr instanceof  RegularListener){
             int tmpindex=0;
@@ -303,7 +307,7 @@ public class ListenerControler {
         for(Audio audio:Database.getDatabase().getAudios()) {
             if(arrmap[0].getKey().equals(audio.getId())){
                 for (User artist:Database.getDatabase().getUsers()){
-  ///??????????????????????????????????????????
+                     ///Todo: ??????????????????????????????????????????
                 }
             }
         }

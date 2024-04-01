@@ -12,7 +12,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ArtistControler {
+    private static ArtistControler artistControler;
     Artist artist;
+
+    public ArtistControler() {
+    }
+
+    public static ArtistControler getArtistControler() {
+        return artistControler;
+    }
 
     public Artist getArtist() {
         return artist;
@@ -22,14 +30,18 @@ public class ArtistControler {
         this.artist = artist;
     }
 
-    public String signUpArtist(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
+    public String signUpArtist(String username, String pasword, String name, String email, String phoneNum, Date birthDate,String bio,String type){
         ArrayList<User> users= Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username)){
                 return "error : this user name already exist .";
             }
         }
-        Artist artist=new Artist(username,pasword,name,email,phoneNum,birthDate);
+        if(type.equals("S")) {
+            Singer artist = new Singer(username, pasword, name, email, phoneNum, birthDate, bio);
+        }else if(type.equals("P")) {
+            Podcaster artist=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
+        }
         setArtist(artist);
         //add to database
         artist.setIsLogin(true);

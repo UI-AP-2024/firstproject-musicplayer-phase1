@@ -12,7 +12,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PodcasterControler extends ArtistControler{
-    public  String publishPodcast(String title,String genre,String caption,String link,String cover){
+    private static PodcasterControler podcasterControler;
+    public PodcasterControler() {
+    }
+
+    public static PodcasterControler getPodcaster() {
+        if(podcasterControler==null)
+            podcasterControler=new PodcasterControler();
+        return podcasterControler;
+    }
+
+    public  String publishPodcast(String title, String genre, String caption, String link, String cover){
         if (artist instanceof Podcaster){
             Podcast podcast0=new Podcast(Podcast.getIdcounter(),title,artist.getFullName(),0,0,new Date(), Genre.valueOf(genre),link,cover,caption);
             Audio.setIdcounter(Audio.getIdcounter()+1);

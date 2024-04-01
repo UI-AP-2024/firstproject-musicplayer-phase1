@@ -1,5 +1,6 @@
 package view;
 
+import controller.ArtistControler;
 import controller.ListenerControler;
 
 import java.util.Date;
@@ -29,8 +30,13 @@ public class MainViewer {
             String[] favgenres=favGenre.split(",");
             print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],favgenres[1],favgenres[2],favgenres[3]));
             ListenerViewer.getListenerViewer();
+        }else if(answers[1].equals("P")){
+            print(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P"));
+            ArtistViewer.getArtistViewer().getAnswer();
+        }else if(answers[1].equals("S")){
+            print(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"S"));
+            ArtistViewer.getArtistViewer().getAnswer();
         }
-
     }
     private void print(Object object){
         System.out.println(object);
