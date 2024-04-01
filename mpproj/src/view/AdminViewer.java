@@ -1,4 +1,4 @@
 package view;
 
-public class AdminViewer {
+public class AdminViewer {//todo admin viewer
 }

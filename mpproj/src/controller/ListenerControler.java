@@ -39,6 +39,7 @@ public class ListenerControler {
         }
         Listener listener=new Listener(username,pasword,name,email,phoneNum,birthDate,50);
         setListenerr(listener);
+        Database.getDatabase().getUsers().add((RegularListener)listener);
         //add to database
         listener.setIsLogin(true);
         return showgenre()+"\n";

@@ -36,6 +36,8 @@ public class ListenerViewer {
             artists();
         else if (answers[0].equals("Sort")) {
             //TOdo: ?
+        }else if (answers[0].equals("Search")) {
+            //TOdo: ?
         }else if (answers[0].equals("Filter")) {
             //TOdo: ?
         }else if (answers[0].equals("Add"))
