@@ -44,6 +44,8 @@ public class AdminView {
                 System.out.println(view.showOneArtistInfo(commands[1]));
             else if(commands[0].equals("Reports"))
                 System.out.println(view.showReports());
+            else if(commands[0].equals("AccountInfo"))
+                System.out.println(view.showUserInfo());
             else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");
         }

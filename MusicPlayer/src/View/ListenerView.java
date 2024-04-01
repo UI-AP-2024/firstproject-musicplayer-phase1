@@ -143,6 +143,8 @@ public class ListenerView {
              }
              else if(commands[0].equals("GetPremium"))
                  System.out.println(view.buyOrExtendSubscription(Integer.parseInt(commands[1])));
+             else if(commands[0].equals("AccountInfo"))
+                 System.out.println(view.showUserInfo());
              else if(!commands[0].equals("Logout"))
                  System.out.println("Wrong command!");
          }

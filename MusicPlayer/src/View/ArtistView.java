@@ -92,6 +92,8 @@ public class ArtistView {
                     System.out.println("Done!");
                 }
             }
+            else if(commands[0].equals("AccountInfo"))
+                System.out.println(view.showUserInfo());
             else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");
         }

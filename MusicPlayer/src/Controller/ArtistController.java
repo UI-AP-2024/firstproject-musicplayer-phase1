@@ -51,7 +51,7 @@ public class ArtistController {
     public String showFollowers(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < model.getFollowers().size(); i++)
-            show.append("Follower "+(i+1)+": "+ model.getFollowers().get(i)+"\n");
+            show.append("Follower "+(i+1)+": "+ model.getFollowers().get(i).getFullName()+"\n");
         return show.toString();
     }
     public String showPlayedCount(){

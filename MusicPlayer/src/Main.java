@@ -21,12 +21,11 @@ public class Main {
                 }
             }
             else if(enter[0].equals("Login") && enter[1]!=null && enter[2]!=null){
-                for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-                    if(Database.getDatabase().getUsers().get(i).getUsername().equals(enter[1])){
-                        User user = Database.getDatabase().getUsers().get(i);
-                        if(user.getClass().equals(Model.AdminModel.class))
+                for (User user : Database.getDatabase().getUsers()) {
+                    if(user.getUsername().equals(enter[1])){
+                        if(user instanceof AdminModel)
                             AdminView.getAdmin().login(enter[1],enter[2]);
-                        else if(user.getClass().equals(Model.ListenerModel.class))
+                        else if(user instanceof ListenerModel)
                             ListenerView.getListener().login(enter[1],enter[2]);
                         else
                             ArtistView.getArtistView().login(enter[1],enter[2]);
