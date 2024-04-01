@@ -112,6 +112,14 @@ public class PodcasterController {
         return txt;
     }
 
+    public String showFollowers(){
+        String txt ="All Followers\n";
+        for(User user : getPodcaster().getFollowers()){
+            txt+="-"+user.getUsername()+"\n";
+        }
+        return txt;
+    }
+
 
     
 }

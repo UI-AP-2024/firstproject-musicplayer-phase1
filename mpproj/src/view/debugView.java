@@ -11,6 +11,7 @@ import model.audio.Genre;
 import model.user.Listener;
 import model.user.Podcaster;
 import model.user.PremiumListener;
+import model.user.PremuimAcc;
 import model.user.Singer;
 import model.user.User;
 
@@ -185,6 +186,37 @@ public class DebugView {
         // tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
         txt = ListenerController.getListenerController().followArtist("Maryaol");
         System.out.println(txt);
+        txt = ListenerController.getListenerController().increaseAccountCredit(67);
+        System.out.println(txt);
+        txt = ListenerController.getListenerController().ShowAccountInfo();
+        System.out.println(txt);
+        int packag=30;
+
+        switch (packag) {
+            case 30:
+            ListenerController.getListenerController().getPremium(30,PremuimAcc.ONE_MONTH.getMoney());
+                break;
+        
+            default:
+                break;
+        }
+
+        txt = ListenerController.getListenerController().ShowAccountInfo();
+        System.out.println(txt);
+        txt = ListenerController.getListenerController().ShowFollowings();
+        System.out.println(txt);
+        txt = ListenerController.getListenerController().reportArtist("Maryaol", "bad song");
+        System.out.println(txt);
+
+        tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");
+        SingerController.getSingerController().loginSinger((Singer)tmp);
+        txt = SingerController.getSingerController().showFollowers();
+        System.out.println(txt);
+        txt = SingerController.getSingerController().showViewsStatics();
+        System.out.println(txt);
+
+        
+
 
 
         

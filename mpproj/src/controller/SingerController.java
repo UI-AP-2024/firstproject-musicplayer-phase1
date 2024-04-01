@@ -32,6 +32,14 @@ public class SingerController {
     public static void setSinger(Singer singer) {
         SingerController.singer = singer;
     }
+
+    public String showFollowers(){
+        String txt ="All Followers\n";
+        for(User user : getSinger().getFollowers()){
+            txt+="-"+user.getUsername()+"\n";
+        }
+        return txt;
+    }
     
     // public boolean emailPassRegex(String email){
     //     Pattern pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -110,6 +118,21 @@ public class SingerController {
             }
         }
         
+        return txt;
+    }
+    public String showViewsStatics(){
+        String txt="Albums\n";
+        if(getSinger().getAlbumList().size()==0){
+            txt+="No album found!!";
+            return txt;
+        }
+        for(Album album : getSinger().getAlbumList()){
+            txt+=album.getAlbumName()+"\n";
+            for(Music music:album.getMusicList()){
+                txt+=music.getAudioName()+"\n";
+            }
+        }
+
         return txt;
     }
 

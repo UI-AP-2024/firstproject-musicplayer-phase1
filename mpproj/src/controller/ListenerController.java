@@ -13,6 +13,7 @@ import model.user.FreeListener;
 import model.user.Listener;
 import model.user.Podcaster;
 import model.user.PremiumListener;
+import model.user.Report;
 import model.user.Singer;
 import model.user.User;
 
@@ -110,7 +111,10 @@ public class ListenerController {
         "\nemail address: "+getListener().getEmailAddress()+
         "\npassword : "+getListener().getPassword()+
         "\nbirth date : "+String.valueOf(getListener().getBirthDate())+
-        "\nAccount Credit : "+String.valueOf(getListener().getAccountCredit());
+        "\nAccount Credit : "+String.valueOf(getListener().getAccountCredit())+"\n";
+        if(getListener() instanceof PremiumListener){
+            txt+="Premium Expiration Date : "+String.valueOf(((PremiumListener)getListener()).getPremiumExpirationDate());
+        }
         return txt;
     }
 
@@ -174,6 +178,7 @@ public class ListenerController {
         User user = UserController.getUserController().findUser(username);
         if(user instanceof Artist){
             ((Artist)user).addFollowers(getListener());
+            getListener().setNumberOfFollowing(getListener().getNumberOfFollowing()+1);
             return"you've followed '"+username+"' succesfullly";
         }
         else if(user == null){
@@ -181,6 +186,43 @@ public class ListenerController {
         }
         else{
             return "this user is not an Artist! enter an artist username for following";
+        }
+    }
+
+    public String increaseAccountCredit(double amount){
+        getListener().setAccountCredit(getListener().getAccountCredit()+amount);
+        return "the amount added to your credit";
+    }
+
+    public String ShowFollowings(){
+        String txt="All Followings\n";
+        if(getListener().getNumberOfFollowing()==0){
+            txt+="you have no following yet";
+            return txt;
+        }
+        for(User user : Database.getDatabase().getAllUsers()){
+            if(user instanceof Artist){
+                Artist artist = (Artist)user;
+                for(User listenerp : artist.getFollowers()){
+                    if(listenerp.getUsername().equals(getListener().getUsername())){
+                        txt+="-"+artist.getUsername()+"\n";
+                    }
+
+                }
+            }
+        }
+        return txt;
+    }
+
+    public String reportArtist(String username , String explanation){
+        User user = UserController.getUserController().findUser(username);
+        if(user instanceof Artist){
+            Report tmp = new Report(getListener(), null, explanation);
+            Database.getDatabase().addToAllReports(tmp);
+            return "thanks for your feedback , your report has been recieved!";
+        }
+        else{
+            return "invalid username for an Artist ! make sure to enter an Artist's username ";
         }
     }
 

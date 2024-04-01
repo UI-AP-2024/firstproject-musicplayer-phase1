@@ -14,6 +14,7 @@ public class Listener extends User{
     private Map<Long,Long> audioPlays;
     private Date premiumExpirationDate;
     private ArrayList<Genre> favoriteGenres;
+    private long numberOfFollowing;
     public Listener(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
             Date birthDate, double accountCredit) {
         super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate);
@@ -21,6 +22,7 @@ public class Listener extends User{
         listOfPlayLists = new ArrayList<>();
         audioPlays = new HashMap<>();
         favoriteGenres = new ArrayList<>();
+        this.numberOfFollowing=0;
     }
     public double getAccountCredit() {
         return accountCredit;
@@ -60,6 +62,12 @@ public class Listener extends User{
     }
     public void addToFavoriteGenres(Genre favoriteGenre) {
         this.favoriteGenres.add(favoriteGenre);
+    }
+    public void setNumberOfFollowing(long numberOfFollowing) {
+        this.numberOfFollowing = numberOfFollowing;
+    }
+    public long getNumberOfFollowing() {
+        return numberOfFollowing;
     }
     
     
