@@ -222,7 +222,7 @@ public class ListenerController {
     public String showArtistList(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.ArtistModel.class)){
+            if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.SingerModel.class) || Database.getDatabase().getUsers().get(i).getClass().equals(Model.PodcasterModel.class)){
                 show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
             }
         }
@@ -253,9 +253,10 @@ public class ListenerController {
         return show.toString();
     }
     public void followArtist(String userName){
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
-                ArtistModel artist = (ArtistModel) Database.getDatabase().getUsers().get(i);
+        Database database = Database.getDatabase();
+        for (User user : database.getUsers()) {
+            if (user.getUsername().equals(userName) && user instanceof ArtistModel) {
+                ArtistModel artist = (ArtistModel) user;
                 model.getFallowingArtist().add(artist);
                 artist.getFollowers().add(model);
                 break;

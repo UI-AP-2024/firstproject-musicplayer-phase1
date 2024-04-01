@@ -41,6 +41,7 @@ public class ArtistController {
     public String logIn(String username, String password){
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(username) && Database.getDatabase().getUsers().get(i).getPassword().equals(password)){
+                model =(ArtistModel) Database.getDatabase().getUsers().get(i);
                 return "Done!";
             }
         }

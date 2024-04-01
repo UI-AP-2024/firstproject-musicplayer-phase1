@@ -56,7 +56,7 @@ public class AdminController {
     public String showReports(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getReports().size();i++)
-            show.append("User: "+Database.getDatabase().getReports().get(i).getUser() + "\nReported Artist: "+Database.getDatabase().getReports().get(i).getReportedArtist() + "\nDescription: "+ Database.getDatabase().getReports().get(i).getDescription() +"\n");
+            show.append("User: "+Database.getDatabase().getReports().get(i).getUser().getFullName() + "\nReported Artist: "+Database.getDatabase().getReports().get(i).getReportedArtist().getFullName() + "\nDescription: "+ Database.getDatabase().getReports().get(i).getDescription() +"\n");
         return show.toString();
     }
     public String showUserInfo(){
