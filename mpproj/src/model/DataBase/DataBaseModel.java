@@ -20,7 +20,7 @@ public class DataBaseModel {
     }
     private static DataBaseModel dataBase;
 
-    private static DataBaseModel getDataBase() {
+    public static DataBaseModel getDataBase() {
         if (dataBase == null)
             dataBase = new DataBaseModel();
         return dataBase;

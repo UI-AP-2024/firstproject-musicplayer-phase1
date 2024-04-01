@@ -11,16 +11,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public abstract class ListenerModel extends UserAccountModel {
     private int accountCredit;
     private ArrayList<PlaylistModel> playlists;
     private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
     private ArrayList<GenreModel> favoriteGenres;
-    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, int accountCredit) {
+    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
         super(username, password, name, email, phoneNumber, birthday);
-        this.accountCredit = accountCredit;
+        this.accountCredit = 50;
         this.playlists = new ArrayList<PlaylistModel>();
         this.playsCount = new HashMap<AudioModel, Integer>();
         this.subscriptionExpirationDate = new Date();
