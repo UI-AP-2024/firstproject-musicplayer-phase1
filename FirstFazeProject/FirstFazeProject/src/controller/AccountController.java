@@ -7,12 +7,13 @@ import java.util.regex.Pattern;
 
 public class AccountController {
     private static final AccountController accountController = new AccountController();
-    private AccountController() {
-    }
+
+    private AccountController() {}
 
     public static AccountController getAccountController() {
         return accountController;
     }
+
     public int signUp(String answer){
         String[] answers = answer.split(" -");
         Date date = null;
@@ -67,12 +68,14 @@ public class AccountController {
         }
         return 6;
     }
+
     private void addUserToDatabase(UserAccount userAccount){
         ArrayList<UserAccount> backUp =Database.getData().getAllUsers();
         backUp.add(userAccount);
         Database.getData().setAllUsers(backUp);
 //      adds a user account to user accounts list in database
     }
+
     public StringBuilder showGenres(){
         int counter = 1;
         StringBuilder result = new StringBuilder("The genres are : ");
@@ -82,6 +85,7 @@ public class AccountController {
         }
         return result;
     }
+
     public void addFavoriteGenres(String answer){
         Listener person = (Listener) Database.getData().getAllUsers().getLast();
         String[] answers = answer.split(",");
@@ -96,6 +100,7 @@ public class AccountController {
         }
         person.setFavoriteGenres(result);
     }
+
     public void loginPanel(String answer){
         String[] answers = answer.split(" -");
         for (UserAccount userAccount : Database.getData().getAllUsers()){
@@ -106,24 +111,19 @@ public class AccountController {
             }
         }
     }
+
     public void loginPanelOrders(UserAccount user, String answer){
-        switch (answer){
+        String[] answers = answer.split(" -");
+        switch (answers[0]){
             case "Logout":
                 AccountView.getAccountView().showMainMenu();
                 break;
             case "AccountInfo":
-                StringBuilder result = new StringBuilder("Account's info :\r\n");
-                result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
-                result.append("Full Name : ").append(user.getFullName()).append("\r\n");
-                result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
-                result.append("Birth Date : ").append(user.getBirthDate().getYear()).append("/").append(user.getBirthDate().getMonth()).append("/").append(user.getBirthDate().getDate()).append("\r\n");
-                result.append("Phone Number : ").append(user.getPhoneNumber());
-                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showResult(accountInfo(user));
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "GetSuggestions":
                 if (user instanceof Listener){
-                    String[] answers = answer.split(" +");
                     AccountView.getAccountView().showResult(getSuggestions((Listener)user));
                     AccountView.getAccountView().showLoginPanel(user);
                 }else {
@@ -133,17 +133,43 @@ public class AccountController {
                 break;
             case "Artists":
                 int counter =1;
-                result = new StringBuilder("The artists are : \r\n");
+                StringBuilder result = new StringBuilder("The artists are : \r\n");
                 for (UserAccount user1 : Database.getData().getAllUsers()){
                     if ( user instanceof Artist){
                         result.append(counter++).append("_").append(user1.getFullName()).append("\r\n");
                     }
                 }
                 AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "Artist":
+                result = new StringBuilder(" ");
+                for (UserAccount userAccount : Database.getData().getAllUsers()){
+                    if (userAccount instanceof Artist){
+                        if (Objects.equals(answers[1], userAccount.getUniqueUserName())){
+                            result.append(accountInfo(user));
+                            for (Audio audio : Database.getData().getAllAudios()){
+                                if (Objects.equals(audio.getArtistName(), user.getUniqueUserName())){
+                                    result.append(audio.getAudioName());
+                                }
+                            }
+                        }
+                    }
+                }
         }
-        String[] answers = answer.split(" -");
-
     }
+    public StringBuilder accountInfo(UserAccount user){
+        StringBuilder result = new StringBuilder("Account's info :\r\n");
+        result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
+        result.append("Full Name : ").append(user.getFullName()).append("\r\n");
+        result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
+        result.append("Birth Date : ").append(user.getBirthDate().getYear()).append("/").append(user.getBirthDate().getMonth()).append("/").append(user.getBirthDate().getDate()).append("\r\n");
+        result.append("Phone Number : ").append(user.getPhoneNumber());
+        AccountView.getAccountView().showResult(result);
+        AccountView.getAccountView().showLoginPanel(user);
+        return result;
+    }
+
     public StringBuilder getSuggestions(Listener person){
         int counter = 1;
         StringBuilder result = new StringBuilder("Audios you might like : ");

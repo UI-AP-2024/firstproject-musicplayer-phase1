@@ -34,7 +34,7 @@ public class AccountView {
                 showMainMenu();
             case -1:
                 System.out.println("Your password is too weak please choose another password 🙏");
-                showMainMenu();;
+                showMainMenu();
             case -2:
                 System.out.println("Your e-mail's format in not correct please recheck 🙏");
                 showMainMenu();
@@ -53,6 +53,7 @@ public class AccountView {
             case 4:
                 System.out.println("Login was successfully done 😎");
                 AccountController.getAccountController().loginPanel(answer);
+                break;
             case 5:
                 System.out.println("Your name or password is wrong please try again 🙏");
                 showMainMenu();
@@ -66,6 +67,8 @@ public class AccountView {
         System.out.println(AccountController.getAccountController().showGenres());
         AccountController.getAccountController().addFavoriteGenres(inp.nextLine());
         System.out.println("Favorite genres were added successfully");
+        showMainMenu();
+        System.out.println("The order is meaningless please login again");
         showMainMenu();
     }
     public void showLoginPanel(UserAccount person){
