@@ -136,4 +136,14 @@ public class ListenerController {
         else
             return "The desired audio file was not found";
     }
+
+    public String likeAudioFile(long id){
+        for (Audio audio : Database.getDataBase().getAudio()){
+            if (audio.getId() == id){
+                audio.setNumberOfLikes(audio.getNumberOfLikes()+1);
+                return "The audio file was liked";
+            }
+        }
+        return "The desired audio file was not found";
+    }
 }
