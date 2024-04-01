@@ -30,7 +30,7 @@ public class AdminController {
         for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio name: "+audio.getAudioName()+" Artist name: "+audio.getArtistName() + "\n");
+                show.append("Audio name: "+audio.getAudioName()+"\tArtist name: "+audio.getArtistName() + "\n");
                 break;
             }
         }
@@ -48,7 +48,7 @@ public class AdminController {
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)) {
                 ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
-                show.append("Name: " + artist.getFullName()+" email:"+artist.getEmail()+" phone number: "+artist.getPhoneNumber()+" salary: "+artist.getSalary()+"\nBiography"+artist.getBiography()+"\n");
+                show.append("Name: " + artist.getFullName()+"\temail:"+artist.getEmail()+"\tphone number: "+artist.getPhoneNumber()+"\tsalary: "+artist.getSalary()+"\nBiography"+artist.getBiography()+"\n");
                 break;
             }
         return show.toString();

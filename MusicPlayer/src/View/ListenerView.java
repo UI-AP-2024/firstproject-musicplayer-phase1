@@ -74,8 +74,10 @@ public class ListenerView {
                  System.out.println(view.showArtistList());
              else if(commands[0].equals("Artist"))
                  System.out.println(view.showArtist(commands[1]));
-             else if(commands[0].equals("Follow"))
+             else if(commands[0].equals("Follow")) {
                  view.followArtist(commands[1]);
+                 System.out.println(commands[1]+" Followed successfully!");
+             }
              else if(commands[0].equals("Search"))
                  System.out.println(view.searchAudio(commands[1]));
              else if(commands[0].equals("Sort")){

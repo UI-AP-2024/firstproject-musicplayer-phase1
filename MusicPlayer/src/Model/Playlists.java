@@ -12,6 +12,7 @@ public class Playlists {
         IDCount = ++ID;
         this.playlistName = playlistName;
         this.userName = userName;
+        this.audio = new ArrayList<>();
     }
 
     public static int getID() {

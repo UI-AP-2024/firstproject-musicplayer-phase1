@@ -24,9 +24,9 @@ public class Main {
                 for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
                     if(Database.getDatabase().getUsers().get(i).getUsername().equals(enter[1])){
                         User user = Database.getDatabase().getUsers().get(i);
-                        if(user.getClass().equals(AdminModel.class))
+                        if(user.getClass().equals(Model.AdminModel.class))
                             AdminView.getAdmin().login(enter[1],enter[2]);
-                        else if(user.getClass().equals(ListenerModel.class))
+                        else if(user.getClass().equals(Model.ListenerModel.class))
                             ListenerView.getListener().login(enter[1],enter[2]);
                         else
                             ArtistView.getArtistView().login(enter[1],enter[2]);

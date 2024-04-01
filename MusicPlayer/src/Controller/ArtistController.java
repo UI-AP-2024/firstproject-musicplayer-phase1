@@ -50,7 +50,7 @@ public class ArtistController {
     public String showFollowers(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < model.getFollowers().size(); i++)
-            show.append("Follower "+i+": "+ model.getFollowers().get(i)+"\n");
+            show.append("Follower "+(i+1)+": "+ model.getFollowers().get(i)+"\n");
         return show.toString();
     }
     public String showPlayedCount(){
@@ -58,7 +58,7 @@ public class ArtistController {
         for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getArtistName().equals(model.getFullName())){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio name: "+audio.getAudioName()+" Play count: "+audio.getPlayedCount()+"\n");
+                show.append("Audio name: "+audio.getAudioName()+"\tPlay count: "+audio.getPlayedCount()+"\n");
             }
         }
         return show.toString();
@@ -85,7 +85,7 @@ public class ArtistController {
     }
     public String showUserInfo(){
         CalculateEarnings();
-        return "Name: "+model.getFullName() + " Salary: "+model.getSalary()+" Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
+        return "Name: "+model.getFullName() + "\tSalary: "+model.getSalary()+"\tUsername: " + model.getUsername() + "\tPhone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + "\tBorn: " + model.getBirthDate() ;
     }
     public void newAlbum(String albumName){
        ((SingerModel)model).getAlbums().add(new Album(albumName, model.getFullName()));

@@ -53,7 +53,7 @@ public class ListenerController {
     }
     public String makeNewPlaylist(String playlistName,String userName){
 
-        if(model.getClass().equals(PremiumSubscription.class)) {
+        if(model.getClass().equals(Model.PremiumModel.class)) {
             model.getPlaylists().add(new Playlists(playlistName,userName));
             return "Playlist made successfully";
         }
@@ -66,7 +66,7 @@ public class ListenerController {
         return "Sorry! You can't creat more than 3 playlists with freeAccount.";
     }
     public String addMusicToPlaylist(String playlistName,int ID){
-        if(model.getClass().equals(PremiumSubscription.class)){
+        if(model.getClass().equals(Model.PremiumModel.class)){
             searchAndAdd(playlistName,ID);
             return "Music added to playlist successfully.";
         }
@@ -93,7 +93,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show = "Audio: " + audio.getAudioName() + " Artis: " + audio.getArtistName() + " Likes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + " Release Date: " + audio.getReleaseDate() + " ID: " + audio.getIDCount();
+                show = "Audio: " + audio.getAudioName() + "\tArtis: " + audio.getArtistName() + "\tLikes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + "\tRelease Date: " + audio.getReleaseDate() + "\tID: " + audio.getIDCount();
                 audio.setPlayedCount(audio.getPlayedCount() + 1);
                 model.Count++;
                 model.getPlayCount().put(audio,model.Count);
@@ -125,7 +125,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getAudioName().equals(name) || Database.getDatabase().getAudios().get(i).getArtistName().equals(name)){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio name: " + audio.getAudioName() + " Artist: " + audio.getArtistName() + " Genre: " + audio.getGenre() + "\n");
+                show.append("Audio name: " + audio.getAudioName() + "\tArtist: " + audio.getArtistName() + "\t Genre: " + audio.getGenre() + "\n");
             }
         }
         return show.toString();
@@ -167,7 +167,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getArtistName().equals(artistName)){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio: "+audio + " ID: "+audio.getIDCount()+"\n");
+                show.append("Audio: "+audio.getAudioName() + "\tID: "+audio.getIDCount()+"\n");
             }
         }
         return show.toString();
@@ -177,7 +177,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getGenre().equals(genre)){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio: "+audio + " ID: "+audio.getIDCount()+"\n");
+                show.append("Audio: "+audio.getAudioName() +"\tArtist: "+audio.getArtistName() +"\tID: "+audio.getIDCount()+"\n");
             }
         }
         return show.toString();
@@ -187,7 +187,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(Database.getDatabase().getAudios().get(i).getDate().getYear()==releaseDate.getYear()){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio: "+audio + " Artist: "+audio.getArtistName()+" ID: "+audio.getIDCount()+"\n");
+                show.append("Audio: "+audio.getAudioName() + "\tArtist: "+audio.getArtistName()+"\tID: "+audio.getIDCount()+"\n");
             }
         }
         return show.toString();
@@ -197,7 +197,7 @@ public class ListenerController {
         for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
             if(releaseDate1.getYear() <= Database.getDatabase().getAudios().get(i).getDate().getYear() && Database.getDatabase().getAudios().get(i).getDate().getYear()<=releaseDate2.getYear()){
                 AudioModel audio = Database.getDatabase().getAudios().get(i);
-                show.append("Audio: "+audio + " Artist: "+audio.getArtistName()+" ID: "+audio.getIDCount()+"\n");
+                show.append("Audio: "+audio.getAudioName() + "\tArtist: "+audio.getArtistName()+"\tID: "+audio.getIDCount()+"\n");
             }
         }
         return show.toString();
@@ -215,14 +215,14 @@ public class ListenerController {
     public String showFollowing(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < model.getFallowingArtist().size(); i++) {
-            show.append("Artist: "+ model.getFallowingArtist().get(i)+"\n");
+            show.append("Artist: "+ model.getFallowingArtist().get(i).getFullName()+"\n");
         }
         return show.toString();
     }
     public String showArtistList(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getClass().equals(ArtistModel.class)){
+            if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.ArtistModel.class)){
                 show.append("Artist Name: " + Database.getDatabase().getUsers().get(i).getFullName() + "\n");
             }
         }
@@ -234,16 +234,17 @@ public class ListenerController {
             if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
                 ArtistModel artist = (ArtistModel) Database.getDatabase().getUsers().get(i);
                 show.append("Artist Name: " + artist.getFullName() + "\n");
-                if(Database.getDatabase().getUsers().get(i).getClass().equals(SingerModel.class)){
-                    SingerModel singer = (SingerModel) artist;
-                    for (int r = 0; r < singer.getAlbums().size(); r++) {
-                        show.append("Albums Name: "+ singer.getAlbums().get(r)+"\n");
+                if(Database.getDatabase().getUsers().get(i).getClass().equals(Model.SingerModel.class)){
+                    show.append("Albums Name:\n");
+                    for (int r = 0; r < ((SingerModel) artist).getAlbums().size(); r++) {
+                        show.append(((SingerModel) artist).getAlbums().get(r).getAlbumName()+"\n");
                     }
                 }
                 else{
                     PodcasterModel podcaster = (PodcasterModel) artist;
+                    show.append("Podcasts Name:\n");
                     for (int j = 0; j < podcaster.getPodcasts().size(); j++) {
-                        show.append("Podcasts Name: " + podcaster.getPodcasts().get(j)+"\n");
+                        show.append(podcaster.getPodcasts().get(j).getAudioName()+"\n");
                     }
                 }
                 break;
@@ -264,7 +265,7 @@ public class ListenerController {
     public String showPlaylists(){
         StringBuilder show = new StringBuilder();
         for (int i = 0; i < model.getPlaylists().size(); i++) {
-            show.append("Playlist name: "+model.getPlaylists().get(i).getPlaylistName());
+            show.append("Playlist name: "+model.getPlaylists().get(i).getPlaylistName()+"\n");
         }
         return show.toString();
     }
@@ -273,7 +274,7 @@ public class ListenerController {
         for (int i = 0; i < model.getPlaylists().size(); i++){
             if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
                 for (int j = 0; j < model.getPlaylists().get(i).getAudio().size(); j++) {
-                    show.append("Audio name; "+model.getPlaylists().get(i).getAudio().get(j).getAudioName() + " Artist Name: " +model.getPlaylists().get(i).getAudio().get(j).getArtistName()+"\n");
+                    show.append("Audio name: "+model.getPlaylists().get(i).getAudio().get(j).getAudioName() + "\tArtist Name: " +model.getPlaylists().get(i).getAudio().get(j).getArtistName()+"\n");
                 }
             }
         }
@@ -282,25 +283,27 @@ public class ListenerController {
     public String getSuggestions(int n){
         StringBuilder show = new StringBuilder();
         int count=0;
-        while (count<n){
-            for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-                if(Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[0]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[1]) ||  Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[2]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[3])){
-                    show.append("Audio name: "+Database.getDatabase().getAudios().get(i).getAudioName() + " Artist name: "+Database.getDatabase().getAudios().get(i).getArtistName() + " Genre: " + Database.getDatabase().getAudios().get(i).getGenre()+"\n");
+
+        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
+            if(count<n) {
+                if (Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[0]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[1]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[2]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[3])) {
+                    show.append("Audio name: " + Database.getDatabase().getAudios().get(i).getAudioName() + "\tArtist name: " + Database.getDatabase().getAudios().get(i).getArtistName() + "\tGenre: " + Database.getDatabase().getAudios().get(i).getGenre() + "\n");
                     count++;
                 }
             }
         }
 
+
         return show.toString();
     }
     public String showUserInfo(){
-        return "Name: "+model.getFullName() + " Username: " + model.getUsername() + " Phone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + " Born: " + model.getBirthDate() ;
+        return "Name: "+model.getFullName() + "\tUsername: " + model.getUsername() + "\tPhone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + "\tBorn: " + model.getBirthDate() ;
     }
     public String buyOrExtendSubscription(int day){
         if(model.getClass().equals(ListenerModel.class)){
-            model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
-            ((PremiumModel) model).setRemainingSubscriptionDay(day);
-            return check(day);
+          //  model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+
+            return check(day) + model.getClass();
         }
         else if(model.getClass().equals(PremiumModel.class)){
             ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel)model).getRemainingSubscriptionDay()+day);
@@ -312,16 +315,40 @@ public class ListenerController {
         if(day==30) {
             if(model.getCredit()-PremiumSubscription.DAYS30.getSubPrize() < 0)
                 return "Your credit is low!";
+            PremiumModel per = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+            per.setCredit(model.getCredit());
+            per.setPlaylists(model.getPlaylists());
+            per.setFavoriteGenres(model.getFavoriteGenres());
+            model=per;
+            per= (PremiumModel)model;
+            ((PremiumModel) model).setRemainingSubscriptionDay(day);
+
             model.setCredit(model.getCredit() - PremiumSubscription.DAYS30.getSubPrize());
         }
         else if(day==60) {
             if(model.getCredit()-PremiumSubscription.DAYS60.getSubPrize() < 0)
                 return "Your credit is low!";
+            PremiumModel per = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+            per.setCredit(model.getCredit());
+            per.setPlaylists(model.getPlaylists());
+            per.setFavoriteGenres(model.getFavoriteGenres());
+            model=per;
+            per= (PremiumModel)model;
+            ((PremiumModel) model).setRemainingSubscriptionDay(day);
+
             model.setCredit(model.getCredit() - PremiumSubscription.DAYS60.getSubPrize());
         }
         else {
             if(model.getCredit()-PremiumSubscription.DAYS180.getSubPrize() < 0)
                 return "Your credit is low!";
+            PremiumModel per = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+            per.setCredit(model.getCredit());
+            per.setPlaylists(model.getPlaylists());
+            per.setFavoriteGenres(model.getFavoriteGenres());
+            model=per;
+            per= (PremiumModel)model;
+            ((PremiumModel) model).setRemainingSubscriptionDay(day);
+
             model.setCredit(model.getCredit() - PremiumSubscription.DAYS180.getSubPrize());
         }
         return "Done!";
