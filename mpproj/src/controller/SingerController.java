@@ -101,7 +101,7 @@ public class SingerController {
         return txt;
     }
     public String ShowSingerInfo(){
-        String txt="Artist info:"+
+        String txt="Singer info:"+
         "\nuser name : "+getSinger().getUsername()+
         "\nFirst name : "+getSinger().getName()+
         "\nFollowers : "+String.valueOf(getSinger().getFollowers().size())+

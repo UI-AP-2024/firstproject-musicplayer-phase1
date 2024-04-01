@@ -148,6 +148,8 @@ public class DebugView {
         System.out.println(txt);
         txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bion);
         System.out.println(txt);
+        txt = UserController.getUserController().signupNewUser("Maryaom","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bion);
+        System.out.println(txt);
 
         User tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");
         User tmpn = UserController.getUserController().findUser("Maryaoh", "Maryamdar84#");
@@ -221,6 +223,50 @@ public class DebugView {
         System.out.println(txt);
         txt = ArtistController.getArtistController().showViewsStatics();
         System.out.println(txt);
+
+        txt = ArtistController.getArtistController().createNewAlbum("mine");
+        System.out.println(txt);
+        long id = SingerController.getSingerController().getSinger().getAlbumList().get(0).getId();
+        System.out.println(id);
+        txt = ArtistController.getArtistController().publishAudio("M", "the first","POP" , "this is lyrics","htpps://jdjfsnfjksk" , "kjhdkjhc.png", 1);
+        System.out.println(txt);
+        txt = ArtistController.getArtistController().showViewsStatics();
+        System.out.println(txt);
+        
+        
+        tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
+        ArtistController.getArtistController().loginArtist((Podcaster)tmp);
+        txt = ArtistController.getArtistController().ShowAccountInfo();
+        System.out.println(txt);
+        txt = ArtistController.getArtistController().showFollowers();
+        System.out.println(txt);
+        txt = ArtistController.getArtistController().showViewsStatics();
+        System.out.println(txt);
+        txt = ArtistController.getArtistController().publishAudio("P", "the first podcast","POP" , "this is Caption","htpps://pdjfsnfjksk" , "kjhdojhc.png", 0);
+        System.out.println(txt);
+        txt = ArtistController.getArtistController().showViewsStatics();
+        System.out.println(txt);
+
+        tmp = UserController.getUserController().findUser("Maryaoh", "Maryamdar84#");
+        ListenerController.getListenerController().loginListener((Listener)tmp);
+        txt = ListenerController.getListenerController().showAllArtists();
+        System.out.println(txt);
+        txt = ListenerController.getListenerController().followArtist("Maryaof");
+        System.out.println(txt);
+        txt = ListenerController.getListenerController().ShowFollowings();
+        System.out.println(txt);
+
+        tmp = UserController.getUserController().findUser("Maryaof", "Maryamdar84#");
+        ArtistController.getArtistController().loginArtist((Podcaster)tmp);
+        txt = ArtistController.getArtistController().showFollowers();
+        System.out.println(txt);
+
+        
+
+
+        
+
+
 
         
 
