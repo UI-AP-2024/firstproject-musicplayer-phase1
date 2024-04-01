@@ -1,6 +1,7 @@
 package model;
 
 import model.AccountUser.AccountUser;
+import model.AccountUser.Listener.Listener;
 import model.Audio.Audio;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public class Database {
     private List<Report> reports;
 
     //*********************************************
-    private Database() {
+    public Database() {
         users = new ArrayList<>();
         audiofiles = new ArrayList<>();
         reports = new ArrayList<>();
@@ -25,6 +26,12 @@ public class Database {
             instance = new Database();
         }
         return instance;
+    }
+
+    //*********************************************
+
+    public void addUser(Listener user){
+        users.add(user);
     }
 
 }
