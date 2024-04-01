@@ -144,9 +144,9 @@ public class DebugView {
                         "-[birthdate in year month day format] with a space in between and your biographi");
         String bio = "this is me maryam dar please supportme thanks";
         String bion = null;
-        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'S',bio);
+        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'S',bio);
         System.out.println(txt);
-        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bion);
+        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bion);
         System.out.println(txt);
 
         User tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");
@@ -177,7 +177,7 @@ public class DebugView {
         txt=ListenerController.getListenerController().showArtistInfo("Maryaol");
         System.out.println(txt);
 
-        txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "Maryam", "Dar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bio);
+        txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bio);
         System.out.println(txt);
 
         txt=ListenerController.getListenerController().showAllArtists();

@@ -106,8 +106,7 @@ public class ListenerController {
     public String ShowAccountInfo(){
         String txt="Account info:"+
         "\nuser name : "+getListener().getUsername()+
-        "\nFirst name : "+getListener().getFirstName()+
-        "\nLast name : "+getListener().getLastName()+
+        "\nFirst name : "+getListener().getName()+
         "\nemail address: "+getListener().getEmailAddress()+
         "\npassword : "+getListener().getPassword()+
         "\nbirth date : "+String.valueOf(getListener().getBirthDate())+
@@ -125,7 +124,7 @@ public class ListenerController {
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DAY_OF_MONTH, days);
                 Date expDate = cal.getTime(); 
-                PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(), getListener().getFirstName(), getListener().getLastName(), getListener().getEmailAddress(), getListener().getPhoneNumber(), getListener().getBirthDate(), getListener().getAccountCredit(),days,expDate);
+                PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(), getListener().getName(), getListener().getEmailAddress(), getListener().getPhoneNumber(), getListener().getBirthDate(), getListener().getAccountCredit(),days,expDate);
                 setListener(tmp);
                 //change the method with type casting?to nut remove user
                 //exchanging two listeners in all felds they are in->database,artist,report

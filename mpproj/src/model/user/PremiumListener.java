@@ -7,9 +7,9 @@ import java.util.TimerTask;
 public class PremiumListener extends Listener{
     private int remainingDaysOfPremium;
 
-    public PremiumListener(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public PremiumListener(String password,String username, String name, String emailAddress, String phoneNumber,
             Date birthDate, double accountCredit, int remainingDaysOfPremium,Date premiumExpirationDate ) {
-        super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, accountCredit);
+        super(password,username, name, emailAddress, phoneNumber, birthDate, accountCredit);
         this.remainingDaysOfPremium = remainingDaysOfPremium;
         super.setPremiumExpirationDate(premiumExpirationDate);
         shortenRemainingDays();

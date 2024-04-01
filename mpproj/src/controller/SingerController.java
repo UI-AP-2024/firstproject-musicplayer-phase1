@@ -93,8 +93,7 @@ public class SingerController {
         getSinger().calculateIncome();
         String txt="Account info:"+
         "\nuser name : "+getSinger().getUsername()+
-        "\nFirst name : "+getSinger().getFirstName()+
-        "\nLast name : "+getSinger().getLastName()+
+        "\nFirst name : "+getSinger().getName()+
         "\nemail address: "+getSinger().getEmailAddress()+
         "\npassword : "+getSinger().getPassword()+
         "\nbirth date : "+String.valueOf(getSinger().getBirthDate())+
@@ -104,8 +103,7 @@ public class SingerController {
     public String ShowSingerInfo(){
         String txt="Artist info:"+
         "\nuser name : "+getSinger().getUsername()+
-        "\nFirst name : "+getSinger().getFirstName()+
-        "\nLast name : "+getSinger().getLastName()+
+        "\nFirst name : "+getSinger().getName()+
         "\nFollowers : "+String.valueOf(getSinger().getFollowers().size())+
         "\nBiographi : "+getSinger().getBiographi()+"\n";
         if(getSinger().getAlbumList().size()==0){
@@ -135,6 +133,11 @@ public class SingerController {
         }
 
         return txt;
+    }
+
+    public String createNewAlbum(String albumName){
+        getSinger().addToAlbumList(new Album(albumName, getSinger().getName()));
+        return "your album has been created succesfully";
     }
 
     

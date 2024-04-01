@@ -7,9 +7,9 @@ public class Artist extends User {
     private double income;
     private ArrayList<User> followers;
     private String biographi;
-    public Artist(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public Artist(String password,String username, String name, String emailAddress, String phoneNumber,
             Date birthDate, String biographi) {
-        super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate);
+        super(password,username, name, emailAddress, phoneNumber, birthDate);
         this.biographi = biographi;
         followers = new ArrayList<>();
         this.income = 0;

@@ -52,7 +52,7 @@ public class UserController {
         }
         return true;
     }
-    public String signupNewUser(String username,String password, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public String signupNewUser(String username,String password, String name, String emailAddress, String phoneNumber,
     String birthDate,char type,String bio) throws ParseException{
         if(!(emailPassRegex(emailAddress))){
             return"Please enter a valid email address";
@@ -74,19 +74,19 @@ public class UserController {
         switch (type) {
             case 'L':
             System.out.println("L");
-            FreeListener listener = new FreeListener(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth, 50);
+            FreeListener listener = new FreeListener(password,username,name, emailAddress, phoneNumber, dateOfbirth, 50);
             Database.getDatabase().addToAllUsers(listener);
                 
                 break;
         
             case 'S':
             System.out.println("S");
-            Singer singer = new Singer(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth,bio);
+            Singer singer = new Singer(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(singer);
                 break;
         
             case 'P':
-            Podcaster podcaster = new Podcaster(password,username, firstName, lastName, emailAddress, phoneNumber, dateOfbirth,bio);
+            Podcaster podcaster = new Podcaster(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(podcaster);
                 break;
         

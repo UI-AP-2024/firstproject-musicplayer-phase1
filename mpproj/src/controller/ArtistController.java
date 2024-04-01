@@ -39,8 +39,7 @@ public class ArtistController {
         getArtist().calculateIncome();
         String txt="Account info:"+
         "\nuser name : "+getArtist().getUsername()+
-        "\nFirst name : "+getArtist().getFirstName()+
-        "\nLast name : "+getArtist().getLastName()+
+        "\nFirst name : "+getArtist().getName()+
         "\nemail address: "+getArtist().getEmailAddress()+
         "\npassword : "+getArtist().getPassword()+
         "\nbirth date : "+String.valueOf(getArtist().getBirthDate())+
@@ -79,6 +78,10 @@ public class ArtistController {
             return txt;
         }
         else return null;
+    }
+
+    public String createNewAlbum(String albumName){
+        return SingerController.getSingerController().createNewAlbum(albumName);
     }
     
 }

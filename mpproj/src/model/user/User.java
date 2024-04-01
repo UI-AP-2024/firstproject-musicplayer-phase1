@@ -5,19 +5,17 @@ import java.util.Date;
 public abstract class User {
     private final String username;
     private String password;
-    private String firstName;//type?
-    private String lastName;//?
+    private String name;//type?
     private String emailAddress;//?
     private String phoneNumber;
     private Date birthDate;
     private static long counter =0;
-    public User(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public User(String password,String username, String name, String emailAddress, String phoneNumber,
             Date birthDate) {
         counter++;
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;  
@@ -28,11 +26,8 @@ public abstract class User {
     public String getPassword() {
         return password;
     }
-    public String getFirstName() {
-        return firstName;
-    }
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
     public String getEmailAddress() {
         return emailAddress;
@@ -49,11 +44,8 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;

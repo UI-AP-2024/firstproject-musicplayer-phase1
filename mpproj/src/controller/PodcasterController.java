@@ -84,8 +84,7 @@ public class PodcasterController {
     public String ShowAccountInfo(){
         String txt="Account info:"+
         "\nuser name : "+getPodcaster().getUsername()+
-        "\nFirst name : "+getPodcaster().getFirstName()+
-        "\nLast name : "+getPodcaster().getLastName()+
+        "\nFirst name : "+getPodcaster().getName()+
         "\nemail address: "+getPodcaster().getEmailAddress()+
         "\npassword : "+getPodcaster().getPassword()+
         "\nbirth date : "+String.valueOf(getPodcaster().getBirthDate())+
@@ -96,8 +95,7 @@ public class PodcasterController {
     public String ShowPodcasterInfo(){
         String txt="Podcaster info:"+
         "\nuser name : "+getPodcaster().getUsername()+
-        "\nFirst name : "+getPodcaster().getFirstName()+
-        "\nLast name : "+getPodcaster().getLastName()+
+        "\nFirst name : "+getPodcaster().getName()+
         "\nFollowers : "+String.valueOf(getPodcaster().getFollowers().size())+
         "\nBiographi : "+getPodcaster().getBiographi()+"\n";
         if(getPodcaster().getPodcastList().size()==0){

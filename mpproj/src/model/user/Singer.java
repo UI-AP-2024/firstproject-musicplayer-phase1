@@ -8,9 +8,9 @@ import model.audio.Music;
 
 public class Singer extends Artist{
     private ArrayList<Album> albumList;
-    public Singer(String password,String username, String firstName, String lastName, String emailAddress, String phoneNumber,
+    public Singer(String password,String username, String name, String emailAddress, String phoneNumber,
             Date birthDate, String biographi) {
-        super(password,username, firstName, lastName, emailAddress, phoneNumber, birthDate, biographi);
+        super(password,username, name , emailAddress, phoneNumber, birthDate, biographi);
         albumList = new ArrayList<>();
     }
 
