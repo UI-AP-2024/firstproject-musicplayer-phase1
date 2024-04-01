@@ -143,30 +143,54 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Artist":
+                counter = 1;
                 result = new StringBuilder(" ");
                 for (UserAccount userAccount : Database.getData().getAllUsers()){
                     if (userAccount instanceof Artist){
                         if (Objects.equals(answers[1], userAccount.getUniqueUserName())){
-                            result.append(accountInfo(user));
+                            result.append(accountInfo(userAccount));
                             for (Audio audio : Database.getData().getAllAudios()){
-                                if (Objects.equals(audio.getArtistName(), user.getUniqueUserName())){
-                                    result.append(audio.getAudioName());
+                                if (Objects.equals(audio.getArtistName(), userAccount.getUniqueUserName())){
+                                    result.append(counter++).append(audio.getAudioName()).append(" ");
                                 }
                             }
+                            AccountView.getAccountView().showResult(result);
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder("The artist was not found"));
+                    AccountView.getAccountView().showLoginPanel(user);
+                }
+                break;
+            case "Follow":
+                for (UserAccount userAccount : Database.getData().getAllUsers()){
+                    if (userAccount instanceof Artist){
+                        if (Objects.equals(answers[1], userAccount.getUniqueUserName())){
+                            ArrayList<UserAccount> backUp = ((Artist) userAccount).getFollowers();
+                            backUp.add(user);
+                            ((Artist) userAccount).setFollowers(backUp);
+                            AccountView.getAccountView().showResult(new StringBuilder("The artist was followed successfully"));
+                            AccountView.getAccountView().showLoginPanel(user);
                         }
                     }
                 }
+                AccountView.getAccountView().showResult(new StringBuilder("The artist was not found"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "Search":
+
+
         }
     }
+
     public StringBuilder accountInfo(UserAccount user){
         StringBuilder result = new StringBuilder("Account's info :\r\n");
         result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
         result.append("Full Name : ").append(user.getFullName()).append("\r\n");
         result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
         result.append("Birth Date : ").append(user.getBirthDate().getYear()).append("/").append(user.getBirthDate().getMonth()).append("/").append(user.getBirthDate().getDate()).append("\r\n");
-        result.append("Phone Number : ").append(user.getPhoneNumber());
+        result.append("Phone Number : ").append(user.getPhoneNumber()).append("\r\n");
         AccountView.getAccountView().showResult(result);
-        AccountView.getAccountView().showLoginPanel(user);
         return result;
     }
 
