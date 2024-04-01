@@ -1,6 +1,6 @@
 package Controllers;
 
-import Extra.AIRecommendor;
+import Extra.AIRecommender;
 import Models.*;
 import Models.Audio.Audio;
 import Models.Data.Database;
@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public abstract class ListenerController {
     private Database database;
+    private AIRecommender aIrecommender;
 
     public Database getDatabase() {
         return database;
@@ -35,6 +36,7 @@ public abstract class ListenerController {
     }
     public ListenerController()
     {
+        this.aIrecommender = AIRecommender.getAIrecommender();
         this.database = Database.getInstance();
         listenerModel = (Listener) this.database.getLogedInUser();
     }
@@ -97,7 +99,7 @@ public abstract class ListenerController {
 
     public ArrayList<Audio> suggestedAudios(int n)
     {
-        return AIRecommendor.recommendor(n, this.getListenerModel());
+        return aIrecommender.recommender(n, this.getListenerModel());
     }
 
     public String playAudio(String audioName)
@@ -106,6 +108,7 @@ public abstract class ListenerController {
         {
             if(tmpAudio.getFileName().equals(audioName))
             {
+                aIrecommender.addRating(this.getListenerModel(), tmpAudio, 0.2);
                 Map<Audio, Integer> playCountMap = this.getListenerModel().getAudiosPlayed();
                 if(playCountMap.containsKey(tmpAudio))
                 {
@@ -129,6 +132,8 @@ public abstract class ListenerController {
         {
             if(audio.getFileName().equals(audioName))
             {
+                aIrecommender.addRating(this.getListenerModel(), audio, 1);
+
                 audio.setLikesCount(audio.getLikesCount()+1);
                 return "Audio liked";
             }

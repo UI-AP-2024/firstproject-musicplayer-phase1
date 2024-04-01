@@ -24,7 +24,6 @@ public class AdminController {
         if(adminController == null) adminController = new AdminController();
         return adminController;
     }
-
     public ArrayList<Audio> showMostLiked()
     {
         ArrayList<Audio> result = database.getAudios();
