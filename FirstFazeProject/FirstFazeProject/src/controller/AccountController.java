@@ -135,7 +135,7 @@ public class AccountController {
                 int counter =1;
                 StringBuilder result = new StringBuilder("The artists are : \r\n");
                 for (UserAccount user1 : Database.getData().getAllUsers()){
-                    if ( user instanceof Artist){
+                    if ( user1 instanceof Artist){
                         result.append(counter++).append("_").append(user1.getFullName()).append("\r\n");
                     }
                 }
@@ -178,23 +178,31 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Search":
+                counter = 1;
+                result = new StringBuilder("Artists you might be searching for : \r\n");
                 for (UserAccount userAccount : Database.getData().getAllUsers()){
                     if (userAccount instanceof Artist){
-                        if(Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
-                            AccountView.getAccountView().showResult(new StringBuilder("Your requested artist was found"));
-                            AccountView.getAccountView().showLoginPanel(user);
+                        if(userAccount.getUniqueUserName().contains(answers[1])){
+                            result.append(counter++).append("_").append(userAccount.getUniqueUserName()).append(" ");
                         }
                     }
                 }
+                counter =1;
+                result.append("\r\n").append("Audios you might be searching for : \r\n");
                 for (Audio audio : Database.getData().getAllAudios()){
-                    if (Objects.equals(audio.getAudioName(), answers[1])){
-                        AccountView.getAccountView().showResult(new StringBuilder("Your requested audio was found"));
-                        AccountView.getAccountView().showLoginPanel(user);
+                    if (audio.getAudioName().contains(answers[1])){
+                        result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
                     }
                 }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Sort":
-                
+                if (Objects.equals(answers[1], "L")){
+
+                }else if (Objects.equals(answers[1],"P")){
+
+                }
         }
     }
 
