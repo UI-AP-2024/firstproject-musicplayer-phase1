@@ -49,8 +49,7 @@ public class ListenerController {
     public StringBuilder showPlaylists() {
         StringBuilder str = new StringBuilder();
         for (PlaylistModel playlist : listener.getPlaylists()) {
-            str.append("\nname : ").append(playlist.getPlaylistName())
-                    .append(" with ID : ").append(playlist.getId());
+            str.append(playlist.toString()).append("\n");
         }
         return str;
     }
@@ -59,7 +58,8 @@ public class ListenerController {
         for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
             if (userAccount instanceof ArtistModel)
                 if (((ArtistModel) userAccount).getFollowers().contains(listener))
-                    str.append("\nname : ").append(userAccount.getName());
+                    str.append("\nname : ").append(userAccount.getName())
+                            .append(", username : ").append(userAccount.getUsername());
         return str;
     }
     public String followArtist(String username) {

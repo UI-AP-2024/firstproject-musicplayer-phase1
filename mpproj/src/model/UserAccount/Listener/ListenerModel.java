@@ -4,6 +4,7 @@ import model.Audio.AudioModel;
 
 import model.GenreModel;
 import model.PlaylistModel;
+import model.UserAccount.Artist.ArtistModel;
 import model.UserAccount.UserAccountModel;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public abstract class ListenerModel extends UserAccountModel {
     private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
     private ArrayList<GenreModel> favoriteGenres;
+    private ArrayList<ArtistModel> followings;
     public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double accountCredit) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = 50;
@@ -24,6 +26,13 @@ public abstract class ListenerModel extends UserAccountModel {
         this.playsCount = new HashMap<AudioModel, Integer>();
         this.subscriptionExpirationDate = new Date();
         this.favoriteGenres = new ArrayList<GenreModel>();
+        this.followings = new ArrayList<ArtistModel>();
+    }
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", accountCredit = " + accountCredit +
+                ", subscriptionExpirationDate = " + subscriptionExpirationDate;
     }
 
     public double getAccountCredit() {
@@ -46,15 +55,12 @@ public abstract class ListenerModel extends UserAccountModel {
         return favoriteGenres;
     }
 
-    public void setAccountCredit(double accountCredit) {
-        this.accountCredit = accountCredit;
+    public ArrayList<ArtistModel> getFollowings() {
+        return followings;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() +
-                ", accountCredit = " + accountCredit +
-                ", subscriptionExpirationDate = " + subscriptionExpirationDate;
+    public void setAccountCredit(double accountCredit) {
+        this.accountCredit = accountCredit;
     }
 
     public void setPlaysCount(Map<AudioModel, Integer> playsCount) {
@@ -67,5 +73,9 @@ public abstract class ListenerModel extends UserAccountModel {
 
     public void setPlaylists(ArrayList<PlaylistModel> playlists) {
         this.playlists = playlists;
+    }
+
+    public void setFollowings(ArrayList<ArtistModel> followings) {
+        this.followings = followings;
     }
 }
