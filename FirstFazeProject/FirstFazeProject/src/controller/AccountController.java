@@ -293,7 +293,7 @@ public class AccountController {
                             break;
                         }
                     }
-                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+                    AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
                     AccountView.getAccountView().showLoginPanel(user);
                     break;
                 }else if (user instanceof Premium){
@@ -307,17 +307,37 @@ public class AccountController {
                                 }
                             }
                             playlist.setAudioList(backUp);
+                            AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
+                            AccountView.getAccountView().showLoginPanel(user);
                             break;
                         }
                     }
-                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+                    AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
                     AccountView.getAccountView().showLoginPanel(user);
                     break;
                 }
                 break;
             case "ShowPlaylists" :
-
+                counter = 1;
+                result = new StringBuilder("The play lists names and ids are : \r\n");
+                if (user instanceof Free){
+                    for (Playlist playlist : ((Free) user).getPlaylists()){
+                        result.append(counter++).append("_").append(playlist.getPlayListName()).append("(").append(playlist.getId()).append(") ");
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder(result));
+                    AccountView.getAccountView().showLoginPanel(user);
+                }else if (user instanceof Premium){
+                    for (Playlist playlist : ((Premium) user).getPlaylists()){
+                        result.append(counter++).append("_").append(playlist.getPlayListName()).append("(").append(playlist.getId()).append(") ");
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder(result));
+                    AccountView.getAccountView().showLoginPanel(user);
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
+                AccountView.getAccountView().showLoginPanel(user);
                 break;
+            case "SelectPlaylist" :
+                
         }
     }
 
