@@ -94,6 +94,10 @@ public class View
                 System.out.println(ListenerController.getListenerController().getSuggestions());
             else if(orders[0].compareTo("NewPlaylist")==0)
                 System.out.println(ListenerController.getListenerController().makePlayList(orders[1]));
+            else if(orders[0].compareTo("ShowPlaylists")==0)
+                System.out.println(ListenerController.getListenerController().showPlayLists());
+            else if(orders[0].compareTo("SelectPlaylist")==0)
+                System.out.println(ListenerController.getListenerController().showPlayList(orders[1]));
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
