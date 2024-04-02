@@ -54,6 +54,18 @@ public class ArtistC {
 
             artist.setIncome(totalIncome);
         }
+
+        public void displayArtistInfo(Artist artist) {
+            System.out.println("Artist Information:");
+            System.out.println("Username: " + artist.getUserName());
+            System.out.println("Full Name: " + artist.getFullName());
+            System.out.println("Email: " + artist.getEmail());
+            System.out.println("Phone Number: " + artist.getPhoneNumber());
+            System.out.println("Birth Date: " + artist.getBirthDate());
+            System.out.println("Biography: " + artist.getBiography());
+            System.out.println("Income: $" + artist.getIncome());
+        }
     }
+
 
 
