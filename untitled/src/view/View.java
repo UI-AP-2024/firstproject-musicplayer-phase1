@@ -118,7 +118,7 @@ public class View
                 break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
-                System.out.println(Controller.getController().getAccModel().toString());
+                System.out.println(ListenerController.getListenerController().getAccInfo());
             else
                 System.out.println("wrong order\ntry again");
         }

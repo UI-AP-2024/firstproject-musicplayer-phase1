@@ -19,7 +19,6 @@ public class ListenerController
 {
     private static ListenerController listenerController;
     private ListenerModel listener;
-    private static long amountOfPlayLists;
     private ListenerController(){}
     public static ListenerController getListenerController()
     {
@@ -30,14 +29,6 @@ public class ListenerController
     public ListenerModel getListener()
     {
         return this.listener;
-    }
-    public static long getAmountOfPlayLists()
-    {
-        return amountOfPlayLists;
-    }
-    public static void setAmountOfPlayLists(long amountOfPlayLists)
-    {
-        ListenerController.amountOfPlayLists = amountOfPlayLists;
     }
     public void setListener(ListenerModel listener)
     {
@@ -114,25 +105,29 @@ public class ListenerController
         else
             return false;
     }
+    public void changeToFree()
+    {
+        String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+        FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+        freeListener.setSubscriptionExpiration(null);
+        freeListener.setListenerCredit(getListener().getListenerCredit());
+        freeListener.setFollowings(getListener().getFollowings());
+        freeListener.setFavGenres(getListener().getFavGenres());
+        freeListener.setLikedAudios(getListener().getLikedAudios());
+        freeListener.setPlayingAmount(getListener().getPlayingAmount());
+        freeListener.setPlayLists(getListener().getPlayLists());
+        Database.getDatabase().getAllUsers().remove(getListener());
+        Database.getDatabase().getAllUsers().add(freeListener);
+        setListener(freeListener);
+    }
     public String addToPlayList(String playListName,String audioID)
     {
         if (getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()<=0)
         {
-            String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
-            FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
-            freeListener.setSubscriptionExpiration(null);
-            freeListener.setListenerCredit(getListener().getListenerCredit());
-            freeListener.setFollowings(getListener().getFollowings());
-            freeListener.setFavGenres(getListener().getFavGenres());
-            freeListener.setLikedAudios(getListener().getLikedAudios());
-            freeListener.setPlayingAmount(getListener().getPlayingAmount());
-            freeListener.setPlayLists(getListener().getPlayLists());
-            Database.getDatabase().getAllUsers().remove(getListener());
-            Database.getDatabase().getAllUsers().add(freeListener);
-            setListener(freeListener);
-            addToPlayList(playListName,audioID);
+            changeToFree();
+            return addToPlayList(playListName,audioID);
         }
-        if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && (((FreeListenerModel) getListener()).getAddedAudios()<FreeListenerModel.getAddAudioLimit())))
+        else if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && (((FreeListenerModel) getListener()).getAddedAudios()<FreeListenerModel.getAddAudioLimit())))
         {
             boolean check=false;
             AudioModel chosenAudio =null;
@@ -155,7 +150,8 @@ public class ListenerController
                 }
             if(!check)
                 return "playlist doesn't exist";
-            ((FreeListenerModel)getListener()).setAddedAudios(((FreeListenerModel) getListener()).getAddedAudios()+1);
+            if(getListener() instanceof  FreeListenerModel)
+                ((FreeListenerModel)getListener()).setAddedAudios(((FreeListenerModel) getListener()).getAddedAudios()+1);
             return "audio added to playlist successfully";
         }
         else
@@ -436,32 +432,22 @@ public class ListenerController
     {
         if (getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()<=0)
         {
-            String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
-            FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
-            freeListener.setSubscriptionExpiration(null);
-            freeListener.setListenerCredit(getListener().getListenerCredit());
-            freeListener.setFollowings(getListener().getFollowings());
-            freeListener.setFavGenres(getListener().getFavGenres());
-            freeListener.setLikedAudios(getListener().getLikedAudios());
-            freeListener.setPlayingAmount(getListener().getPlayingAmount());
-            freeListener.setPlayLists(getListener().getPlayLists());
-            Database.getDatabase().getAllUsers().remove(getListener());
-            Database.getDatabase().getAllUsers().add(freeListener);
-            setListener(freeListener);
-            makePlayList(playlistName);
+            changeToFree();
+            return makePlayList(playlistName);
         }
-        if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
+        else if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
         {
-            amountOfPlayLists++;
+            PlayListModel.setAmountOfPlaylists(PlayListModel.getAmountOfPlaylists()+1);
             PlayListModel temp=new PlayListModel(playlistName,getListener().getUserName());
             long playListID=0;
             char[] userName=getListener().getUserName().toCharArray();
             for(int i=0;i<userName.length;++i)
                 playListID+=userName[i];
-            String fullID=Long.toString(playListID)+Long.toString(amountOfPlayLists);
+            String fullID=Long.toString(playListID)+Long.toString(PlayListModel.getAmountOfPlaylists());
             temp.setPlayListID(Long.parseLong(fullID));
             getListener().getPlayLists().add(temp);
-            ((FreeListenerModel)getListener()).setCreatedPlayLists(((FreeListenerModel) getListener()).getCreatedPlayLists()+1);
+            if (getListener() instanceof FreeListenerModel)
+                ((FreeListenerModel)getListener()).setCreatedPlayLists(((FreeListenerModel) getListener()).getCreatedPlayLists()+1);
             return "playList made successfully";
         }
         else
@@ -631,5 +617,14 @@ public class ListenerController
         }
         else
             return "package not found";
+    }
+    public String getAccInfo()
+    {
+        if(getListener() instanceof PremiumListenerModel)
+        {
+            ((PremiumListenerModel)getListener()).setRemainingDays(((PremiumListenerModel)getListener()).getRemainingDays()-1);
+            getListener().getSubscriptionExpiration().add(Calendar.DATE,-1);
+        }
+        return getListener().toString();
     }
 }

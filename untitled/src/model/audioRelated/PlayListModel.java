@@ -7,11 +7,20 @@ public class PlayListModel
     private long playListID;
     private String playListName;
     private String creator;
+    private static long amountOfPlaylists;
     private ArrayList <AudioModel> audios=new ArrayList<>();
     public PlayListModel(String playListName, String creator)
     {
         this.playListName=playListName;
         this.creator=creator;
+    }
+    public static void setAmountOfPlaylists(long amountOfPlaylists)
+    {
+        PlayListModel.amountOfPlaylists = amountOfPlaylists;
+    }
+    public static long getAmountOfPlaylists()
+    {
+        return amountOfPlaylists;
     }
     public void setPlayListID(long playListID)
     {
