@@ -17,7 +17,7 @@ public abstract class ListenerModel extends UserAccountModel {
     private Map<AudioModel, Integer> playsCount;
     private final Date subscriptionExpirationDate;
     private ArrayList<GenreModel> favoriteGenres;
-    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
+    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double accountCredit) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = 50;
         this.playlists = new ArrayList<PlaylistModel>();
