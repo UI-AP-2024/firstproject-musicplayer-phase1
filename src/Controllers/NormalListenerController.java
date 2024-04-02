@@ -47,23 +47,6 @@ public class NormalListenerController extends ListenerController {
         return "No such playlist found";
     }
 
-
-    public String getCaption(int audioId)
-    {
-        Audio tmpAudio = findAudioById(audioId);
-        if(tmpAudio == null) return "No audio found\n";
-        Podcast tmpPodcast = (Podcast)tmpAudio;
-        return tmpPodcast.getCaption();
-    }
-
-    public String getLyric(int audioId)
-    {
-        Audio tmpAudio = findAudioById(audioId);
-        if(tmpAudio == null) return "No audio found\n";
-        Song tmpSong = (Song)tmpAudio;
-        return tmpSong.getLyrics();
-    }
-
     public String purchasePremium(PremiumPlan plan)
     {
         if(this.getListenerModel().getCredit() >= plan.getPrice())

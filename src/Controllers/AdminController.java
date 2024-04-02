@@ -24,44 +24,44 @@ public class AdminController {
         if(adminController == null) adminController = new AdminController();
         return adminController;
     }
-    public ArrayList<Audio> showMostLiked()
+    public ArrayList<Audio> showMostLiked(int pages, int pageNumber)
     {
         ArrayList<Audio> result = database.getAudios();
         result = result.stream().sorted((aud1, aud2) -> aud1.getLikesCount() - aud2.getLikesCount())
                 .collect(Collectors.toCollection(ArrayList::new));
-        return result;
+        return paging(pages, pageNumber, result);
     }
-    private Artist findArtistByName(String Name)
+    private Artist findArtistByUserName(String userName)
     {
         Artist selectedArtist = null;
         for(User tmpUser : database.getUsers()) if(tmpUser instanceof Artist)
         {
             Artist tmpArtist = (Artist) tmpUser;
-            if(tmpArtist.getName().equals(Name)) selectedArtist = tmpArtist;
+            if(tmpArtist.getUsername().equals(userName)) selectedArtist = tmpArtist;
             break;
         }
         return selectedArtist;
     }
-    public String showArtistInfo(String artistName)
+    public String showArtistInfo(String artistUserName)
     {
-        Artist selectedArtist = findArtistByName(artistName);
+        Artist selectedArtist = findArtistByUserName(artistUserName);
         if(selectedArtist == null) return "No artist found";
         return selectedArtist.toString();
     }
 
-    private Audio findAudioByName(String Name)
+    private Audio findAudioById(int audioId)
     {
         Audio selectedAudio = null;
         for(Audio tmpAudio : database.getAudios())
         {
-            if(tmpAudio.getFileName().equals(Name)) selectedAudio = tmpAudio;
+            if(tmpAudio.getId() == audioId) selectedAudio = tmpAudio;
             break;
         }
         return selectedAudio;
     }
-    public String showAudioInfo(String audioName)
+    public String showAudioInfo(int audioId)
     {
-        Audio selectedAudio = findAudioByName(audioName);
+        Audio selectedAudio = findAudioById(audioId);
         if(selectedAudio == null) return "No audio found";
         return selectedAudio.toString();
     }
@@ -75,11 +75,26 @@ public class AdminController {
         return result;
     }
 
+    private ArrayList<Audio> paging(int pages, int pageNumber, ArrayList<Audio> audios)
+    {
+        ArrayList<Audio> result = new ArrayList<>();
+        int audiosPerPage = audios.size() / pages;
+        if(audios.size() % pages != 0) audiosPerPage++;
+        for(int tmpIndx = (pageNumber-1)*audiosPerPage ; //start at zero
+            audios.get(tmpIndx)!=null && tmpIndx < (pageNumber*audiosPerPage); tmpIndx++)
+        {
+            result.add(audios.get(tmpIndx));
+        }
+        return result;
+    }
     public ArrayList<Report> showReports()
     {
         return database.getReports();
     }
-
+    public ArrayList<Audio> showAudios(int pages, int pageNumber)
+    {
+        return paging(pages, pageNumber, database.getAudios());
+    }
     public String showAdminInfo()
     {
         return adminModel.toString();

@@ -77,6 +77,9 @@ public class PremiumListenerView {
             case "Audio":
                 like(Integer.parseInt(inputArray[1]));
                 break;
+            case "Lyric":
+                getLyric(Integer.parseInt(inputArray[1]));
+                break;
             case "NewPlaylist":
                 makePlaylist(inputArray[1]);
                 break;
@@ -146,6 +149,10 @@ public class PremiumListenerView {
         {
             tmpPlaylist.toString();
         }
+    }
+    private void getLyric(int audioId)
+    {
+        System.out.println(premiumListenerController.getLyric(audioId));
     }
     private void addToPlaylist(String playlistName, int audioId)
     {

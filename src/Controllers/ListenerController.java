@@ -3,6 +3,8 @@ package Controllers;
 import Extra.AIRecommender;
 import Models.*;
 import Models.Audio.Audio;
+import Models.Audio.Podcast;
+import Models.Audio.Song;
 import Models.Data.Database;
 import Models.PremiumPlan;
 import Models.User.Artist;
@@ -209,6 +211,21 @@ public abstract class ListenerController {
             if(tmpAudio.getArtistName().equals(artistUserName)) artistAudios.add(tmpAudio);
         }
         return artistAudios;
+    }
+
+    public String getLyric(int audioId)
+    {
+        Audio tmpAudio = findAudioById(audioId);
+        if(tmpAudio == null) return "No audio found\n";
+        if(tmpAudio instanceof Song) {
+            Song tmpSong = (Song) tmpAudio;
+            return tmpSong.getLyrics();
+        }
+        else
+        {
+            Podcast tmpPodcast = (Podcast) tmpAudio;
+            return tmpPodcast.getCaption();
+        }
     }
 
     public String followArtist(String userName)
