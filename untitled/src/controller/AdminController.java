@@ -6,6 +6,8 @@ import model.report.Report;
 import model.users.AccountUserModel;
 import model.users.artists.ArtistModel;
 
+import java.util.Arrays;
+
 public class AdminController
 {
     private static AdminController adminController;
@@ -55,5 +57,22 @@ public class AdminController
             if(temp!=null && temp.getAudioID()==Long.parseLong(audioID))
                 return temp.toString();
         return "Audio not found";
+    }
+    public String showStatistics()
+    {
+        StringBuilder answer=new StringBuilder();
+        AudioModel[] audios=Database.getDatabase().getAllAudios().toArray(new AudioModel[Database.getDatabase().getAllAudios().size()]);
+        for(int i=0;i<audios.length-1;++i)
+            for(int j=i+1;j<audios.length;++j)
+                if(audios[i].getLikeAmount()<audios[j].getLikeAmount())
+                {
+                    AudioModel temp=audios[i];
+                    audios[i]=audios[j];
+                    audios[j]=temp;
+                }
+        for(AudioModel temp:audios)
+            if(temp!=null)
+                answer.append(temp).append("\n");
+        return answer.toString();
     }
 }

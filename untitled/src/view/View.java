@@ -170,6 +170,8 @@ public class View
                 System.out.println(AdminController.getAdminController().getAudios());
             else if(orders[0].compareTo("Audio")==0)
                 System.out.println(AdminController.getAdminController().getAudio(orders[1]));
+            else if(orders[0].compareTo("Statistics")==0)
+                System.out.println(AdminController.getAdminController().showStatistics());
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
