@@ -242,4 +242,25 @@ public class ArtistController
         Database.getDatabase().getAllAudios().add(podcast);
         ((PodcasterModel)getArtist()).getPodcasts().add(podcast);
     }
+    public double CalculateEarnings()
+    {
+        if(getArtist() instanceof PodcasterModel)
+        {
+            for(PodcastModel temp:((PodcasterModel)getArtist()).getPodcasts())
+                if(temp!=null)
+                    getArtist().setIncome(getArtist().getIncome()+0.5*temp.getPlayAmount());
+            return getArtist().getIncome();
+        }
+        else
+        {
+            for(AlbumModel albumTemp:((SingerModel)getArtist()).getAlbums())
+                if(albumTemp!=null)
+                {
+                    for(MusicModel temp:albumTemp.getMusics())
+                        if(temp!=null)
+                            getArtist().setIncome(getArtist().getIncome()+0.4*temp.getPlayAmount());
+                }
+            return getArtist().getIncome();
+        }
+    }
 }

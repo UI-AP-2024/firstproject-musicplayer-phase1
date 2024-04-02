@@ -154,6 +154,8 @@ public class View
                 else
                     ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6]);
             }
+            else if (orders[0].compareTo("CalculateEarnings")==0)
+                System.out.println(ArtistController.getArtistController().CalculateEarnings());
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
