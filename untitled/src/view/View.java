@@ -162,6 +162,14 @@ public class View
             String[] orders = order.split(" -");
             if(orders[0].compareTo("Reports")==0)
                 System.out.println(AdminController.getAdminController().getReports());
+            else if(orders[0].compareTo("Artists")==0)
+                System.out.println(AdminController.getAdminController().getArtists());
+            else if(orders[0].compareTo("Artist")==0)
+                System.out.println(AdminController.getAdminController().getArtist(orders[1]));
+            else if(orders[0].compareTo("Audios")==0)
+                System.out.println(AdminController.getAdminController().getAudios());
+            else if(orders[0].compareTo("Audio")==0)
+                System.out.println(AdminController.getAdminController().getAudio(orders[1]));
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
