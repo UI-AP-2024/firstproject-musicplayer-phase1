@@ -359,6 +359,7 @@ public class AccountController {
                 for (Audio audio : Database.getData().getAllAudios()){
                     if (audio.getUniqueId() == Integer.parseInt(answers[1])){
                         AccountView.getAccountView().showResult(new StringBuilder("The music was played successfully"));
+                        audio.setTimesPlayed((audio.getTimesPlayed()+1));
                         AccountView.getAccountView().showLoginPanel(user);
                     }
                 }
@@ -366,6 +367,17 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Like":
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (audio.getUniqueId() == Integer.parseInt(answers[1])){
+                        AccountView.getAccountView().showResult(new StringBuilder("The music was liked successfully"));
+                        audio.setLikes((audio.getLikes()+1));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "Lyric":
                 
         }
     }
