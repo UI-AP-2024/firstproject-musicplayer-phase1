@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 public abstract class Audio {
     private int id;
+    private static int idCounter = 1;
     private String fileName;
     private String artistName;
     private int playCount;
@@ -14,9 +15,9 @@ public abstract class Audio {
     private String audioLink;
     private String cover;
 
-    public Audio(int id, String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
+    public Audio(String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
                  Genre genre, String audioLink, String cover) {
-        this.id = id;
+        this.id = idCounter++;
         this.fileName = fileName;
         this.artistName = artistName;
         this.playCount = playCount;

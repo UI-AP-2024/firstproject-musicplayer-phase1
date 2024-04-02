@@ -6,9 +6,9 @@ import java.time.LocalDate;
 public class Podcast extends Audio {
     private String caption;
 
-    public Podcast(int id, String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
+    public Podcast(String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
                    Genre genre, String audioLink, String cover, String caption) {
-        super(id, fileName, artistName, playCount, likesCount, publishDate, genre, audioLink, cover);
+        super(fileName, artistName, playCount, likesCount, publishDate, genre, audioLink, cover);
         this.caption = caption;
     }
 

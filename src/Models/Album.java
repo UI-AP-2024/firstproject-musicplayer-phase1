@@ -6,12 +6,13 @@ import java.util.ArrayList;
 
 public class Album {
     private int id;
+    private static int idCounter = 1;
     private String name;
     private String artistName;
     private ArrayList<Song> songs;
 
-    public Album(int id, String name, String artistName, ArrayList<Song> songs) {
-        this.id = id;
+    public Album(String name, String artistName, ArrayList<Song> songs) {
+        this.id = idCounter++;
         this.name = name;
         this.artistName = artistName;
         this.songs = songs;

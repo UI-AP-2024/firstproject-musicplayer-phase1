@@ -7,9 +7,9 @@ import java.time.LocalDate;
 public class Song extends Audio {
     private String lyrics;
 
-    public Song(int id, String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
+    public Song(String fileName, String artistName, int playCount, int likesCount, LocalDate publishDate,
                 Genre genre, String audioLink, String cover, String lyrics) {
-        super(id, fileName, artistName, playCount, likesCount, publishDate, genre, audioLink, cover);
+        super(fileName, artistName, playCount, likesCount, publishDate, genre, audioLink, cover);
         this.lyrics = lyrics;
     }
 
