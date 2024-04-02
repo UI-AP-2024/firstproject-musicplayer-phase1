@@ -354,8 +354,19 @@ public class AccountController {
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
                 AccountView.getAccountView().showLoginPanel(user);
+                break;
             case "Play":
-
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (audio.getUniqueId() == Integer.parseInt(answers[1])){
+                        AccountView.getAccountView().showResult(new StringBuilder("The music was played successfully"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "Like":
+                
         }
     }
 
