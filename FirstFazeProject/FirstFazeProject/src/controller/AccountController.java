@@ -337,7 +337,25 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "SelectPlaylist" :
-                
+                if (user instanceof Free){
+                    for (Playlist playlist : ((Free) user).getPlaylists()){
+                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+                            AccountView.getAccountView().showResult(new StringBuilder("The play list was selected successfully"));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                }else if (user instanceof Premium){
+                    for (Playlist playlist : ((Premium) user).getPlaylists()){
+                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+                            AccountView.getAccountView().showResult(new StringBuilder("The play list was selected successfully"));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
+                AccountView.getAccountView().showLoginPanel(user);
+            case "Play":
+
         }
     }
 
