@@ -17,6 +17,7 @@ public class ListenerController
 {
     private static ListenerController listenerController;
     private ListenerModel listener;
+    private static long amountOfPlayLists;
     private ListenerController(){}
     public static ListenerController getListenerController()
     {
@@ -27,6 +28,14 @@ public class ListenerController
     public ListenerModel getListener()
     {
         return this.listener;
+    }
+    public static long getAmountOfPlayLists()
+    {
+        return amountOfPlayLists;
+    }
+    public static void setAmountOfPlayLists(long amountOfPlayLists)
+    {
+        ListenerController.amountOfPlayLists = amountOfPlayLists;
     }
     public void setListener(ListenerModel listener)
     {
@@ -126,6 +135,7 @@ public class ListenerController
                 }
             if(!check)
                 return "playlist doesn't exist";
+            ((FreeListenerModel)getListener()).setAddedAudios(((FreeListenerModel) getListener()).getAddedAudios()+1);
             return "audio added to playlist successfully";
         }
         else
@@ -401,5 +411,24 @@ public class ListenerController
                     answer.append(audios.get(i)).append("\n");
             return answer.toString();
         }
+    }
+    public String makePlayList(String playlistName)
+    {
+        if(getListener() instanceof PremiumListenerModel || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
+        {
+            amountOfPlayLists++;
+            PlayListModel temp=new PlayListModel(playlistName,getListener().getUserName());
+            long playListID=0;
+            char[] userName=getListener().getUserName().toCharArray();
+            for(int i=0;i<userName.length;++i)
+                playListID+=userName[i];
+            String fullID=Long.toString(playListID)+Long.toString(amountOfPlayLists);
+            temp.setPlayListID(Long.parseLong(fullID));
+            getListener().getPlayLists().add(temp);
+            ((FreeListenerModel)getListener()).setCreatedPlayLists(((FreeListenerModel) getListener()).getCreatedPlayLists()+1);
+            return "playList made successfully";
+        }
+        else
+            return "you already created 3 playlists";
     }
 }
