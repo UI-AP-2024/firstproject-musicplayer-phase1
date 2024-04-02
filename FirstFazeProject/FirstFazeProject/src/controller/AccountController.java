@@ -274,47 +274,47 @@ public class AccountController {
                         AccountView.getAccountView().showLoginPanel(user);
                         break;
                 }
-//            case "Add":
-//                if (user instanceof Free){
-//                    for (Playlist playlist : ((Free) user).getPlaylists()){
-//                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
-//                            if (playlist.getAudioList().size() >= ((Free) user).getMaxAddSongToPlaylist()){
-//                                AccountView.getAccountView().showResult(new StringBuilder("Max number of audios have been added before to this list"));
-//                                AccountView.getAccountView().showLoginPanel(user);
-//                            }
-//                            ArrayList<Audio> backUp = playlist.getAudioList();
-//                            for (Audio audio : Database.getData().getAllAudios()){
-//                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
-//                                    backUp.add(audio);
-//                                    break;
-//                                }
-//                            }
-//                            playlist.setAudioList(backUp);
-//                            break;
-//                        }
-//                    }
-//                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
-//                    AccountView.getAccountView().showLoginPanel(user);
-//                    break;
-//                }else if (user instanceof Premium){
-//                    for (Playlist playlist : ((Premium) user).getPlaylists()){
-//                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
-//                            ArrayList<Audio> backUp = playlist.getAudioList();
-//                            for (Audio audio : Database.getData().getAllAudios()){
-//                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
-//                                    backUp.add(audio);
-//                                    break;
-//                                }
-//                            }
-//                            playlist.setAudioList(backUp);
-//                            break;
-//                        }
-//                    }
-//                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
-//                    AccountView.getAccountView().showLoginPanel(user);
-//                    break;
-//                }
-//                break;
+            case "Add":
+                if (user instanceof Free){
+                    for (Playlist playlist : ((Free) user).getPlaylists()){
+                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+                            if (playlist.getAudioList().size() >= ((Free) user).getMaxAddSongToPlaylist()){
+                                AccountView.getAccountView().showResult(new StringBuilder("Max number of audios have been added before to this list"));
+                                AccountView.getAccountView().showLoginPanel(user);
+                            }
+                            ArrayList<Audio> backUp = playlist.getAudioList();
+                            for (Audio audio : Database.getData().getAllAudios()){
+                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
+                                    backUp.add(audio);
+                                    break;
+                                }
+                            }
+                            playlist.setAudioList(backUp);
+                            break;
+                        }
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+                    AccountView.getAccountView().showLoginPanel(user);
+                    break;
+                }else if (user instanceof Premium){
+                    for (Playlist playlist : ((Premium) user).getPlaylists()){
+                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+                            ArrayList<Audio> backUp = playlist.getAudioList();
+                            for (Audio audio : Database.getData().getAllAudios()){
+                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
+                                    backUp.add(audio);
+                                    break;
+                                }
+                            }
+                            playlist.setAudioList(backUp);
+                            break;
+                        }
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+                    AccountView.getAccountView().showLoginPanel(user);
+                    break;
+                }
+                break;
             case "ShowPlaylists" :
 
                 break;
