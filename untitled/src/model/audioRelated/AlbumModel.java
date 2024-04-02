@@ -8,10 +8,15 @@ public class AlbumModel
     private String albumName;
     private String nameOfArtist;
     private ArrayList <MusicModel> musics=new ArrayList<>();
+    private static long albumAmount;
     public AlbumModel(String albumName, String nameOfArtist)
     {
         this.albumName=albumName;
         this.nameOfArtist=nameOfArtist;
+    }
+    public static void setAlbumAmount(long albumAmount)
+    {
+        AlbumModel.albumAmount = albumAmount;
     }
     public void setAlbumID(long albumID)
     {
@@ -32,6 +37,10 @@ public class AlbumModel
     public long getAlbumID()
     {
         return this.albumID;
+    }
+    public static long getAlbumAmount()
+    {
+        return albumAmount;
     }
     public ArrayList<MusicModel> getMusics()
     {

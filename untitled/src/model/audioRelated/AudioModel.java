@@ -13,6 +13,7 @@ public abstract class AudioModel
     private Genre genre;
     private String link;
     private String cover;
+    private static long audioAmount;
     public AudioModel(String audioName, String nameOfArtist, Genre genre, String link, String cover)
     {
         this.audioName=audioName;
@@ -58,6 +59,10 @@ public abstract class AudioModel
     {
         return this.nameOfArtist;
     }
+    public static long getAudioAmount()
+    {
+        return audioAmount;
+    }
     public void setAudioID(long audioID)
     {
         this.audioID = audioID;
@@ -93,6 +98,10 @@ public abstract class AudioModel
     public void setNameOfArtist(String nameOfArtist)
     {
         this.nameOfArtist = nameOfArtist;
+    }
+    public static void setAudioAmount(long audioAmount)
+    {
+        AudioModel.audioAmount = audioAmount;
     }
     public String toString()
     {

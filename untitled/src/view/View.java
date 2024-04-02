@@ -145,6 +145,15 @@ public class View
                 System.out.println(ArtistController.getArtistController().showFollowers());
             else if (orders[0].compareTo("ViewsStatistics")==0)
                 System.out.println(ArtistController.getArtistController().showViewsStatistics());
+            else if (orders[0].compareTo("NewAlbum")==0)
+                System.out.println(ArtistController.getArtistController().makeAlbum(orders[1]));
+            else if (orders[0].compareTo("Publish")==0)
+            {
+                if(orders[1].compareTo("M")==0)
+                    System.out.println(ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7]));
+                else
+                    ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6]);
+            }
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);

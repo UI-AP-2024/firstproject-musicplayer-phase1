@@ -1,9 +1,7 @@
 package controller;
 
 import model.Database;
-import model.audioRelated.AlbumModel;
-import model.audioRelated.MusicModel;
-import model.audioRelated.PodcastModel;
+import model.audioRelated.*;
 import model.users.AccountUserModel;
 import model.users.artists.ArtistModel;
 import model.users.artists.PodcasterModel;
@@ -99,5 +97,149 @@ public class ArtistController
                     answer.append(temp).append("\n");
             return answer.toString();
         }
+    }
+    public String makeAlbum(String albumName)
+    {
+        if(getArtist() instanceof SingerModel)
+        {
+            AlbumModel.setAlbumAmount(AlbumModel.getAlbumAmount()+1);
+            AlbumModel album=new AlbumModel(albumName,getArtist().getUserName());
+            char[] artistUserName=getArtist().getUserName().toCharArray();
+            long albumID=0;
+            for(int i=0;i<artistUserName.length;++i)
+                albumID+=artistUserName[i];
+            String fullID=Long.toString(albumID)+Long.toString(AlbumModel.getAlbumAmount());
+            album.setAlbumID(Long.parseLong(fullID));
+            ((SingerModel)getArtist()).getAlbums().add(album);
+            return "Album made";
+        }
+        else
+            return "You are not a singer";
+    }
+    public String publish(String title,String genre,String lyric,String link,String cover,String albumID)
+    {
+        String musicID=new String();
+        Genre tempGenre =null;
+        if(genre.compareTo("ROCK")==0)
+        {
+            tempGenre=Genre.ROCK;
+            musicID="1";
+        }
+        else if(genre.compareTo("POP")==0)
+        {
+            tempGenre=Genre.POP;
+            musicID="2";
+        }
+        else if(genre.compareTo("JAZZ")==0)
+        {
+            tempGenre=Genre.JAZZ;
+            musicID="3";
+        }
+        else if(genre.compareTo("COUNTRY")==0)
+        {
+            tempGenre=Genre.COUNTRY;
+            musicID="4";
+        }
+        else if(genre.compareTo("TRUE_CRIME")==0)
+        {
+            tempGenre=Genre.TRUE_CRIME;
+            musicID="5";
+        }
+        else if(genre.compareTo("HIPHOP")==0)
+        {
+            tempGenre=Genre.HIPHOP;
+            musicID="6";
+        }
+        else if(genre.compareTo("HISTORY")==0)
+        {
+            tempGenre=Genre.HISTORY;
+            musicID="7";
+        }
+        else if(genre.compareTo("INTERVIEW")==0)
+        {
+            tempGenre=Genre.INTERVIEW;
+            musicID="8";
+        }
+        else if(genre.compareTo("SOCIETY")==0)
+        {
+            tempGenre=Genre.SOCIETY;
+            musicID="9";
+        }
+        AudioModel.setAudioAmount(AudioModel.getAudioAmount()+1);
+        MusicModel music=new MusicModel(title,getArtist().getUserName(),tempGenre,link,cover,lyric);
+        char[] artistUserName=getArtist().getUserName().toCharArray();
+        long ID=0;
+        for(int i=0;i<artistUserName.length;++i)
+            ID+=artistUserName[i];
+        musicID=musicID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
+        music.setAudioID(Long.parseLong(musicID));
+        Database.getDatabase().getAllAudios().add(music);
+        for(AlbumModel temp:((SingerModel)getArtist()).getAlbums())
+            if(temp!=null && temp.getAlbumID()==Long.parseLong(albumID))
+            {
+                temp.getMusics().add(music);
+                return "music published";
+            }
+        return "Album not found";
+    }
+    public void publish(String title,String genre,String caption,String link,String cover)
+    {
+        String podcastID=new String();
+        Genre tempGenre =null;
+        if(genre.compareTo("ROCK")==0)
+        {
+            tempGenre=Genre.ROCK;
+            podcastID="1";
+        }
+        else if(genre.compareTo("POP")==0)
+        {
+            tempGenre=Genre.POP;
+            podcastID="2";
+        }
+        else if(genre.compareTo("JAZZ")==0)
+        {
+            tempGenre=Genre.JAZZ;
+            podcastID="3";
+        }
+        else if(genre.compareTo("COUNTRY")==0)
+        {
+            tempGenre=Genre.COUNTRY;
+            podcastID="4";
+        }
+        else if(genre.compareTo("TRUE_CRIME")==0)
+        {
+            tempGenre=Genre.TRUE_CRIME;
+            podcastID="5";
+        }
+        else if(genre.compareTo("HIPHOP")==0)
+        {
+            tempGenre=Genre.HIPHOP;
+            podcastID="6";
+        }
+        else if(genre.compareTo("HISTORY")==0)
+        {
+            tempGenre=Genre.HISTORY;
+            podcastID="7";
+        }
+        else if(genre.compareTo("INTERVIEW")==0)
+        {
+            tempGenre=Genre.INTERVIEW;
+            podcastID="8";
+        }
+        else if(genre.compareTo("SOCIETY")==0)
+        {
+            tempGenre=Genre.SOCIETY;
+            podcastID="9";
+        }
+        AudioModel.setAudioAmount(AudioModel.getAudioAmount()+1);
+        PodcastModel podcast=new PodcastModel(title,getArtist().getUserName(),tempGenre,link,cover,caption);
+        char[] artistUserName=getArtist().getUserName().toCharArray();
+        long ID=0;
+        for(int i=0;i<artistUserName.length;++i)
+            ID+=artistUserName[i];
+        podcastID=podcastID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
+        podcast.setAudioID(Long.parseLong(podcastID));
+        Database.getDatabase().getAllAudios().add(podcast);
+        ((PodcasterModel)getArtist()).getPodcasts().add(podcast);
     }
 }
