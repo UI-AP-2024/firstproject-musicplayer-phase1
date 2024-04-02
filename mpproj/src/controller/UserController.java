@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import model.database.Database;
 import model.user.Artist;
 import model.user.FreeListener;
+import model.user.Listener;
 import model.user.Podcaster;
 import model.user.Singer;
 import model.user.User;
@@ -105,6 +106,19 @@ public class UserController {
         }
         return null;
     }
+    public String loginUser(String username,String password){
+        User user = findUser(username, password);
+        if(user instanceof Listener){
+            ListenerController.getListenerController().loginListener((Listener)user);
+            return "L";
+        }
+        if(user instanceof Artist){
+            ArtistController.getArtistController().loginArtist((Artist)user);
+            return "A";
+        }
+        return null;
+    }
+
     public User findUser(String username){
         for(User user : Database.getDatabase().getAllUsers()){
             if(user.getUsername().equals(username)){
