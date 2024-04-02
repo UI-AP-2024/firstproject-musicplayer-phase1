@@ -20,6 +20,12 @@ public abstract class ArtistModel extends UserAccountModel {
         super(username, password, name, email, phoneNumber, birthday);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", Biography = " + biography;
+    }
+
     public double getIncome() {
         return income;
     }

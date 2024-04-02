@@ -12,6 +12,11 @@ public class SingerModel extends ArtistModel{
         this.albums = new ArrayList<AlbumModel>();
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public ArrayList<AlbumModel> getAlbums() {
         return albums;
     }

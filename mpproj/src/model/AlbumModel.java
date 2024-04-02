@@ -18,6 +18,14 @@ public class AlbumModel {
         this.musics = new ArrayList<MusicModel>();
     }
 
+    @Override
+    public String toString() {
+
+        return "id=" + id +
+                ", albumName = " + albumName +
+                ", artistName = " + artistName;
+    }
+
     public int getId() {
         return id;
     }

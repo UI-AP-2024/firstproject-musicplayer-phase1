@@ -50,6 +50,13 @@ public abstract class ListenerModel extends UserAccountModel {
         this.accountCredit = accountCredit;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", accountCredit = " + accountCredit +
+                ", subscriptionExpirationDate = " + subscriptionExpirationDate;
+    }
+
     public void setPlaysCount(Map<AudioModel, Integer> playsCount) {
         this.playsCount = playsCount;
     }

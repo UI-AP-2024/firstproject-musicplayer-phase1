@@ -20,6 +20,15 @@ public abstract class UserAccountModel {
         this.birthday = birthday;
     }
 
+    @Override
+    public String toString() {
+        return "username = " + username +
+                ", name = " + name +
+                ", email = " + email +
+                ", phoneNumber = " + phoneNumber +
+                ", birthday = " + birthday;
+    }
+
     public String getUsername() {
         return username;
     }

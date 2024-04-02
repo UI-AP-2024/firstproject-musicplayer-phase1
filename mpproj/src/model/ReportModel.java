@@ -14,6 +14,13 @@ public class ReportModel {
         this.reportDescription = reportDescription;
     }
 
+    @Override
+    public String toString() {
+        return "reporterUser = " + reporterUser.getUsername() +
+                ", reportedArtist = " + reportedArtist.getUsername() +
+                ", reportDescription = " + reportDescription;
+    }
+
     public UserAccountModel getReporterUser() {
         return reporterUser;
     }

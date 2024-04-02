@@ -12,6 +12,13 @@ public class MusicModel extends AudioModel{
         this.lyrics = lyrics;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nLyrics :\n" + this.getLyrics();
+    }
+
+
+
     public String getLyrics() {
         return lyrics;
     }

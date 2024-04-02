@@ -18,6 +18,12 @@ public class PlaylistModel {
         this.audios = new ArrayList<AudioModel>();
     }
 
+    @Override
+    public String toString() {
+        return "id = " + id +
+                ", playlistName = " + playlistName;
+    }
+
     public int getId() {
         return id;
     }

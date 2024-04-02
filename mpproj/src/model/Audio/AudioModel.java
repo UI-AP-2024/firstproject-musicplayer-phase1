@@ -26,6 +26,19 @@ public abstract class AudioModel {
         this.cover = cover;
     }
 
+    @Override
+    public String toString() {
+        return "ID=" + id +
+                ", AudioTitle = " + audioTitle +
+                ", ArtistName = " + artistName +
+                ", PlaysCount = " + playsCount +
+                ", LikesCount = " + likesCount +
+                ", ReleaseDate = " + releaseDate +
+                ", Genre = " + genre +
+                ", AudioLink = " + audioLink +
+                ", Cover = " + cover;
+    }
+
     public int getId() {
         return id;
     }

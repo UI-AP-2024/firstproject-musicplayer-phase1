@@ -11,6 +11,11 @@ public class PodcastModel extends AudioModel{
         this.caption = caption;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\n Caption :\n" + this.getCaption();
+    }
+
     public String getCaption() {
         return caption;
     }
