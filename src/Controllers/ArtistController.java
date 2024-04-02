@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public abstract class ArtistController {
-    // the class is abstract, hence it can't follow the singleton pattern
-    // because in singleton pattern we need to make an object of the class in constructor
     public ArtistController()
     {
         database = Database.getInstance();

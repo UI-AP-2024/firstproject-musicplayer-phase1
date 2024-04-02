@@ -1,9 +1,12 @@
 package Controllers;
 
 import Models.Audio.Audio;
+import Models.Audio.Podcast;
+import Models.Audio.Song;
 import Models.Playlist;
 import Models.PremiumPlan;
 import Models.User.NormalListener;
+import Models.User.Podcaster;
 import Models.User.PremiumListener;
 
 import java.time.LocalDate;
@@ -12,16 +15,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class NormalListenerController extends ListenerController {
-    private static NormalListenerController normalListenerController;
-    private NormalListenerController()
-    {
-        super();
-    }
-    public NormalListenerController getNormalListenerController()
-    {
-        if(normalListenerController == null) normalListenerController = new NormalListenerController();
-        return normalListenerController;
-    }
+
     public String makeNewPlaylist(String name)
     {
         ArrayList<Playlist> playlists = this.getListenerModel().getPlaylists();
@@ -51,6 +45,23 @@ public class NormalListenerController extends ListenerController {
             }
         }
         return "No such playlist found";
+    }
+
+
+    public String getCaption(int audioId)
+    {
+        Audio tmpAudio = findAudioById(audioId);
+        if(tmpAudio == null) return "No audio found\n";
+        Podcast tmpPodcast = (Podcast)tmpAudio;
+        return tmpPodcast.getCaption();
+    }
+
+    public String getLyric(int audioId)
+    {
+        Audio tmpAudio = findAudioById(audioId);
+        if(tmpAudio == null) return "No audio found\n";
+        Song tmpSong = (Song)tmpAudio;
+        return tmpSong.getLyrics();
     }
 
     public String purchasePremium(PremiumPlan plan)

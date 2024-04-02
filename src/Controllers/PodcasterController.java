@@ -6,16 +6,7 @@ import Models.User.Podcaster;
 import java.util.ArrayList;
 
 public class PodcasterController extends ArtistController{
-    private static  PodcasterController podcasterController;
-    private PodcasterController()
-    {
-        super();
-    }
-    public PodcasterController getPodcasterController()
-    {
-        if(podcasterController == null) podcasterController = new PodcasterController();
-        return podcasterController;
-    }
+
     public void publishPodcast(Podcast podcast)
     {
         Podcaster podcasterModel = (Podcaster) this.getArtistModel();

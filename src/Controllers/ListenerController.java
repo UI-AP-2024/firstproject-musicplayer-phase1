@@ -12,6 +12,8 @@ import Models.User.User;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
 public abstract class ListenerController {
@@ -156,21 +158,21 @@ public abstract class ListenerController {
         return result;
     }
 
-    private Artist findArtistByName(String Name)
+    private Artist findArtistByUserName(String userName)
     {
         Artist selectedArtist = null;
         for(User tmpUser : database.getUsers()) if(tmpUser instanceof Artist)
         {
             Artist tmpArtist = (Artist) tmpUser;
-            if(tmpArtist.getName().equals(Name)) selectedArtist = tmpArtist;
+            if(tmpArtist.getUsername().equals(userName)) selectedArtist = tmpArtist;
             break;
         }
         return selectedArtist;
     }
 
-    public String reportArtist(String artistName, String description)
+    public String reportArtist(String artistUserName, String description)
     {
-        Artist reportedArtist = findArtistByName(artistName);
+        Artist reportedArtist = findArtistByUserName(artistUserName);
         if(reportedArtist == null) return "No Artist found";
         database.addReport(new Report(this.getListenerModel(), reportedArtist,  description));
         return "Report Added successfully";
@@ -190,28 +192,28 @@ public abstract class ListenerController {
 
     }
 
-    public String getArtistInfo(String artistName)
+    public String getArtistInfo(String userName)
     {
-        Artist selectedArtist = findArtistByName(artistName);
+        Artist selectedArtist = findArtistByUserName(userName);
         if(selectedArtist == null) return "No artist found";
         return selectedArtist.toString();
     }
 
-    public ArrayList<Audio> getArtistAudios(String artistName)
+    public ArrayList<Audio> getArtistAudios(String artistUserName)
     {
         ArrayList<Audio> artistAudios = new ArrayList<>();
-        Artist selectedArtist = findArtistByName(artistName);
+        Artist selectedArtist = findArtistByUserName(artistUserName);
         if(selectedArtist == null) return artistAudios;
         for(Audio tmpAudio : database.getAudios())
         {
-            if(tmpAudio.getArtistName().equals(artistName)) artistAudios.add(tmpAudio);
+            if(tmpAudio.getArtistName().equals(artistUserName)) artistAudios.add(tmpAudio);
         }
         return artistAudios;
     }
 
-    public String followArtist(String artistName)
+    public String followArtist(String userName)
     {
-        Artist selectedArtist = findArtistByName(artistName);
+        Artist selectedArtist = findArtistByUserName(userName);
         if(selectedArtist == null) return "No Artist found";
         ArrayList<User> followers = selectedArtist.getFollowers();
         followers.add(this.getListenerModel());
@@ -239,5 +241,13 @@ public abstract class ListenerController {
     public abstract String addToPlaylist(String playistName, Audio audio);
     public abstract String purchasePremium(PremiumPlan plan);
 
+    public Audio findAudioById(int audioId)
+    {
+        Optional<Audio> result = database.getAudios().stream().filter(aud -> aud.getId() == audioId)
+                .findFirst();
+        if(result.isPresent()) return result.get();
+        else return null;
+
+    }
 
 }

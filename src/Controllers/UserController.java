@@ -78,7 +78,7 @@ public class UserController {
         return switchResult;
     }
 
-    public String login(String userName, String password)
+    public Object login(String userName, String password)
     {
         for(User tmpUser : database.getUsers())
         {
@@ -87,12 +87,17 @@ public class UserController {
                 if(tmpUser.getPassword().equals(password))
                 {
                     database.setLogedInUser(tmpUser);
-                    return "Loged in successfully";
+                    if(tmpUser instanceof NormalListener) return new NormalListenerView();
+                    else if(tmpUser instanceof PremiumListener) return new PremiumListenerView();
+                    else if(tmpUser instanceof Singer) return new SingerView();
+                    else if(tmpUser instanceof Podcaster) return new PodcasterView();
+                    else if(tmpUser instanceof Admin) return new AdminView();
+                    else return null;
                 }
-                return "Wrong Password";
+                return null;
             }
         }
-        return "Invalid username";
+        return null;
     }
 
     public void logout()

@@ -19,7 +19,7 @@ public class AdminController {
         database = Database.getInstance();
         adminModel = Admin.getInstance();
     }
-    public AdminController getAdminController()
+    public static AdminController getAdminController()
     {
         if(adminController == null) adminController = new AdminController();
         return adminController;

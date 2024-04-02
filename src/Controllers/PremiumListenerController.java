@@ -14,16 +14,10 @@ import java.util.concurrent.TimeUnit;
 
 public class PremiumListenerController extends ListenerController{
 
-    private static PremiumListenerController premiumListenerController;
-    private PremiumListenerController()
+    public PremiumListenerController()
     {
         super();
         daySubtracter();
-    }
-    public PremiumListenerController getPremiumListenerController()
-    {
-        if(premiumListenerController == null) premiumListenerController = new PremiumListenerController();
-        return premiumListenerController;
     }
     public String makeNewPlaylist(String name)
     {
