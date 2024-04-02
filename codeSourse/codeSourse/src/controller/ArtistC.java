@@ -3,6 +3,7 @@ package controller;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
 import model.Audio.Audio;
+import model.Audio.Podcast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,11 +31,29 @@ public class ArtistC {
                 playCountMap.put(title, playCount);
             }
 
-            // Display play count for each audio
             System.out.println("Play count for each audio:");
             for (Map.Entry<String, Integer> entry : playCountMap.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
         }
+
+
+        public void updateArtistIncome(Artist artist, List<Audio> audios) {
+            double totalIncome = 0;
+
+            for (Audio audio : audios) {
+                if (audio.getArtist().equals(artist.getFullName())) {
+                    int playCount = audio.getPlayCount();
+                    if (audio instanceof Podcast) {
+                        totalIncome += playCount * 0.5;
+                    } else {
+                        totalIncome += playCount * 0.4;
+                    }
+                }
+            }
+
+            artist.setIncome(totalIncome);
+        }
     }
+
 
