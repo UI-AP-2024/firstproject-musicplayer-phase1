@@ -142,7 +142,9 @@ public class View
             String order = input.nextLine();
             String[] orders = order.split(" -");
             if(orders[0].compareTo("Followers")==0)
-                ;
+                System.out.println(ArtistController.getArtistController().showFollowers());
+            else if (orders[0].compareTo("ViewsStatistics")==0)
+                System.out.println(ArtistController.getArtistController().showViewsStatistics());
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
