@@ -98,6 +98,12 @@ public class View
                 System.out.println(ListenerController.getListenerController().showPlayLists());
             else if(orders[0].compareTo("SelectPlaylist")==0)
                 System.out.println(ListenerController.getListenerController().showPlayList(orders[1]));
+            else if(orders[0].compareTo("Play")==0)
+                System.out.println(ListenerController.getListenerController().playAudio(orders[1]));
+            else if(orders[0].compareTo("Like")==0)
+                System.out.println(ListenerController.getListenerController().likeAudio(orders[1]));
+            else if(orders[0].compareTo("Lyric")==0)
+                System.out.println(ListenerController.getListenerController().showLyricOrCaption(orders[1]));
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);

@@ -446,4 +446,41 @@ public class ListenerController
                 return temp.toString();
         return "playlist not found";
     }
+    public String playAudio(String audioID)
+    {
+        for(AudioModel temp:Database.getDatabase().getAllAudios())
+            if(temp!=null && temp.getAudioID()==Long.parseLong(audioID))
+            {
+                temp.setPlayAmount(temp.getPlayAmount()+1);
+                if(!getListener().getPlayingAmount().containsKey(temp))
+                    getListener().getPlayingAmount().put(temp,1L);
+                else
+                    getListener().getPlayingAmount().replace(temp,getListener().getPlayingAmount().get(temp)+1);
+                return temp.toString();
+            }
+        return "Audio not found";
+    }
+    public String likeAudio(String audioID)
+    {
+        for(AudioModel temp:Database.getDatabase().getAllAudios())
+            if(temp!=null && temp.getAudioID()==Long.parseLong(audioID))
+            {
+                temp.setLikeAmount(temp.getLikeAmount()+1);
+                getListener().getLikedAudios().add(temp);
+                return "liked audio";
+            }
+        return "Audio not found";
+    }
+    public String showLyricOrCaption(String audioID)
+    {
+        for(AudioModel temp:Database.getDatabase().getAllAudios())
+            if(temp!=null && temp.getAudioID()==Long.parseLong(audioID))
+            {
+                if(temp instanceof MusicModel)
+                    return ((MusicModel)temp).getLyric();
+                else
+                    return ((PodcastModel)temp).getCaption();
+            }
+        return "Audio not found";
+    }
 }
