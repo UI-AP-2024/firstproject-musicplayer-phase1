@@ -12,28 +12,44 @@ public class AdminController {
     }
     public String showPopularSongs(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-             if(Database.getDatabase().getAudios().get(i).getLikeCount() >=1)
-                 show.append(Database.getDatabase().getAudios().get(i).getAudioName());
-        }
+        sortingAudioFilesBasedOnLikes();
+        for (AudioModel audio : Database.getDatabase().getAudios())
+             show.append("Audio: ").append(audio.getAudioName()).append("\n");
+
         return show.toString();
+    }
+
+    private void sortingAudioFilesBasedOnLikes(){
+
+        for (int i = 0; i < Database.getDatabase().getAudios().size() - 1; i++) {
+            int likeBefore = Database.getDatabase().getAudios().get(i).getLikeCount();
+            for (int j = i + 1; j < Database.getDatabase().getAudios().size(); j++) {
+                int likeAfter = Database.getDatabase().getAudios().get(j).getLikeCount();
+                if(likeAfter > likeBefore){
+                    int temp = likeAfter;
+                    likeAfter = likeBefore;
+                    likeBefore = temp;
+                }
+            }
+
+        }
+
     }
     public String showAudioInfo(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-            show.append("Audio Name: "+ Database.getDatabase().getAudios().get(i).getAudioName() + "\nArtist Name: " + Database.getDatabase().getAudios().get(i).getArtistName() + "\nAudio ID: "+Database.getDatabase().getAudios().get(i).getIDCount() +"\n");
-        }
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            show.append("Audio Name: "+ audio.getAudioName() + "\nArtist Name: " + audio.getArtistName() + "\nAudio ID: "+audio.getIDCount() +"\n");
+
         return show.toString();
     }
     public String showOneAudioInfo(int ID){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getIDCount()==ID){
                 show.append("Audio name: "+audio.getAudioName()+"\tArtist name: "+audio.getArtistName() + "\n");
                 break;
             }
-        }
+
         return show.toString();
     }
     public String showArtistInfo(){
@@ -45,18 +61,19 @@ public class AdminController {
     }
     public String showOneArtistInfo(String userName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++)
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)) {
-                ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
+        for (User user : Database.getDatabase().getUsers())
+            if(user.getUsername().equals(userName)) {
+                ArtistModel artist =(ArtistModel) user;
                 show.append("Name: " + artist.getFullName()+"\temail:"+artist.getEmail()+"\tphone number: "+artist.getPhoneNumber()+"\tsalary: "+artist.getSalary()+"\nBiography"+artist.getBiography()+"\n");
                 break;
             }
+
         return show.toString();
     }
     public String showReports(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getReports().size();i++)
-            show.append("User: "+Database.getDatabase().getReports().get(i).getUser().getFullName() + "\nReported Artist: "+Database.getDatabase().getReports().get(i).getReportedArtist().getFullName() + "\nDescription: "+ Database.getDatabase().getReports().get(i).getDescription() +"\n");
+        for (Report reports : Database.getDatabase().getReports())
+            show.append("User: "+reports.getUser().getFullName() + "\nReported Artist: "+reports.getReportedArtist().getFullName() + "\nDescription: "+ reports.getDescription() +"\n");
         return show.toString();
     }
     public String showUserInfo(){

@@ -1,9 +1,6 @@
 package Controller;
 import Model.*;
-
-import java.lang.reflect.Array;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +9,10 @@ public class ListenerController {
     private int count=0;
 
     public String signUp(String username, String password, String fullName, String email, String phoneNumber, Date birthDate){
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){
+        for (User user : Database.getDatabase().getUsers())
+            if(user.getUsername().equals(username))
                 return "This Username already used!";
-            }
-        }
+
         Pattern emailPattern = Pattern.compile(".*@.*(\\.com|\\.ir|\\.org)$");
         Matcher matcherEmail = emailPattern.matcher(email);
         Pattern phonepattern = Pattern.compile("^\\d{8,11}$");
@@ -35,13 +31,16 @@ public class ListenerController {
         return "Done!";
     }
     public String logIn(String username, String password){
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(username) && Database.getDatabase().getUsers().get(i).getPassword().equals(password)){
-                User user = Database.getDatabase().getUsers().get(i);
+        for (User user : Database.getDatabase().getUsers())
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                if(user instanceof PremiumModel)
+                    model = (PremiumModel)user;
+                else
+                    model = (ListenerModel) user;
 
                 return "Done!";
             }
-        }
+
         return "Username or password is wrong!";
     }
     public void selectGenres(Genre genre){
@@ -53,7 +52,7 @@ public class ListenerController {
     }
     public String makeNewPlaylist(String playlistName,String userName){
 
-        if(model.getClass().equals(Model.PremiumModel.class)) {
+        if(model instanceof PremiumModel) {
             model.getPlaylists().add(new Playlists(playlistName,userName));
             return "Playlist made successfully";
         }
@@ -66,68 +65,57 @@ public class ListenerController {
         return "Sorry! You can't creat more than 3 playlists with freeAccount.";
     }
     public String addMusicToPlaylist(String playlistName,int ID){
-        if(model.getClass().equals(Model.PremiumModel.class)){
+        if(model instanceof PremiumModel){
             searchAndAdd(playlistName,ID);
-            return "Music added to playlist successfully.";
+            return "Audio added to playlist successfully.";
         }
         else if(model.musicCount < FreeModel.maxAudio){
             searchAndAdd(playlistName,ID);
             model.musicCount++;
-            return "Music added to playlist successfully.";
+            return "Audio added to playlist successfully.";
         }
         return "Sorry! You can't add more than 10 Songs to the playlist with freeAccount.";
     }
     private void searchAndAdd(String playlistName,int ID){
-        for (int i = 0; i < model.getPlaylists().size(); i++) {
-            if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
-                for (int j = 0; j < Database.getDatabase().getAudios().size(); j++) {
-                    if(Database.getDatabase().getAudios().get(j).getIDCount()==ID){
-                        model.getPlaylists().get(i).getAudio().add(Database.getDatabase().getAudios().get(j));
-                    }
-                }
-            }
-        }
+        for (Playlists playlists : model.getPlaylists())
+            if(playlists.getPlaylistName().equals(playlistName))
+                for (AudioModel audio : Database.getDatabase().getAudios())
+                    if(audio.getIDCount()==ID)
+                        playlists.getAudio().add(audio);
     }
     public String playAudio(int ID){
         String show = "";
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getIDCount()==ID){
                 show = "Audio: " + audio.getAudioName() + "\tArtis: " + audio.getArtistName() + "\tLikes: " + audio.getLikeCount() +"\nGenre: " + audio.getGenre() + "\tRelease Date: " + audio.getReleaseDate() + "\tID: " + audio.getIDCount();
                 audio.setPlayedCount(audio.getPlayedCount() + 1);
                 model.Count++;
                 model.getPlayCount().put(audio,model.Count);
             }
-        }
+
         return show;
     }
     public void likeAudio(int ID){
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getIDCount()==ID){
                 audio.setLikeCount(audio.getLikeCount() + 1);
                 break;
             }
-        }
     }
     public String showLyric(int ID){
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getIDCount()==ID){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getIDCount()==ID)
                 if(audio.getClass().equals(Music.class))
                     return ((Music) audio).getLyrics();
-            }
-        }
+
         return "Audio Not Found!";
     }
     public String searchAudio(String name){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getAudioName().equals(name) || Database.getDatabase().getAudios().get(i).getArtistName().equals(name)){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getAudioName().equals(name) || audio.getArtistName().equals(name))
                 show.append("Audio name: " + audio.getAudioName() + "\tArtist: " + audio.getArtistName() + "\t Genre: " + audio.getGenre() + "\n");
-            }
-        }
+
         return show.toString();
     }
     public void sortingAudioFilesBasedOnLikes(){
@@ -164,49 +152,40 @@ public class ListenerController {
     }
     public String filterAudioFilesBasedOnArtist(String artistName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getArtistName().equals(artistName)){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios()) {
+            if(audio.getArtistName().equals(artistName))
                 show.append("Audio: "+audio.getAudioName() + "\tID: "+audio.getIDCount()+"\n");
-            }
         }
         return show.toString();
     }
     public String filterAudioFilesBasedOnGenres(Genre genre){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getGenre().equals(genre)){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios()) {
+            if(audio.getGenre().equals(genre))
                 show.append("Audio: "+audio.getAudioName() +"\tArtist: "+audio.getArtistName() +"\tID: "+audio.getIDCount()+"\n");
-            }
         }
         return show.toString();
     }
     public String filterAudioFilesBasedOnDate(Date releaseDate){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getDate().getYear()==releaseDate.getYear()){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getDate().getYear()==releaseDate.getYear()){
                 show.append("Audio: "+audio.getAudioName() + "\tArtist: "+audio.getArtistName()+"\tID: "+audio.getIDCount()+"\n");
-            }
         }
         return show.toString();
     }
     public String filterAudioFilesBasedAmongDate(Date releaseDate1,Date releaseDate2){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i <Database.getDatabase().getAudios().size(); i++) {
-            if(releaseDate1.getYear() <= Database.getDatabase().getAudios().get(i).getDate().getYear() && Database.getDatabase().getAudios().get(i).getDate().getYear()<=releaseDate2.getYear()){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios()) {
+            if(releaseDate1.getYear() <= audio.getDate().getYear() && audio.getDate().getYear()<=releaseDate2.getYear())
                 show.append("Audio: "+audio.getAudioName() + "\tArtist: "+audio.getArtistName()+"\tID: "+audio.getIDCount()+"\n");
-            }
         }
         return show.toString();
     }
     public void ArtistReport(String userName,String description){
-        StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(userName)){
-                ArtistModel artist =(ArtistModel) Database.getDatabase().getUsers().get(i);
+        for (User user : Database.getDatabase().getUsers()) {
+            if(user.getUsername().equals(userName)){
+                ArtistModel artist =(ArtistModel) user;
                 Database.getDatabase().getReports().add(new Report(model,artist,description));
                 break;
             }
@@ -214,18 +193,17 @@ public class ListenerController {
     }
     public String showFollowing(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < model.getFallowingArtist().size(); i++) {
-            show.append("Artist: "+ model.getFallowingArtist().get(i).getFullName()+"\n");
-        }
+        for (ArtistModel artist : model.getFallowingArtist())
+            show.append("Artist: "+ artist.getFullName()+"\n");
+
         return show.toString();
     }
     public String showArtistList() {
         StringBuilder show = new StringBuilder();
-        for (User user : Database.getDatabase().getUsers()) {
-            if (user instanceof SingerModel || user instanceof PodcasterModel) {
+        for (User user : Database.getDatabase().getUsers())
+            if (user instanceof SingerModel || user instanceof PodcasterModel)
                 show.append("Artist Name: ").append(user.getFullName()).append("\n");
-            }
-        }
+
         return show.toString();
     }
     public String showArtist(String userName){
@@ -233,19 +211,16 @@ public class ListenerController {
         for (User user : Database.getDatabase().getUsers()) {
             if(user.getUsername().equals(userName)){
                 ArtistModel artist = (ArtistModel) user;
-                show.append("Artist Name: " + artist.getFullName() + "\n");
+                show.append("Artist Name: ").append(artist.getFullName()).append("\n");
                 if(user instanceof SingerModel){
                     show.append("Albums Name:\n");
-                    for (int r = 0; r < ((SingerModel) artist).getAlbums().size(); r++) {
-                        show.append(((SingerModel) artist).getAlbums().get(r).getAlbumName()+"\n");
-                    }
+                    for (Album album : ((SingerModel) artist).getAlbums())
+                        show.append(album.getAlbumName()).append("\n");
                 }
                 else{
-                    PodcasterModel podcaster = (PodcasterModel) artist;
                     show.append("Podcasts Name:\n");
-                    for (int j = 0; j < podcaster.getPodcasts().size(); j++) {
-                        show.append(podcaster.getPodcasts().get(j).getAudioName()+"\n");
-                    }
+                    for (Podcast podcast : ((PodcasterModel) artist).getPodcasts())
+                        show.append(podcast.getAudioName()).append("\n");
                 }
                 break;
             }
@@ -265,17 +240,17 @@ public class ListenerController {
     }
     public String showPlaylists(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < model.getPlaylists().size(); i++) {
-            show.append("Playlist name: "+model.getPlaylists().get(i).getPlaylistName()+"\n");
+        for (Playlists playlists : model.getPlaylists()) {
+            show.append("Playlist name: ").append(playlists.getPlaylistName()).append("\n");
         }
         return show.toString();
     }
     public String selectPlaylist(String playlistName){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < model.getPlaylists().size(); i++){
-            if(model.getPlaylists().get(i).getPlaylistName().equals(playlistName)){
-                for (int j = 0; j < model.getPlaylists().get(i).getAudio().size(); j++) {
-                    show.append("Audio name: "+model.getPlaylists().get(i).getAudio().get(j).getAudioName() + "\tArtist Name: " +model.getPlaylists().get(i).getAudio().get(j).getArtistName()+"\n");
+        for (Playlists playlists : model.getPlaylists()){
+            if(playlists.getPlaylistName().equals(playlistName)){
+                for (AudioModel audio :  playlists.getAudio()) {
+                    show.append("Audio name: "+audio.getAudioName() + "\tArtist Name: " +audio.getArtistName()+"\n");
                 }
             }
         }
@@ -285,10 +260,10 @@ public class ListenerController {
         StringBuilder show = new StringBuilder();
         int count=0;
 
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
+        for (AudioModel audio : Database.getDatabase().getAudios()) {
             if(count<n) {
-                if (Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[0]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[1]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[2]) || Database.getDatabase().getAudios().get(i).getGenre().equals(model.getFavoriteGenres()[3])) {
-                    show.append("Audio name: " + Database.getDatabase().getAudios().get(i).getAudioName() + "\tArtist name: " + Database.getDatabase().getAudios().get(i).getArtistName() + "\tGenre: " + Database.getDatabase().getAudios().get(i).getGenre() + "\n");
+                if (audio.getGenre().equals(model.getFavoriteGenres()[0]) || audio.getGenre().equals(model.getFavoriteGenres()[1]) || audio.getGenre().equals(model.getFavoriteGenres()[2]) || audio.getGenre().equals(model.getFavoriteGenres()[3])) {
+                    show.append("Audio name: " + audio.getAudioName() + "\tArtist name: " + audio.getArtistName() + "\tGenre: " + audio.getGenre() + "\n");
                     count++;
                 }
             }
@@ -302,7 +277,6 @@ public class ListenerController {
     }
     public String buyOrExtendSubscription(int day){
         if(model.getClass().equals(ListenerModel.class)){
-          //  model = new PremiumModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
 
             return check(day) + model.getClass();
         }

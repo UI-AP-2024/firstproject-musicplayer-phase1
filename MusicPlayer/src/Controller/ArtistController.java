@@ -12,11 +12,10 @@ public class ArtistController {
     }
 
     public String signUp(String artKind, String username, String password, String fullName, String email, String phoneNumber, Date birthDate, String bio){
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(username)){
+        for (User user : Database.getDatabase().getUsers())
+            if(user.getUsername().equals(username))
                 return "This Username already used!";
-            }
-        }
+
         Pattern emailPattern = Pattern.compile(".*@.*(\\.com|\\.ir|\\.org)$");
         Matcher matcherEmail = emailPattern.matcher(email);
         Pattern phonepattern = Pattern.compile("^\\d{8,11}$");
@@ -39,9 +38,9 @@ public class ArtistController {
     }
 
     public String logIn(String username, String password){
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getUsername().equals(username) && Database.getDatabase().getUsers().get(i).getPassword().equals(password)){
-                model =(ArtistModel) Database.getDatabase().getUsers().get(i);
+        for (User user : Database.getDatabase().getUsers()) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                model =(ArtistModel) user;
                 return "Done!";
             }
         }
@@ -56,33 +55,27 @@ public class ArtistController {
     }
     public String showPlayedCount(){
         StringBuilder show = new StringBuilder();
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getArtistName().equals(model.getFullName())){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getArtistName().equals(model.getFullName()))
                 show.append("Audio name: "+audio.getAudioName()+"\tPlay count: "+audio.getPlayedCount()+"\n");
-            }
-        }
+
         return show.toString();
     }
     public void CalculateEarnings(){
-        for (int i = 0; i < Database.getDatabase().getAudios().size(); i++) {
-            if(Database.getDatabase().getAudios().get(i).getArtistName().equals(model.getFullName())){
-                AudioModel audio = Database.getDatabase().getAudios().get(i);
+        for (AudioModel audio : Database.getDatabase().getAudios())
+            if(audio.getArtistName().equals(model.getFullName())){
                 model.setPlayCount(model.getPlayCount()+audio.getPlayedCount());
                 audio.setPlayedCount(0);
             }
-        }
-        for (int i = 0; i < Database.getDatabase().getUsers().size(); i++) {
-            if(Database.getDatabase().getUsers().get(i).getFullName().equals(model.getFullName())){
-                User user = Database.getDatabase().getUsers().get(i);
-                if(user.getClass().equals(PodcasterModel.class))
+        for (User user : Database.getDatabase().getUsers())
+            if(user.getFullName().equals(model.getFullName())){
+                if(user instanceof PodcasterModel)
                     model.setSalary(model.getPlayCount()*0.5);
                 else
                     model.setSalary(model.getPlayCount()*0.4);
 
                 break;
             }
-        }
     }
     public String showUserInfo(){
         CalculateEarnings();
@@ -92,13 +85,12 @@ public class ArtistController {
        ((SingerModel)model).getAlbums().add(new Album(albumName, model.getFullName()));
     }
     public void publishMusic(String audioName, Genre genre,String lyric,String link,String cover,int albumID){
-        for (int i = 0; i < ((SingerModel)model).getAlbums().size(); i++) {
-            if(((SingerModel)model).getAlbums().get(i).getIDCount()==albumID){
+        for (Album album : ((SingerModel)model).getAlbums())
+            if(album.getIDCount()==albumID){
                 Music music = new Music(audioName, model.getFullName(),genre,link,cover,lyric);
-                ((SingerModel)model).getAlbums().get(i).getMusics().add(music);
+                album.getMusics().add(music);
                 break;
             }
-        }
     }
     public void publishPodcast(String audioName, Genre genre, String caption, String link, String cover){
         Podcast podcast = new Podcast(audioName,model.getFullName(),genre,link,cover,caption);

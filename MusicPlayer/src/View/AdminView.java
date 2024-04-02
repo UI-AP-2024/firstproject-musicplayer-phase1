@@ -49,6 +49,6 @@ public class AdminView {
             else if(!commands[0].equals("Logout"))
                 System.out.println("Wrong command!");
         }
-        //go to main menu
+
     }
 }
