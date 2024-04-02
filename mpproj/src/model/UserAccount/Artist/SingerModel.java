@@ -8,7 +8,7 @@ import java.util.Date;
 public class SingerModel extends ArtistModel{
     private ArrayList<AlbumModel> albums;
     public SingerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double income, String biography) {
-        super(username, password, name, email, phoneNumber, birthday, income, biography);
+        super(username, password, name, email, phoneNumber, birthday, biography);
         this.albums = new ArrayList<AlbumModel>();
     }
 

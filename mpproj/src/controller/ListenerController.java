@@ -10,10 +10,9 @@ import model.UserAccount.Artist.ArtistModel;
 import model.UserAccount.Listener.ListenerModel;
 import model.UserAccount.UserAccountModel;
 
-import java.time.Instant;
-import java.util.ArrayList;
+
 import java.util.Objects;
-import java.util.regex.Pattern;
+
 
 
 public class ListenerController {
@@ -55,11 +54,8 @@ public class ListenerController {
     }
     public StringBuilder showFollowings() {
         StringBuilder str = new StringBuilder();
-        for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
-            if (userAccount instanceof ArtistModel)
-                if (((ArtistModel) userAccount).getFollowers().contains(listener))
-                    str.append("\nname : ").append(userAccount.getName())
-                            .append(", username : ").append(userAccount.getUsername());
+        for (ArtistModel artist : listener.getFollowings())
+            str.append(artist.toString());
         return str;
     }
     public String followArtist(String username) {
@@ -68,6 +64,8 @@ public class ListenerController {
                 if (Objects.equals(userAccount.getUsername(), username)) {
                     if (((ArtistModel) userAccount).getFollowers().contains(listener))
                         return "You are currently following this artist";
+                    listener.getFollowings().add((ArtistModel)userAccount);
+                    ((ArtistModel) userAccount).getFollowers().add(listener);
                     return "You are now following this artist";
                 }
         return "Username not found";

@@ -9,10 +9,10 @@ public abstract class ArtistModel extends UserAccountModel {
     private double income;
     private ArrayList<UserAccountModel> followers;
     private String biography;
-    public ArtistModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double income, String biography) {
+    public ArtistModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, String biography) {
         super(username, password, name, email, phoneNumber, birthday);
         this.followers = new ArrayList<UserAccountModel>();
-        this.income = income;
+        this.income = 0;
         this.biography = biography;
     }
 
