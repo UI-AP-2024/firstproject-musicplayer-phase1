@@ -1,7 +1,11 @@
 package controller;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -99,7 +103,7 @@ public class AudioController {
         return txt;
     }
     private String filterByGenres(String key){
-        String txt = " Audios filtered by artist\n";
+        String txt = " Audios filtered by genres\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
             .filter(Audio -> Audio.getGenre().equals(Genre.valueOf(key)))
@@ -116,13 +120,40 @@ public class AudioController {
     private String filterByDate(String key)throws ParseException{
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         Date date = formatter.parse(key);
-        String txt = " Audios filtered by artist\n";
+        String txt = " Audios filtered by date\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
             .filter(Audio -> Audio.getReleaseDate().equals(date))
             .collect(Collectors.toCollection(ArrayList::new));
         if(filtered.size()==0){
             return "no audio was published on this day enter another date!";
+        }
+        for(Audio audio : filtered){
+            txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\n";
+           
+        }
+        return txt;
+    }
+
+    public String dateToString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+        String strDate = dateFormat.format(date);  
+        return strDate;
+    }
+    public String filterByDate(String dateone, String datetwo )throws ParseException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate1 = LocalDate.parse(dateone, formatter);
+        LocalDate localDate2 = LocalDate.parse(datetwo, formatter);
+
+        String txt = " Audios filtered between two dates\n";
+        ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
+            .stream()
+            .filter(e -> !LocalDate.parse(dateToString(e.getReleaseDate()), formatter).isBefore(localDate1)
+                    && !LocalDate.parse(dateToString(e.getReleaseDate()), formatter).isAfter(localDate2))
+            .sorted(Comparator.comparing(e -> e.getReleaseDate()))
+            .collect(Collectors.toCollection(ArrayList::new));
+        if(filtered.size()==0){
+            return "no audio was published between these two dates, enter two other dates!";
         }
         for(Audio audio : filtered){
             txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\n";

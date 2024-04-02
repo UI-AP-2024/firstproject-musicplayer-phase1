@@ -26,21 +26,21 @@ public class Stream {
         System.out.println(copy.size());
 
         // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        Date j = new Date();
-        LocalDate local = j.toInstant() 
-                  .atZone(ZoneId.systemDefault()) 
-                  .toLocalDate(); 
+        // Date j = new Date();
+        // LocalDate local = j.toInstant() 
+        //           .atZone(ZoneId.systemDefault()) 
+        //           .toLocalDate(); 
         
   
         
-        LocalDate localDate1 = LocalDate.parse(date1, formatter);
-        LocalDate localDate2 = LocalDate.parse(date2, formatter);
+        // LocalDate localDate1 = LocalDate.parse(dateone, formatter);
+        // LocalDate localDate2 = LocalDate.parse(datetwo, formatter);
 
-        return receipts.stream()
-            .filter(e -> !LocalDate.parse(e.date(), formatter).isBefore(localDate1)
-                    && !LocalDate.parse(e.date(), formatter).isAfter(localDate2))
-            .sorted()
-            .collect(Collectors.toList());
+        // return receipts.stream()
+        //     .filter(e -> !LocalDate.parse(e.date(), formatter).isBefore(localDate1)
+        //             && !LocalDate.parse(e.date(), formatter).isAfter(localDate2))
+        //     .sorted()
+        //     .collect(Collectors.toList());
 
         
         
