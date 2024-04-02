@@ -43,7 +43,7 @@ public class ArtistController {
     }
 
     public String ShowAccountInfo(){
-        getArtist().calculateIncome();
+        calculateIncome();
         String txt="Account info:"+
         "\nuser name : "+getArtist().getUsername()+
         "\nFirst name : "+getArtist().getName()+
@@ -120,5 +120,33 @@ public class ArtistController {
         }
         else return "this type of audio is not valid enter a valid type\n 'M' for Music & 'P' for podcast";
     }
+
+    public void calculateIncome(){
+        if(getArtist() instanceof Singer){
+            calculateIncome((Singer)getArtist());
+        }
+        if(getArtist() instanceof Podcaster){
+            calculateIncome((Podcaster)getArtist());
+        }
+
+    }
+    public void calculateIncome(Singer singer){
+        long view =0;
+        for(Album album :singer.getAlbumList()){
+            for(Music music : album.getMusicList()){
+                view+=music.getNumberOfPlays();
+            }
+        }
+        getArtist().setIncome(view*0.4);
+    }
+    public void calculateIncome(Podcaster podcaster){
+        long view =0;
+        for(Podcast podcast :podcaster.getPodcastList()){
+            view+=podcast.getNumberOfPlays();
+        }
+        getArtist().setIncome(view*0.5);
+    }
+
+
     
 }

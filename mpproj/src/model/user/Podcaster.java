@@ -29,13 +29,6 @@ public class Podcaster extends Artist{
         this.podcastList.add(podcast);
     }
 
-    public void calculateIncome(){
-        long view =0;
-        for(Podcast podcast :podcastList){
-                view+=podcast.getNumberOfPlays();
-        }
-        super.setIncome(view*0.5);
-    }
-    
+
     
 }

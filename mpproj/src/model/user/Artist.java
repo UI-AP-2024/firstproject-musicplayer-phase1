@@ -35,9 +35,7 @@ public class Artist extends User {
     public String getBiographi() {
         return biographi;
     }
-    public void calculateIncome(){
-
-    }
+    
 
     
     

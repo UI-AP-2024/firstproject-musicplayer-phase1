@@ -25,15 +25,7 @@ public class Singer extends Artist{
         this.albumList.add(album);
     }
 
-    public void calculateIncome(){
-        long view =0;
-        for(Album album :albumList){
-            for(Music music : album.getMusicList()){
-                view+=music.getNumberOfPlays();
-            }
-        }
-        super.setIncome(view*0.4);
-    }
+    
     
     
 }

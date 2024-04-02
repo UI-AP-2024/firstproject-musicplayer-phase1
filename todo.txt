@@ -25,3 +25,5 @@ premium enum
 //////////
 
 change audio name to title
+/////
+artist name -> artist username (for audios)and filtrer & search by username or name??

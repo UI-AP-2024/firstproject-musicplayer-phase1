@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,28 +13,21 @@ import java.util.stream.Collectors;
 
 import model.audio.Audio;
 import model.audio.Genre;
+import model.audio.Music;
+import model.audio.Podcast;
 import model.database.Database;
-import model.user.Listener;
-import model.user.User;
 
 public class AudioController {
     private static AudioController audioController;
     private AudioController(){
 
     }
-    public static AudioController audioController(){
+    public static AudioController getAudioController(){
         if(audioController==null){
             audioController = new AudioController();
         }
         return audioController;
     }
-    // private Audio audio;
-    // public Audio getAudio(){
-    //     return audio;
-    // }
-    // public void setAudio(Audio audio){//in login
-    //     this.audio = audio;
-    // }
 
     public String searchAudio(String key){
         String txt="results matching your keyword\n";
@@ -160,6 +152,44 @@ public class AudioController {
            
         }
         return txt;
+    }
+    public String playAudio(long audioId){
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                audio.setNumberOfPlays(audio.getNumberOfPlays()+1);
+                String txt="the audio is playing\n"+
+                "title : "+audio.getAudioName()+"\n"+
+                "Artist : "+audio.getArtistName()+"\n"+
+                "likes : "+String.valueOf(audio.getNumberOfLikes())+"\n"+
+                "plays : "+String.valueOf(audio.getNumberOfPlays())+"\n";
+                return txt;
+            }
+        }
+        return "enter a valid id";
+    }
+
+    public String likeAudio(long audioId){
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                audio.setNumberOfLikes(audio.getNumberOfLikes()+1);
+                return null;
+            }
+        }
+        return "enter a valid id";
+    }
+
+    public String showLyric(long audioId){
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                if(audio instanceof Music){
+                    return ((Music)audio).getLyrics();
+                }
+                if(audio instanceof Podcast){
+                    return ((Podcast)audio).getCaption();
+                }
+            }
+        }
+        return "enter a valid id";
     }
 
 

@@ -3,10 +3,14 @@ package controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.audio.Album;
+import model.audio.Audio;
 import model.audio.Genre;
+import model.audio.PlayList;
 import model.database.Database;
 import model.user.Artist;
 import model.user.FreeListener;
@@ -19,7 +23,7 @@ import model.user.User;
 
 public class ListenerController {
     private static ListenerController listenerController;
-    private ListenerController(){
+    protected ListenerController(){
 
     }
     public static ListenerController getListenerController(){
@@ -167,15 +171,135 @@ public class ListenerController {
         }
     }
 
-    // public String showArtistInfo(){
-    //     String txt="Artist info:"+
-    //     "\nuser name : "+getListener().getUsername()+
-    //     "\nFirst name : "+getListener().getFirstName()+
-    //     "\nLast name : "+getListener().getLastName()+
-    //     "\nFollowers : "+get
+    public String addAudioPlay(long id){
+        for(Map.Entry<Long,Long> entry : getListener().getAudioPlays().entrySet())
+        {
+            if(entry.getKey()==(Long)id){
+                entry.setValue(entry.getValue()+1);
+            }
+        }
+        getListener().getAudioPlays().put(id, (long)1);
+        return AudioController.getAudioController().playAudio(id);
+    
+    }
+    
+    public String addAudioLikes(long id){
+        for(Map.Entry<Long,Long> entry : getListener().getAudioLikes().entrySet())
+        {
+            if(entry.getKey()==(Long)id){
+                entry.setValue(entry.getValue()+1);
+            }
+        }
+        getListener().getAudioLikes().put(id, (long)1);
+        return AudioController.getAudioController().likeAudio(id);
         
-    //     return txt;
-    // }
+    }
+
+    public String createNewPlaylist(String name){
+        if(getListener() instanceof FreeListener){
+            return createNewPlaylist((FreeListener)getListener(),name);
+        }
+        if(getListener() instanceof PremiumListener){
+            return createNewPlaylist((PremiumListener)getListener(),name);
+        }
+
+        return null;
+    }
+    public String createNewPlaylist(FreeListener freeListener,String name){
+        if(freeListener.getListOfPlayLists().size()<FreeListener.getPlayListLimit()){
+            freeListener.addToListOfPlayLists(new PlayList(name, freeListener.getUsername()));
+            return "your playlist created succesfully";
+        }
+        return "you cant create more playlists , get a premium account and you have no limit";
+    }
+    public String createNewPlaylist(PremiumListener premiumListener, String name){
+        premiumListener.addToListOfPlayLists(new PlayList(name, premiumListener.getUsername()));
+
+        return "your playlist created succesfully";
+    }
+
+    public String addAudioToPlaylist(String playlistName, long audioId){
+        if(getListener() instanceof FreeListener){
+            return addAudioToPlaylist((FreeListener)getListener(), playlistName,audioId);
+        }
+        if(getListener() instanceof PremiumListener){
+            return addAudioToPlaylist((PremiumListener)getListener(), playlistName,audioId);
+        }
+        return null;
+        
+    }
+    public String addAudioToPlaylist(FreeListener free, String playlistName, long audioId)
+    {
+        Audio tmp= null;
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                tmp= audio;
+            }
+        }
+        if(tmp==null){
+            return "couldnt find this audio , make sure you are entering the correct id";
+        }
+        for(PlayList playlist : free.getListOfPlayLists()){
+            if(playlist.getPlayListName().equals(playlistName)){
+                if(playlist.getAudioList().size()==FreeListener.getAddSongToPLaylistLimit()){
+                    return "you cant add more song to a playlist , get premium to have no limits";
+                }
+                playlist.addToAudioList(tmp);
+                return " the audio added to your playList";
+            }
+        }
+        return "playlist with this name doesnt exist in your account";
+    }
+    public String addAudioToPlaylist(PremiumListener premium, String playlistName, long audioId)
+    {
+        Audio tmp= null;
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                tmp= audio;
+            }
+        }
+        if(tmp==null){
+            return "couldnt find this audio , make sure you are entering the correct id";
+        }
+        for(PlayList playlist : premium.getListOfPlayLists()){
+            if(playlist.getPlayListName().equals(playlistName)){
+                playlist.addToAudioList(tmp);
+                return " the audio added to your playList";
+            }
+        }
+        return "playlist with this name doesnt exist in your account";
+    }
+
+    public String showPlaylists(){
+        String txt= "All playlists\n";
+        if(getListener().getListOfPlayLists().size()==0){
+            return "no playlist has been created, create a playlist by 'NewPlaylist -[playlist’s name]' command";
+        }
+        for(PlayList playlist : getListener().getListOfPlayLists()){
+            txt+="-"+playlist.getPlayListName()+"("+String.valueOf(playlist.getAudioList().size())+"audios)\n";
+        }
+        return txt;
+    }
+    public String selectPlaylist(String name){
+        String txt="play list ("+ name + ")\n";
+        if(getListener().getListOfPlayLists().size()==0){
+            return "your have not created any playLists and cant have access to other playlists";
+        }
+        for(PlayList playlist : getListener().getListOfPlayLists()){
+            if(playlist.getPlayListName().equals(name)){
+                txt+="creator - "+playlist.getCreaterName()+"\n"+
+                "list of audios : \n";
+                if(playlist.getAudioList().size()==0){
+                    txt+="no audios added to this playlist";
+                }
+                for(Audio audio : playlist.getAudioList()){
+                    txt+="-"+audio.getAudioName()+"("+String.valueOf(audio.getNumberOfPlays())+")\n";
+                }
+            }
+            else return "you dont have a play list with this name , make sure you typed it correctly";
+        }
+        return txt;
+    }
     
     
 }

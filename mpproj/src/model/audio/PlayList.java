@@ -35,15 +35,16 @@ public class PlayList {
     public void setCreaterName(String createrName) {
         this.createrName = createrName;
     }
-    public void setAudioList(Audio audio) {
-        this.audioList.add(audio);
-    }
     public static void setPlaylistCounter(long playlistCounter) {
         PlayList.playlistCounter = playlistCounter;
     }
-    // private void setId(){
-    //     this.id = String.valueOf(playlistCounter)+"/"+playListName;
-    // }
+    public void setAudioList(ArrayList<Audio> audioList) {
+        this.audioList = audioList;
+    }
+    public void addToAudioList(Audio audio) {
+        this.audioList.add(audio);
+    }
+    
     
     
 }

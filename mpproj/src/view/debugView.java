@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import controller.ArtistController;
+import controller.AudioController;
+import controller.FreeController;
 import controller.ListenerController;
 import controller.PodcasterController;
 import controller.SingerController;
@@ -261,7 +263,39 @@ public class DebugView {
         txt = ArtistController.getArtistController().showFollowers();
         System.out.println(txt);
 
+        String charachter = UserController.getUserController().loginUser("Maryaoh", "Maryamdar84#");
+        if(charachter.equals("L")){
+            txt= ListenerController.getListenerController().addAudioPlay((long)1);
+            System.out.println(txt);
+            txt= ListenerController.getListenerController().addAudioPlay((long)1);
+            System.out.println(txt);
+            txt= ListenerController.getListenerController().addAudioPlay((long)1);
+            System.out.println(txt);
+            txt= AudioController.getAudioController().showLyric((long)1);
+
+        }
+        charachter = UserController.getUserController().loginUser("Maryaol", "Maryamdar84#");
+        if(charachter.equals("A")){
+           txt= ArtistController.getArtistController().showViewsStatics();
+            System.out.println(txt);
+        }
         
+        txt = UserController.getUserController().signupNewUser("loryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bio);
+        System.out.println(txt);
+        charachter = UserController.getUserController().loginUser("loryaof", "Maryamdar84#");
+        if(charachter.equals("L")){
+            System.out.println("L");
+            txt= FreeController.getFreeController().createNewPlaylist("play1");
+            System.out.println(txt);
+            txt= FreeController.getFreeController().createNewPlaylist("play2");
+            System.out.println(txt);
+            txt= FreeController.getFreeController().createNewPlaylist("play3");
+            System.out.println(txt);
+            txt= FreeController.getFreeController().createNewPlaylist("play4");
+            System.out.println(txt);
+            
+        }
+
 
 
         
