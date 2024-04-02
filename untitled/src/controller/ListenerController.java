@@ -2,6 +2,7 @@ package controller;
 
 import model.Database;
 import model.audioRelated.*;
+import model.report.Report;
 import model.users.AccountUserModel;
 import model.users.artists.ArtistModel;
 import model.users.artists.PodcasterModel;
@@ -264,7 +265,7 @@ public class ListenerController
             String dateRegex="^\\d{4}/([1][0-2]|[1-9]|[0][1-9])/([1-2][0-9]|30|[0-9]|0[0-9])$";
             Pattern datePattern=Pattern.compile(dateRegex);
             if(!datePattern.matcher(filterBy).matches())
-                return "birth date isn't valid";
+                return "date isn't valid";
             Calendar date =Calendar.getInstance();
             date.setTime(new Date(filterBy));
             for(AudioModel temp:Database.getDatabase().getAllAudios())
@@ -482,5 +483,28 @@ public class ListenerController
                     return ((PodcastModel)temp).getCaption();
             }
         return "Audio not found";
+    }
+    public String showFollowings()
+    {
+        StringBuilder answer=new StringBuilder("Following usernames:\n");
+        for(ArtistModel temp:getListener().getFollowings())
+            if(temp!=null)
+                answer.append(temp.getUserName()).append("\n");
+        return answer.toString();
+    }
+    public String report(String artistUserName,String explanation)
+    {
+        for(AccountUserModel temp :Database.getDatabase().getAllUsers())
+            if(temp instanceof ArtistModel && temp.getUserName().compareTo(artistUserName)==0)
+            {
+                Report report=new Report((ArtistModel)temp,getListener(),explanation);
+                Database.getDatabase().getReports().add(report);
+                return "reported successfully";
+            }
+        return "Artist not found";
+    }
+    public void increaseCredit(String  credit)
+    {
+        getListener().setListenerCredit(getListener().getListenerCredit()+Double.parseDouble(credit));
     }
 }
