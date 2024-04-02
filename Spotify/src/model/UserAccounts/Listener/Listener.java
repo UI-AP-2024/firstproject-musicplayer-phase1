@@ -1,7 +1,10 @@
 package model.UserAccounts.Listener;
 import java.util.Calendar;
+
+import model.Audio.Audio;
 import model.Genre.Genre;
 import model.Playlist.Playlist;
+import model.UserAccounts.Artist.Artist;
 import model.UserAccounts.userAccount;
 
 import java.util.ArrayList;
@@ -12,7 +15,18 @@ import java.util.Map;
 public class Listener extends userAccount {
     private double credit;
     private ArrayList<Playlist> playlists;
-    private Map<Playlist,Integer> playFiles;
+    private Map<Audio,Integer> playFiles;
+
+    private ArrayList<Artist> followings;
+
+    public ArrayList<Artist> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(ArrayList<Artist> followings) {
+        this.followings = followings;
+    }
+
     private Date dateOfEndSubscription;
     private ArrayList<Genre> favouriteGenres;
     public Listener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday,double credit,ArrayList<Playlist> playlists,ArrayList<Genre> favouriteGenres) {
@@ -33,7 +47,7 @@ public class Listener extends userAccount {
             context.append(playlist.toString());
         }
         context.append("\n");
-        for(Map.Entry<Playlist,Integer> playFile:playFiles.entrySet()){
+        for(Map.Entry<Audio,Integer> playFile:playFiles.entrySet()){
             context.append(playFile.getKey());
             context.append(" : ");
             context.append(playFile.getValue());
@@ -57,11 +71,11 @@ public class Listener extends userAccount {
         this.playlists = playlists;
     }
 
-    public Map<Playlist, Integer> getPlayFiles() {
+    public Map<Audio, Integer> getPlayFiles() {
         return playFiles;
     }
 
-    public void setPlayFiles(Map<Playlist, Integer> playFiles) {
+    public void setPlayFiles(Map<Audio, Integer> playFiles) {
         this.playFiles = playFiles;
     }
 
