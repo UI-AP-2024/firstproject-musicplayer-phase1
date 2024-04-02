@@ -6,6 +6,9 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
+//        Free nsda = new Free("masih" ,"m","f"," "," ",new Date(4));
+//        UserAccount m = nsda;
+//        boolean va = nsda instanceof Artist;
         AccountView.getAccountView().showFirstMenu();
     }
 }

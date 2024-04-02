@@ -37,7 +37,7 @@ public class AccountController {
                 if (!result2)
                     return -2;
                 String phoneNumberRegex ="^([0][9]|[\\+][9][8][9])(([1][0-9])|([2][0-2])|([0][0-5])|([3][0])|([3][3])|([3][5-9])|([4][1]))(\\d){7}$";
-//              can be replaced by this ->       ^(09|\+989)((1[0-9])|(2[0-2])|(0[0-5])|(30)|(33)|(3[5-9])|(41))(\d){7}$
+//              can be replaced by this  ->  ^(09|\+989)((1[0-9])|(2[0-2])|(0[0-5])|(30)|(33)|(3[5-9])|(41))(\d){7}$
                 boolean result3 = Pattern.compile(phoneNumberRegex).matcher(answers[6]).find();
                 if (!result3)
                     return -3;
@@ -234,7 +234,89 @@ public class AccountController {
                     for (Audio audio : audioArrayList) {
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getTimesPlayed()).append(")").append("\r\n");
                     }
+                    AccountView.getAccountView().showResult(result);
+                    AccountView.getAccountView().showLoginPanel(user);
                 }
+                break;
+            case "Filter" :
+                counter = 1;
+                result = new StringBuilder("The songs you were searching for by your filter : \r\n");
+                switch (answers[1]){
+                    case "A" :
+                        for (UserAccount userAccount : Database.getData().getAllUsers()){
+                            for (Audio audio : Database.getData().getAllAudios()){
+                                if (audio.getAudioName().contains(answers[2])){
+                                    result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                                }
+                            }
+                        }
+                        AccountView.getAccountView().showResult(result);
+                        AccountView.getAccountView().showLoginPanel(user);
+                        break;
+                    case "G" :
+                        for (Audio audio : Database.getData().getAllAudios()){
+                            if(audio.getGenre().name().equals(answers[2])){
+                                result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                            }
+                        }
+                        AccountView.getAccountView().showResult(result);
+                        AccountView.getAccountView().showLoginPanel(user);
+                        break;
+                    case "D" :
+                        String[] dateInfo = answers[2].split("\\.");
+                        Date date = new Date(Integer.parseInt(dateInfo[0]), Integer.parseInt(dateInfo[1]), Integer.parseInt(dateInfo[2]));
+                        for (Audio audio : Database.getData().getAllAudios()){
+                            if (date.compareTo(audio.getReleaseTime()) <=0){
+                                result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                            }
+                        }
+                        AccountView.getAccountView().showResult(result);
+                        AccountView.getAccountView().showLoginPanel(user);
+                        break;
+                }
+//            case "Add":
+//                if (user instanceof Free){
+//                    for (Playlist playlist : ((Free) user).getPlaylists()){
+//                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+//                            if (playlist.getAudioList().size() >= ((Free) user).getMaxAddSongToPlaylist()){
+//                                AccountView.getAccountView().showResult(new StringBuilder("Max number of audios have been added before to this list"));
+//                                AccountView.getAccountView().showLoginPanel(user);
+//                            }
+//                            ArrayList<Audio> backUp = playlist.getAudioList();
+//                            for (Audio audio : Database.getData().getAllAudios()){
+//                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
+//                                    backUp.add(audio);
+//                                    break;
+//                                }
+//                            }
+//                            playlist.setAudioList(backUp);
+//                            break;
+//                        }
+//                    }
+//                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+//                    AccountView.getAccountView().showLoginPanel(user);
+//                    break;
+//                }else if (user instanceof Premium){
+//                    for (Playlist playlist : ((Premium) user).getPlaylists()){
+//                        if (Objects.equals(playlist.getPlayListName(), answers[1])){
+//                            ArrayList<Audio> backUp = playlist.getAudioList();
+//                            for (Audio audio : Database.getData().getAllAudios()){
+//                                if (audio.getUniqueId() == Integer.parseInt(answers[2])){
+//                                    backUp.add(audio);
+//                                    break;
+//                                }
+//                            }
+//                            playlist.setAudioList(backUp);
+//                            break;
+//                        }
+//                    }
+//                    AccountView.getAccountView().showResult(new StringBuilder("The audio was not found, please try again"));
+//                    AccountView.getAccountView().showLoginPanel(user);
+//                    break;
+//                }
+//                break;
+            case "ShowPlaylists" :
+
                 break;
         }
     }
