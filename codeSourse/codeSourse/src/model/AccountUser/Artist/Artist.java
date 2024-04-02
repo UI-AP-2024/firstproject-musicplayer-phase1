@@ -52,4 +52,6 @@ public class Artist extends AccountUser {
                 ", biography='" + biography + '\'' +
                 '}';
     }
+
+
 }

@@ -10,7 +10,7 @@ public class Database {
     private static Database instance;
     private List<AccountUser> users;
     private List<Audio> audiofiles;
-    private List<Report> reports;
+    private static List<Report> reports;
 
     //*********************************************
     public Database() {
@@ -28,10 +28,16 @@ public class Database {
         return instance;
     }
 
+    public static void addreport(Report userReport) {
+        reports.add(userReport);
+    }
+
+
     //*********************************************
 
     public void addUser(Listener user){
         users.add(user);
     }
+
 
 }
