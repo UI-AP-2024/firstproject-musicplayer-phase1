@@ -13,4 +13,10 @@ public class AdminModel extends AccountUserModel
             admin=new AdminModel(userName,password,fullName,email,phoneNumber,birthDate);
         return admin;
     }
+    public static AdminModel getAdmin()
+    {
+        if(admin==null)
+            admin=new AdminModel("MK","jk1997","Marzieh Karami","marzieh666@gmail.com","09132082206","2005/2/1");
+        return admin;
+    }
 }

@@ -2,10 +2,10 @@ package controller;
 
 import model.Database;
 import model.users.AccountUserModel;
+import model.users.AdminModel;
 import model.users.artists.PodcasterModel;
 import model.users.artists.SingerModel;
 import model.users.listeners.ListenerModel;
-
 import java.util.regex.Pattern;
 
 public class Controller
@@ -35,6 +35,8 @@ public class Controller
             return "S";
         else if(this.accModel instanceof PodcasterModel)
             return "P";
+        else if(this.accModel instanceof AdminModel)
+            return "A";
         else
             return null;
     }
@@ -68,6 +70,11 @@ public class Controller
             }
         if(!exist)
         {
+            if(AdminModel.getAdmin().getUserName().compareTo(userName)==0 && AdminModel.getAdmin().getPassword().compareTo(password)==0)
+            {
+                setAccModel(AdminModel.getAdmin());
+                return "logged in";
+            }
             return "username doesn't exist";
         }
         return "logged in";

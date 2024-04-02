@@ -1,5 +1,6 @@
 package view;
 
+import controller.AdminController;
 import controller.ArtistController;
 import controller.Controller;
 import controller.ListenerController;
@@ -48,15 +49,26 @@ public class View
                 System.out.println(Controller.getController().logIn(orders[1],orders[2]));
                 if(Controller.getController().getAccType().compareTo("L")==0)
                     showListenerPanel();
-                /////kxnvkabvkbvufebv
+                else if(Controller.getController().getAccType().compareTo("A")==0)
+                    showAdminPanel();
+                else
+                    showArtistPanel();
                 break;
             }
             else if (orders[0].compareTo("Logout")==0)
             {
                 if(Controller.getController().getAccType().compareTo("L")==0)
+                {
                     ListenerController.getListenerController().setListener(null);
+                    Controller.getController().setAccModel(null);
+                }
+                else if(Controller.getController().getAccType().compareTo("A")==0)
+                    Controller.getController().setAccModel(null);
                 else
+                {
                     ArtistController.getArtistController().setArtist(null);
+                    Controller.getController().setAccModel(null);
+                }
                 break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
@@ -119,6 +131,44 @@ public class View
             }
             else if(orders[0].compareTo("AccountInfo")==0)
                 System.out.println(ListenerController.getListenerController().getAccInfo());
+            else
+                System.out.println("wrong order\ntry again");
+        }
+    }
+    public void showArtistPanel()
+    {
+        while(true)
+        {
+            String order = input.nextLine();
+            String[] orders = order.split(" -");
+            if(orders[0].compareTo("Followers")==0)
+                ;
+            else if (orders[0].compareTo("Logout")==0)
+            {
+                ListenerController.getListenerController().setListener(null);
+                break;
+            }
+            else if(orders[0].compareTo("AccountInfo")==0)
+                System.out.println(Controller.getController().getAccModel().toString());
+            else
+                System.out.println("wrong order\ntry again");
+        }
+    }
+    public void showAdminPanel()
+    {
+        while(true)
+        {
+            String order = input.nextLine();
+            String[] orders = order.split(" -");
+            if(orders[0].compareTo("Reports")==0)
+                System.out.println(AdminController.getAdminController().getReports());
+            else if (orders[0].compareTo("Logout")==0)
+            {
+                ListenerController.getListenerController().setListener(null);
+                break;
+            }
+            else if(orders[0].compareTo("AccountInfo")==0)
+                System.out.println(Controller.getController().getAccModel().toString());
             else
                 System.out.println("wrong order\ntry again");
         }
