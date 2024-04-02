@@ -12,7 +12,7 @@ public class PremiumModel extends ListenerModel{
     }
 
     public int getRemainingSubscriptionDay() {
-        return remainingSubscriptionDay-1;
+        return remainingSubscriptionDay;
     }
 
     public void setRemainingSubscriptionDay(int remainingSubscriptionDay) {

@@ -273,6 +273,18 @@ public class ListenerController {
         return show.toString();
     }
     public String showUserInfo(){
+        if(model instanceof PremiumModel) {
+            ((PremiumModel) model).setRemainingSubscriptionDay(((PremiumModel) model).getRemainingSubscriptionDay() - 1);
+            if(((PremiumModel) model).getRemainingSubscriptionDay() == 0){
+                ListenerModel free = new ListenerModel(model.getUsername(),model.getPassword() ,model.getFullName(),model.getEmail(), model.getPhoneNumber(), model.getBirthDate());
+                free.setCredit(model.getCredit());
+                free.setPlaylists(model.getPlaylists());
+                free.setFavoriteGenres(model.getFavoriteGenres());
+                model=free;
+                free= (ListenerModel) model;
+            }
+            return "Name: " + model.getFullName() + "\tUsername: " + model.getUsername() + "\tPhone number: " + model.getPhoneNumber() + "\nEmail: " + model.getEmail() + "\tBorn: " + model.getBirthDate() + "\tsubscription days left: " + ((PremiumModel) model).getRemainingSubscriptionDay();
+        }
         return "Name: "+model.getFullName() + "\tUsername: " + model.getUsername() + "\tPhone number: " + model.getPhoneNumber() + "\nEmail: "+ model.getEmail() + "\tBorn: " + model.getBirthDate() ;
     }
     public String buyOrExtendSubscription(int day){
