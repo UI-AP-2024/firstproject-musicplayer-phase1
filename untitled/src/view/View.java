@@ -108,8 +108,10 @@ public class View
                 System.out.println(ListenerController.getListenerController().showFollowings());
             else if(orders[0].compareTo("Report")==0)
                 System.out.println(ListenerController.getListenerController().report(orders[1],orders[2]));
-            else if(orders[0].compareTo(" IncreaseCredit")==0)
+            else if(orders[0].compareTo("IncreaseCredit")==0)
                 ListenerController.getListenerController().increaseCredit(orders[1]);
+            else if(orders[0].compareTo("GetPremium")==0)
+                System.out.println(ListenerController.getListenerController().buyPremium(orders[1]));
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);

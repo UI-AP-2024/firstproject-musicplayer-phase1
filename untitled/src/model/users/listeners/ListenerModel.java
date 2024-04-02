@@ -23,8 +23,6 @@ public class ListenerModel extends AccountUserModel
     public ListenerModel(String userName, String password, String fullName, String email, String phoneNumber, String birthDate)
     {
         super(userName,password,fullName,email,phoneNumber,birthDate);
-        this.listenerCredit=50;
-        this.subscriptionExpiration=null;
     }
     public void setLikedAudios(ArrayList<AudioModel> likedAudios)
     {
@@ -85,8 +83,11 @@ public class ListenerModel extends AccountUserModel
     public String toString()
     {
         String string= super.toString()+"\nCredit: "+this.listenerCredit+"\nSubscription expiration date: ";
-        if(this.subscriptionExpiration!=null)
+        if(this.subscriptionExpiration!=null && !this.subscriptionExpiration.before(Calendar.getInstance()))
+        {
+            this.subscriptionExpiration.add(Calendar.DATE,-1);
             string=string+this.subscriptionExpiration.get(Calendar.YEAR)+"/"+this.subscriptionExpiration.get(Calendar.MONTH)+"/"+this.subscriptionExpiration.get(Calendar.DATE);
+        }
         else
             string=string+"Not a premium listener";
         StringBuilder theRestOfString=new StringBuilder("\nFavorite genres: ");

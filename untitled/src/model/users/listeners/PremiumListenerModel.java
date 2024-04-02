@@ -1,5 +1,7 @@
 package model.users.listeners;
 
+import java.util.Calendar;
+
 public class PremiumListenerModel extends ListenerModel
 {
     private int remainingDays;
@@ -17,6 +19,6 @@ public class PremiumListenerModel extends ListenerModel
     }
     public String toString()
     {
-        return super.toString()+"Remaining subscription days: "+this.remainingDays;
+        return super.toString()+"Remaining subscription days: "+(--this.remainingDays);
     }
 }

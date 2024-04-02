@@ -4,6 +4,7 @@ import model.Database;
 import model.audioRelated.*;
 import model.report.Report;
 import model.users.AccountUserModel;
+import model.users.Subscription;
 import model.users.artists.ArtistModel;
 import model.users.artists.PodcasterModel;
 import model.users.artists.SingerModel;
@@ -49,6 +50,8 @@ public class ListenerController
         {
             ListenerModel tempListener;
             tempListener=new FreeListenerModel(userName,password,fullName,email,phoneNumber,birthDate);
+            tempListener.setListenerCredit(50);
+            tempListener.setSubscriptionExpiration(null);
             setListener(tempListener);
             Database.getDatabase().getAllUsers().add(tempListener);
         }
@@ -113,7 +116,23 @@ public class ListenerController
     }
     public String addToPlayList(String playListName,String audioID)
     {
-        if((getListener() instanceof PremiumListenerModel) || (getListener() instanceof FreeListenerModel && (((FreeListenerModel) getListener()).getAddedAudios()<FreeListenerModel.getAddAudioLimit())))
+        if (getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()<=0)
+        {
+            String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+            FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+            freeListener.setSubscriptionExpiration(null);
+            freeListener.setListenerCredit(getListener().getListenerCredit());
+            freeListener.setFollowings(getListener().getFollowings());
+            freeListener.setFavGenres(getListener().getFavGenres());
+            freeListener.setLikedAudios(getListener().getLikedAudios());
+            freeListener.setPlayingAmount(getListener().getPlayingAmount());
+            freeListener.setPlayLists(getListener().getPlayLists());
+            Database.getDatabase().getAllUsers().remove(getListener());
+            Database.getDatabase().getAllUsers().add(freeListener);
+            setListener(freeListener);
+            addToPlayList(playListName,audioID);
+        }
+        if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && (((FreeListenerModel) getListener()).getAddedAudios()<FreeListenerModel.getAddAudioLimit())))
         {
             boolean check=false;
             AudioModel chosenAudio =null;
@@ -415,7 +434,23 @@ public class ListenerController
     }
     public String makePlayList(String playlistName)
     {
-        if(getListener() instanceof PremiumListenerModel || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
+        if (getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()<=0)
+        {
+            String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+            FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+            freeListener.setSubscriptionExpiration(null);
+            freeListener.setListenerCredit(getListener().getListenerCredit());
+            freeListener.setFollowings(getListener().getFollowings());
+            freeListener.setFavGenres(getListener().getFavGenres());
+            freeListener.setLikedAudios(getListener().getLikedAudios());
+            freeListener.setPlayingAmount(getListener().getPlayingAmount());
+            freeListener.setPlayLists(getListener().getPlayLists());
+            Database.getDatabase().getAllUsers().remove(getListener());
+            Database.getDatabase().getAllUsers().add(freeListener);
+            setListener(freeListener);
+            makePlayList(playlistName);
+        }
+        if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
         {
             amountOfPlayLists++;
             PlayListModel temp=new PlayListModel(playlistName,getListener().getUserName());
@@ -506,5 +541,95 @@ public class ListenerController
     public void increaseCredit(String  credit)
     {
         getListener().setListenerCredit(getListener().getListenerCredit()+Double.parseDouble(credit));
+    }
+    public String buyPremium(String pack)
+    {
+        Subscription subscription;
+        if(pack.compareTo("30")==0)
+        {
+            subscription=Subscription.THIRTY_DAYS;
+            if(getListener().getListenerCredit()<subscription.getPrice())
+                return "your credit isn't enough";
+            getListener().setListenerCredit(getListener().getListenerCredit()-subscription.getPrice());
+            getListener().setSubscriptionExpiration(Calendar.getInstance());
+            getListener().getSubscriptionExpiration().add(Calendar.DATE,30);
+            if(getListener() instanceof FreeListenerModel)
+            {
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+                premiumListener.setListenerCredit(getListener().getListenerCredit());
+                premiumListener.setFollowings(getListener().getFollowings());
+                premiumListener.setFavGenres(getListener().getFavGenres());
+                premiumListener.setLikedAudios(getListener().getLikedAudios());
+                premiumListener.setPlayingAmount(getListener().getPlayingAmount());
+                premiumListener.setPlayLists(getListener().getPlayLists());
+                premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
+                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                Database.getDatabase().getAllUsers().remove(getListener());
+                Database.getDatabase().getAllUsers().add(premiumListener);
+                setListener(premiumListener);
+                return "package bought successfully";
+            }
+            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            return "package bought successfully";
+        }
+        else if(pack.compareTo("60")==0)
+        {
+            subscription=Subscription.SIXTY_DAYS;
+            if(getListener().getListenerCredit()<subscription.getPrice())
+                return "your credit isn't enough";
+            getListener().setListenerCredit(getListener().getListenerCredit()-subscription.getPrice());
+            getListener().setSubscriptionExpiration(Calendar.getInstance());
+            getListener().getSubscriptionExpiration().add(Calendar.DATE,60);
+            if(getListener() instanceof FreeListenerModel)
+            {
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+                premiumListener.setListenerCredit(getListener().getListenerCredit());
+                premiumListener.setFollowings(getListener().getFollowings());
+                premiumListener.setFavGenres(getListener().getFavGenres());
+                premiumListener.setLikedAudios(getListener().getLikedAudios());
+                premiumListener.setPlayingAmount(getListener().getPlayingAmount());
+                premiumListener.setPlayLists(getListener().getPlayLists());
+                premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
+                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                Database.getDatabase().getAllUsers().remove(getListener());
+                Database.getDatabase().getAllUsers().add(premiumListener);
+                setListener(premiumListener);
+                return "package bought successfully";
+            }
+            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            return "package bought successfully";
+        }
+        else if(pack.compareTo("180")==0)
+        {
+            subscription=Subscription.ONEHEIGHTY_DAYS;
+            if(getListener().getListenerCredit()<subscription.getPrice())
+                return "your credit isn't enough";
+            getListener().setListenerCredit(getListener().getListenerCredit()-subscription.getPrice());
+            getListener().setSubscriptionExpiration(Calendar.getInstance());
+            getListener().getSubscriptionExpiration().add(Calendar.DATE,180);
+            if(getListener() instanceof FreeListenerModel)
+            {
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
+                premiumListener.setListenerCredit(getListener().getListenerCredit());
+                premiumListener.setFollowings(getListener().getFollowings());
+                premiumListener.setFavGenres(getListener().getFavGenres());
+                premiumListener.setLikedAudios(getListener().getLikedAudios());
+                premiumListener.setPlayingAmount(getListener().getPlayingAmount());
+                premiumListener.setPlayLists(getListener().getPlayLists());
+                premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
+                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                Database.getDatabase().getAllUsers().remove(getListener());
+                Database.getDatabase().getAllUsers().add(premiumListener);
+                setListener(premiumListener);
+                return "package bought successfully";
+            }
+            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            return "package bought successfully";
+        }
+        else
+            return "package not found";
     }
 }
