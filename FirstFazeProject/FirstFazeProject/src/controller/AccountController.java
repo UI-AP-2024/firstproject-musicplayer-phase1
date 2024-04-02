@@ -378,7 +378,21 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "Lyric":
-                
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (audio.getUniqueId() == Integer.parseInt(answers[1])){
+                        if (audio instanceof Music){
+                            AccountView.getAccountView().showResult(new StringBuilder("The music lyrics : \r\n").append(((Music) audio).getMusicLyrics()));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }else if (audio instanceof Podcast){
+                            AccountView.getAccountView().showResult(new StringBuilder("The podcast caption : \r\n").append(((Podcast) audio).getCaption()));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "NewPlaylist" :
         }
     }
 
