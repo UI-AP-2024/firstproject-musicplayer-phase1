@@ -130,6 +130,28 @@ public class User {
         }
     }
 
+    public void followArtist(Artist artist) {
+        followedArtists.add(artist);
+        System.out.println( " is now following " + artist.getUserName());
+    }
+        private List<Artist> followedArtists;
+
+        public User() {
+            this.followedArtists = new ArrayList<>();
+        }
+
+
+        public void displayFollowedArtists() {
+            if (followedArtists.isEmpty()) {
+                System.out.println("You are not following any artists.");
+            } else {
+                System.out.println("Artists you are following:");
+                for (Artist artist : followedArtists) {
+                    System.out.println(artist.getUserName());
+                }
+            }
+    }
+
     public void displayArtistInfoAndWorks(Artist artist) {
         System.out.println("Artist Information:");
         System.out.println("Username: " + artist.getUserName());
@@ -173,39 +195,6 @@ public class User {
         }
     }
 
-
-//    public List<Audio> recommendSongs(Singer artist, List<Playlist> playlists, List<Genre> favoriteGenres, List<Album> allAlbums) {
-//        List<Audio> recommendedSongs = new ArrayList<>();
-//        for (Playlist playlist : playlists) {
-//            for (String audioName : playlist.getAudios()) {
-//                Audio song = findAudioByName(audioName, artist, allAlbums);
-//                if (song != null && song.getArtist().equals(artist) && favoriteGenres.contains(song.getGenre())) {
-//                    recommendedSongs.add(song);
-//                }
-//            }
-//        }
-//        return recommendedSongs.subList(0, Math.min(10, recommendedSongs.size()));
-//    }
-//
-//    private Audio findAudioByName(String audioName, Singer singer, List<Audio> allAudios, List<Genre> favoriteGenres) {
-//        for (Audio audio : allAudios) {
-//            if (audio.getTitle().equals(audioName) && audio.getArtist().equals(singer.getFullName())) {
-//                if (favoriteGenres.contains(audio.getGenre())) {
-//                    return audio;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    private Album findAlbumByName(String albumName, List<Album> allAlbums) {
-//        for (Album album : allAlbums) {
-//            if (album.getName().equals(albumName)) {
-//                return album;
-//            }
-//        }
-//        return null;
-//    }
 
     public static void printAccountInfo(AccountUser user) {
         System.out.println("Username: " + user.getUserName());
@@ -292,35 +281,26 @@ public class User {
         public List<Audio> recommendSongs(Listener user, List<Audio> allAudios) {
             List<Audio> recommendedSongs = new ArrayList<>();
 
-            // Favorite genres of the user
             List<Genre> favoriteGenres = user.getFavoriteGenres();
 
-            // Audios that have been played most by the user
             Map<Audio, Integer> playCountByAudio = user.getPlayCountByAudio();
 
-            // Artists that match the user's taste the most
             List<Artist> artistsWithBestMatch = findArtistsWithBestMatch(user, allAudios);
 
-            // Audios that the user has liked
             List<Audio> likedAudios = likeAudis;
 
-            // Select songs with the best match
             recommendedSongs.addAll(selectSongsWithBestMatch(allAudios, favoriteGenres, artistsWithBestMatch, likedAudios));
 
-            // Return the top 10 recommended songs
             return recommendedSongs.subList(0, Math.min(10, recommendedSongs.size()));
         }
 
         public List<Artist> findArtistsWithBestMatch(Listener user, List<Audio> allAudios) {
             List<Artist> artistsWithBestMatch = new ArrayList<>();
 
-            // Following artists of the user
-            List<Artist> followingArtists = user.getFollowers();
+            List<Artist> followingArtists = followedArtists;
 
-            // Favorite genres of the user
             List<Genre> favoriteGenres = user.getFavoriteGenres();
 
-            // Check if artists have matching genres with user's favorite genres based on following artists
             for (Artist followingArtist : followingArtists) {
                 if (artistHasMatchingGenres(followingArtist, favoriteGenres, allAudios)) {
                     artistsWithBestMatch.add(followingArtist);
@@ -331,7 +311,6 @@ public class User {
         }
 
         private boolean artistHasMatchingGenres(Artist artist, List<Genre> favoriteGenres, List<Audio> allAudios) {
-            // Check if any of the artist's songs match the user's favorite genres
             for (Audio audio : allAudios) {
                 if (artist.equals(audio.getArtist()) && favoriteGenres.contains(audio.getGenre())) {
                     return true;
