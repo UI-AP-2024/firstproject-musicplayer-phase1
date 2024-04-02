@@ -47,7 +47,7 @@ public class PlayListModel
     }
     public String toString ()
     {
-        String string="Playlist name: "+this.playListName+"\nPlaylist ID: "+this.playListID+"\nCreator's name: "+this.creator;
+        String string="Playlist name: "+this.playListName+"\nPlaylist ID: "+this.playListID+"\nCreator's username: "+this.creator;
         StringBuilder temp=new StringBuilder("\nAudios:\n");
         for(AudioModel audioTemp:this.audios)
             if(audioTemp!=null)
