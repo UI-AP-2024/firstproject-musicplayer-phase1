@@ -3,7 +3,6 @@ package controller;
 import model.*;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
-import model.AccountUser.Artist.TypeOfArtist.Singer;
 import model.AccountUser.Listener.Listener;
 import model.AccountUser.Listener.TypeOfListener.FreeListener;
 import model.AccountUser.Listener.TypeOfListener.PremiumListener;
@@ -15,15 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
-public class User {
+public class UserC {
 
     private List<Audio> likeAudis;
 
     public void addAudio(Playlist playlist, String audio) {
         playlist.addAudio(audio);
     }
-
 
     //*********************************************
     public static Playlist createPlaylist(int id, String name, String userName, boolean isPremium) {
@@ -46,21 +43,6 @@ public class User {
         playlist.addAudio(audio);
     }
 
-    //*********************************************
-    public void playAudio(Audio Audi, String audio) {
-        System.out.println(
-                "uniqueId=" + Audi.getUniqeId() +
-                        ", title='" + Audi.getTitle() + '\'' +
-                        ", artist='" + Audi.getArtist() + '\'' +
-                        ", playCount=" + Audi.getPlayCount() +
-                        ", likes=" + Audi.getLikes() +
-                        ", releaseDate=" + Audi.getReleaseDate() +
-                        ", genre=" + Audi.getGenre() +
-                        ", audioLink='" + Audi.getAudioLink() + '\'' +
-                        ", cover='" + Audi.getCover() + '\'' +
-                        '}'
-        );
-    }
 
     //*********************************************
     public void likeAudis(Audio audio) {
@@ -121,44 +103,29 @@ public class User {
         }
         return filteredAudios;
     }
+    //*********************************************
 
-    public void displayArtistFollowings(Artist artist) {
-        List<AccountUser> followers = artist.getFollowers();
-        System.out.println("Followers of " + artist.getUserName() + ":");
-        for (AccountUser follower : followers) {
-            System.out.println(follower.getUserName());
-        }
-    }
 
     public void followArtist(Artist artist) {
         followedArtists.add(artist);
-        System.out.println( " is now following " + artist.getUserName());
+        System.out.println(" is now following " + artist.getUserName());
     }
-        private List<Artist> followedArtists;
 
-        public User() {
-            this.followedArtists = new ArrayList<>();
-        }
+    private List<Artist> followedArtists;
 
+    public UserC() {
+        this.followedArtists = new ArrayList<>();
+    }
 
-        public void displayFollowedArtists() {
-            if (followedArtists.isEmpty()) {
-                System.out.println("You are not following any artists.");
-            } else {
-                System.out.println("Artists you are following:");
-                for (Artist artist : followedArtists) {
-                    System.out.println(artist.getUserName());
-                }
+    public void displayFollowedArtists() {
+        if (followedArtists.isEmpty()) {
+            System.out.println("You are not following any artists.");
+        } else {
+            System.out.println("Artists you are following:");
+            for (Artist artist : followedArtists) {
+                System.out.println(artist.getUserName());
             }
-    }
-
-    public void displayArtistInfoAndWorks(Artist artist) {
-        System.out.println("Artist Information:");
-        System.out.println("Username: " + artist.getUserName());
-        System.out.println("Full Name: " + artist.getFullName());
-        System.out.println("Income: $" + artist.getIncome());
-        System.out.println("Biography: " + artist.getBiography());
-        System.out.println("\nArtworks by " + artist.getUserName() + ":");
+        }
     }
 
 
@@ -176,32 +143,6 @@ public class User {
     public void followArtist(Artist artist, AccountUser user) {
         artist.getFollowers().add(user);
         System.out.println(user.getUserName() + " is now following " + artist.getUserName());
-    }
-
-
-    public void viewPlaylists(List<Playlist> playlists) {
-        System.out.println("Playlists created by the listener:");
-        for (Playlist playlist : playlists) {
-            System.out.println("Playlist: " + playlist.getName());
-        }
-    }
-
-    public void viewPlaylistContents(Playlist playlist) {
-        System.out.println("Playlist Name: " + playlist.getName());
-        System.out.println("Created by: " + playlist.getUserName());
-        System.out.println("Contents of playlist \"" + playlist.getName() + "\":");
-        for (String audio : playlist.getAudios()) {
-            System.out.println("  - " + audio);
-        }
-    }
-
-
-    public static void printAccountInfo(AccountUser user) {
-        System.out.println("Username: " + user.getUserName());
-        System.out.println("Full Name: " + user.getFullName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Phone Number: " + user.getPhoneNumber());
-        System.out.println("Birth Date: " + user.getBirthDate());
     }
 
 
@@ -230,7 +171,6 @@ public class User {
             listener.setAccountBalance(listener.getAccountBalance() - price);
             System.out.println("Premium subscription purchased successfully!");
 
-            // Update subscription end date
             Date currentDate = new Date();
             Date subscriptionEndDate = listener.getSubscriptionEndDate();
             if (subscriptionEndDate == null || currentDate.after(subscriptionEndDate)) {
@@ -242,9 +182,7 @@ public class User {
             subscriptionEndDate = calendar.getTime();
             listener.setSubscriptionEndDate(subscriptionEndDate);
 
-            // Convert user to premium listener if necessary
             if (listener instanceof FreeListener) {
-                // Upgrade listener to premium
                 FreeListener freeListener = (FreeListener) listener;
                 PremiumListener premiumListener = new PremiumListener(
                         freeListener.getUserName(),
@@ -259,13 +197,10 @@ public class User {
                 premiumListener.setPlaylists(freeListener.getPlaylists());
                 premiumListener.setPlayCountByAudio(freeListener.getPlayCountByAudio());
                 premiumListener.setFavoriteGenres(freeListener.getFavoriteGenres());
-                // Set remaining subscription days
                 premiumListener.setRemainingSubDays(daysToAdd);
-                // Update listener reference
                 listener = premiumListener;
                 System.out.println("User upgraded to premium.");
             } else if (listener instanceof PremiumListener) {
-                // Update remaining subscription days
                 PremiumListener premiumListener = (PremiumListener) listener;
                 premiumListener.setRemainingSubDays(premiumListener.getRemainingSubDays() + daysToAdd);
                 System.out.println("Premium subscription renewed.");
@@ -276,7 +211,6 @@ public class User {
     }
 
 
-    public class RecommendationSystem {
 
         public List<Audio> recommendSongs(Listener user, List<Audio> allAudios) {
             List<Audio> recommendedSongs = new ArrayList<>();
@@ -332,15 +266,15 @@ public class User {
 
             return selectedSongs;
         }
-    }
-        public void increaseAccountBalance(Listener listener, double amount) {
-            if (listener != null && listener instanceof Listener) {
-                ((Listener) listener).setAccountBalance(((Listener) listener).getAccountBalance() + amount);
-            } else {
-                System.out.println("User is not a listener. Cannot increase account balance.");
-            }
+
+    public void increaseAccountBalance(Listener listener, double amount) {
+        if (listener != null && listener instanceof Listener) {
+            ((Listener) listener).setAccountBalance(((Listener) listener).getAccountBalance() + amount);
+        } else {
+            System.out.println("User is not a listener. Cannot increase account balance.");
         }
     }
+}
 
 
 
