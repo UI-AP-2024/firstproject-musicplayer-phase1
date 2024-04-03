@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 
+import java.security.PublicKey;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,5 +109,14 @@ public class ArtistController {
             }
         }
         return "The username does not exist or the password is incorrect";
+    }
+
+    public String viewInfoacc(){
+        String result = "";
+        if ( getUserAccount() instanceof Singer)
+            result += (Singer)getUserAccount();
+        else
+            result += (Podcaster)getUserAccount();
+        return result;
     }
 }
