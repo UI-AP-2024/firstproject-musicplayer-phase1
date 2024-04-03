@@ -110,7 +110,7 @@ public class ArtistController
             String fullID=Long.toString(albumID)+Long.toString(AlbumModel.getAlbumAmount());
             album.setAlbumID(Long.parseLong(fullID));
             ((SingerModel)getArtist()).getAlbums().add(album);
-            return "Album made";
+            return "Album made ID: "+album.getAlbumID();
         }
         else
             return "You are not a singer";
@@ -119,47 +119,47 @@ public class ArtistController
     {
         String musicID=new String();
         Genre tempGenre =null;
-        if(genre.compareTo("ROCK")==0)
+        if(genre.compareTo("Rock")==0)
         {
             tempGenre=Genre.ROCK;
             musicID="1";
         }
-        else if(genre.compareTo("POP")==0)
+        else if(genre.compareTo("Pop")==0)
         {
             tempGenre=Genre.POP;
             musicID="2";
         }
-        else if(genre.compareTo("JAZZ")==0)
+        else if(genre.compareTo("Jazz")==0)
         {
             tempGenre=Genre.JAZZ;
             musicID="3";
         }
-        else if(genre.compareTo("COUNTRY")==0)
+        else if(genre.compareTo("Country")==0)
         {
             tempGenre=Genre.COUNTRY;
             musicID="4";
         }
-        else if(genre.compareTo("TRUE_CRIME")==0)
+        else if(genre.compareTo("TrueCrime")==0)
         {
             tempGenre=Genre.TRUE_CRIME;
             musicID="5";
         }
-        else if(genre.compareTo("HIPHOP")==0)
+        else if(genre.compareTo("HipHop")==0)
         {
             tempGenre=Genre.HIPHOP;
             musicID="6";
         }
-        else if(genre.compareTo("HISTORY")==0)
+        else if(genre.compareTo("History")==0)
         {
             tempGenre=Genre.HISTORY;
             musicID="7";
         }
-        else if(genre.compareTo("INTERVIEW")==0)
+        else if(genre.compareTo("InterView")==0)
         {
             tempGenre=Genre.INTERVIEW;
             musicID="8";
         }
-        else if(genre.compareTo("SOCIETY")==0)
+        else if(genre.compareTo("Society")==0)
         {
             tempGenre=Genre.SOCIETY;
             musicID="9";
@@ -176,55 +176,55 @@ public class ArtistController
             {
                 temp.getMusics().add(music);
                 Database.getDatabase().getAllAudios().add(music);
-                return "music published";
+                return "music published ID: "+music.getAudioID();
             }
         return "Album not found";
     }
-    public void publish(String title,String genre,String caption,String link,String cover)
+    public String publish(String title,String genre,String caption,String link,String cover)
     {
         String podcastID=new String();
         Genre tempGenre =null;
-        if(genre.compareTo("ROCK")==0)
+        if(genre.compareTo("Rock")==0)
         {
             tempGenre=Genre.ROCK;
             podcastID="1";
         }
-        else if(genre.compareTo("POP")==0)
+        else if(genre.compareTo("Pop")==0)
         {
             tempGenre=Genre.POP;
             podcastID="2";
         }
-        else if(genre.compareTo("JAZZ")==0)
+        else if(genre.compareTo("Jazz")==0)
         {
             tempGenre=Genre.JAZZ;
             podcastID="3";
         }
-        else if(genre.compareTo("COUNTRY")==0)
+        else if(genre.compareTo("Country")==0)
         {
             tempGenre=Genre.COUNTRY;
             podcastID="4";
         }
-        else if(genre.compareTo("TRUE_CRIME")==0)
+        else if(genre.compareTo("TrueCrime")==0)
         {
             tempGenre=Genre.TRUE_CRIME;
             podcastID="5";
         }
-        else if(genre.compareTo("HIPHOP")==0)
+        else if(genre.compareTo("HipHop")==0)
         {
             tempGenre=Genre.HIPHOP;
             podcastID="6";
         }
-        else if(genre.compareTo("HISTORY")==0)
+        else if(genre.compareTo("History")==0)
         {
             tempGenre=Genre.HISTORY;
             podcastID="7";
         }
-        else if(genre.compareTo("INTERVIEW")==0)
+        else if(genre.compareTo("InterView")==0)
         {
             tempGenre=Genre.INTERVIEW;
             podcastID="8";
         }
-        else if(genre.compareTo("SOCIETY")==0)
+        else if(genre.compareTo("Society")==0)
         {
             tempGenre=Genre.SOCIETY;
             podcastID="9";
@@ -238,6 +238,7 @@ public class ArtistController
         podcast.setAudioID(Long.parseLong(podcastID));
         Database.getDatabase().getAllAudios().add(podcast);
         ((PodcasterModel)getArtist()).getPodcasts().add(podcast);
+        return "Podcast published ID: "+podcast.getAudioID();
     }
     public double CalculateEarnings()
     {

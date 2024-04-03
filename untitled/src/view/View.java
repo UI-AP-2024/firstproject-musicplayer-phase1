@@ -34,7 +34,7 @@ public class View
                     {
                         System.out.println("Choose maximum 4 favorite genres from genres below:\n"+ListenerController.getListenerController().getGenres());
                         String favInputGenre=input.nextLine();
-                        String[] inputSplit=favInputGenre.split("-");
+                        String[] inputSplit=favInputGenre.split(" -");
                         String[] genres=inputSplit[1].split(",");
                         int counter=0;
                         while(counter<4 && counter<genres.length)
@@ -42,7 +42,10 @@ public class View
                             if(ListenerController.getListenerController().addFavGenres(genres[counter]))
                                 counter++;
                             else
+                            {
                                 System.out.println("genre doesn't exist");
+                                break;
+                            }
                         }
                     }
                 }
@@ -164,7 +167,7 @@ public class View
                 if(orders[1].compareTo("M")==0)
                     System.out.println(ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7]));
                 else if(orders[1].compareTo("P")==0)
-                    ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6]);
+                    System.out.println(ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6]));
                 else
                     System.out.println("wrong order\ntry again");
             }

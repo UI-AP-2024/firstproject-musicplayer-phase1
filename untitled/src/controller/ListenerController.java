@@ -144,6 +144,9 @@ public class ListenerController
             for(PlayListModel temp:listener.getPlayLists())
                 if(temp!=null && temp.getPlayListName().compareTo(playListName)==0)
                 {
+                    for(AudioModel audio:temp.getAudios())
+                        if(audio!=null && audio.getAudioID()==Long.parseLong(audioID))
+                            return "its already in the playlist";
                     temp.getAudios().add(chosenAudio);
                     check=true;
                     break;
@@ -219,82 +222,111 @@ public class ListenerController
         StringBuilder answer=new StringBuilder();
         if(sortType.compareTo("L")==0)
         {
-            for(int i=0;i<Database.getDatabase().getAllAudios().size()-1;++i)
+            AudioModel[] audios =Database.getDatabase().getAllAudios().toArray(new AudioModel[Database.getDatabase().getAllAudios().size()]);
+            for(int i=0;i<audios.length-1;++i)
             {
-                AudioModel outPut=Database.getDatabase().getAllAudios().get(i);
-                for(int j=i+1;j<Database.getDatabase().getAllAudios().size();++j)
-                    if(outPut.getLikeAmount()<Database.getDatabase().getAllAudios().get(j).getLikeAmount())
+                for(int j=i+1;j<audios.length;++j)
+                    if(audios[i].getLikeAmount()<audios[j].getLikeAmount())
                     {
-                        outPut=Database.getDatabase().getAllAudios().get(j);
+                        AudioModel temp=audios[i];
+                        audios[i]=audios[j];
+                        audios[j]=temp;
                     }
-                answer.append("AudioID: ").append(outPut.getAudioID()).append("\nAudio name: ").append(outPut.getAudioName()).append("\nlike amount: ").append(outPut.getLikeAmount()).append("\n");
             }
+            for(AudioModel temp:audios)
+                if(temp!=null)
+                    answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\nlike amount: ").append(temp.getLikeAmount()).append("\n");
             return answer.toString();
         }
         else if(sortType.compareTo("P")==0)
         {
-            for(int i=0;i<Database.getDatabase().getAllAudios().size()-1;++i)
+            AudioModel[] audios =Database.getDatabase().getAllAudios().toArray(new AudioModel[Database.getDatabase().getAllAudios().size()]);
+            for(int i=0;i<audios.length-1;++i)
             {
-                AudioModel outPut=Database.getDatabase().getAllAudios().get(i);
-                for(int j=i+1;j<Database.getDatabase().getAllAudios().size();++j)
-                    if(outPut.getPlayAmount()<Database.getDatabase().getAllAudios().get(j).getPlayAmount())
+                for(int j=i+1;j<audios.length;++j)
+                    if(audios[i].getPlayAmount()<audios[j].getPlayAmount())
                     {
-                        outPut=Database.getDatabase().getAllAudios().get(j);
+                        AudioModel temp=audios[i];
+                        audios[i]=audios[j];
+                        audios[j]=temp;
                     }
-                answer.append("AudioID: ").append(outPut.getAudioID()).append("\nAudio name: ").append(outPut.getAudioName()).append("\nplay amount: ").append(outPut.getPlayAmount()).append("\n");
             }
+            for(AudioModel temp:audios)
+                if(temp!=null)
+                    answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\nlike amount: ").append(temp.getLikeAmount()).append("\n");
             return answer.toString();
         }
         else
             return "wrong order";
+    }
+    public Genre getGenre(String genre)
+    {
+        if(genre.compareTo("Rock")==0)
+        {
+            return Genre.ROCK;
+        }
+        else if(genre.compareTo("Pop")==0)
+        {
+            return Genre.POP;
+        }
+        else if(genre.compareTo("Jazz")==0)
+        {
+            return Genre.JAZZ;
+        }
+        else if(genre.compareTo("Country")==0)
+        {
+            return Genre.COUNTRY;
+        }
+        else if(genre.compareTo("TrueCrime")==0)
+        {
+            return Genre.TRUE_CRIME;
+        }
+        else if(genre.compareTo("HipHop")==0)
+        {
+            return Genre.HIPHOP;
+        }
+        else if(genre.compareTo("History")==0)
+        {
+            return Genre.HISTORY;
+        }
+        else if(genre.compareTo("InterView")==0)
+        {
+            return Genre.INTERVIEW;
+        }
+        else if(genre.compareTo("Society")==0)
+        {
+            return Genre.SOCIETY;
+        }
+        else
+            return null;
     }
     public String doFilter(String filter,String filterBy)
     {
         StringBuilder answer=new StringBuilder();
         if(filter.compareTo("A")==0)
         {
-            ArtistModel artist=(showArtist(filterBy) instanceof ArtistModel)?(ArtistModel)showArtist(filterBy):null;
-            if(artist!=null)
-            {
-                if(artist instanceof SingerModel)
-                {
-                    for(AlbumModel albumTemp :((SingerModel) artist).getAlbums())
-                        if(albumTemp!=null)
-                        {
-                            answer.append("Album name: ").append(albumTemp.getAlbumName()).append("\nAlbum ID: ").append(albumTemp.getAlbumID()).append("\nArtist username: ").append(albumTemp.getNameOfArtist()).append("\n");
-                            for(MusicModel musicTemp:albumTemp.getMusics())
-                                if(musicTemp!=null)
-                                    answer.append("Music name: ").append(musicTemp.getAudioName()).append("\nMusic ID: ").append(musicTemp.getAudioID()).append("\n");
-                        }
-                }
-                else if(artist instanceof PodcasterModel)
-                {
-                    answer.append("Artist username: ").append(artist.getUserName()).append("\n");
-                    for(PodcastModel temp:((PodcasterModel)artist).getPodcasts())
-                        if(temp!=null)
-                            answer.append("Podcast name: ").append(temp.getAudioName()).append("\nPodcast ID: ").append(temp.getAudioID()).append("\n");
-                }
-                return answer.toString();
-            }
-            return "artist not found";
+            for(AccountUserModel temp:Database.getDatabase().getAllUsers())
+                if(temp!=null && temp.getFullName().compareTo(filterBy)==0)
+                    answer.append("Artist name: ").append(temp.getFullName()).append("\nArtist username: ").append(temp.getUserName()).append("\n");
+            return answer.toString();
         }
         else if(filter.compareTo("G")==0)
         {
             for(AudioModel temp:Database.getDatabase().getAllAudios())
-                if(temp!= null && temp.getGenre().toString().compareTo(filterBy)==0)
+                if(temp!= null && temp.getGenre().compareTo(getGenre(filterBy))==0 && getGenre(filterBy)!=null)
                     answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\n");
             return answer.toString();
         }
         else if(filter.compareTo("D")==0)
         {
-            String dateRegex="^\\d{4}/([1][0-2]|[1-9]|[0][1-9])/([1-2][0-9]|30|[0-9]|0[0-9])$";
+            String dateRegex="^\\d{4}/([1][0-2]|[1-9]|[0][1-9])/([1-2][0-9]|30|31|[0-9]|0[0-9])$";
             Pattern datePattern=Pattern.compile(dateRegex);
             if(!datePattern.matcher(filterBy).matches())
                 return "date isn't valid";
             Calendar date =Calendar.getInstance();
             date.setTime(new Date(filterBy));
             for(AudioModel temp:Database.getDatabase().getAllAudios())
-                if(temp!=null && temp.getReleaseDate().compareTo(date)==0)
+                if(temp!=null && temp.getReleaseDate().get(Calendar.YEAR)==date.get(Calendar.YEAR) && temp.getReleaseDate().get(Calendar.MONTH)==date.get(Calendar.MONTH) && temp.getReleaseDate().get(Calendar.DATE)==date.get(Calendar.DATE))
                     answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\n");
             return answer.toString();
         }
@@ -370,23 +402,23 @@ public class ListenerController
     }
     public String getSuggestions()
     {
+        ArrayList <AudioModel> suggestions=new ArrayList<>();
         StringBuilder answer=new StringBuilder();
-        int counter=0;
         int audioAmount=0;
         Map.Entry <Genre,Long>[] mostPlayedGenre=getTopTenMostPlayedGenre();
         Map.Entry <Genre,Long>[] likedGenres=getGenreOfLikedAudios();
         ArrayList <Genre> genres=new ArrayList<>();
         if(mostPlayedGenre[0].getKey()!=null)
             genres.add(mostPlayedGenre[0].getKey());
-        if(mostPlayedGenre[1].getKey()!=null)
+        if(mostPlayedGenre[1].getKey()!=null && !genres.contains(mostPlayedGenre[1].getKey()))
             genres.add(mostPlayedGenre[1].getKey());
-        if(likedGenres[0].getKey()!=null)
+        if(likedGenres[0].getKey()!=null && !genres.contains(likedGenres[0].getKey()))
             genres.add(likedGenres[0].getKey());
-        if(likedGenres[1].getKey()!=null)
+        if(likedGenres[1].getKey()!=null && !genres.contains(likedGenres[1].getKey()))
             genres.add(likedGenres[1].getKey());
-        if(getListener().getFavGenres().get(0)!=null)
+        if(getListener().getFavGenres().get(0)!=null && !genres.contains(getListener().getFavGenres().get(0)))
             genres.add(getListener().getFavGenres().get(0));
-        if(getListener().getFavGenres().get(1)!=null)
+        if(getListener().getFavGenres().get(1)!=null && !genres.contains(getListener().getFavGenres().get(1)))
             genres.add(getListener().getFavGenres().get(1));
         for(ArtistModel temp:getListener().getFollowings())
         {
@@ -396,48 +428,65 @@ public class ListenerController
             {
                 for(PodcastModel audioTemp:((PodcasterModel)temp).getPodcasts())
                 {
-                    if(counter>=3)
-                        break;
                     if(audioTemp!=null)
                         for(Genre genreTemp:genres)
                         {
                             if(genreTemp!=null && audioTemp.getGenre().compareTo(genreTemp)==0)
                             {
+                                suggestions.add(audioTemp);
                                 answer.append("AudioID: ").append(audioTemp.getAudioID()).append("\nAudio name: ").append(audioTemp.getAudioName()).append("\n");
-                                counter++;
+                                audioAmount++;
+                                break;
                             }
                         }
                 }
             }
             else
             {
-                BREAK:
                 for(AlbumModel albumTemp:((SingerModel)temp).getAlbums())
                     if(albumTemp!=null)
                         for(MusicModel musicTemp:albumTemp.getMusics())
                             if(musicTemp!=null)
                                 for(Genre genreTemp:genres)
                                 {
-                                    if(counter>=3)
-                                        break BREAK;
                                     if(genreTemp!=null && musicTemp.getGenre().compareTo(genreTemp)==0)
                                     {
+                                        suggestions.add(musicTemp);
                                         answer.append("AudioID: ").append(musicTemp.getAudioID()).append("\nAudio name: ").append(musicTemp.getAudioName()).append("\n");
-                                        counter++;
+                                        audioAmount++;
+                                        break;
                                     }
                                 }
             }
-            audioAmount+=counter;
-           counter=0;
         }
         if(audioAmount==10)
             return answer.toString();
         else
         {
+            int counter=0;
+            boolean check=false;
             ArrayList <AudioModel>audios=getMostPlayedAudios();
-            for(int i=0;i<10-audioAmount;++i)
+            for(int i=0;counter<10-audioAmount && i<audios.size();++i)
                 if(audios.get(i)!=null)
-                    answer.append("AudioID: ").append(audios.get(i).getAudioID()).append("\nAudio name: ").append(audios.get(i).getAudioName()).append("\n");
+                {
+                    if(audioAmount!=0)
+                    {
+                        for(AudioModel audio:suggestions)
+                            if(audio!=null && audio.toString().compareTo(audios.get(i).toString())==0)
+                            {
+                                check=true;
+                                break;
+                            }
+                        if(!check)
+                        {
+                            answer.append("AudioID: ").append(audios.get(i).getAudioID()).append("\nAudio name: ").append(audios.get(i).getAudioName()).append("\n");
+                            counter++;
+                        }
+                        check=false;
+                    }
+                    else
+                        answer.append("AudioID: ").append(audios.get(i).getAudioID()).append("\nAudio name: ").append(audios.get(i).getAudioName()).append("\n");
+                }
             return answer.toString();
         }
     }
@@ -450,6 +499,9 @@ public class ListenerController
         }
         else if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
         {
+            for(PlayListModel playList: getListener().getPlayLists())
+                if(playList!=null && playList.getPlayListName().compareTo(playlistName)==0)
+                    return "playlist already exist";
             PlayListModel temp=new PlayListModel(playlistName,getListener().getUserName());
             long playListID=0;
             char[] userName=getListener().getUserName().toCharArray();
@@ -562,13 +614,13 @@ public class ListenerController
                 premiumListener.setPlayingAmount(getListener().getPlayingAmount());
                 premiumListener.setPlayLists(getListener().getPlayLists());
                 premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
-                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                premiumListener.setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
                 Database.getDatabase().getAllUsers().remove(getListener());
                 Database.getDatabase().getAllUsers().add(premiumListener);
                 setListener(premiumListener);
                 return "package bought successfully";
             }
-            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            ((PremiumListenerModel)getListener()).setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
             return "package bought successfully";
         }
         else if(pack.compareTo("60")==0)
@@ -590,13 +642,13 @@ public class ListenerController
                 premiumListener.setPlayingAmount(getListener().getPlayingAmount());
                 premiumListener.setPlayLists(getListener().getPlayLists());
                 premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
-                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                premiumListener.setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
                 Database.getDatabase().getAllUsers().remove(getListener());
                 Database.getDatabase().getAllUsers().add(premiumListener);
                 setListener(premiumListener);
                 return "package bought successfully";
             }
-            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            ((PremiumListenerModel)getListener()).setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
             return "package bought successfully";
         }
         else if(pack.compareTo("180")==0)
@@ -618,13 +670,13 @@ public class ListenerController
                 premiumListener.setPlayingAmount(getListener().getPlayingAmount());
                 premiumListener.setPlayLists(getListener().getPlayLists());
                 premiumListener.setSubscriptionExpiration(getListener().getSubscriptionExpiration());
-                premiumListener.setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-premiumListener.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-premiumListener.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-premiumListener.getSubscriptionExpiration().get(Calendar.DATE)));
+                premiumListener.setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
                 Database.getDatabase().getAllUsers().remove(getListener());
                 Database.getDatabase().getAllUsers().add(premiumListener);
                 setListener(premiumListener);
                 return "package bought successfully";
             }
-            ((PremiumListenerModel)getListener()).setRemainingDays(((Calendar.getInstance().get(Calendar.YEAR)-getListener().getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-getListener().getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-getListener().getSubscriptionExpiration().get(Calendar.DATE)));
+            ((PremiumListenerModel)getListener()).setRemainingDays((getListener().getSubscriptionExpiration().get(Calendar.YEAR)-(Calendar.getInstance().get(Calendar.YEAR))*365)+((getListener().getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(getListener().getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE)));
             return "package bought successfully";
         }
         else

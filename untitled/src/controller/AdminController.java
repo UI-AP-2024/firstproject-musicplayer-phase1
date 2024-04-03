@@ -21,7 +21,7 @@ public class AdminController
         StringBuilder answer=new StringBuilder();
         for(Report temp: Database.getDatabase().getReports())
             if(temp!=null)
-                answer.append(temp).append("\n");
+                answer.append("Reported Artist username: ").append(temp.getReportedArtist().getUserName()).append("\nreporter username: ").append(temp.getReporterUser().getUserName()).append("\nexplanation: ").append(temp.getExplanation()).append("\n");
         return answer.toString();
     }
     public String getArtists()

@@ -15,7 +15,7 @@ public class PremiumListenerModel extends ListenerModel
     }
     public int getRemainingDays()
     {
-        this.remainingDays=((Calendar.getInstance().get(Calendar.YEAR)-this.getSubscriptionExpiration().get(Calendar.YEAR))*365)+((Calendar.getInstance().get(Calendar.MONTH)-this.getSubscriptionExpiration().get(Calendar.MONTH))*30)+(Calendar.getInstance().get(Calendar.DATE)-this.getSubscriptionExpiration().get(Calendar.DATE));
+        this.remainingDays=((this.getSubscriptionExpiration().get(Calendar.YEAR)-Calendar.getInstance().get(Calendar.YEAR))*365)+((this.getSubscriptionExpiration().get(Calendar.MONTH)-Calendar.getInstance().get(Calendar.MONTH))*30)+(this.getSubscriptionExpiration().get(Calendar.DATE)-Calendar.getInstance().get(Calendar.DATE));
         return this.remainingDays;
     }
     public String toString()
