@@ -57,47 +57,47 @@ public class ListenerController
     }
     public boolean addFavGenres(String genre)
     {
-        if(genre.compareTo("ROCK")==0)
+        if(genre.compareTo("Rock")==0)
         {
             getListener().getFavGenres().add(Genre.ROCK);
             return true;
         }
-        else if(genre.compareTo("POP")==0)
+        else if(genre.compareTo("Pop")==0)
         {
             getListener().getFavGenres().add(Genre.POP);
             return true;
         }
-        else if(genre.compareTo("JAZZ")==0)
+        else if(genre.compareTo("Jazz")==0)
         {
             getListener().getFavGenres().add(Genre.JAZZ);
             return true;
         }
-        else if(genre.compareTo("COUNTRY")==0)
+        else if(genre.compareTo("Country")==0)
         {
             getListener().getFavGenres().add(Genre.COUNTRY);
             return true;
         }
-        else if(genre.compareTo("TRUE_CRIME")==0)
+        else if(genre.compareTo("TrueCrime")==0)
         {
             getListener().getFavGenres().add(Genre.TRUE_CRIME);
             return true;
         }
-        else if(genre.compareTo("HIPHOP")==0)
+        else if(genre.compareTo("HipHop")==0)
         {
             getListener().getFavGenres().add(Genre.HIPHOP);
             return true;
         }
-        else if(genre.compareTo("HISTORY")==0)
+        else if(genre.compareTo("History")==0)
         {
             getListener().getFavGenres().add(Genre.HISTORY);
             return true;
         }
-        else if(genre.compareTo("INTERVIEW")==0)
+        else if(genre.compareTo("InterView")==0)
         {
             getListener().getFavGenres().add(Genre.INTERVIEW);
             return true;
         }
-        else if(genre.compareTo("SOCIETY")==0)
+        else if(genre.compareTo("Society")==0)
         {
             getListener().getFavGenres().add(Genre.SOCIETY);
             return true;

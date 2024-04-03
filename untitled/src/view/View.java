@@ -41,6 +41,8 @@ public class View
                         {
                             if(ListenerController.getListenerController().addFavGenres(genres[counter]))
                                 counter++;
+                            else
+                                System.out.println("genre doesn't exist");
                         }
                     }
                 }
