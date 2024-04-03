@@ -9,8 +9,6 @@ import java.util.Date;
 public class ArtistModel extends AccountsModel {
     private double income;
     private ArrayList<AccountsModel> followers;
-
-    private ArrayList<AudioModel> audios;
     private int followersCount;
     private String bio;
 
@@ -18,7 +16,6 @@ public class ArtistModel extends AccountsModel {
         super(username , password , fullName , email , phoneNumber , birthDate);
 
         this.followers = new ArrayList<AccountsModel>();
-        this.audios = new ArrayList<AudioModel>();
         this.followersCount = 0;
         this.bio = bio;
     }
@@ -39,14 +36,6 @@ public class ArtistModel extends AccountsModel {
         this.followers.add(follower);
     }
 
-    public ArrayList<AudioModel> getAudios() {
-        return audios;
-    }
-
-    public void addAudio(AudioModel audio){
-        this.audios.add(audio);
-    }
-
     public int getFollowersCount(){
         return this.followersCount;
     }
@@ -62,8 +51,4 @@ public class ArtistModel extends AccountsModel {
         this.bio = bio;
     }
 
-    @Override
-    public String toString(){
-        return "Username : "+ this.getUsername() + "\nFull Name : "+ this.getFullName();
-    }
 }
