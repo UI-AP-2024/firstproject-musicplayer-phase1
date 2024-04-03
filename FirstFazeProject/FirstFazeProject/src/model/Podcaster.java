@@ -10,6 +10,15 @@ public class Podcaster extends Artist{
     public Podcaster(String uniqueUserName, String password, String fullName, String email, String phoneNumber, Date birthDate, String biography) {
         super(uniqueUserName, password, fullName, email, phoneNumber, birthDate, biography);
     }
+
+    public ArrayList<Podcast> getPodcasts() {
+        return podcasts;
+    }
+
+    public void setPodcasts(ArrayList<Podcast> podcasts) {
+        this.podcasts = podcasts;
+    }
+
     @Override
     public double audiosTimesPlayed() {
         int counter = 0;

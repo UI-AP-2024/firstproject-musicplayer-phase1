@@ -721,6 +721,9 @@ public class AccountController {
                         newAudiosList = Database.getData().getAllAudios();
                         newAudiosList.add(newPodcast);
                         Database.getData().setAllAudios(newAudiosList);
+                        ArrayList<Podcast> backUp = ((Podcaster)artist).getPodcasts();
+                        backUp.add(newPodcast);
+                        ((Podcaster) artist).setPodcasts(backUp);
                         AccountView.getAccountView().showResult(new StringBuilder("The podcast was published successfully"));
                         AccountView.getAccountView().showArtistLoginPanel(artist);
                         break;
