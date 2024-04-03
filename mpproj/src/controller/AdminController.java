@@ -1,5 +1,6 @@
 package controller;
 
+import model.Artist;
 import model.Audio;
 import model.Database;
 import model.UserAccount;
@@ -41,6 +42,28 @@ public class AdminController {
         ListenerController.getListenerController().sortAudioFile("L");
         for (Audio audio : Database.getDataBase().getAudio()){
             result += audio+"\n";
+        }
+        if ( result.equals(""))
+            result += "empty";
+        return result;
+    }
+
+    public String viewAudios(){
+        String result = "";
+        for ( Audio audio : Database.getDataBase().getAudio()){
+            result += audio+"\n";
+        }
+        if ( result.equals(""))
+            result += "empty";
+        return result;
+    }
+
+    public String viewArtists(){
+        String result = "";
+        for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1 instanceof Artist){
+                result += userAccount1+"\n";
+            }
         }
         if ( result.equals(""))
             result += "empty";
