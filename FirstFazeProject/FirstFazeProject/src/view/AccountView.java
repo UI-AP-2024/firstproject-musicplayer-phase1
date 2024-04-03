@@ -1,8 +1,9 @@
 package view;
-
+import model.Admin;
 import controller.AccountController;
 import model.*;
 
+import java.util.Objects;
 import java.util.Scanner;
 public class AccountView {
     private static AccountView accountView;
@@ -19,6 +20,7 @@ public class AccountView {
     Scanner inp = new Scanner(System.in);
 
     public void showFirstMenu(){
+        Admin.getAdmin();
         System.out.println("Welcome to the music player please signup or login first ❤");
         showMainMenu();
     }
@@ -68,17 +70,31 @@ public class AccountView {
         AccountController.getAccountController().addFavoriteGenres(inp.nextLine());
         System.out.println("Favorite genres were added successfully");
         showMainMenu();
-        System.out.println("The order is meaningless please login again");
-        showMainMenu();
     }
-    public void showLoginPanel(UserAccount person){
+    public void showListenerLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");
         String answer = inp.nextLine();
-        AccountController.getAccountController().loginPanelOrders(person,answer);
+        AccountController.getAccountController().loginListenerPanelOrders(person,answer);
     }
-    public void successfullyLogin(UserAccount person){
+    public void showArtistLoginPanel(UserAccount person){
+        System.out.println("Please Enter a command");
+        String answer = inp.nextLine();
+        AccountController.getAccountController().loginArtistPanelOrders((Artist)person,answer);
+    }
+    public void showAdminLoginPanel(UserAccount person){
+        System.out.println("Please Enter a command");
+        String answer = inp.nextLine();
+        AccountController.getAccountController().loginAdminPanelOrders((Admin)person,answer);
+    }
+    public void successfullyLogin(UserAccount person , String type){
         System.out.println("You have login to your panel, now you can use the program ✌");
-        showLoginPanel(person);
+        if (Objects.equals(type, "Listener")) {
+            showListenerLoginPanel(person);
+        }else if (Objects.equals(type, "Admin")){
+            showAdminLoginPanel(person);
+        }else if (type == "Artist"){
+            showArtistLoginPanel(person);
+        }
     }
     public void showResult(StringBuilder result){
         System.out.println(result);

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Admin extends UserAccount{
@@ -10,14 +11,13 @@ public class Admin extends UserAccount{
     }
 
     public static Admin getAdmin() {
-        return admin;
-    }
-
-    public static String setAdmin(String name,String password,String fullName,String email,String phoneNumber,Date birthDate) {
         if (admin == null) {
-            Admin.admin = new Admin(name, password, fullName, email, phoneNumber, birthDate);
-            return "Admin was made successfully";
+            Admin.admin = new Admin("Masih", "Masih1383", "MasihRoughani", "im.the.best.no.one.can.pass@gmail.com", "09135111562", new Date(2005, 1, 8));
+            ArrayList<UserAccount> backUp = Database.getData().getAllUsers();
+            backUp.add(admin);
+            Database.getData().setAllUsers(backUp);
+            return admin;
         }
-        return "An admin was made before";
+        return admin;
     }
 }
