@@ -3,10 +3,10 @@ import model.Audio.*;
 import model.Database.Database;
 import model.UserAccount.*;
 import model.*;
-import java.util.Calendar;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ListenerControler {
     private Listener listenerr;
@@ -29,19 +29,24 @@ public class ListenerControler {
     public void setListenerr(Listener listenerr) {
         this.listenerr = listenerr;
     }
-//todo : regex for sign up
+
     public String signUpListener(String username, String pasword, String name, String email, String phoneNum, Date birthDate){
+        if(!Regex.emailRegex(email))
+            return "use valid email";
+        if (!Regex.passwordRegex(pasword))
+            return "use harder password";
+        if(!Regex.phoneRegex(phoneNum))
+            return "use valid phone number";
         ArrayList<User>users=Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username)){
                 return "error : this user name already exist .";
             }
         }
-        Listener listener=new Listener(username,pasword,name,email,phoneNum,birthDate,50);
-        setListenerr(listener);
-        Database.getDatabase().getUsers().add((RegularListener)listener);
-        //add to database
-        listener.setIsLogin(true);
+        listenerr=new Listener(username,pasword,name,email,phoneNum,birthDate,50);
+        setListenerr(listenerr);
+        Database.getDatabase().getUsers().add(listenerr);
+        listenerr.setIsLogin(true);
         return showgenre()+"\n";
     }
     String showgenre(){
@@ -109,11 +114,13 @@ public class ListenerControler {
     }
     public boolean islogin(){
         return listenerr.getIsLogin();
-    }//todo:check if user is login for cammands
+    }
     private int generateIdPlaylist(){
         return listenerr.getPlaylistcounter()+ Playlist.getIdcounter();
     }
     public String AddAudio(String playListname,int auidioId) {
+
+        int tmpInd=0;
         for (Playlist playlist : listenerr.getPlaylists()) {
             if (playlist.getName().equals(playListname)) {
                 if (listenerr instanceof RegularListener) {
@@ -123,19 +130,25 @@ public class ListenerControler {
                 }
                 for (Audio audio : Database.getDatabase().getAudios()) {
                     if (audio.getId() == auidioId) {
-                        playlist.getAudios().add(audio);
+                    if(playlist.getAudios().contains(audio)){
+                        return "its already added";
+                    }
+                        listenerr.getPlaylists().get(tmpInd).getAudios().add(audio);
                         return "audio successfully added . ";
                     }
                 }
             }
+            tmpInd++;
         }
         return "error: no match for audio id or play list name .";
     }
     public String playAudio(int audioId){
-        for (Audio audio:Database.getDatabase().getAudios()){//todo: add to history with map
+        for (Audio audio:Database.getDatabase().getAudios()){
             if(audio.getId()==audioId){
                 audio.setPlayCount(audio.getPlayCount()+1);
-                return "playing "+audio.getTitle();
+                listenerr.getListeningHistory().putIfAbsent(audioId,0);
+                listenerr.getListeningHistory().put(audioId,listenerr.getListeningHistory().get(audioId)+1);
+                return "playing "+audio.getTitle()+ "        "+audio.getAudioFileLink();
             }
         }
         return "not found";
@@ -144,6 +157,8 @@ public class ListenerControler {
         for(User user:Database.getDatabase().getUsers()){
             if(user.getUsername().equals(artistusername)){
                 if(user instanceof Artist){
+                    if(((Artist) user).getFollowers().contains(listenerr))
+                        return "already followed";
                     ((Artist) user).getFollowers().add(listenerr);
                     listenerr.getFollowings().add((Artist) user);
                     return "followed";
@@ -156,6 +171,7 @@ public class ListenerControler {
         for (Audio audio:Database.getDatabase().getAudios()){
             if(audio.getId()==audioId){
                 audio.setLikes(audio.getLikes()+1);
+                genreScore.put(audio.getGenre(),genreScore.get(audio)+1);
                 return "liked "+audio.getTitle();
             }
         }
@@ -182,20 +198,20 @@ public class ListenerControler {
         return "error";
     }
     public  String showArtists(){
-        StringBuilder result=new StringBuilder("Artis:\n");
+        StringBuilder result=new StringBuilder("Artists:\n");
         for(User artist:Database.getDatabase().getUsers()) {
             if (artist instanceof Artist) {
-                result.append("artis name :").append(artist.getUsername()).append("\n");
+                result.append("artist name :").append(artist.getUsername()).append("\n");
             }
         }
         return String.valueOf(result);
     }
     public String showArtist(String userName){
-        StringBuilder result=new StringBuilder("Artis:\n");
+        StringBuilder result=new StringBuilder("Artist:\n");
         for(User artist:Database.getDatabase().getUsers()) {
             if(userName.equals(artist.getUsername())) {
                 if (artist instanceof Artist) {
-                    result.append("artis name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers()).append(" biography : ").append(((Artist) artist).getBiography()).append("\n");
+                    result.append("artist name :").append(artist.getFullName()).append(" followers : ").append(((Artist) artist).getFollowers().size()).append("\n");
                     if (artist instanceof Singer) {
                         result.append("musics : ");
                         for (Album album : ((Singer) artist).getAlbums()) {
@@ -215,6 +231,10 @@ public class ListenerControler {
         return String.valueOf(result);
     }
     public String userInfo(){
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(listenerr.getEndSubDate());
+        calendar.add(Calendar.DAY_OF_MONTH,-1);
+        listenerr.setEndSubDate(calendar.getTime());
         return listenerr.toString();
     }
     public String showmyPlaylist(){
@@ -238,8 +258,103 @@ public class ListenerControler {
         }
         return "error : not foound play llist";
     }
-    //todo : filter and sort
-    //جستجو، مرتبسازی و فیلتر فالهای صوتی
+
+    public String filterDate( Date startDate,Date endDate){
+        StringBuilder result=new StringBuilder(" song publish between this to date : \n");
+        for (Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getReleaseDate().after(startDate)&&audio.getReleaseDate().before(endDate)){
+                result.append(" title :").append(audio.getTitle()).append("artist name: ").append(audio.getArtistName()).append(" , ");
+            }
+        }
+        return String.valueOf(result);
+    }
+    public String filterDate( Date startDate){
+        StringBuilder result=new StringBuilder(" song publish after this date : \n");
+        for (Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getReleaseDate().after(startDate)){
+                result.append(" title :").append(audio.getTitle()).append("artist name: ").append(audio.getArtistName()).append(" , ");
+            }
+        }
+        return String.valueOf(result);
+    }
+
+    public String filterbyGenre(String genreName){
+        StringBuilder result=new StringBuilder(genreName);
+        for (Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getGenre().equals(Genre.valueOf(genreName))){
+                result.append(" title : ").append(audio.getTitle()).append(" artist name: ").append(audio.getArtistName()).append(" | ");
+            }
+        }
+        return String.valueOf(result);
+    }
+    public String filterArtist(String name){
+        StringBuilder result=new StringBuilder("artists\n");
+        for(User user:Database.getDatabase().getUsers()){
+            if(user instanceof Artist){
+                if(name.equals(user.getFullName()) || name.equals(user.getUsername())){
+                    result.append("user name ").append(user.getUsername()).append(" name : ").append(user.getFullName()).append(" follower : ").append(((Artist) user).getFollowers()).append("\n");
+                }
+            }
+        }
+        return String.valueOf(result);
+    }
+    public String searchByArtistName(String name){
+        StringBuilder result=new StringBuilder("artists\n");
+        for(User user:Database.getDatabase().getUsers()){
+            if(user instanceof Artist){
+                if(name.equals(user.getFullName()) || name.equals(user.getUsername())){
+                    result.append("user name ").append(user.getUsername()).append(" name : ").append(user.getFullName()).append(" follower : ").append(((Artist) user).getFollowers()).append("\n");
+                }
+            }
+        }
+        return String.valueOf(result);
+    }
+    public String searchByAudio(String name){
+        StringBuilder result=new StringBuilder("audios :\n");
+        for(Audio audio:Database.getDatabase().getAudios()){
+            if(audio.getTitle().equals(name)){
+                result.append("audio name : ").append(audio.getTitle()).append(" artist name :").append(audio.getArtistName()).append("\n");
+            }
+        }
+        return String.valueOf(result);
+    }
+
+    public String sortLikes(){
+        ArrayList<Audio> audioArrayList=Database.getDatabase().getAudios();
+        Audio tmpAudio;
+        for (int i = 0; i < audioArrayList.size()-1; i++) {
+            for (int j = 0; j < audioArrayList.size()-1-i; j++) {
+                if(audioArrayList.get(j).getLikes()<audioArrayList.get(j+1).getLikes()){
+                    tmpAudio=audioArrayList.get(j);
+                    audioArrayList.set(j,audioArrayList.get(j+1));
+                    audioArrayList.set(j+1,tmpAudio);
+                }
+            }
+        }
+        StringBuilder result=new StringBuilder("audios :\n");
+        for(Audio audio:audioArrayList) {
+            result.append(audio.getTitle()).append(", ").append("likes : ").append(audio.getLikes()).append("\n");
+        }
+        return String.valueOf(result);
+    }
+    public String sortPlay(){
+        ArrayList<Audio> audioArrayList=Database.getDatabase().getAudios();
+        Audio tmpAudio;
+        for (int i = 0; i < audioArrayList.size()-1; i++) {
+            for (int j = 0; j < audioArrayList.size()-1-i; j++) {
+                if(audioArrayList.get(j).getPlayCount()<audioArrayList.get(j+1).getPlayCount()){
+                    tmpAudio=audioArrayList.get(j);
+                    audioArrayList.set(j,audioArrayList.get(j+1));
+                    audioArrayList.set(j+1,tmpAudio);
+                }
+            }
+        }
+        StringBuilder result=new StringBuilder("audios :\n");
+        for(Audio audio:audioArrayList) {
+            result.append(audio.getTitle()).append(", ").append("played : ").append(audio.getLikes()).append("\n");
+        }
+        return String.valueOf(result);
+    }
     public  String increaseCredit(int increaseAmount){
         listenerr.setCredit(listenerr.getCredit()+increaseAmount);
         return "increased";
@@ -250,16 +365,16 @@ public class ListenerControler {
         }
         listenerr.setCredit(listenerr.getCredit()-subscriptionPlan.getPrice());
         String str=listenerr.getEndSubDate().toString();
-        if(listenerr instanceof  RegularListener){
+        if(!(listenerr instanceof  PrimiumListener)){
             int tmpindex=0;
             ArrayList<User> users=new ArrayList<>();
             for(User user : Database.getDatabase().getUsers()){
-                if(user.getUsername().equals(listenerr)){
+                if(user.getUsername().equals(listenerr.getUsername())){
                     PrimiumListener tmplistenerr=new PrimiumListener(listenerr.getUsername(),listenerr.getPassword(),listenerr.getFullName(),listenerr.getEmail(),listenerr.getPhoneNumber(),listenerr.getDateOfBirth(),listenerr.getCredit());
                     tmplistenerr.setSubscription(subscriptionPlan);
                     Calendar calendar=Calendar.getInstance();
                     calendar.setTime(tmplistenerr.getEndSubDate());
-                    if(subscriptionPlan.equals(SubscriptionPlan.Onemonth)){
+                    if(subscriptionPlan.equals(SubscriptionPlan.OneMonth)){
                         calendar.add(Calendar.MONTH,1);
                         tmplistenerr.setEndSubDate(calendar.getTime());
                     }else if(subscriptionPlan.equals(SubscriptionPlan.TwoMonth)){
@@ -277,10 +392,10 @@ public class ListenerControler {
             }
             Database.getDatabase().setUsers(users);
         }
-        if(listenerr instanceof  PrimiumListener){
+        else if(listenerr instanceof  PrimiumListener){
             Calendar calendar=Calendar.getInstance();
             calendar.setTime(listenerr.getEndSubDate());
-            if(subscriptionPlan.equals(SubscriptionPlan.Onemonth)){
+            if(subscriptionPlan.equals(SubscriptionPlan.OneMonth)){
                 calendar.add(Calendar.MONTH,1);
                 listenerr.setEndSubDate(calendar.getTime());
             }else if(subscriptionPlan.equals(SubscriptionPlan.TwoMonth)){
@@ -291,10 +406,11 @@ public class ListenerControler {
                 listenerr.setEndSubDate(calendar.getTime());
             }
         }
-        return "befor :"+str+"now :"+listenerr.getEndSubDate().toString();
+        return "befor :"+str+", now :"+listenerr.getEndSubDate().toString();
     }
-    public String suggestAudio(int n){//ToDo: sugest not comlete
-        n=10;
+        Map<Genre,Integer>genreScore=new HashMap<>();
+        Map<Artist,Integer>artistScore=new HashMap<>();
+    public String suggestAudio(int n){
         Map.Entry<Integer,Integer>[] arrmap=listenerr.getListeningHistory().entrySet().toArray(new Map.Entry[listenerr.getListeningHistory().size()]);
         for (int i = 0; i <arrmap.length-1 ; i++) {
             for (int j = 0; j < arrmap.length-1-i; j++) {
@@ -305,13 +421,54 @@ public class ListenerControler {
                 }
             }
         }
-        for(Audio audio:Database.getDatabase().getAudios()) {
-            if(arrmap[0].getKey().equals(audio.getId())){
-                for (User artist:Database.getDatabase().getUsers()){
-                     ///Todo: ??????????????????????????????????????????
+        for(Genre genre:listenerr.getFavoriteGenre()){
+            genreScore.putIfAbsent(genre,1);
+        }
+        for(Map.Entry<Integer,Integer> entrymap1:arrmap){
+            for(Audio audio:Database.getDatabase().getAudios()){
+                if(entrymap1.getKey()==audio.getId()) {
+                    if (genreScore.containsKey(audio.getGenre())){
+                        genreScore.put(audio.getGenre(),entrymap1.getValue()+1);
+                    }else{
+                        genreScore.putIfAbsent(audio.getGenre(),1);
+                    }
                 }
             }
         }
+        for(Artist artist:listenerr.getFollowings()){
+            if(artistScore.containsKey(artist)){
+                artistScore.put(artist,artistScore.get(artist)+1);
+            }else
+                artistScore.putIfAbsent(artist,1);
+        }
+
+        int score=0;
+        ArrayList<Integer>scores=new ArrayList<>();
+        ArrayList<Audio>audioArrayList=Database.getDatabase().getAudios();
+        int tmpIndex=0;
+        for(Audio audio:audioArrayList) {
+            for(User user:Database.getDatabase().getUsers()){
+                if(user.getFullName().equals(audio.getArtistName())){
+                    score+=artistScore.get(user);
+                    score+=genreScore.get(audio.getGenre());
+                    scores.add(score);
+                }
+            }
+        }
+        for (int i = 0; i < scores.size()-1; i++) {
+            for (int j = 0; j < scores.size()-1-i; j++) {
+                if(scores.get(j)<scores.get(j+1)){
+                    Audio tmp=audioArrayList.get(j+1);
+                    audioArrayList.set(j+1,audioArrayList.get(j));
+                    audioArrayList.set(j,tmp);
+                }
+            }
+        }
+        StringBuilder str=new StringBuilder("suggest:\n");
+        for (int i = 0; i < n; i++) {
+            str.append("title : ").append(audioArrayList.get(i).getTitle()).append(" artist name : ").append(audioArrayList.get(i).getArtistName()).append("\n");
+        }
+        return String.valueOf(str);
     }
     public String lyric(int audioId){
         for(Audio audio:Database.getDatabase().getAudios()){

@@ -23,23 +23,28 @@ public class AdminViewer {
     public void getAnswer() {
         answer = sc.nextLine();
         answers = answer.split("-");
-        if (answers[0].equals("Logout")) {
+        if (answers[0].equals("Logout"))
             logout();
-        } else if (answers[0].equals("Artists")) {
-
-        } else if (answers[0].equals("Audios")) {
-
-        } else if (answers[0].equals("Audio")) {
-
-        } else if (answers[0].equals("Artist")) {
-
-        } else if (answers[0].equals("Reports")) {
-
-        } else {
+         else if (answers[0].equals("Artists"))
+            artists();
+         else if (answers[0].equals("Audios"))
+            audios();
+         else if (answers[0].equals("Audio"))
+            audioInfo();
+        else if (answers[0].equals("AccountInfo"))
+            artist();
+        else if (answers[0].equals("Statistic"))
+            artist();
+        else if (answers[0].equals("Artist"))
+            artist();
+         else if (answers[0].equals("Reports"))
+            reports();
+         else {
             print("wrong command");
             getAnswer();
         }
     }
+    protected
     public void audioInfo(){
         print(AdminControler.getAdminControler().lookAudioInfo(Integer.parseInt(answers[1])));
         getAnswer();

@@ -26,6 +26,8 @@ public class ListenerViewer {
         answers = answer.split("-");
         if (answers[0].equals("Logout"))
             logOut(answer);
+        else if (answers[0].equals("Follow"))
+            follow();
         else if (answers[0].equals("AccountInfo"))
             accountInfo(answer);
         else if (answers[0].equals("GetSuggestion"))
@@ -45,7 +47,7 @@ public class ListenerViewer {
             filter();
         else if (answers[0].equals("Add"))
             add();
-        else if (answers[0].equals("ShowPLaylists"))
+        else if (answers[0].equals("ShowPlaylists"))
             showPlaylists();
         else if (answers[0].equals("SelectPlaylist"))
             selectPlaylists();
@@ -70,6 +72,10 @@ public class ListenerViewer {
             print("wrong command");
             getAnswer();
         }
+    }
+    public void follow(){
+        print(ListenerControler.getListenerControler().followArtist(answers[1]));
+        getAnswer();
     }
     public void filter(){
         if(answers[1].equals("A"))
@@ -131,7 +137,7 @@ public class ListenerViewer {
     }
     public void getSuggestion(String str){
         String[] result=answer.split("-");
-   //     print(ListenerControler.getListenerControler().suggestAudio(Integer.parseInt(result[1])));
+        print(ListenerControler.getListenerControler().suggestAudio(Integer.parseInt(result[1])));
         getAnswer();
     }
     public void  artist(){

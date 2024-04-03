@@ -70,7 +70,7 @@ public class AdminControler {
         StringBuilder result=new StringBuilder("reports :\n");
         ArrayList<Report> reports= Database.getDatabase().getReports();
         for(Report report:reports) {
-            result.append(" artist name : ").append(report.getReportedArtist()).append(" reporter name : ").append(report.getReportingUser().getUsername()).append(" exeplenation: ").append(report.getDescription()).append("\n");
+            result.append(" artist name : ").append(report.getReportedArtist().getUsername()).append(", reporter name : ").append(report.getReportingUser().getUsername()).append(" exeplenation: ").append(report.getDescription()).append("\n");
         }
         return String.valueOf(result);
     }
@@ -86,7 +86,7 @@ public class AdminControler {
     public String lookAudios(){
         StringBuilder result=new StringBuilder("audios :\n");
         for(Audio audio:Database.getDatabase().getAudios()) {
-            result.append(audio.getTitle()).append(", ");
+            result.append(audio.getTitle()).append(", ").append(" , audio id : ").append(audio.getId()).append("  ");
         }
         return String.valueOf(result);
     }
@@ -94,10 +94,10 @@ public class AdminControler {
         for(Audio audio:Database.getDatabase().getAudios()) {
             if(audio.getId()==audioId){
                 return "artist name : "+audio.getArtistName()+
-                        "title"+audio.getTitle() +
-                        "play count "+audio.getPlayCount()+
-                        "file link"+audio.getAudioFileLink()+
-                        "likes : "+audio.getLikes();
+                        ", title"+audio.getTitle() +
+                        ", play count "+audio.getPlayCount()+
+                        ", file link"+audio.getAudioFileLink()+
+                        ", likes : "+audio.getLikes();
             }
         }
         return "error : not found";

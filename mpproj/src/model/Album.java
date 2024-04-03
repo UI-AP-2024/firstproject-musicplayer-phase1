@@ -21,10 +21,10 @@ public class Album {
     }
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder("album name");
-        res.append(name).append("singer name : ").append(singerName).append("\n songs : ");
+        StringBuilder res = new StringBuilder(", album name : ");
+        res.append(name).append(" singer name : ").append(singerName).append("Album id:  ").append(id);
         for(Audio audio : songs){
-            res.append(audio.getTitle());
+            res.append(" , songs:").append(audio.getTitle());
         }
         return String.valueOf(res);
     }

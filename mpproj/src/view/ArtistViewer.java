@@ -48,7 +48,7 @@ public class ArtistViewer {
         getAnswer();
     }
     public void newAlbum(){
-        print(SingerControler.getSingerControler().newAlbum(answers[1]));
+        print(ArtistControler.getArtistControler().newAlbum(answers[1]));
         getAnswer();
     }
     public void calculationEarning(){
@@ -65,9 +65,9 @@ public class ArtistViewer {
     }
     public void publish(){
         if(answers[1].equals("M"))
-        print(SingerControler.getSingerControler().publishMusic(answers[2],answers[3],answers[4],answers[5],answers[6], Integer.parseInt(answers[7])));
+        print(ArtistControler.getArtistControler().publishMusic(answers[2],answers[3],answers[4],answers[5],answers[6], Integer.parseInt(answers[7])));
         else if(answers[1].equals("P"))
-            print(SingerControler.getSingerControler().publishMusic(answers[2],answers[3],answers[4],answers[5],answers[6], Integer.parseInt(answers[7])));
+            print(ArtistControler.getArtistControler().publishPodcast(answers[2],answers[3],answers[4],answers[5],answers[6]));
         getAnswer();
     }
     public void logout(){

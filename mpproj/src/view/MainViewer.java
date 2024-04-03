@@ -91,7 +91,7 @@ public class MainViewer {
                 getanswer();
             ArtistViewer.getArtistViewer().getAnswer();
         }else{
-            message=AdminControler.getAdminControler().login(answers[2],answers[3]);
+            message=AdminControler.getAdminControler().login(answers[1],answers[2]);
             print(message);
             if(message.equals("error : user name or password is wrong"))
                 getanswer();

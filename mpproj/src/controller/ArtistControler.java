@@ -5,6 +5,7 @@ import model.Audio.Audio;
 import model.Audio.Music;
 import model.Audio.Podcast;
 import model.Database.Database;
+import model.Genre;
 import model.Report;
 import model.UserAccount.*;
 
@@ -14,11 +15,42 @@ import java.util.Date;
 public class ArtistControler {
     private static ArtistControler artistControler;
     Artist artist;
-
+    public  String publishPodcast(String title, String genre, String caption, String link, String cover){
+        if (artist instanceof Podcaster){
+            Podcast podcast0=new Podcast(Podcast.getIdcounter(),title,artist.getFullName(),0,0,new Date(), Genre.valueOf(genre),link,cover,caption);
+            Audio.setIdcounter(Audio.getIdcounter()+1);
+            ((Podcaster) artist).getPodcasts().add(podcast0);
+            Database.getDatabase().getAudios().add(podcast0);
+        }
+        return "podcast added";
+    }
+    public  String publishMusic(String title, String genre, String caption, String link, String cover, int albumId){
+        if (artist instanceof Singer){
+            Music music0=new Music(Audio.getIdcounter(),title,artist.getFullName(),0,0,new Date(), Genre.valueOf(genre),link,cover,caption);
+            int tmpindex=0;
+            Audio.setIdcounter(Audio.getIdcounter()+1);
+            for(Album album: ((Singer) artist).getAlbums()){
+                if(albumId==album.getId()){
+                    ((Singer) artist).getAlbums().get(tmpindex).getSongs().add(music0);
+                }else
+                    tmpindex++;
+            }
+            Database.getDatabase().getAudios().add(music0);
+        }
+        return "music added";
+    }
+    public String newAlbum(String name){
+        Album album0=new Album(Album.getAlbumCounter(),name,artist.getUsername());
+        Album.setAlbumCounter(Album.getAlbumCounter()+1);
+        ((Singer)artist).getAlbums().add(album0);
+        return "album created";
+    }
     public ArtistControler() {
     }
 
     public static ArtistControler getArtistControler() {
+        if (artistControler == null)
+            artistControler=new ArtistControler();
         return artistControler;
     }
 
@@ -44,23 +76,20 @@ public class ArtistControler {
             }
         }
         if(type.equals("S")) {
-            Singer artist = new Singer(username, pasword, name, email, phoneNum, birthDate, bio);
+            Singer artistt = new Singer(username, pasword, name, email, phoneNum, birthDate, bio);
+            setArtist(artistt);
         }else if(type.equals("P")) {
-            Podcaster artist=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
+            Podcaster artistt=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
+            setArtist(artistt);
         }
-        setArtist(artist);
         Database.getDatabase().getUsers().add(artist);
-        artist.setIsLogin(true);
         return  "artist accaount successfully created .";
     }
     public String login(String username,String password){
         ArrayList<User>users=Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
-                if(artist.getIsLogin()==true)
-                    return "you are in already in your profile .";
                 setArtist((Artist) user);
-                artist.setIsLogin(true);
                 return "login successful .";
             }
         }
@@ -68,7 +97,6 @@ public class ArtistControler {
     }
     public String logout(){
         ArrayList<User>users=Database.getDatabase().getUsers();
-        artist.setIsLogin(false);
         return "logout successfull";
     }
     public  String artistInfo(){
