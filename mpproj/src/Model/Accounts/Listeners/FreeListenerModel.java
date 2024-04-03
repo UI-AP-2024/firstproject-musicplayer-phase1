@@ -1,5 +1,6 @@
 package Model.Accounts.Listeners;
 
+import Model.Audios.AudioModel;
 import Model.Audios.Genre;
 import Model.Audios.PlaylistModel;
 
@@ -28,14 +29,17 @@ public class FreeListenerModel extends ListenerModel {
         return this.maxAddToPlaylistLimit;
     }
 
-    public Map<PlaylistModel , Integer> getPlaylistAudioCount(){
+    public Map<PlaylistModel , Integer> getAllPlaylistAudioCount(){
         return this.playlistAudioCount;
     }
 
+    public Integer getPlaylistAudioCount(PlaylistModel playlist){
+        return this.playlistAudioCount.get(playlist);
+    }
     public void setPlaylistAudioCount(PlaylistModel playlist){
         this.playlistAudioCount.put(playlist , 0);
     }
-    public void AddToPlaylistAudioCount(PlaylistModel playlist){
+    public void addToPlaylistAudioCount(PlaylistModel playlist){
         this.playlistAudioCount.merge(playlist , 1 , Integer::sum);
     }
 
@@ -51,7 +55,4 @@ public class FreeListenerModel extends ListenerModel {
         this.playlistCount = count;
     }
 
-    public void setPlaylistCount(){
-        this.playlistCount++;
-    }
 }
