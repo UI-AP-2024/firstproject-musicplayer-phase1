@@ -8,6 +8,5 @@ public abstract class UserController {
     public void logout()
     {
         Database.getInstance().setLogedInUser(null);
-        AccountView.getUserView().getInput();
     }
 }

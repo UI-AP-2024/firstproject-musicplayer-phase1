@@ -100,7 +100,7 @@ public class NormalListenerView {
                 break;
             case "Logout":
                 normalListenerController.logout();
-                break;
+                return;
             default:
                 System.out.println("Invalid command");
         }

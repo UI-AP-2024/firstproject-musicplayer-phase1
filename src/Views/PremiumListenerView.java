@@ -100,7 +100,7 @@ public class PremiumListenerView {
                 break;
             case "Logout":
                 premiumListenerController.logout();
-                break;
+                return;
             default:
                 System.out.println("Invalid command");
         }

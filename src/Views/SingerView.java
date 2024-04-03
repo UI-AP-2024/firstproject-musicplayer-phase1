@@ -39,7 +39,7 @@ public class SingerView {
                 break;
             case "Logout":
                 singerController.logout();
-                break;
+                return;
             default:
                 System.out.println("Invalid command");
         }

@@ -37,7 +37,7 @@ public class PodcasterView {
                 break;
             case "Logout":
                 podcasterController.logout();
-                break;
+                return;
             default:
                 System.out.println("Invalid command");
         }
