@@ -229,5 +229,17 @@ public class ListenerController {
             result = "empty";
         return result;
     }
-    
+
+    public String reportArtist(String userName, String description){
+        for (UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1.getUserName().equals(userName)){
+                if ( userAccount1 instanceof Artist){
+                    Report report = new Report(getUserAccount(),(Artist) userAccount1,description);
+                    Database.getDataBase().getReports().add(report);
+                    return "The desired artist was successfully reported";
+                }
+            }
+        }
+        return "No artist was found with the entered username";
+    }
 }
