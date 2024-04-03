@@ -635,6 +635,18 @@ public class AccountController {
                 AccountView.getAccountView().showResult(new StringBuilder("The username was not found"));
                 AccountView.getAccountView().showAdminLoginPanel(admin);
                 break;
+            case "Reports":
+                result = new StringBuilder("All reports recorded till now : \r\n");
+                counter =1;
+                for (Report report : Database.getData().getReports()){
+                    result.append(counter++).append(report.getReporterUser()).append("--->").append(report.getReportedArtist())
+                            .append("\r\n").append(report.getCaption()).append("\r\n");
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showAdminLoginPanel(admin);
+            default:
+                AccountView.getAccountView().showResult(new StringBuilder("The order is not able to be run please try again"));
+                AccountView.getAccountView().showAdminLoginPanel(admin);
         }
     }
 
