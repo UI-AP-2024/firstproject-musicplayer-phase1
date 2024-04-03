@@ -14,6 +14,10 @@ public class UserRegistration {
 
     //*********************************************
 
+    public  Map<String, Listener> getUsers(){
+        return users;
+    }
+
     public void registerUser() {
         Scanner scanner = new Scanner(System.in);
 
@@ -119,25 +123,8 @@ public class UserRegistration {
     }
     //*********************************************
 
-        public void login(String username, String password) {
-            if (checkCredentials(username, password)) {
-                showUserPanel(username);
-            } else {
-                System.out.println("Invalid username or password");
-            }
-        }
 
-    private void showUserPanel(String username) {
-    }
 
-    private boolean checkCredentials(String username, String password) {
-        for (Map.Entry<String, Listener> entry : users.entrySet()) {
-            Listener user = entry.getValue();
-            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     }

@@ -9,13 +9,13 @@ import java.util.*;
 public class Database {
     private static Database instance;
     private List<AccountUser> users;
-    private List<Audio> audiofiles;
+    private static List<Audio> audiofiles;
     private static List<Report> reports;
 
     //*********************************************
     public Database() {
         users = new ArrayList<>();
-        audiofiles = new ArrayList<>();
+        audiofiles = new ArrayList<Audio>();
         reports = new ArrayList<>();
 
     }
@@ -38,6 +38,11 @@ public class Database {
     public void addUser(Listener user){
         users.add(user);
     }
+
+    public void addrAudio(Audio audio) {
+        audiofiles.add(audio);
+    }
+
 
 
 }

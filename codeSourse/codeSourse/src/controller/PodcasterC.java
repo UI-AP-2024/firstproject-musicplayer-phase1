@@ -18,5 +18,3 @@ public class PodcasterC {
         System.out.println("Podcast '" + title + "' published successfully by " + podcaster.getFullName() + ".");
     }
 }
-
-

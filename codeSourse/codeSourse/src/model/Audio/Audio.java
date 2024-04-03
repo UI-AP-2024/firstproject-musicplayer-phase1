@@ -4,7 +4,7 @@ import model.Genre;
 
 import java.util.Date;
 
-public abstract class Audio {
+public class Audio {
     private int uniqeId;
     private String title;
     private String artist;
