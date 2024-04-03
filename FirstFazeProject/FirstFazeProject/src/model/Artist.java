@@ -2,8 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
-public class Artist extends UserAccount{
+public class Artist extends UserAccount {
     private Double income;
     private ArrayList<UserAccount> followers = new ArrayList<>();
     private String biography;
@@ -35,5 +36,9 @@ public class Artist extends UserAccount{
 
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    public double audiosTimesPlayed() {
+        return 0;
     }
 }

@@ -675,6 +675,18 @@ public class AccountController {
                 }
                 AccountView.getAccountView().showResult(result);
                 AccountView.getAccountView().showArtistLoginPanel(artist);
+            case "CalculateEarnings":
+                result = new StringBuilder("The income of the artist is : ");
+                if (artist instanceof Singer){
+                    result.append(artist.audiosTimesPlayed());
+                    AccountView.getAccountView().showArtistLoginPanel(artist);
+                }else if ( artist instanceof Podcaster){
+                    result.append(artist.audiosTimesPlayed());
+                    AccountView.getAccountView().showArtistLoginPanel(artist);
+                }
+                break;
+            case "NewAlbum" :
+
         }
     }
 }
