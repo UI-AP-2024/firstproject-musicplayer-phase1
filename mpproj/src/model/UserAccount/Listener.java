@@ -1,11 +1,11 @@
 package model.UserAccount;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
+
 import model.Audio.*;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.Map;
+
 import model.*;
 
 public class Listener extends User{
@@ -16,8 +16,7 @@ public class Listener extends User{
     private ArrayList<Genre> favoriteGenre;
     private  int playlistcounter;
     private ArrayList<Artist>followings;
-//ارΟخ اتمام اشتراک )از نوع کلاس  - Dateدر صورتی که حساب شنونده عادی است،
-//اΞن فیلد  nullخواهد بود.
+
     public Listener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth,int credit) {
         super(username, password, fullName, email, phoneNumber, dateOfBirth);
         this.credit=credit;
@@ -25,6 +24,7 @@ public class Listener extends User{
         favoriteGenre=new ArrayList<>();
         followings=new ArrayList<>();
         endSubDate=new Date();
+        listeningHistory=new HashMap<>();
     }
     @Override
     public String toString() {

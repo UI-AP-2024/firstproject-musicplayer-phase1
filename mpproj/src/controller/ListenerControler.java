@@ -11,8 +11,11 @@ import java.util.regex.Pattern;
 public class ListenerControler {
     private Listener listenerr;
     private static ListenerControler listenerControler;
-
+    Map<Genre,Integer>genreScore;
+    Map<Artist,Integer>artistScore;
     private ListenerControler() {
+        genreScore=new HashMap<>();
+        artistScore=new HashMap<>();
     }
 
     public static ListenerControler getListenerControler() {
@@ -171,7 +174,10 @@ public class ListenerControler {
         for (Audio audio:Database.getDatabase().getAudios()){
             if(audio.getId()==audioId){
                 audio.setLikes(audio.getLikes()+1);
-                genreScore.put(audio.getGenre(),genreScore.get(audio)+1);
+                if(genreScore.containsKey(audio.getGenre())) {
+                    genreScore.put(audio.getGenre(), genreScore.get(audio) + 1);
+                }else
+                    genreScore.put(audio.getGenre(),1);
                 return "liked "+audio.getTitle();
             }
         }
@@ -408,8 +414,7 @@ public class ListenerControler {
         }
         return "befor :"+str+", now :"+listenerr.getEndSubDate().toString();
     }
-        Map<Genre,Integer>genreScore=new HashMap<>();
-        Map<Artist,Integer>artistScore=new HashMap<>();
+
     public String suggestAudio(int n){
         Map.Entry<Integer,Integer>[] arrmap=listenerr.getListeningHistory().entrySet().toArray(new Map.Entry[listenerr.getListeningHistory().size()]);
         for (int i = 0; i <arrmap.length-1 ; i++) {

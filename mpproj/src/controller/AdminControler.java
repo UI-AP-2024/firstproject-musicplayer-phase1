@@ -66,6 +66,9 @@ public class AdminControler {
         admin.setIsLogin(false);
         return "logout successfull";
     }
+    public String accountInfo(){
+        return admin.toString();
+    }
     public String lookReport(){
         StringBuilder result=new StringBuilder("reports :\n");
         ArrayList<Report> reports= Database.getDatabase().getReports();

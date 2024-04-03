@@ -32,9 +32,9 @@ public class AdminViewer {
          else if (answers[0].equals("Audio"))
             audioInfo();
         else if (answers[0].equals("AccountInfo"))
-            artist();
+            accountinfo();
         else if (answers[0].equals("Statistic"))
-            artist();
+            statistic();
         else if (answers[0].equals("Artist"))
             artist();
          else if (answers[0].equals("Reports"))
@@ -44,7 +44,14 @@ public class AdminViewer {
             getAnswer();
         }
     }
-    protected
+    public void statistic(){
+        print(AdminControler.getAdminControler().lookMostLikeAudio());
+        getAnswer();
+    }
+    public void accountinfo(){
+        print(AdminControler.getAdminControler().accountInfo());
+        getAnswer();
+    }
     public void audioInfo(){
         print(AdminControler.getAdminControler().lookAudioInfo(Integer.parseInt(answers[1])));
         getAnswer();
