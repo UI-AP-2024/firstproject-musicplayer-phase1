@@ -1,7 +1,10 @@
 package controller;
 
+import com.sun.jdi.connect.Connector;
 import model.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,34 +66,32 @@ public class ListenerController {
 
     public String createPlaylist(String name) {
         if (getUserAccount() instanceof Free) {
-            countPlaylist++;
-            if (countPlaylist <= ((Free) getUserAccount()).getLimitNumberPlaylist()) {
-                Playlist playlist = new Playlist(countPlaylist, name, getUserAccount().getUserName(), null);
+            ((Free) getUserAccount()).setCountNumberPlaylist(((Free) getUserAccount()).getCountNumberPlaylist()+1);
+            if (((Free) getUserAccount()).getCountNumberPlaylist() <= ((Free) getUserAccount()).getLimitNumberPlaylist()) {
+                Playlist playlist = new Playlist(((Free) getUserAccount()).getCountNumberPlaylist(), name, getUserAccount().getUserName(), null);
                 ((Free) getUserAccount()).getPlaylists().add(playlist);
                 return "The playlist was created successfully";
             } else {
-                countPlaylist--;
+                ((Free) getUserAccount()).setCountNumberPlaylist(((Free) getUserAccount()).getCountNumberPlaylist()-1);
                 return "You are allowed to create 3 playlists";
             }
 
         } else if (getUserAccount() instanceof Premium) {
-            countPlaylist++;
-            Playlist playlist = new Playlist(countPlaylist, name, getUserAccount().getUserName(), null);
+            ((Premium) getUserAccount()).setCountNumberPlaylistP(((Premium) getUserAccount()).getCountNumberPlaylistP()+1);
+            Playlist playlist = new Playlist(((Premium) getUserAccount()).getCountNumberPlaylistP(), name, getUserAccount().getUserName(), null);
             ((Premium) getUserAccount()).getPlaylists().add(playlist);
             return "The playlist was created successfully";
         } else
             return "ERORR create playlist";
     }
 
-    private static int countAddAudioPlaylist = 0;
-
     public String addAudioToPlaylist(String nameOfPlaylist, long id) {
         if (getUserAccount() instanceof Free) {
             for (Playlist playlist : ((Free) getUserAccount()).getPlaylists()) {
-                if (playlist.getNameOfPlaylist().equals(nameOfPlaylist) && countAddAudioPlaylist < ((Free) getUserAccount()).getLimitAddSong()) {
+                if (playlist.getNameOfPlaylist().equals(nameOfPlaylist) && ((Free) getUserAccount()).getCountAddSong() < ((Free) getUserAccount()).getLimitAddSong()) {
                     for (Audio audio : playlist.getListAudio()) {
                         if (audio.getId() == id) {
-                            countPlaylist++;
+                            ((Free) getUserAccount()).setCountAddSong(((Free) getUserAccount()).getCountAddSong()+1);
                             playlist.getListAudio().add(audio);
                             ((Free) getUserAccount()).getPlaylists().remove(playlist);
                             ((Free) getUserAccount()).getPlaylists().add(playlist);
@@ -99,7 +100,7 @@ public class ListenerController {
                     }
                 }
             }
-            if (countPlaylist >= ((Free) getUserAccount()).getLimitAddSong())
+            if (((Free) getUserAccount()).getCountAddSong() >= ((Free) getUserAccount()).getLimitAddSong())
                 return "You are allowed to add only 10 audio files";
             else
                 return "The name of the playlist or the ID of the audio file is wrong";
@@ -108,7 +109,6 @@ public class ListenerController {
                 if (playlist.getNameOfPlaylist().equals(nameOfPlaylist)) {
                     for (Audio audio : playlist.getListAudio()) {
                         if (audio.getId() == id) {
-                            countPlaylist++;
                             playlist.getListAudio().add(audio);
                             ((Premium) getUserAccount()).getPlaylists().remove(playlist);
                             ((Premium) getUserAccount()).getPlaylists().add(playlist);

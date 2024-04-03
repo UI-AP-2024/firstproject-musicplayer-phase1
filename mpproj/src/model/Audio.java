@@ -13,6 +13,12 @@ public abstract class Audio {
     private String audioLink;
     private String cover;
 
+    public String toString(){
+        String result = "";
+        result += "Audio Id: "+getId()+"\tAudio Name: "+getName()+"\tArtist name: "+getNameArtist()+"\tPlays: "+getNumberOfPlays()+"\tLike: "+getNumberOfLikes()+"\tDate of release: "+String.valueOf(getDateOfRelease())+"\tGener: "+String.valueOf(getGener())+"\tLink: "+getAudioLink()+"\tCover: "+getCover();
+        return result;
+    }
+
     public Audio(long id, String name, String nameArtist, Date dateOfRelease, Gener gener, String audioLink, String cover) {
         this.id = id;
         this.name = name;

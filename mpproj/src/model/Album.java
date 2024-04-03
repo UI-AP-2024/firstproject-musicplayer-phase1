@@ -15,6 +15,20 @@ public class Album {
         this.musicList = musicList;
     }
 
+    public String toString(){
+        String result = "";
+        result += "Album Id: "+getId()+"\tAlbum Name: "+getName()+"\tSinger Name: "+getSingerName();
+        String result2 = "";
+        for ( Music music : getMusicList()){
+            result2 += music+"\n";
+        }
+        if ( result2.equals(""))
+            result += "\nMusics: empty";
+        else
+            result += "\nMusics:\n "+result2;
+        return result;
+    }
+
     public long getId() {
         return id;
     }

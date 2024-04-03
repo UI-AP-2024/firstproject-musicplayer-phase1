@@ -5,6 +5,11 @@ public class Report {
     private Artist artist;
     private String description;
 
+    public String toString(){
+        String result = "";
+        result += "Reporting user: "+getUser().getUserName()+"\tReported artist: "+getArtist().getUserName()+"\nDescription: "+getDescription();
+    }
+
     public Report(UserAccount user, Artist artist, String description) {
         this.user = user;
         this.artist = artist;

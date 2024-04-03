@@ -10,6 +10,12 @@ public abstract class UserAccount {
     private String phoneNumber;
     private Date dateOfBirth;
 
+    public String toString(){
+        String result = "";
+        result += "Username: "+getUserName()+"\tName: "+getName()+"\tEmail: "+getEmail();
+        return result;
+    }
+
     public UserAccount(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth) {
         this.userName = userName;
         this.password = password;

@@ -8,6 +8,21 @@ public class Artist extends UserAccount{
     private ArrayList<UserAccount> listFollowers;
     private String bio;
 
+    @Override
+    public String toString(){
+        String result = "";
+        result += super.toString()+"\tBio: "+getBio();
+        String foll = "";
+        for ( UserAccount userAccount1 : getListFollowers()){
+            foll += "Username: "+getUserName()+"\tname: "+getName()+"\n";
+        }
+        if (foll.equals(""))
+            result += "\nFollowers: empty";
+        else
+            result += "\nFollowers:\n"+foll;
+        return foll;
+    }
+
     public Artist(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, double income, ArrayList<UserAccount> listFollowers, String bio) {
         super(userName, password, name, email, phoneNumber, dateOfBirth);
         this.income = income;
