@@ -288,4 +288,32 @@ public class ListenerController {
         }
         return "The username entered is not valid";
     }
+
+    public String viewPLaylists(){
+        String result = "";
+        if ( getUserAccount() instanceof Listener){
+            String result1 = "";
+            for ( Playlist playlist : ((Listener) getUserAccount()).getPlaylists()){
+                result1 += playlist+"\n";
+            }
+            if ( result1.equals(""))
+                result = "you do not have playlist";
+            else
+                result = result1;
+        }
+        return result;
+    }
+
+    public String selectPlaylist(String playlistName){
+        if (getUserAccount() instanceof Listener) {
+            for ( Playlist playlist : ((Listener) getUserAccount()).getPlaylists()){
+                if ( playlist.getNameOfPlaylist().equals(playlistName)){
+                    String result = "";
+                    result += playlist;
+                    return result;
+                }
+            }
+        }
+        return "The desired playlist was not found";
+    }
 }
