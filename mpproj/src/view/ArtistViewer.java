@@ -38,6 +38,9 @@ public class ArtistViewer {
             publish();
         } else if (answers[0].equals("AccountInfo")) {
             accountInfo();
+        }else{
+            print("wrong command");
+            getAnswer();
         }
     }
     public void followers(){
@@ -69,7 +72,7 @@ public class ArtistViewer {
     }
     public void logout(){
         print(ArtistControler.getArtistControler().logout());
-        getAnswer();
+        MainViewer.getMainViewer().getanswer();
     }
     private void print(Object object){
         System.out.println(object);

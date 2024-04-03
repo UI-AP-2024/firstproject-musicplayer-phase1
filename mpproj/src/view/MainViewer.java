@@ -1,5 +1,6 @@
 package view;
 
+import controller.AdminControler;
 import controller.ArtistControler;
 import controller.ListenerControler;
 
@@ -8,6 +9,9 @@ import java.util.Scanner;
 
 public class MainViewer {
     private static MainViewer mainViewer;
+    Scanner sc = new Scanner(System.in);
+    private String answer;
+    String[] answers;
 
     public MainViewer() {
     }
@@ -17,31 +21,81 @@ public class MainViewer {
             mainViewer=new MainViewer();
         return mainViewer;
     }
-
-    Scanner sc=new Scanner(System.in);
+    public void getanswer() {
+        answer = sc.nextLine();
+        answers = answer.split("-");
+        if(answers[0].equals("Signup")){
+            signup();
+        } else if (answers[0].equals("Login")) {
+            login();
+        }else{
+            print("wrong command");
+            getanswer();
+        }
+    }
     public void signup(){
-        String answer=sc.nextLine();
-        String[]answers=answer.split("-");
-        String[]dateStr=answers[7].split("/");
-        Date date=new Date(Integer.parseInt(dateStr[0]),Integer.parseInt(dateStr[1]),Integer.parseInt(dateStr[2]));
+        String error1="use valid phone number";
+        String error2="use harder password";
+        String error3="use valid email";
+        String massage;
+        String[]dateStr;
+
+        if(answers[1].equals("L")||answers[1].equals("P")||answers[1].equals("S"))
+             dateStr = answers[7].split("/");
+        else
+            dateStr=answers[6].split("/");
+        Date date = new Date(Integer.parseInt(dateStr[0]), Integer.parseInt(dateStr[1]), Integer.parseInt(dateStr[2]));
         if(answers[1].equals("L")) {
-            print(ListenerControler.getListenerControler().signUpListener(answers[2], answers[3], answers[4], answers[5], answers[6], date));
-            if(ListenerControler.getListenerControler().signUpListener(answers[2], answers[3], answers[4], answers[5], answers[6], date).equals("error : this user name already exist ."))
-                signup();
+            massage=ListenerControler.getListenerControler().signUpListener(answers[2], answers[3], answers[4], answers[5], answers[6],date);
+            print(massage);
+            if(massage.equals("error : this user name already exist .")||massage.equals(error1) || massage.equals(error2) || massage.equals(error3 ))
+                getanswer();
             String favGenre=sc.nextLine();
             String[] favgenres=favGenre.split(",");
             print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],favgenres[1],favgenres[2],favgenres[3]));
-            ListenerViewer.getListenerViewer();
+            ListenerViewer.getListenerViewer().getAnswer();
         }else if(answers[1].equals("P")){
-            print(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P"));
-            if(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P").equals("error : this user name already exist ."))
-                signup();
+            massage=ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P");
+            print(massage);
+            if(massage.equals("error : this user name already exist .")||massage.equals(error1) || massage.equals(error2) || massage.equals(error3 ))
+                getanswer();
             ArtistViewer.getArtistViewer().getAnswer();
         }else if(answers[1].equals("S")){
-            print(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"S"));
-            if(ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P").equals("error : this user name already exist ."))
-                signup();
+            massage=ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"S");
+            print(massage);
+            if(massage.equals("error : this user name already exist .")||massage.equals(error1) || massage.equals(error2) || massage.equals(error3 ) )
+                getanswer();
             ArtistViewer.getArtistViewer().getAnswer();
+        }else{
+            String[]dateStr1=answers[6].split("/");
+            Date date1=new Date(Integer.parseInt(dateStr1[0]),Integer.parseInt(dateStr1[1]),Integer.parseInt(dateStr1[2]));
+            massage=AdminControler.getAdminControler().signUpAdmin(answers[1], answers[2], answers[3], answers[4], answers[5], date);
+            print(massage);
+            if(massage.equals("error : this user name already exist .") ||massage.equals(error1) || massage.equals(error2) || massage.equals(error3 ))
+                getanswer();
+            AdminViewer.getAdminViewer().getAnswer();
+        }
+    }
+    public void login(){
+        String message;
+        if(answers[1].equals("L")){
+            message=ListenerControler.getListenerControler().login(answers[2],answers[3]);
+            print(message);
+            if(message.equals("error : user name or password is wrong"))
+                getanswer();
+            ListenerViewer.getListenerViewer().getAnswer();
+        } else if (answers[1].equals("A")) {
+            message=ArtistControler.getArtistControler().login(answers[2],answers[3]);
+            print(message);
+            if(message.equals("error : user name or password is wrong"))
+                getanswer();
+            ArtistViewer.getArtistViewer().getAnswer();
+        }else{
+            message=AdminControler.getAdminControler().login(answers[2],answers[3]);
+            print(message);
+            if(message.equals("error : user name or password is wrong"))
+                getanswer();
+            AdminViewer.getAdminViewer().getAnswer();
         }
     }
     private void print(Object object){

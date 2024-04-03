@@ -15,7 +15,7 @@ public class Regex {
 
     private static Regex regex1;
     public static boolean phoneRegex(String phoneNumber) {
-        Pattern pattern = Pattern.compile("^\\+\\d{11,12}$");
+        Pattern pattern = Pattern.compile("^09+\\d{9}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
