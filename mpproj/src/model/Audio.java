@@ -12,6 +12,15 @@ public abstract class Audio {
     private Gener gener;
     private String audioLink;
     private String cover;
+    private static int countId=0;
+
+    public static int getCountId() {
+        return countId;
+    }
+
+    public static void setCountId(int countId) {
+        Audio.countId = countId;
+    }
 
     public String toString(){
         String result = "";

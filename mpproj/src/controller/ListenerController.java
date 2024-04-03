@@ -214,7 +214,7 @@ public class ListenerController {
             String[] str = detail.split("/");
             Date date = new Date(Integer.valueOf(str[0])-1900,Integer.valueOf(str[1])-1,Integer.valueOf(str[2]));
             for ( Audio audio : Database.getDataBase().getAudio() ){
-                if ( date.equals( audio.getDateOfRelease() ) ){
+                if ( audio.getDateOfRelease().getYear()==date.getYear() && audio.getDateOfRelease().getMonth()==date.getMonth() && audio.getDateOfRelease().getDay()==date.getDay()){
                     result += "\n"+audio;
                 }
             }
