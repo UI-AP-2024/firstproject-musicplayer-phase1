@@ -197,7 +197,7 @@ public class ListenerController {
         StringBuilder message = new StringBuilder();
 
         ArrayList<ArtistModel> artists = findArtists();
-        List<ArtistModel> searchArtist = artists.stream().filter(artist -> artist.getFullName().equals(search)).toList();
+        List<ArtistModel> searchArtist = artists.stream().filter(artist -> artist.getUsername().equals(search)).toList();
         ArrayList<AudioModel> audios = Database.getDatabase().getAudios();
 
         if(!(searchArtist.isEmpty())) {
