@@ -242,4 +242,35 @@ public class ListenerController {
         }
         return "No artist was found with the entered username";
     }
+
+    public String viewListArtist(){
+        String result = "";
+        for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1 instanceof Artist){
+                result += "\nUsername: "+userAccount1.getUserName()+"\tName: "+userAccount1.getName();
+            }
+        }
+        if ( result.equals(""))
+            result = "empty";
+        return result;
+    }
+
+    public String viewInfoArtist(String userName){
+        String result = "";
+        for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1.getUserName().equals(userName)){
+                if ( userAccount1 instanceof Artist){
+                    if ( userAccount1 instanceof Podcaster)
+                        result += userAccount1;
+                    else if ( userAccount1 instanceof Singer)
+                        result += userAccount1;
+                }
+                break;
+            }
+        }
+        if ( result.equals(""))
+            return "The username entered is not valid";
+        else
+            return result;
+    }
 }
