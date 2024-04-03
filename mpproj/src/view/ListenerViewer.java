@@ -85,13 +85,9 @@ public class ListenerViewer {
         else if (answers[1].equals("D")) {
             String[] dateStr1 = answers[2].split("/");
             Date startDate=new Date(Integer.parseInt(dateStr1[0]),Integer.parseInt(dateStr1[1]),Integer.parseInt(dateStr1[2]));
-            if(answers[3]!=null) {
                 String[] dateStr2 = answers[3].split("/");
                 Date endDate=new Date(Integer.parseInt(dateStr2[0]),Integer.parseInt(dateStr2[1]),Integer.parseInt(dateStr2[2]));
                 print(ListenerControler.getListenerControler().filterDate(startDate,endDate));
-            } else  {
-                print(ListenerControler.getListenerControler().filterDate(startDate));
-            }
         }
         getAnswer();
     }

@@ -454,7 +454,10 @@ public class ListenerControler {
         for(Audio audio:audioArrayList) {
             for(User user:Database.getDatabase().getUsers()){
                 if(user.getFullName().equals(audio.getArtistName())){
-                    score+=artistScore.get(user);
+                    if(!(artistScore.containsKey(user))){
+                        artistScore.putIfAbsent((Artist) user,1);
+                    }else
+                        score+=artistScore.get(user);
                     score+=genreScore.get(audio.getGenre());
                     scores.add(score);
                 }
@@ -462,7 +465,7 @@ public class ListenerControler {
         }
         for (int i = 0; i < scores.size()-1; i++) {
             for (int j = 0; j < scores.size()-1-i; j++) {
-                if(scores.get(j)<scores.get(j+1)){
+                if(scores.get(j)>scores.get(j+1)){
                     Audio tmp=audioArrayList.get(j+1);
                     audioArrayList.set(j+1,audioArrayList.get(j));
                     audioArrayList.set(j,tmp);
