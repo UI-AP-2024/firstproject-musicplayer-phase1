@@ -679,14 +679,27 @@ public class AccountController {
                 result = new StringBuilder("The income of the artist is : ");
                 if (artist instanceof Singer){
                     result.append(artist.audiosTimesPlayed());
+                    AccountView.getAccountView().showResult(result);
                     AccountView.getAccountView().showArtistLoginPanel(artist);
                 }else if ( artist instanceof Podcaster){
                     result.append(artist.audiosTimesPlayed());
+                    AccountView.getAccountView().showResult(result);
                     AccountView.getAccountView().showArtistLoginPanel(artist);
                 }
                 break;
             case "NewAlbum" :
-
+                Album newAlbum = new Album(answers[1] , artist.getUniqueUserName());
+                if (artist instanceof Singer){
+                    ArrayList<Album> backUp = ((Singer) artist).getAlbums();
+                    backUp.add(newAlbum);
+                    ((Singer) artist).setAlbums(backUp);
+                    AccountView.getAccountView().showResult(new StringBuilder("The album was made successfully"));
+                    AccountView.getAccountView().showArtistLoginPanel(artist);
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The album was not made cause the artist is not a singer"));
+                AccountView.getAccountView().showArtistLoginPanel(artist);
+                break;
+                
         }
     }
 }
