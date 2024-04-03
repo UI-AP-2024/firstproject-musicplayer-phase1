@@ -28,16 +28,20 @@ public class View
             {
                 if(orders[1].compareTo("L")==0)
                 {
-                    System.out.println(ListenerController.getListenerController().makeNewListener(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7]));
-                    System.out.println("Choose maximum 4 favorite genres from genres below:\n"+ListenerController.getListenerController().getGenres());
-                    String favInputGenre=input.nextLine();
-                    String[] inputSplit=favInputGenre.split("-");
-                    String[] genres=inputSplit[1].split(",");
-                    int counter=0;
-                    while(counter<4 && counter<genres.length)
+                    String validOrNot=ListenerController.getListenerController().makeNewListener(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7]);
+                    System.out.println(validOrNot);
+                    if(validOrNot.compareTo("Signed up successfully")==0)
                     {
-                        if(ListenerController.getListenerController().addFavGenres(genres[counter]))
-                            counter++;
+                        System.out.println("Choose maximum 4 favorite genres from genres below:\n"+ListenerController.getListenerController().getGenres());
+                        String favInputGenre=input.nextLine();
+                        String[] inputSplit=favInputGenre.split("-");
+                        String[] genres=inputSplit[1].split(",");
+                        int counter=0;
+                        while(counter<4 && counter<genres.length)
+                        {
+                            if(ListenerController.getListenerController().addFavGenres(genres[counter]))
+                                counter++;
+                        }
                     }
                 }
                 else if(orders[1].compareTo("S")==0 || orders[1].compareTo("P")==0)
