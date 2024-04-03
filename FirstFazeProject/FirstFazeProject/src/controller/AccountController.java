@@ -76,6 +76,26 @@ public class AccountController {
         Database.getData().setAllUsers(backUp);
     }
 
+    public void loginPanel(String answer) {
+        String[] answers = answer.split(" -");
+        for (UserAccount userAccount : Database.getData().getAllUsers()) {
+            if (Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
+                if (Objects.equals(userAccount.getPassword(), answers[2])) {
+                    if (userAccount instanceof Listener) {
+                        String type = "Listener";
+                        AccountView.getAccountView().successfullyLogin(userAccount, type);
+                    } else if (userAccount instanceof Admin) {
+                        String type = "Admin";
+                        AccountView.getAccountView().successfullyLogin(userAccount, type);
+                    } else if (userAccount instanceof Singer || userAccount instanceof Podcaster) {
+                        String type = "Artist";
+                        AccountView.getAccountView().successfullyLogin(userAccount, type);
+                    }
+                }
+            }
+        }
+    }
+
     public StringBuilder showGenres() {
         int counter = 1;
         StringBuilder result = new StringBuilder("The genres are : ");
@@ -99,26 +119,6 @@ public class AccountController {
             }
         }
         person.setFavoriteGenres(result);
-    }
-
-    public void loginPanel(String answer) {
-        String[] answers = answer.split(" -");
-        for (UserAccount userAccount : Database.getData().getAllUsers()) {
-            if (Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
-                if (Objects.equals(userAccount.getPassword(), answers[2])) {
-                    if (userAccount instanceof Listener) {
-                        String type = "Listener";
-                        AccountView.getAccountView().successfullyLogin(userAccount, type);
-                    } else if (userAccount instanceof Admin) {
-                        String type = "Admin";
-                        AccountView.getAccountView().successfullyLogin(userAccount, type);
-                    } else if (userAccount instanceof Singer || userAccount instanceof Podcaster) {
-                        String type = "Artist";
-                        AccountView.getAccountView().successfullyLogin(userAccount, type);
-                    }
-                }
-            }
-        }
     }
 
     public void loginListenerPanelOrders(Listener listener, String answer) {

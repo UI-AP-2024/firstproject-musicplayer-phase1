@@ -64,6 +64,18 @@ public class AccountView {
                 showMainMenu();
         }
     }
+
+    public void successfullyLogin(UserAccount person , String type){
+        System.out.println("You have login to your panel, now you can use the program ✌");
+        if (Objects.equals(type, "Listener")) {
+            showListenerLoginPanel(person);
+        }else if (Objects.equals(type, "Admin")){
+            showAdminLoginPanel(person);
+        }else if (Objects.equals(type, "Artist")){
+            showArtistLoginPanel(person);
+        }
+    }
+
     public void showGenresMenu(){
         System.out.println("Please choose 4 of the genres below 🎼");
         System.out.println(AccountController.getAccountController().showGenres());
@@ -86,16 +98,7 @@ public class AccountView {
         String answer = inp.nextLine();
         AccountController.getAccountController().loginAdminPanelOrders((Admin)person,answer);
     }
-    public void successfullyLogin(UserAccount person , String type){
-        System.out.println("You have login to your panel, now you can use the program ✌");
-        if (Objects.equals(type, "Listener")) {
-            showListenerLoginPanel(person);
-        }else if (Objects.equals(type, "Admin")){
-            showAdminLoginPanel(person);
-        }else if (type == "Artist"){
-            showArtistLoginPanel(person);
-        }
-    }
+
     public void showResult(StringBuilder result){
         System.out.println(result);
     }
