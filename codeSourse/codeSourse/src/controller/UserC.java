@@ -3,6 +3,8 @@ package controller;
 import model.*;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
+import model.AccountUser.Artist.TypeOfArtist.Podcaster;
+import model.AccountUser.Artist.TypeOfArtist.Singer;
 import model.AccountUser.Listener.Listener;
 import model.AccountUser.Listener.TypeOfListener.FreeListener;
 import model.AccountUser.Listener.TypeOfListener.PremiumListener;
@@ -16,6 +18,119 @@ import java.util.stream.Collectors;
 
 public class UserC {
 
+    private Map<String, Listener> users = new HashMap<>();
+
+    //*********************************************
+
+    public Map<String, Listener> getUsers() {
+        return users;
+    }
+
+    public void registerUser() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Please enter userName: ");
+        String userName = scanner.nextLine();
+
+        if (users.containsKey(userName)) {
+            System.out.println("Error: userName already exists.");
+            return;
+        }
+
+        //*********************************************
+
+        System.out.print("Please enter fullName: ");
+        String fullName = scanner.nextLine();
+
+        //*********************************************
+
+        System.out.print("Please enter birthDate (yyyy-MM-dd): ");
+        String birthDateStr = scanner.nextLine();
+        Date birthDate;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            birthDate = dateFormat.parse(birthDateStr);
+        } catch (ParseException e) {
+            System.out.println("Invalid birthDate format.");
+            return;
+        }
+
+        //*********************************************
+
+        System.out.print("Please enter email: ");
+        String email = scanner.nextLine();
+        if (!isValidUserEmail(email)) {
+            System.out.println("Invalid email.");
+            return;
+        }
+
+        //*********************************************
+
+        System.out.print("Please enter password: ");
+        String password = scanner.nextLine();
+        if (!isValidPassword(password)) {
+            System.out.println("Invalid password.");
+            return;
+        }
+
+        //*********************************************
+
+        System.out.print("Please enter phoneNumber: ");
+        String phoneNumber = scanner.nextLine();
+        if (!isValidPhoneNumber(phoneNumber)) {
+            System.out.println("Invalid phoneNumber.");
+            return;
+        }
+
+        //*********************************************
+        Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
+        newUser.setFavoriteGenres(selectFavoriteGenres());
+        newUser.setAccountBalance(50.0);
+        Database.getDatabase().getUsers().add(newUser);
+
+        users.put(userName, newUser);
+    }
+
+    //*********************************************
+    private static boolean isValidUserEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(\\S+)$";
+        return email.matches(emailRegex);
+    }
+
+    private static boolean isValidPassword(String password) {
+        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$";
+        return password.matches(passwordRegex);
+    }
+
+    private static boolean isValidPhoneNumber(String phoneNumber) {
+        String phoneRegex = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$";
+        return phoneNumber.matches(phoneRegex);
+    }
+
+    //*********************************************
+
+    private List<Genre> selectFavoriteGenres() {
+        List<Genre> favoriteGenres = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Please select your favorite genres (maximum 4):");
+        Genre[] genres = Genre.values();
+        for (int i = 0; i < genres.length; i++) {
+            System.out.println((i + 1) + ". " + genres[i]);
+        }
+        System.out.println("Enter the numbers corresponding to your favorite genres (separated by commas):");
+        String input = scanner.nextLine();
+        String[] numbers = input.split("-");
+        for (String number : numbers) {
+            int index = Integer.parseInt(number.trim()) - 1;
+            if (index >= 0 && index < genres.length && favoriteGenres.size() < 4) {
+                favoriteGenres.add(genres[index]);
+            }
+        }
+        return favoriteGenres;
+    }
+
+   //**********************************************
     private List<Audio> likeAudis;
 
     public void addAudio(Playlist playlist, String audio) {
@@ -111,7 +226,7 @@ public class UserC {
         System.out.println(" is now following " + artist.getUserName());
     }
 
-    private List<Artist> followedArtists;
+    private static List<Artist> followedArtists;
 
     public UserC() {
         this.followedArtists = new ArrayList<>();
@@ -135,7 +250,7 @@ public class UserC {
         userReport.setReportingUser(report.getReportingUser());
         userReport.setReportedArtist(report.getReportedArtist());
         userReport.setDescription(report.getDescription());
-        Database.addreport(userReport);
+        Database.getDatabase().getReports().add(userReport);
 
     }
 
@@ -212,7 +327,7 @@ public class UserC {
 
 
 
-        public List<Audio> recommendSongs(Listener user, List<Audio> allAudios) {
+        public static List<Audio> recommendSongs(Listener user, List<Audio> allAudios, List<Audio> likeAudis) {
             List<Audio> recommendedSongs = new ArrayList<>();
 
             List<Genre> favoriteGenres = user.getFavoriteGenres();
@@ -228,7 +343,7 @@ public class UserC {
             return recommendedSongs.subList(0, Math.min(10, recommendedSongs.size()));
         }
 
-        public List<Artist> findArtistsWithBestMatch(Listener user, List<Audio> allAudios) {
+        public static List<Artist> findArtistsWithBestMatch(Listener user, List<Audio> allAudios) {
             List<Artist> artistsWithBestMatch = new ArrayList<>();
 
             List<Artist> followingArtists = followedArtists;
@@ -244,7 +359,7 @@ public class UserC {
             return artistsWithBestMatch;
         }
 
-        private boolean artistHasMatchingGenres(Artist artist, List<Genre> favoriteGenres, List<Audio> allAudios) {
+        private static boolean artistHasMatchingGenres(Artist artist, List<Genre> favoriteGenres, List<Audio> allAudios) {
             for (Audio audio : allAudios) {
                 if (artist.equals(audio.getArtist()) && favoriteGenres.contains(audio.getGenre())) {
                     return true;
@@ -253,7 +368,7 @@ public class UserC {
             return false;
         }
 
-        private List<Audio> selectSongsWithBestMatch(List<Audio> allAudios, List<Genre> favoriteGenres, List<Artist> artistsWithBestMatch, List<Audio> likedAudios) {
+        private static List<Audio> selectSongsWithBestMatch(List<Audio> allAudios, List<Genre> favoriteGenres, List<Artist> artistsWithBestMatch, List<Audio> likedAudios) {
             List<Audio> selectedSongs = new ArrayList<>();
 
             for (Audio audio : allAudios) {
@@ -274,7 +389,35 @@ public class UserC {
             System.out.println("User is not a listener. Cannot increase account balance.");
         }
     }
+
+    static void showUserPanel() {
+
+    }
+
+    public static void login(String username, String password) {
+        boolean userFound = false;
+        for (AccountUser user : Database.getDatabase().getUsers()) {
+            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                userFound = true;
+                if (user instanceof Listener) {
+                    System.out.println("You are a listener. Opening listener panel...");
+                    showUserPanel();
+                } else if (user instanceof Podcaster) {
+                    System.out.println("You are a podcaster. Opening podcaster panel...");
+                    showUserPanel();
+                } else if (user instanceof Singer) {
+                    System.out.println("You are a singer. Opening singer panel...");
+                    showUserPanel();
+                }
+                break;
+            }
+        }
+        if (!userFound) {
+            System.out.println("Invalid username or password. Please try again.");
+        }
+    }
 }
+
 
 
 

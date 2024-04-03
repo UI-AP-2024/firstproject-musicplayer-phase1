@@ -7,41 +7,48 @@ import model.Audio.Audio;
 import java.util.*;
 
 public class Database {
-    private static Database instance;
-    private List<AccountUser> users;
-    private static List<Audio> audiofiles;
-    private static List<Report> reports;
+    private static Database database;
+    private  static ArrayList<AccountUser> users;
+    private static ArrayList<Audio> audiofiles;
+    private static ArrayList<Report> reports;
 
     //*********************************************
     public Database() {
-        users = new ArrayList<>();
-        audiofiles = new ArrayList<Audio>();
-        reports = new ArrayList<>();
+        this.users = new ArrayList<>();
+        this.audiofiles = new ArrayList<>();
+        this.reports = new ArrayList<>();
 
     }
     //*********************************************
 
-    public static Database getInstance() {
-        if (instance == null) {
-            instance = new Database();
+    public static Database getDatabase() {
+        if (database == null) {
+            database = new Database();
         }
-        return instance;
+        return database;
     }
-
-    public static void addreport(Report userReport) {
-        reports.add(userReport);
-    }
-
 
     //*********************************************
 
-    public void addUser(Listener user){
-        users.add(user);
+    public ArrayList<AccountUser> getUsers(){
+        return users;
+    }
+    public void setUsers(ArrayList<AccountUser> users){
+        this.users = users;
+    }
+    public ArrayList<Audio> getAudiofiles() {
+        return audiofiles;
+    }
+    public void setAudiofiles(ArrayList<Audio> audiofiles){
+        this.audiofiles = audiofiles;
+    }
+    public ArrayList<Report> getReports(){
+        return reports;
+    }
+    public void setReports(ArrayList<Report> reports){
+        this.reports = reports;
     }
 
-    public void addrAudio(Audio audio) {
-        audiofiles.add(audio);
-    }
 
 
 
