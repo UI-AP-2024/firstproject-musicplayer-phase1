@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -299,6 +300,24 @@ public class ListenerController {
             else return "you dont have a play list with this name , make sure you typed it correctly";
         }
         return txt;
+    }
+
+    public void suggestion(){
+        Map<Long,Long> map = getListener().getAudioPlays();
+        Map.Entry<Long,Long>[] arrmap =map.entrySet().toArray(new Map.Entry[map.size()]);
+        for (int i = 0; i < arrmap.length-1; i++) {
+            for (int j = i+1; j < arrmap.length; j++) {
+                if(arrmap[j].getValue()>arrmap[i].getValue()){
+                    Map.Entry<Long,Long> tmp = arrmap[i];
+                    arrmap[i] = arrmap[j];
+                    arrmap[j] =tmp;
+                }
+            }
+        }
+        ArrayList<Long> artists = new ArrayList<>();
+        
+
+
     }
     
     

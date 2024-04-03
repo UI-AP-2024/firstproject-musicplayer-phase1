@@ -1,16 +1,12 @@
 package view;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import controller.ArtistController;
 import controller.AudioController;
-import controller.FreeController;
 import controller.ListenerController;
-import controller.PodcasterController;
 import controller.SingerController;
 import controller.UserController;
-import model.audio.Genre;
 import model.user.Artist;
 import model.user.Listener;
 import model.user.Podcaster;
@@ -146,11 +142,11 @@ public class DebugView {
                         "-[birthdate in year month day format] with a space in between and your biographi");
         String bio = "this is me maryam dar please supportme thanks";
         String bion = null;
-        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'S',bio);
+        String txt = UserController.getUserController().signupNewUser("Maryaol","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005","S",bio);
         System.out.println(txt);
-        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bion);
+        txt = UserController.getUserController().signupNewUser("Maryaoh","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005","L",bion);
         System.out.println(txt);
-        txt = UserController.getUserController().signupNewUser("Maryaom","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bion);
+        txt = UserController.getUserController().signupNewUser("Maryaom","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005","P",bion);
         System.out.println(txt);
 
         User tmp = UserController.getUserController().findUser("Maryaol", "Maryamdar84#");
@@ -158,7 +154,7 @@ public class DebugView {
         if(tmp instanceof Singer){
             System.out.println("Is Singer");
             SingerController.getSingerController().loginSinger((Singer)tmp);
-            txt = SingerController.getSingerController().ShowAccountInfo();
+            txt = ArtistController.getArtistController().ShowAccountInfo();
             System.out.println(txt);
         }
         if(tmpn instanceof Listener){
@@ -181,7 +177,7 @@ public class DebugView {
         txt=ListenerController.getListenerController().showArtistInfo("Maryaol");
         System.out.println(txt);
 
-        txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'P',bio);
+        txt = UserController.getUserController().signupNewUser("Maryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005","P",bio);
         System.out.println(txt);
 
         txt=ListenerController.getListenerController().showAllArtists();
@@ -269,7 +265,7 @@ public class DebugView {
             System.out.println(txt);
             txt= ListenerController.getListenerController().addAudioPlay((long)1);
             System.out.println(txt);
-            txt= ListenerController.getListenerController().addAudioPlay((long)1);
+            txt= ListenerController.getListenerController().addAudioPlay(1);
             System.out.println(txt);
             txt= AudioController.getAudioController().showLyric((long)1);
 
@@ -280,20 +276,11 @@ public class DebugView {
             System.out.println(txt);
         }
         
-        txt = UserController.getUserController().signupNewUser("loryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005",'L',bio);
+        txt = UserController.getUserController().signupNewUser("loryaof","Maryamdar84#", "MaryamDar", "maryamdar1384@gmail.com","09390555104","10-5-2005","L",bio);
         System.out.println(txt);
         charachter = UserController.getUserController().loginUser("loryaof", "Maryamdar84#");
         if(charachter.equals("L")){
             System.out.println("L");
-            txt= FreeController.getFreeController().createNewPlaylist("play1");
-            System.out.println(txt);
-            txt= FreeController.getFreeController().createNewPlaylist("play2");
-            System.out.println(txt);
-            txt= FreeController.getFreeController().createNewPlaylist("play3");
-            System.out.println(txt);
-            txt= FreeController.getFreeController().createNewPlaylist("play4");
-            System.out.println(txt);
-            
         }
 
 

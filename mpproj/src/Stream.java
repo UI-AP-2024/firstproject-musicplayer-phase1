@@ -1,13 +1,18 @@
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 // import java.util.ArrayList;
 import java.util.Comparator;
 // import java.util.stream.Collectors;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Stream {
     public static void main(String[] args) {
@@ -42,8 +47,34 @@ public class Stream {
         //     .sorted()
         //     .collect(Collectors.toList());
 
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(8760,1);
+        map.put(8769,34);
+        map.put(8762,87);
+        map.put(8765,9);
+
+        // List<Integer> employeeById = new ArrayList<>(audioLikes.values());
+        // Collections.sort(employeeById);
+        // SortedSet<Integer> values = new TreeSet<>(audioLikes.values());
+        // System.out.println(audioLikes);
         
-        
+        Map.Entry<Integer,Integer>[] arrmap =map.entrySet().toArray(new Map.Entry[map.size()]);
+        for (int i = 0; i < arrmap.length-1; i++) {
+            for (int j = i+1; j < arrmap.length; j++) {
+                if(arrmap[j].getValue()>arrmap[i].getValue()){
+                    Map.Entry<Integer,Integer> tmp = arrmap[i];
+                    arrmap[i] = arrmap[j];
+                    arrmap[j] =tmp;
+                }
+            }
+        }
+        for (int i = 0; i < arrmap.length-1; i++) {
+            for (int j = i+1; j < arrmap.length; j++) {
+               System.out.println(arrmap[i].getKey());
+            }
+        }
+
+        System.out.println(arrmap);
         
     }
     

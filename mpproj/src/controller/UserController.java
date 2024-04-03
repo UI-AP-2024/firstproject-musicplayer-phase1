@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.database.Database;
+import model.user.Admin;
 import model.user.Artist;
 import model.user.FreeListener;
 import model.user.Listener;
@@ -32,7 +33,7 @@ public class UserController {
         return matcher.matches();
     }
     public boolean DatePassRegex(String birthDate){
-        Pattern pattern = Pattern.compile("(^0[1-9]|[12][0-9]|3[01])-([1-9]|1[0-2])-(19[0-9]{2}|2[0-9]{3}$)");
+        Pattern pattern = Pattern.compile("(^0[1-9]|[12][0-9]|3[01])/([1-9]|1[0-2])/(19[0-9]{2}|2[0-9]{3}$)");
         Matcher matcher = pattern.matcher(birthDate);
         return matcher.matches();
     }
@@ -53,8 +54,8 @@ public class UserController {
         }
         return true;
     }
-    public String signupNewUser(String username,String password, String name, String emailAddress, String phoneNumber,
-    String birthDate,char type,String bio) throws ParseException{
+    public String signupNewUser(String type,String username,String password, String name, String emailAddress, String phoneNumber,
+    String birthDate,String bio) throws ParseException{
         if(!(emailPassRegex(emailAddress))){
             return"Please enter a valid email address";
         }
@@ -70,23 +71,22 @@ public class UserController {
         if(!(DatePassRegex(birthDate))){
             return"This Date is not valid !please enter a valid one";
         }
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date dateOfbirth = formatter.parse(birthDate);
         switch (type) {
-            case 'L':
-            System.out.println("L");
+            case "L":
             FreeListener listener = new FreeListener(password,username,name, emailAddress, phoneNumber, dateOfbirth, 50);
             Database.getDatabase().addToAllUsers(listener);
+            ListenerController.getListenerController().setListener(listener);
                 
                 break;
         
-            case 'S':
-            System.out.println("S");
+            case "S":
             Singer singer = new Singer(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(singer);
                 break;
         
-            case 'P':
+            case "P":
             Podcaster podcaster = new Podcaster(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
             Database.getDatabase().addToAllUsers(podcaster);
                 break;
@@ -115,6 +115,9 @@ public class UserController {
         if(user instanceof Artist){
             ArtistController.getArtistController().loginArtist((Artist)user);
             return "A";
+        }
+        if(user instanceof Admin){
+            return "Admin";
         }
         return null;
     }
