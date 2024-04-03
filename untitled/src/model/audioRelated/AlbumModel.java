@@ -13,6 +13,7 @@ public class AlbumModel
     {
         this.albumName=albumName;
         this.nameOfArtist=nameOfArtist;
+        albumAmount++;
     }
     public static void setAlbumAmount(long albumAmount)
     {

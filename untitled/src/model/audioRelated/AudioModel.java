@@ -22,6 +22,7 @@ public abstract class AudioModel
         this.link=link;
         this.cover=cover;
         this.releaseDate=Calendar.getInstance();
+        audioAmount++;
     }
     public Calendar getReleaseDate()
     {

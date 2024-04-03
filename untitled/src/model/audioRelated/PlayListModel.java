@@ -13,6 +13,7 @@ public class PlayListModel
     {
         this.playListName=playListName;
         this.creator=creator;
+        amountOfPlaylists++;
     }
     public static void setAmountOfPlaylists(long amountOfPlaylists)
     {

@@ -450,7 +450,6 @@ public class ListenerController
         }
         else if((getListener() instanceof PremiumListenerModel && ((PremiumListenerModel)getListener()).getRemainingDays()>0) || (getListener() instanceof FreeListenerModel && ((FreeListenerModel) getListener()).getCreatedPlayLists()<FreeListenerModel.getPlayListLimit()))
         {
-            PlayListModel.setAmountOfPlaylists(PlayListModel.getAmountOfPlaylists()+1);
             PlayListModel temp=new PlayListModel(playlistName,getListener().getUserName());
             long playListID=0;
             char[] userName=getListener().getUserName().toCharArray();

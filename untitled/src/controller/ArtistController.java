@@ -102,7 +102,6 @@ public class ArtistController
     {
         if(getArtist() instanceof SingerModel)
         {
-            AlbumModel.setAlbumAmount(AlbumModel.getAlbumAmount()+1);
             AlbumModel album=new AlbumModel(albumName,getArtist().getUserName());
             char[] artistUserName=getArtist().getUserName().toCharArray();
             long albumID=0;
@@ -165,7 +164,6 @@ public class ArtistController
             tempGenre=Genre.SOCIETY;
             musicID="9";
         }
-        AudioModel.setAudioAmount(AudioModel.getAudioAmount()+1);
         MusicModel music=new MusicModel(title,getArtist().getUserName(),tempGenre,link,cover,lyric);
         char[] artistUserName=getArtist().getUserName().toCharArray();
         long ID=0;
@@ -231,7 +229,6 @@ public class ArtistController
             tempGenre=Genre.SOCIETY;
             podcastID="9";
         }
-        AudioModel.setAudioAmount(AudioModel.getAudioAmount()+1);
         PodcastModel podcast=new PodcastModel(title,getArtist().getUserName(),tempGenre,link,cover,caption);
         char[] artistUserName=getArtist().getUserName().toCharArray();
         long ID=0;
