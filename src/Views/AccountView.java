@@ -46,6 +46,7 @@ public class AccountView {
             default:
                 System.out.println("Invalid command");
         }
+        getInput();
     }
 
     public ArrayList<Genre> getGenres()
@@ -53,7 +54,7 @@ public class AccountView {
         System.out.println("Enter your favourite genres");
         for(Genre genre : Genre.values())
         {
-            System.out.println(genre.name());
+            System.out.println(genre.getAsString());
         }
         Scanner jin = new Scanner(System.in);
         String input = jin.nextLine();
@@ -62,7 +63,7 @@ public class AccountView {
         ArrayList<Genre> result = new ArrayList<>();
         for(String genreName : genreArray)
         {
-            result.add(Genre.valueOf(genreName));
+            result.add(Genre.fromString(genreName));
         }
         return result;
     }

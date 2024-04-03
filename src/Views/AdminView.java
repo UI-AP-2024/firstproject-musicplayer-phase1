@@ -42,6 +42,7 @@ public class AdminView {
             default:
                 System.out.println("Command not found");
         }
+        getInput();
     }
     private void showReports()
     {

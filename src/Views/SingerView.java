@@ -43,6 +43,7 @@ public class SingerView {
             default:
                 System.out.println("Invalid command");
         }
+        getInput();
     }
     private void publishAudio(String title, Genre genre, String lyrics, String link, String cover, int albumId)
     {

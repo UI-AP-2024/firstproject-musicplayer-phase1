@@ -104,6 +104,7 @@ public class PremiumListenerView {
             default:
                 System.out.println("Invalid command");
         }
+        getInput();
     }
     private void getPremium(PremiumPlan plan)
     {

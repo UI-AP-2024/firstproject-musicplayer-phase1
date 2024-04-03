@@ -41,6 +41,7 @@ public class PodcasterView {
             default:
                 System.out.println("Invalid command");
         }
+        getInput();
     }
 
     private void publishAudio(String title, Genre genre, String caption, String link, String cover)

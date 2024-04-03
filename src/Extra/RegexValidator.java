@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 public class RegexValidator {
     public static boolean phoneValidator(String phoneNumber)
     {
-        Pattern pattern = Pattern.compile("^\\+\\d{11,12}$");
+        Pattern pattern = Pattern.compile("^09+\\d{9}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
