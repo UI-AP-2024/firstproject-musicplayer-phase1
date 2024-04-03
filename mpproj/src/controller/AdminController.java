@@ -2,6 +2,8 @@ package controller;
 
 import model.*;
 
+import java.security.PublicKey;
+
 public class AdminController {
     private static AdminController adminController;
 
@@ -74,6 +76,19 @@ public class AdminController {
         }
         if ( result.equals(""))
             result += "empty";
+        return result;
+    }
+
+    public String viewInfoAccount(String username){
+        String result = "";
+        for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1.getUserName().equals(username)){
+                result += userAccount1;
+                break;
+            }
+        }
+        if ( result.equals(""))
+            result += "No account was found with the entered username";
         return result;
     }
 }
