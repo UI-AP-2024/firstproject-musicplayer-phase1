@@ -74,7 +74,7 @@ public class AccountView {
     public void showListenerLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");
         String answer = inp.nextLine();
-        AccountController.getAccountController().loginListenerPanelOrders(person,answer);
+        AccountController.getAccountController().loginListenerPanelOrders((Listener)person,answer);
     }
     public void showArtistLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");

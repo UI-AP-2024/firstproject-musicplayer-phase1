@@ -121,70 +121,67 @@ public class AccountController {
         }
     }
 
-    public void loginListenerPanelOrders(UserAccount user, String answer) {
+    public void loginListenerPanelOrders(Listener listener, String answer) {
         String[] answers = answer.split(" -");
+        StringBuilder result ;
+        int counter;
         switch (answers[0]) {
             case "Logout":
                 AccountView.getAccountView().showMainMenu();
                 break;
             case "AccountInfo":
-                AccountView.getAccountView().showResult(accountInfo(user));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showResult(accountInfo(listener));
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "GetSuggestions":
-                if (user instanceof Listener) {
-                    AccountView.getAccountView().showResult(getSuggestions((Listener) user));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                } else {
-                    AccountView.getAccountView().showResult(new StringBuilder("Your account is not the listener type"));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                }
+                    AccountView.getAccountView().showResult(getSuggestions((Listener) listener));
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Artists":
-                int counter = 1;
-                StringBuilder result = new StringBuilder("The artists are : \r\n");
-                for (UserAccount user1 : Database.getData().getAllUsers()) {
-                    if (user1 instanceof Artist) {
-                        result.append(counter++).append("_").append(user1.getFullName()).append("\r\n");
+                counter = 1;
+                result = new StringBuilder("The artists are : \r\n");
+                for (UserAccount user : Database.getData().getAllUsers()) {
+                    if (user instanceof Artist) {
+                        result.append(counter++).append("_").append(user.getUniqueUserName()).append("\r\n");
                     }
                 }
                 AccountView.getAccountView().showResult(result);
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Artist":
                 counter = 1;
-                result = new StringBuilder(" ");
+                result = new StringBuilder();
                 for (UserAccount userAccount : Database.getData().getAllUsers()) {
                     if (userAccount instanceof Artist) {
                         if (Objects.equals(answers[1], userAccount.getUniqueUserName())) {
                             result.append(accountInfo(userAccount));
                             for (Audio audio : Database.getData().getAllAudios()) {
                                 if (Objects.equals(audio.getArtistName(), userAccount.getUniqueUserName())) {
-                                    result.append(counter++).append(audio.getAudioName()).append(" ");
+                                    result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
                                 }
                             }
                             AccountView.getAccountView().showResult(result);
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
-                    AccountView.getAccountView().showResult(new StringBuilder("The artist was not found"));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
                 }
+                AccountView.getAccountView().showResult(new StringBuilder("The artist was not found please try again"));
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Follow":
                 for (UserAccount userAccount : Database.getData().getAllUsers()) {
-                    if (userAccount instanceof Artist) {
+                    if (userAccount instanceof Artist){
                         if (Objects.equals(answers[1], userAccount.getUniqueUserName())) {
                             ArrayList<UserAccount> backUp = ((Artist) userAccount).getFollowers();
-                            backUp.add(user);
+                            backUp.add(listener);
                             ((Artist) userAccount).setFollowers(backUp);
                             AccountView.getAccountView().showResult(new StringBuilder("The artist was followed successfully"));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("The artist was not found"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Search":
                 counter = 1;
@@ -204,12 +201,11 @@ public class AccountController {
                     }
                 }
                 AccountView.getAccountView().showResult(result);
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Sort":
                 counter = 1;
                 ArrayList<Audio> audioArrayList = Database.getData().getAllAudios();
-                ;
                 if (Objects.equals(answers[1], "L")) {
                     result = new StringBuilder("The sorted list of audios buy number of likes : \r\n");
                     for (int i = 0; i < audioArrayList.size() - 1; i++) {
@@ -227,8 +223,8 @@ public class AccountController {
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getLikes()).append(")").append("\r\n");
                     }
                     AccountView.getAccountView().showResult(result);
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                } else if (Objects.equals(answers[1], "P")) {
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
+                }else if (Objects.equals(answers[1], "P")){
                     result = new StringBuilder("The sorted list of audios buy number of plays : \r\n");
                     for (int i = 0; i < audioArrayList.size() - 1; i++) {
                         for (int j = i + 1; j < audioArrayList.size(); j++) {
@@ -245,196 +241,190 @@ public class AccountController {
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getTimesPlayed()).append(")").append("\r\n");
                     }
                     AccountView.getAccountView().showResult(result);
-                    AccountView.getAccountView().showListenerLoginPanel(user);
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
                 }
+                AccountView.getAccountView().showResult(new StringBuilder("please enter the sorting type more specific"));
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Filter":
                 counter = 1;
-                result = new StringBuilder("The songs you were searching for by your filter : \r\n");
+                result = new StringBuilder("The songs you were searching for, by your filter : \r\n");
                 switch (answers[1]) {
                     case "A":
-                        for (UserAccount userAccount : Database.getData().getAllUsers()) {
-                            for (Audio audio : Database.getData().getAllAudios()) {
-                                if (audio.getAudioName().contains(answers[2])) {
-                                    result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
-                                }
-                            }
-                        }
-                        AccountView.getAccountView().showResult(result);
-                        AccountView.getAccountView().showListenerLoginPanel(user);
-                        break;
-                    case "G":
                         for (Audio audio : Database.getData().getAllAudios()) {
-                            if (audio.getGenre().name().equals(answers[2])) {
+                            if (audio.getArtistName().contains(answers[2])) {
                                 result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
                             }
                         }
                         AccountView.getAccountView().showResult(result);
-                        AccountView.getAccountView().showListenerLoginPanel(user);
-                        break;
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
+                    case "G":
+                        for (Audio audio : Database.getData().getAllAudios()) {
+                            if (audio.getGenre().name().contains(answers[2])) {
+                                result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                            }
+                        }
+                        AccountView.getAccountView().showResult(result);
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
                     case "D":
                         String[] dateInfo1 = answers[2].split("\\.");
                         String[] dateInfo2 = answers[3].split("\\.");
                         Date date1 = new Date(Integer.parseInt(dateInfo1[0]), Integer.parseInt(dateInfo1[1]), Integer.parseInt(dateInfo1[2]));
-                        Date date2 = new Date(Integer.parseInt(dateInfo1[0]), Integer.parseInt(dateInfo1[1]), Integer.parseInt(dateInfo1[2]));
+                        Date date2 = new Date(Integer.parseInt(dateInfo2[0]), Integer.parseInt(dateInfo2[1]), Integer.parseInt(dateInfo2[2]));
                         for (Audio audio : Database.getData().getAllAudios()) {
                             if (date1.compareTo(audio.getReleaseTime()) <= 0 && date2.compareTo(audio.getReleaseTime()) >= 0) {
                                 result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
                             }
                         }
                         AccountView.getAccountView().showResult(result);
-                        AccountView.getAccountView().showListenerLoginPanel(user);
-                        break;
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
+                    default:
+                        AccountView.getAccountView().showResult(new StringBuilder("The format you are searching for, doesn't exist"));
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
                 }
             case "Add":
-                if (user instanceof Free) {
-                    for (Playlist playlist : ((Free) user).getPlaylists()) {
+                if (listener instanceof Free) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         if (Objects.equals(playlist.getPlayListName(), answers[1])) {
-                            if (playlist.getAudioList().size() >= ((Free) user).getMaxAddSongToPlaylist()) {
+                            if (playlist.getAudioList().size() >= ((Free) listener).getMaxAddSongToPlaylist()) {
                                 AccountView.getAccountView().showResult(new StringBuilder("Max number of audios have been added before to this list"));
-                                AccountView.getAccountView().showListenerLoginPanel(user);
+                                AccountView.getAccountView().showListenerLoginPanel(listener);
                             }
                             ArrayList<Audio> backUp = playlist.getAudioList();
                             for (Audio audio : Database.getData().getAllAudios()) {
                                 if (audio.getUniqueId() == Integer.parseInt(answers[2])) {
                                     backUp.add(audio);
-                                    break;
+                                    playlist.setAudioList(backUp);
+                                    AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
+                                    AccountView.getAccountView().showListenerLoginPanel(listener);
                                 }
                             }
-                            playlist.setAudioList(backUp);
-                            break;
                         }
                     }
-                    AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                    break;
-                } else if (user instanceof Premium) {
-                    for (Playlist playlist : ((Premium) user).getPlaylists()) {
+                    AccountView.getAccountView().showResult(new StringBuilder("The audio or the album was not found"));
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
+                } else if (listener instanceof Premium) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         if (Objects.equals(playlist.getPlayListName(), answers[1])) {
                             ArrayList<Audio> backUp = playlist.getAudioList();
                             for (Audio audio : Database.getData().getAllAudios()) {
                                 if (audio.getUniqueId() == Integer.parseInt(answers[2])) {
                                     backUp.add(audio);
-                                    break;
+                                    playlist.setAudioList(backUp);
+                                    AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
+                                    AccountView.getAccountView().showListenerLoginPanel(listener);
                                 }
                             }
-                            playlist.setAudioList(backUp);
-                            AccountView.getAccountView().showResult(new StringBuilder("The audio was added successfully"));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
-                            break;
                         }
                     }
-                    AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                    break;
+                    AccountView.getAccountView().showResult(new StringBuilder("The audio or the album was not  found"));
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
                 }
                 break;
             case "ShowPlaylists":
                 counter = 1;
                 result = new StringBuilder("The play lists names and ids are : \r\n");
-                if (user instanceof Free) {
-                    for (Playlist playlist : ((Free) user).getPlaylists()) {
+                if (listener instanceof Free) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         result.append(counter++).append("_").append(playlist.getPlayListName()).append("(").append(playlist.getId()).append(") ");
                     }
                     AccountView.getAccountView().showResult(new StringBuilder(result));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
-                } else if (user instanceof Premium) {
-                    for (Playlist playlist : ((Premium) user).getPlaylists()) {
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
+                } else if (listener instanceof Premium) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         result.append(counter++).append("_").append(playlist.getPlayListName()).append("(").append(playlist.getId()).append(") ");
                     }
                     AccountView.getAccountView().showResult(new StringBuilder(result));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
                 }
-                AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
                 break;
             case "SelectPlaylist":
-                if (user instanceof Free) {
-                    for (Playlist playlist : ((Free) user).getPlaylists()) {
+                if (listener instanceof Free) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         if (Objects.equals(playlist.getPlayListName(), answers[1])) {
+//                            Playlist selectedPlaylist =playlist;
                             AccountView.getAccountView().showResult(new StringBuilder("The play list was selected successfully"));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
-                } else if (user instanceof Premium) {
-                    for (Playlist playlist : ((Premium) user).getPlaylists()) {
+                }else if (listener instanceof Premium) {
+                    for (Playlist playlist : listener.getPlaylists()) {
                         if (Objects.equals(playlist.getPlayListName(), answers[1])) {
+//                            Playlist selectedPlaylist =playlist;
                             AccountView.getAccountView().showResult(new StringBuilder("The play list was selected successfully"));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("An issue was found please try again and be more specific"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Play":
                 for (Audio audio : Database.getData().getAllAudios()) {
                     if (audio.getUniqueId() == Integer.parseInt(answers[1])) {
                         audio.setTimesPlayed((audio.getTimesPlayed() + 1));
-                        Map<Audio, Integer> backUp = ((Listener) user).getAudioTimesPlayed();
+                        Map<Audio, Integer> backUp = listener.getAudioTimesPlayed();
                         for (Audio audio1 : backUp.keySet()) {
                             if (audio1 == audio) {
                                 backUp.put(audio1, (backUp.get(audio1) + 1));
                                 break;
                             }
                         }
-                        ((Listener) user).setAudioTimesPlayed(backUp);
+                        listener.setAudioTimesPlayed(backUp);
                         AccountView.getAccountView().showResult(new StringBuilder("The music was played successfully"));
-                        AccountView.getAccountView().showListenerLoginPanel(user);
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
                     }
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Like":
                 for (Audio audio : Database.getData().getAllAudios()) {
                     if (audio.getUniqueId() == Integer.parseInt(answers[1])) {
-                        AccountView.getAccountView().showResult(new StringBuilder("The music was liked successfully"));
                         audio.setLikes((audio.getLikes() + 1));
-                        AccountView.getAccountView().showListenerLoginPanel(user);
+                        AccountView.getAccountView().showResult(new StringBuilder("The music was liked successfully"));
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
                     }
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Lyric":
                 for (Audio audio : Database.getData().getAllAudios()) {
                     if (audio.getUniqueId() == Integer.parseInt(answers[1])) {
                         if (audio instanceof Music) {
                             AccountView.getAccountView().showResult(new StringBuilder("The music lyrics : \r\n").append(((Music) audio).getMusicLyrics()));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         } else if (audio instanceof Podcast) {
                             AccountView.getAccountView().showResult(new StringBuilder("The podcast caption : \r\n").append(((Podcast) audio).getCaption()));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
                 }
                 AccountView.getAccountView().showResult(new StringBuilder("The audio was not found be more specific"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "NewPlaylist":
-                if (user instanceof Free) {
-                    if (((Listener) user).getPlaylists().size() >= ((Free) user).getMaxPlaylistMade()) {
+                if (listener instanceof Free) {
+                    if (listener.getPlaylists().size() >= ((Free) listener).getMaxPlaylistMade()) {
                         AccountView.getAccountView().showResult(new StringBuilder("You have already made the maximum number of lists"));
-                        AccountView.getAccountView().showListenerLoginPanel(user);
-                    } else {
-                        Playlist newPlaylist = new Playlist(answers[1], user.getUniqueUserName());
-                        ArrayList<Playlist> backUp = ((Free) user).getPlaylists();
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
+                    }else {
+                        Playlist newPlaylist = new Playlist(answers[1], listener.getUniqueUserName());
+                        ArrayList<Playlist> backUp = listener.getPlaylists();
                         backUp.add(newPlaylist);
-                        ((Free) user).setPlaylists(backUp);
+                        listener.setPlaylists(backUp);
                         AccountView.getAccountView().showResult(new StringBuilder("The playlist was successfully made"));
-                        AccountView.getAccountView().showListenerLoginPanel(user);
+                        AccountView.getAccountView().showListenerLoginPanel(listener);
                     }
-                } else if (user instanceof Premium) {
-                    Playlist newPlaylist = new Playlist(answers[1], user.getUniqueUserName());
-                    ArrayList<Playlist> backUp = ((Premium) user).getPlaylists();
+                } else if (listener instanceof Premium) {
+                    Playlist newPlaylist = new Playlist(answers[1], listener.getUniqueUserName());
+                    ArrayList<Playlist> backUp = listener.getPlaylists();
                     backUp.add(newPlaylist);
-                    ((Premium) user).setPlaylists(backUp);
+                    listener.setPlaylists(backUp);
                     AccountView.getAccountView().showResult(new StringBuilder("The playlist was successfully made"));
-                    AccountView.getAccountView().showListenerLoginPanel(user);
+                    AccountView.getAccountView().showListenerLoginPanel(listener);
                 }
-                AccountView.getAccountView().showResult(new StringBuilder("The playlist can't be made"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
                 break;
             case "Followings":
                 counter = 1;
@@ -442,46 +432,46 @@ public class AccountController {
                 for (UserAccount userAccount : Database.getData().getAllUsers()) {
                     if (userAccount instanceof Artist) {
                         for (UserAccount userAccount1 : ((Artist) userAccount).getFollowers()) {
-                            if (userAccount1 == user) {
+                            if (userAccount1 == listener) {
                                 result.append(counter++).append("_").append(userAccount.getUniqueUserName()).append(" ");
+                                break;
                             }
-                            break;
                         }
                     }
                 }
                 AccountView.getAccountView().showResult(result);
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Report":
                 for (UserAccount userAccount : Database.getData().getAllUsers()) {
                     if (userAccount instanceof Artist) {
                         if (Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
-                            Report report = new Report(user, (Artist) userAccount, answers[2]);
+                            Report report = new Report(listener, (Artist) userAccount, answers[2]);
                             ArrayList<Report> backUp = Database.getData().getReports();
                             backUp.add(report);
                             Database.getData().setReports(backUp);
                             AccountView.getAccountView().showResult(new StringBuilder("The report was recorded successfully"));
-                            AccountView.getAccountView().showListenerLoginPanel(user);
+                            AccountView.getAccountView().showListenerLoginPanel(listener);
                         }
                     }
                 }
-                AccountView.getAccountView().showResult(new StringBuilder("The report's recording failed"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showResult(new StringBuilder("The report's recording failed, no artists found"));
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "IncreaseCredit":
-                ((Listener) user).setAccountCredit(((Listener) user).getAccountCredit() + Double.parseDouble(answers[1]));
+                listener.setAccountCredit(listener.getAccountCredit() + Double.parseDouble(answers[1]));
                 AccountView.getAccountView().showResult(new StringBuilder("Your account credit was increased"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "GetPremium":
                 switch (answers[1]) {
                     case "ThirtyDay", "OneEightyDay", "SixtyDay":
-                        accountShareCheck(user, answers);
+                        accountShareCheck(listener, answers);
                         break;
                 }
             default:
                 AccountView.getAccountView().showResult(new StringBuilder("Your command is unable to run"));
-                AccountView.getAccountView().showListenerLoginPanel(user);
+                AccountView.getAccountView().showListenerLoginPanel(listener);
         }
     }
 
@@ -532,17 +522,6 @@ public class AccountController {
         person.setAccountCredit(person.getAccountCredit() - premiumShare.getValue());
     }
 
-    public StringBuilder accountInfo(UserAccount user) {
-        StringBuilder result = new StringBuilder("Account's info :\r\n");
-        result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
-        result.append("Full Name : ").append(user.getFullName()).append("\r\n");
-        result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
-        result.append("Birth Date : ").append(user.getBirthDate().getYear()).append("/").append(user.getBirthDate().getMonth()).append("/").append(user.getBirthDate().getDate()).append("\r\n");
-        result.append("Phone Number : ").append(user.getPhoneNumber()).append("\r\n");
-        AccountView.getAccountView().showResult(result);
-        return result;
-    }
-
     public StringBuilder getSuggestions(Listener person) {
         int counter = 1;
         StringBuilder result = new StringBuilder("Audios you might like : ");
@@ -570,7 +549,7 @@ public class AccountController {
                 break;
             case "Statistics":
                 ArrayList<Audio> audios1 = Database.getData().getAllAudios();
-                ArrayList<Audio> audios2 = new ArrayList<>();
+                Audio[] audios2 = new Audio[audios1.size()];
                 for (int i = 0 ; i < audios1.size() ; i++){
                     Audio backUp = audios1.getFirst() ;
                     for (Audio audio : Database.getData().getAllAudios()){
@@ -579,7 +558,7 @@ public class AccountController {
                         }
                     }
                     audios1.remove(backUp);
-                    audios2.add(backUp);
+                    audios2[i] = backUp;
                 }
                 counter = 1;
                 result = new StringBuilder("The list of audios by like ranking : \r\n");
@@ -743,5 +722,15 @@ public class AccountController {
                 AccountView.getAccountView().showResult(new StringBuilder("The order is not able to be run please try again"));
                 AccountView.getAccountView().showAdminLoginPanel(artist);
         }
+    }
+
+    public StringBuilder accountInfo(UserAccount user) {
+        StringBuilder result = new StringBuilder("Account's info :\r\n");
+        result.append("User Name : ").append(user.getUniqueUserName()).append("\r\n");
+        result.append("Full Name : ").append(user.getFullName()).append("\r\n");
+        result.append("E-Mail : ").append(user.getEmail()).append("\r\n");
+        result.append("Birth Date : ").append(user.getBirthDate().getYear()).append("/").append(user.getBirthDate().getMonth()).append("/").append(user.getBirthDate().getDate()).append("\r\n");
+        result.append("Phone Number : ").append(user.getPhoneNumber()).append("\r\n");
+        return result;
     }
 }
