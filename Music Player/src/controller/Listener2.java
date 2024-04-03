@@ -154,4 +154,23 @@ public abstract class Listener2 extends UserAccount2
         return playlist2.showPlaylist();
     }
     protected abstract void buyOrRenew(int money);
+    ArrayList<String> search = new ArrayList<String>();
+    public ArrayList<String> searching(String string)
+    {
+        for(int i=0; i<Database.getDatabase().getAudio().size();i++)
+        {
+            if(string.compareTo(Database.getDatabase().getAudio().get(i).getName())>0)
+            {
+                search.add(Database.getDatabase().getAudio().get(i).getName());
+            }
+        }
+        for(int i=0; i<artistArrayList.size();i++)
+        {
+            if(string.compareTo(artistArrayList.get(i).getName())>0)
+            {
+                search.add(artistArrayList.get(i).getName());
+            }
+        }
+        return search;
+    }
 }
