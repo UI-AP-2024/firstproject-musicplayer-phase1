@@ -19,4 +19,15 @@ public class Podcast extends Audio {
     public void setCaption(String caption) {
         this.caption = caption;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append(super.toString());
+        result.append("Caption : \n");
+        result.append(this.getCaption());
+        result.append("\n");
+        return result.toString();
+    }
 }

@@ -67,4 +67,13 @@ public abstract class Listener extends User {
     }
 
 
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("Credit : \n");
+        result.append(this.credit);
+        result.append("\n");
+        return result.toString();
+    }
 }

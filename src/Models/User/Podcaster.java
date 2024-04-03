@@ -1,4 +1,5 @@
 package Models.User;
+import Models.Album;
 import Models.Audio.Podcast;
 
 import java.time.LocalDate;
@@ -19,5 +20,17 @@ public class Podcaster extends Artist {
 
     public void setPodcasts(ArrayList<Podcast> podcasts) {
         this.podcasts = podcasts;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("Podcasts : \n");
+        for(Podcast tmpPodcast : this.getPodcasts())
+        {
+            result.append(tmpPodcast.toString());
+        }
+        return result.toString();
     }
 }

@@ -18,4 +18,16 @@ public class Singer extends Artist {
     public void setAlbums(ArrayList<Album> albums) {
         this.albums = albums;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("Albums : \n");
+        for(Album tmpAlbum : this.getAlbums())
+        {
+            result.append(tmpAlbum.toString());
+        }
+        return result.toString();
+    }
 }

@@ -20,4 +20,14 @@ public class PremiumListener extends Listener {
         super(username, password, name, email, phoneNumber, dateOfBirth, accountCredit, subscriptionEndDate, favoriteGenres);
         this.remainingDays = remainingDays;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("Premium remaining days : ");
+        result.append(this.getRemainingDays());
+        result.append("\n");
+        return result.toString();
+    }
 }

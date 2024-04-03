@@ -18,4 +18,18 @@ public class NormalListener extends Listener {
     public int getPlaylistLimit() {
         return PLAYLIST_LIMIT;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append("Songs per playlist : ");
+        result.append(SONGS_PER_PLAYLIST_LIMIT);
+        result.append("\n");
+
+        result.append("playlists count limit : ");
+        result.append(PLAYLIST_LIMIT);
+        result.append("\n");
+        return  result.toString();
+    }
 }

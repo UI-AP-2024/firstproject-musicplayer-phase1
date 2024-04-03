@@ -38,5 +38,19 @@ public class Report {
         this.description = description;
     }
 
-
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("Reporting user : ");
+        result.append(this.reportingUser);
+        result.append("\n");
+        result.append("Reported artist : ");
+        result.append(this.getReportedArtist());
+        result.append("\n");
+        result.append("Description : ");
+        result.append(this.getDescription());
+        result.append("\n");
+        return result.toString();
+    }
 }

@@ -54,4 +54,17 @@ public class Playlist {
     public void setAudioFiles(ArrayList<Audio> audioFiles) {
         this.audioFiles = audioFiles;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("Name : ");
+        result.append(this.getPlaylistName());
+        result.append("\n");
+        result.append("User : ");
+        result.append(this.getOwnerUserName());
+        result.append("\n");
+        return result.toString();
+    }
 }

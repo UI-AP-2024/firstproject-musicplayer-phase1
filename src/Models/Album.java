@@ -49,4 +49,17 @@ public class Album {
     public void setSongs(ArrayList<Song> songs) {
         this.songs = songs;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("Name : ");
+        result.append(this.name);
+        result.append("\n");
+        result.append("Artist : ");
+        result.append(this.getArtistName());
+        result.append("\n");
+        return result.toString();
+    }
 }

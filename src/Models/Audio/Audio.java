@@ -99,4 +99,46 @@ public abstract class Audio {
     public void setCover(String cover) {
         this.cover = cover;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append("Cover : \n");
+        result.append(this.getCover());
+        result.append("\n");
+
+        result.append("Name : \n");
+        result.append(this.getFileName());
+        result.append("\n");
+
+        result.append("Artist : \n");
+        result.append(this.getArtistName());
+        result.append("\n");
+
+        result.append("Audio : \n");
+        result.append(this.getAudioLink());
+        result.append("\n");
+
+        result.append("Genre : \n");
+        result.append(this.getGenre().name());
+        result.append("\n");
+
+        result.append("Likes : \n");
+        result.append(this.getLikesCount());
+        result.append("\n");
+
+        result.append("Plays : \n");
+        result.append(this.getPlayCount());
+        result.append("\n");
+
+        result.append("Publish Date : \n");
+        result.append(this.getPublishDate());
+        result.append("\n");
+
+        result.append("ID : \n");
+        result.append(this.getId());
+        result.append("\n");
+        return result.toString();
+    }
 }

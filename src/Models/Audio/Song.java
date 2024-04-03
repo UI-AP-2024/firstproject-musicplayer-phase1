@@ -20,4 +20,16 @@ public class Song extends Audio {
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
     }
+
+
+    @Override
+    public String toString()
+    {
+        StringBuilder result = new StringBuilder();
+        result.append(super.toString());
+        result.append("Lyrics : \n");
+        result.append(this.getLyrics());
+        result.append("\n");
+        return result.toString();
+    }
 }
