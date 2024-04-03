@@ -2,6 +2,10 @@ package controller;
 
 import model.*;
 
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ArtistController {
     private static ArtistController artistController;
 
@@ -65,5 +69,44 @@ public class ArtistController {
             return result;
         }
         return "ERORR viewNumberPlay";
+    }
+
+    public String registration(String type,String userName, String password, String name, String email, String number/*, Date birth*/,String year,String month,String day,String bio) {
+        for (UserAccount tmp : Database.getDataBase().getUserAccounts()) {
+            if (tmp.getUserName().equals(userName))
+                return "Username is duplicated. Please try again";
+        }
+        String regex = "^([\\w-\\.]+[@]{1}[\\w]+[\\.]{1}[\\w]{2,4})$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches() == false)
+            return "The email entered is not valid";
+        regex = "^([0]{1}[9]{1}[0-9]{9})$";
+        pattern = Pattern.compile(regex);
+        matcher = pattern.matcher(number);
+        if (matcher.matches() == false)
+            return "The phone number entered is not valid";
+
+        Date birth = new Date(Integer.valueOf(year)-1900,Integer.valueOf(month)-1,Integer.valueOf(day));
+
+        if ( type.equals("S")){
+            Singer singer = new Singer(userName,password,name,email,number,birth,bio);
+            Database.getDataBase().getUserAccounts().add(singer);
+        }
+        else{
+            Podcaster podcaster = new Podcaster(userName,password,name,email,number,birth,bio);
+            Database.getDataBase().getUserAccounts().add(podcaster);
+        }
+        return "Account created successfully";
+    }
+
+    public String login(String userName, String password) {
+        for (UserAccount tmp : Database.getDataBase().getUserAccounts()) {
+            if (tmp.getUserName().equals(userName) && tmp.getPassword().equals(password)) {
+                setUserAccount(tmp);
+                return "Login successfully";
+            }
+        }
+        return "The username does not exist or the password is incorrect";
     }
 }

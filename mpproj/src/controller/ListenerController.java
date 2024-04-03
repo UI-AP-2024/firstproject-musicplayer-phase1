@@ -211,10 +211,12 @@ public class ListenerController {
         }
         else if ( type.equals("D")){
             String result = "";
+            String[] str = detail.split("/");
+            Date date = new Date(Integer.valueOf(str[0])-1900,Integer.valueOf(str[1])-1,Integer.valueOf(str[2]));
             for ( Audio audio : Database.getDataBase().getAudio() ){
-//                if ( detail.equals( String.valueOf(audio.getGener()) ){
-//                    result += "\n"+audio;
-//                }
+                if ( date.equals( audio.getDateOfRelease() ) ){
+                    result += "\n"+audio;
+                }
             }
             return result;
         }
