@@ -90,4 +90,7 @@ public class SignInOutController {
             }
         return "username not found";
     }
+    public void logout() {
+        user = null;
+    }
 }
