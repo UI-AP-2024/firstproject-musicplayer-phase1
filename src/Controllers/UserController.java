@@ -3,6 +3,7 @@ import Extra.RegexValidator;
 import Models.Data.Database;
 import Models.Genre;
 import Models.User.*;
+import Views.*;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class UserController {
         return false;
     }
 
-    public String signUp(char userType, String userName, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth, String bio)
+    public String signUp(String userType, String userName, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth, String bio)
     {
         for(User tmpUser : database.getUsers())
         {
@@ -49,11 +50,11 @@ public class UserController {
         String switchResult = "User added successfully";
         switch (userType)
         {
-            case 'L':
-                ArrayList<Genre> genres = userView.getGenres();
+            case "L":
+                ArrayList<Genre> genres = UserView.getUserView().getGenres();
                 database.addUser(new NormalListener(userName, password, name, email, phoneNumber, dateOfBirth, 50, null, genres));
                 break;
-            case 'S':
+            case "S":
                 // since each Audio has an artistName property, artistNames must be unique
                 if(checkName(name))
                 {
@@ -62,7 +63,7 @@ public class UserController {
                 }
                 database.addUser(new Singer(userName, password, name, email, phoneNumber, dateOfBirth, 0, bio));
                 break;
-            case 'P':
+            case "P":
                 // since each Audio has an artistName property, artistNames must be unique
                 if(checkName(name))
                 {
@@ -103,5 +104,10 @@ public class UserController {
     public void logout()
     {
         database.setLogedInUser(null);
+    }
+
+    public String showAccountInfo()
+    {
+        return database.getLogedInUser().toString();
     }
 }
