@@ -11,8 +11,8 @@ import java.util.Date;
 public class Premium extends Listener {
     private Calendar calendar;
     private int leftOverDays;
-    public Premium(String userId, String password, String fullName, String email, String phoneNumber, Date birthday, double credit, ArrayList<Playlist> playlists, ArrayList<Genre> favouriteGenres,int leftOverDays) {
-        super(userId, password, fullName, email, phoneNumber,birthday,credit, playlists, favouriteGenres);
+    public Premium(String userId, String password, String fullName, String email, String phoneNumber, Date birthday) {
+        super(userId, password, fullName, email, phoneNumber,birthday);
 //        this.leftOverDays = leftOverDays;
 //        calendar=Calendar.getInstance();
 //        calendar.setTimeInMillis(System.currentTimeMillis());

@@ -22,12 +22,12 @@ public class Listener extends userAccount {
 
 
 
-    public Listener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday,double credit,ArrayList<Playlist> playlists,ArrayList<Genre> favouriteGenres) {
+    public Listener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday) {
         super(userId, password, fullName, email, phoneNumber, birthday);
-        this.credit = credit;
-        this.playlists = playlists;
+        this.credit = 50;
+        this.playlists = new ArrayList<Playlist>();
         this.playFiles = new HashMap<>();
-        this.favouriteGenres=favouriteGenres;
+        this.favouriteGenres= new ArrayList<Genre>();
     }
 
     @Override

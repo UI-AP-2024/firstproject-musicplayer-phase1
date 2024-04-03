@@ -15,11 +15,11 @@ import model.UserAccounts.userAccount;
 import sun.font.TrueTypeFont;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class listenerController {
     private static listenerController listenerC;
-    private Free freeM;
     private Listener listenerM;
     private listenerController(){
     }
@@ -31,13 +31,7 @@ public class listenerController {
         return listenerC;
     }
 
-    public Free getFreeM() {
-        return freeM;
-    }
 
-    public void setFreeM(Free freeM) {
-        this.freeM = freeM;
-    }
     public Listener getListenerM() {
         return listenerM;
     }
@@ -48,29 +42,34 @@ public class listenerController {
 
 
     //// Register free listener
-    public boolean registerListener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday, double credit, ArrayList<Playlist> playlists, ArrayList<Genre> favouriteGenres){
+    public String registerListener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday){
         for(userAccount userAccount:Database.getDatabase().getAllUsersList()){
             if (userAccount.getUserId().equals(userId)){
-                return false;
+                return "this user name has already exist!";
             }
         }
-        listenerM =freeM;
-
-        Free tempListener = new Free(userId,password,fullName,email,phoneNumber,birthday,credit,playlists,favouriteGenres);
-        setFreeM(tempListener);
-        freeM.setCredit(50);
-        Database.getDatabase().getAllUsersList().add(freeM);
-        return true;
+        Pattern phoneRegex = Pattern.compile("^09[01239][0-9]{8}$");
+        if (!phoneRegex.matcher(phoneNumber).matches()){
+            return "phone number is not true!";
+        }
+        Pattern emailRegex = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,}$");
+        if (!emailRegex.matcher(email).matches()){
+            return "email is not true";
+        }
+        Free tempListener = new Free(userId,password,fullName,email,phoneNumber,birthday);
+        listenerM = tempListener;
+        Database.getDatabase().getAllUsersList().add(listenerM);
+        return "Registering was successful!!!";
     }
 
     //Show Genres to  registered listener;
 
     //choose Genres to listener:
     public void chooseFourGenres(Genre genre1,Genre genre2,Genre genre3,Genre genre4){
-        getFreeM().getFavouriteGenres().add(genre1);
-        getFreeM().getFavouriteGenres().add(genre2);
-        getFreeM().getFavouriteGenres().add(genre3);
-        getFreeM().getFavouriteGenres().add(genre4);
+        getListenerM().getFavouriteGenres().add(genre1);
+        getListenerM().getFavouriteGenres().add(genre2);
+        getListenerM().getFavouriteGenres().add(genre3);
+        getListenerM().getFavouriteGenres().add(genre4);
     }
 
     /// Login free listener
@@ -104,19 +103,24 @@ public class listenerController {
 
     // Add audio to playlist
 
-    public boolean addAudioToPlaylist(String name,int audioId){
+    public String addAudioToPlaylist(String name,int audioId){
         for (Playlist playlist:listenerM.getPlaylists()){
             if (playlist.getPlayListName().equals(name)){
                 for (Audio audio:Database.getDatabase().getAllAudiosList()){
                     if (audio.getAudioId()==audioId){
+                        for (Audio audio1:playlist.getAudioList()){
+                            if (audio.equals(audio1)){
+                                return "you added this audio to playlist before!";
+                            }
+                        }
                         playlist.getAudioList().add(audio);
-                        return true;
+                        return "audio added to playlist successfully";
                     }
                 }
-
+                return "audio not found!";
             }
         }
-        return false;
+        return "playlist not found!";
     }
 
     // Play the audio

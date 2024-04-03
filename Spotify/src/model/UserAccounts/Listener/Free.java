@@ -11,8 +11,8 @@ public class Free extends Listener {
     private static final int limitCreatePlaylist=3;
     private static final int limitAddMusicToPlaylist=10;
 
-    public Free(String userId, String password, String fullName, String email, String phoneNumber, Date birthday, double credit, ArrayList<Playlist> playlists, ArrayList<Genre> favouriteGenres) {
-        super(userId, password, fullName, email, phoneNumber, birthday, credit, playlists, favouriteGenres);
+    public Free(String userId, String password, String fullName, String email, String phoneNumber, Date birthday) {
+        super(userId, password, fullName, email, phoneNumber, birthday);
     }
 
     public static int getLimitCreatePlaylist(){
