@@ -45,6 +45,8 @@ public class PlaylistModel {
 
     @Override
     public String toString(){
-        return "Playlist Name : "+ this.playListName + "\nCreated by : "+ this.ownerUserName;
+        return "ID : "+ ID +
+                "\nPlaylist Name : "+ this.playListName +
+                "\nCreated by : "+ this.ownerUserName;
     }
 }

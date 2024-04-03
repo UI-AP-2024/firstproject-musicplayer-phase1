@@ -39,4 +39,11 @@ public class AlbumModel {
     public void addSongToAlbum(AudioModel audio){
         this.songsList.add(audio);
     }
+
+    @Override
+    public String toString(){
+        return "ID : "+ ID +
+                "Name : "+ name +
+                "Artist Name : "+ artistName;
+    }
 }
