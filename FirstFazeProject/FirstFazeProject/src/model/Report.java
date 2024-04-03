@@ -3,12 +3,12 @@ package model;
 public class Report {
     private UserAccount reporterUser;
     private Artist reportedArtist;
-    private String caption;
+    private String explanation;
 
-    public Report(UserAccount reporterUser, Artist reportedArtist, String caption) {
+    public Report(UserAccount reporterUser, Artist reportedArtist, String explanation) {
         this.reporterUser = reporterUser;
         this.reportedArtist = reportedArtist;
-        this.caption = caption;
+        this.explanation = explanation;
     }
 
     public UserAccount getReporterUser() {
@@ -28,10 +28,10 @@ public class Report {
     }
 
     public String getCaption() {
-        return caption;
+        return explanation;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public void setCaption(String explanation) {
+        this.explanation = explanation;
     }
 }
