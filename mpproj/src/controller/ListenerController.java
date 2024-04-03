@@ -64,7 +64,7 @@ public class ListenerController {
         return txt;
     }
 
-    public void getPremium(int days,int payment){
+    public String getPremium(int days,int payment){//2ta overload
         if(getListener().getAccountCredit()>=payment){
             getListener().setAccountCredit(getListener().getAccountCredit()-payment);
             if(getListener() instanceof FreeListener){
@@ -89,7 +89,9 @@ public class ListenerController {
                     tmpp.setRemainingDaysOfPremium(tmpp.getRemainingDaysOfPremium()+days);
                 }
             }
+            return "your account got premium";
         }
+        return "you dont have enough credit to get premium";
 
     }
 
@@ -186,9 +188,13 @@ public class ListenerController {
     }
     
     public String likeAudio(long id){
-        getListener().addToLikedAudios(id);
         boolean check = AudioController.getAudioController().likeAudio(id);
         if(check){
+            for(Long audioId: getListener().getLikedAudios()){
+                if(audioId==id){
+                    return "you can like an audio only one time";
+                }
+            }
             getListener().addToLikedAudios(id);
             return "thanks for your feedback";
         }
@@ -213,7 +219,7 @@ public class ListenerController {
             freeListener.addToListOfPlayLists(new PlayList(name, freeListener.getUsername()));
             return "your playlist created succesfully";
         }
-        return "you cant create more playlists , get a premium account and you have no limit";
+        return "you cant create more playlists , get a premium account and you will have no limit";
     }
     public String createNewPlaylist(PremiumListener premiumListener, String name){
         premiumListener.addToListOfPlayLists(new PlayList(name, premiumListener.getUsername()));
@@ -247,8 +253,13 @@ public class ListenerController {
                 if(playlist.getAudioList().size()==FreeListener.getAddSongToPLaylistLimit()){
                     return "you cant add more song to a playlist , get premium to have no limits";
                 }
+                for(Audio audio:playlist.getAudioList()){
+                    if(audio.getId()==audioId){
+                        return "you alraedy added this audio to this playlist";
+                    }
+                }
                 playlist.addToAudioList(tmp);
-                return " the audio added to your playList";
+                return "the audio added to your playList";
             }
         }
         return "playlist with this name doesnt exist in your account";
@@ -266,6 +277,11 @@ public class ListenerController {
         }
         for(PlayList playlist : premium.getListOfPlayLists()){
             if(playlist.getPlayListName().equals(playlistName)){
+                for(Audio audio:playlist.getAudioList()){
+                    if(audio.getId()==audioId){
+                        return "you alraedy added this audio to this playlist";
+                    }
+                }
                 playlist.addToAudioList(tmp);
                 return " the audio added to your playList";
             }
@@ -279,7 +295,7 @@ public class ListenerController {
             return "no playlist has been created, create a playlist by 'NewPlaylist -[playlist’s name]' command";
         }
         for(PlayList playlist : getListener().getListOfPlayLists()){
-            txt+="-"+playlist.getPlayListName()+"("+String.valueOf(playlist.getAudioList().size())+"audios)\n";
+            txt+="-"+playlist.getPlayListName()+"("+String.valueOf(playlist.getAudioList().size())+" audios)\n";
         }
         return txt;
     }
@@ -298,10 +314,10 @@ public class ListenerController {
                 for(Audio audio : playlist.getAudioList()){
                     txt+="-"+audio.getAudioName()+"("+String.valueOf(audio.getNumberOfPlays())+")\n";
                 }
+                return txt;
             }
-            else return "you dont have a play list with this name , make sure you typed it correctly";
         }
-        return txt;
+        return "you dont have a play list with this name , make sure you typed it correctly";
     }
 
     public void suggestion(){

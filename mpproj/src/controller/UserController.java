@@ -49,7 +49,7 @@ public class UserController {
     }
     public boolean usernameIsUnic(String username){
         for(User user : Database.getDatabase().getAllUsers()){
-            if(user.getUsername()==username)
+            if(user.getUsername().equals(username))
                 return false;
         }
         return true;

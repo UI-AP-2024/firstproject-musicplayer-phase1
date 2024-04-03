@@ -1,25 +1,27 @@
-package view;
+package view.trash;
 
 import java.text.ParseException;
 import java.util.Scanner;
+
+import controller.AdminController;
 import controller.ArtistController;
 import controller.AudioController;
 import controller.ListenerController;
 import model.user.PremuimAcc;
 
-public class ArtistView {
-    private static ArtistView artistView;
-    private ArtistView(){
+public class AdminView {
+    private static AdminView adminView;
+    private AdminView(){
 
     }
-    public static ArtistView getArtistView(){
-        if(artistView==null){
-            artistView = new ArtistView();
+    public static AdminView getAdminView(){
+        if(adminView==null){
+            adminView = new AdminView();
         }
-        return artistView;
+        return adminView;
     }
 
-    public void ArtistView() throws ParseException{
+    public void AdminView() throws ParseException{
         Scanner sc = new Scanner(System.in);
         String command;
         String txt;
@@ -30,30 +32,34 @@ public class ArtistView {
             String [] spltCmd = command.split("-");
             switch (spltCmd[0]) {
                 case "AccountInfo":
-                txt = ArtistController.getArtistController().ShowAccountInfo();
-                System.out.println(txt);
+                AdminController.getAdminController().ShowAccountInfo();
                     
                     break;
-                case "Followers":
-                txt = ArtistController.getArtistController().showFollowers();
+                case "Reports":
+                txt = AdminController.getAdminController().reports();
                 System.out.println(txt);                    
                     break;
-                case "ViewsStatistics":
-                txt = ArtistController.getArtistController().showViewsStatics();
+                case "Statistics":
+                txt =AdminController.getAdminController().popularAudios();
                 System.out.println(txt);
                     
                     break;
-                case "CalculateEarnings":
+                case "Audios":
                 ArtistController.getArtistController().calculateIncome();
                     
                     break;
-                case "NewAlbum":
+                case "Audio":
                 txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
                 System.out.println(txt);
                     
                     break;
-                case "Publish":
-                txt = ArtistController.getArtistController().publishAudio(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],Long.parseLong(spltCmd[7]));
+                case "Artists":
+                txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
+                System.out.println(txt);
+                    
+                    break;
+                case "Artist":
+                txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
                 System.out.println(txt);
                     
                     break;

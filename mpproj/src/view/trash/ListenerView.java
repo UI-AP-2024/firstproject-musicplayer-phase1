@@ -1,4 +1,4 @@
-package view;
+package view.trash;
 
 import java.text.ParseException;
 import java.util.Scanner;

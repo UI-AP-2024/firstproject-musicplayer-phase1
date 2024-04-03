@@ -1,0 +1,146 @@
+Signup-S-singerone-Singerone#1-singerlopi-singer@gmail.com-09123456789-12/12/1990-this is bio HI
+Login-singerone-Singerone#1
+AccountInfo
+Followers
+NewAlbum-oneAlbum1
+ViewsStatistics
+Publish-P-the music one-POP-this is lyric-https://musicLink-cover.png-1
+Publish-M-the music one-POP-this is lyric-https://musicLink-cover.png-1
+Publish-M-the music two-JAZZ-this is lyric-https://musicLink-cover.png-1
+ViewsStatistics
+Logout
+ViewsStatistics
+Signup-S-singerone-Singertwo#2-singerlopii-singer@gmail.com-09123456789-12/12/1990-this is bio too HI
+Signup-S-singertwo-Singertwo#2-singerlopii-singer@gmail.com-09123456789-12/12/1990-this is bio too HI
+Signup-S-singerthree-Singerthree#3-singerlopiii-singer@gmail.com-09123456789-12/12/1990-this is bio three HI
+Login-singertwo-Singertwo#2
+NewAlbum-twoAlbum1
+ViewsStatistics
+Publish-M-the music pop-POP-this is lyric-https://musicLink-cover.png-1
+Publish-M-the music jazz-JAZZ-this is lyric-https://musicLink-cover.png-2
+ViewsStatistics
+Publish-M-the music pop-POP-this is lyric-https://musicLink-cover.png-2
+ViewsStatistics
+Logout
+Login-singerthree-Singerthree#3
+NewAlbum-threeAlbum1
+ViewsStatistics
+Publish-M-the music pop-POP-this is lyric-https://musicLink-cover.png-3
+Publish-M-the music jazz-JAZZ-this is lyric-https://musicLink-cover.png-3
+Logout
+Signup-P-Podcasterone-Podcasterone#1-podilopi-Podcaster@gmail.com-09123456789-12/12/1990-this is bio too HI
+Signup-P-Podcastertwo-Podcastertwo#2-podilopii-Podcaster@gmail.com-09123456789-12/12/1990-this is bio too HI
+Login-Podcasterone-Podcasterone#1
+Followers
+Publish-P-podcast crime-TRUE_CRIME-this is lyric-https://musicLink-cover.png
+Publish-P-podcast history-HISTORY-this is lyric-https://musicLink-cover.png
+ViewsStatistics
+Logout
+Login-Podcastertwo-Podcastertwo#2
+Publish-P-podcast crime-TRUE_CRIME-this is lyric-https://musicLink-cover.png
+Publish-P-podcast history-HISTORY-this is lyric-https://musicLink-cover.png
+ViewsStatistics
+Logout
+Signup-L-listenerone-Listenerone#1-listenerlopi-listener@gmail.com-09123456789-12/12/1990
+FavouriteGenres-POP,JAZZ,HIPHOP
+Login-listenerone-Listenerone#1
+AccountInfo
+Artists
+Artist-singerone
+Follow-singerone
+Follow-singerthree
+Follow-Podcasterone
+Filter-G-POP
+Filter-A-singerlopi
+Filter-D-3/4/2024
+Filter-D-31/3/2024
+Filter-D-2/4/2024-4/4/2024
+Search-podilopi
+Search-music jazz
+Play-1
+Play-1
+Like-1
+Play-1
+Play-2
+Play-2
+Like-2
+Play-2
+Play-2
+Play-3
+Play-3
+Play-3
+Play-3
+Play-3
+Like-2
+Lyric-2
+Lyric-8
+Followings
+Report-singerone-explanation is long
+NewPlaylist-playlistone
+Add-playlistone-1
+Add-playlistone-3
+Add-playlistone-8
+Add-playlistone-65
+Add-playlistoni-1
+NewPlaylist-playlisttwo
+Add-playlisttwo-4
+Add-playlisttwo-7
+ShowPlaylists
+SelectPlaylist-playlistone
+SelectPlaylist-playlisttwo
+NewPlaylist-playlistthree
+SelectPlaylist-playlistthree
+NewPlaylist-playlistfour
+Add-playlistone-2
+Add-playlistone-4
+Add-playlistone-5
+Add-playlistone-6
+Add-playlistone-7
+Add-playlistone-9
+Add-playlistone-10
+Add-playlistone-10
+GetPremium-30
+AccountInfo
+GetPremium-60
+AccountInfo
+IncreaseCredit-14
+AccountInfo
+Sort-P
+Sort-L
+Logout
+Signup-L-listenertwo-Listenertwo#2-listenerlopii-listener@gmail.com-09123456789-12/12/1990
+FavouriteGenres-POP,JAZZ,HIPHOP
+Login-listenertwo-Listenertwo#2
+Play-1
+Play-2
+Play-3
+Play-4
+Play-5
+Play-6
+Play-7
+Play-8
+Play-9
+Play-10
+Like-1
+Like-2
+Like-3
+Like-4
+Like-5
+Like-6
+Like-7
+Like-8
+Like-9
+Like-10
+Follow-singerone
+Follow-singerthree
+Follow-Podcasterone
+Report-singerone-explanation is long
+Sort-P
+Sort-L
+Artist-singerone
+Logout
+Login-isAdmin-Pkjhgyt4321#
+Statistics
+Reports
+AccountInfo
+Logout

@@ -3,12 +3,10 @@ package controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import model.audio.Audio;
@@ -16,6 +14,9 @@ import model.audio.Genre;
 import model.audio.Music;
 import model.audio.Podcast;
 import model.database.Database;
+
+import java.lang.Object;
+import java.util.*;
 
 public class AudioController {
     private static AudioController audioController;
@@ -43,22 +44,28 @@ public class AudioController {
         String txt = "Sorted Audios according to ";
         if(base.equals("P")){
             txt+="number of plays\n";
-            ArrayList <Audio> sorted = Database.getDatabase().getAllAudio()
+            List <Audio> sorted = Database.getDatabase().getAllAudio()
                 .stream()
                 .sorted(Comparator.comparing(Audio -> Audio.getNumberOfPlays()))
-                .collect(Collectors.toCollection(ArrayList::new));
-            for(Audio audio : sorted){
-                txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\n";
+                .collect(Collectors.toCollection(ArrayList::new))
+                .reversed();
+            
+            ArrayList<Audio> sortedArr =new ArrayList<Audio>(sorted);
+
+            for(Audio audio : sortedArr){
+                txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\tPlays: "+String.valueOf(audio.getNumberOfPlays())+"\n";
             }
         }
         if(base.equals("L")){
             txt+="number of likes\n";
-            ArrayList <Audio> sorted = Database.getDatabase().getAllAudio()
+            List <Audio> sorted = Database.getDatabase().getAllAudio()
                 .stream()
                 .sorted(Comparator.comparing(Audio -> Audio.getNumberOfLikes()))
-                .collect(Collectors.toCollection(ArrayList::new));
-            for(Audio audio : sorted){
-                txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\n";
+                .collect(Collectors.toCollection(ArrayList::new))
+                .reversed();
+            ArrayList<Audio> sortedArr =new ArrayList<Audio>(sorted);
+            for(Audio audio : sortedArr){
+                txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\tLikes: "+String.valueOf(audio.getNumberOfLikes())+"\n";
             }
         }
         return txt;
@@ -95,7 +102,7 @@ public class AudioController {
         return txt;
     }
     private String filterByGenres(String key){
-        String txt = " Audios filtered by genres\n";
+        String txt = "Audios filtered by genres\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
             .filter(Audio -> Audio.getGenre().equals(Genre.valueOf(key)))
@@ -109,13 +116,33 @@ public class AudioController {
         }
         return txt;
     }
+    private boolean cmpDate(Date one , Date two){
+        // LocalDate localone = one.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(one);
+        cal2.setTime(two);
+        if(cal1.get(Calendar.DAY_OF_MONTH)!=cal2.get(Calendar.DAY_OF_MONTH)){
+            return false;
+        }
+        if(cal1.get(Calendar.MONTH)!=cal2.get(Calendar.MONTH)){
+            return false;
+        }
+        if(cal1.get(Calendar.YEAR)!=cal2.get(Calendar.YEAR)){
+            return false;
+        }
+        return true;
+    }
     private String filterByDate(String key)throws ParseException{
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        // String [] keys = key.split("/");
+        // LocalDate date = LocalDate 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date date = formatter.parse(key);
-        String txt = " Audios filtered by date\n";
+
+        String txt = "Audios filtered by date\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
-            .filter(Audio -> Audio.getReleaseDate().equals(date))
+            .filter(Audio -> cmpDate(Audio.getReleaseDate(),date))
             .collect(Collectors.toCollection(ArrayList::new));
         if(filtered.size()==0){
             return "no audio was published on this day enter another date!";
@@ -128,20 +155,21 @@ public class AudioController {
     }
 
     public String dateToString(Date date){
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
         String strDate = dateFormat.format(date);  
         return strDate;
     }
     public String filterByDate(String dateone, String datetwo )throws ParseException{
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate localDate1 = LocalDate.parse(dateone, formatter);
-        LocalDate localDate2 = LocalDate.parse(datetwo, formatter);
-
-        String txt = " Audios filtered between two dates\n";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        Date date1 = formatter.parse(dateone);
+        Date date2 = formatter.parse(datetwo);
+        // LocalDate localDate1 = LocalDate.parse(dateone, formatter);
+        // LocalDate localDate2 = LocalDate.parse(datetwo, formatter);
+        String txt = "Audios filtered between two dates\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
-            .filter(e -> !LocalDate.parse(dateToString(e.getReleaseDate()), formatter).isBefore(localDate1)
-                    && !LocalDate.parse(dateToString(e.getReleaseDate()), formatter).isAfter(localDate2))
+            .filter(e -> e.getReleaseDate().before(date2)
+                    && e.getReleaseDate().after(date1))
             .sorted(Comparator.comparing(e -> e.getReleaseDate()))
             .collect(Collectors.toCollection(ArrayList::new));
         if(filtered.size()==0){

@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import model.audio.Audio;
@@ -33,11 +34,13 @@ public class AdminController {
 
     public String popularAudios(){
         String txt = "Popular Audios\n";
-        ArrayList <Audio> sorted = Database.getDatabase().getAllAudio()
+        List <Audio> sorted = Database.getDatabase().getAllAudio()
                 .stream()
                 .sorted(Comparator.comparing(Audio -> Audio.getNumberOfLikes()))
-                .collect(Collectors.toCollection(ArrayList::new));
-            for(Audio audio : sorted){
+                .collect(Collectors.toCollection(ArrayList::new))
+                .reversed();
+            ArrayList<Audio> sortedArr =new ArrayList<Audio>(sorted);
+            for(Audio audio : sortedArr){
                 txt+="-"+audio.getAudioName()+"("+audio.getArtistName()+")\n"
                 +"Likes : "+String.valueOf(audio.getNumberOfLikes())+"\n"
                 +"Plays : "+String.valueOf(audio.getNumberOfPlays())+"\n\n";
@@ -52,7 +55,7 @@ public class AdminController {
             return "no report has been recieved";
         }
         for(Report report : Database.getDatabase().getAllReports()){
-            txt+="reported Artist : "+report.getReportedArtist()+"\n"+
+            txt+="<->reported Artist : "+report.getReportedArtist()+"\n"+
             "reporting user : " + report.getReportingUser()+"\n"+
             "Description : "+ report.getDescription()+"\n";
         }

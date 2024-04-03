@@ -1,4 +1,4 @@
-package view;
+package view.test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -11,6 +11,7 @@ import controller.AudioController;
 import controller.ListenerController;
 import controller.SingerController;
 import controller.UserController;
+import model.database.Database;
 import model.user.Admin;
 import model.user.Artist;
 import model.user.Listener;
@@ -35,16 +36,11 @@ public class MainView {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date dateOfbirth = formatter.parse("12/5/2000");
         Admin admin = Admin.getAdmin("Pkjhgyt4321#","isAdmin","AdminName","emailAdmin@gmail.com","09876543215",dateOfbirth);
+        Database.getDatabase().addToAllUsers(admin);
         Scanner sc = new Scanner(System.in);
         String command;
         String txt;
-        //Signup -L|S|P -[username] -[password] -[name] -[email] -[phone number]
-//-[birth date] -[bio ]
-        // String check ="Signup-L-mary-Maryamdar84#-MaryamDar-maryamdar1384@gmail.com-09390555104-10/5/2005-muytrggv";
-        // String [] spltCmd = command.split("-");
-        // txt = UserController.getUserController().signupNewUser(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],spltCmd[7],spltCmd[8]);
-        //         System.out.println(txt);
-        // boolean a =true;
+        String character="out";
         int a =10;
         String type=null;
         while (true) {
@@ -55,8 +51,14 @@ public class MainView {
             }
             switch (spltCmd[0]) {
                 case "Signup":
-                txt = UserController.getUserController().signupNewUser(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],spltCmd[7],spltCmd[8]);
-                System.out.println(txt);
+                if(spltCmd.length==9){
+                    txt = UserController.getUserController().signupNewUser(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],spltCmd[7],spltCmd[8]);
+                    System.out.println(txt);
+                }
+                if(spltCmd.length==8){
+                    txt = UserController.getUserController().signupNewUser(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],spltCmd[7],null);
+                    System.out.println(txt);
+                }
                     break;
                 case "FavouriteGenres":
                 if(type.equals("L")){
@@ -74,30 +76,39 @@ public class MainView {
                     
                     break;
                 case "Login":
-                String charachter = UserController.getUserController().loginUser(spltCmd[1],spltCmd[2]);
-                if(charachter.equals("L")){
-                    ListenerView.getListenerView().ListenerView();
-                }
-                if(charachter.equals("A")){
-                    System.out.println("you've loged in successfully");
-                    ArtistView.getArtistView().ArtistView();
-                }
-                if(charachter.equals("null")){
-                    System.out.println("null");
+                
+                character = UserController.getUserController().loginUser(spltCmd[1],spltCmd[2]);
+                if(character.equals("null")){
+                    System.out.println("not a valid username or password try again");
                 }
                 else{
-                    System.out.println("not a valid username or password try again");
+                    System.out.println("you've loged in successfully");
                 }
                     break;
                 case "Logout":
+                character="out";
+                System.out.println("you've logged out");
                     
                     break;
             
                 
                 default:
+                if(character.equals("out")||character.equals("null")){
+                    System.out.println("you dont have access to this command");
+                }
+                if(character.equals("A")){
+                    ArtistView.getArtistView().ArtistView(spltCmd);
+                }
+                if(character.equals("L")){
+                    ListenerView.getListenerView().ListenerView(spltCmd);
+                }
+                if(character.equals("Admin")){
+                    AdminView.getAdminView().AdminView(spltCmd);
+                }
                     break;
             }
             a--;
+            System.out.println("\n");
         }
     }
 }

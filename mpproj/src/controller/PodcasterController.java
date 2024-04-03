@@ -42,7 +42,7 @@ public class PodcasterController {
         "\nuser name : "+getPodcaster().getUsername()+
         "\nFirst name : "+getPodcaster().getName()+
         "\nFollowers : "+String.valueOf(getPodcaster().getFollowers().size())+
-        "\nBiographi : "+getPodcaster().getBiographi()+"\n";
+        "\nBiographi : "+getPodcaster().getBiographi()+"\n\n";
         if(getPodcaster().getPodcastList().size()==0){
             txt+="No Podcast found!!";
             return txt;

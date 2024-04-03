@@ -51,7 +51,7 @@ public class SingerController {
         "\nuser name : "+getSinger().getUsername()+
         "\nFirst name : "+getSinger().getName()+
         "\nFollowers : "+String.valueOf(getSinger().getFollowers().size())+
-        "\nBiographi : "+getSinger().getBiographi()+"\n";
+        "\nBiographi : "+getSinger().getBiographi()+"\n\n";
         if(getSinger().getAlbumList().size()==0){
             txt+="No album found!!";
             return txt;

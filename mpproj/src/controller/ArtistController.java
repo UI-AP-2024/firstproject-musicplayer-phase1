@@ -56,6 +56,10 @@ public class ArtistController {
 
     public String showFollowers(){
         String txt ="All Followers\n";
+        if(getArtist().getFollowers().size()==0){
+            txt+="you dont have any followers yet!";
+            return txt;
+        }
         for(User user : getArtist().getFollowers()){
             txt+="-"+user.getUsername()+"\n";
         }
@@ -108,16 +112,17 @@ public class ArtistController {
         }
         if(type.equals("M")){
             if(getArtist() instanceof Singer){
-                Music tmp = new Music(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
-                Database.getDatabase().addToAllAudio(tmp);
                 for(Album album : ((Singer)getArtist()).getAlbumList())
                 {
                     if(album.getId()==albumId){
+                        Music tmp = new Music(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
+                        Database.getDatabase().addToAllAudio(tmp);
                         album.addToMusicList(tmp);
+                        return "your Music published succesfully";
                     }
                 }
 
-                return "your Music published succesfully";
+                return "you dont have access to this album , enter one of your own album id";
             }
             else return "you are not a Singer You Cant publish a music ";
 
