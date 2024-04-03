@@ -62,8 +62,6 @@ public class ListenerController {
         return "The username does not exist or the password is incorrect";
     }
 
-    private static int countPlaylist = 0;
-
     public String createPlaylist(String name) {
         if (getUserAccount() instanceof Free) {
             ((Free) getUserAccount()).setCountNumberPlaylist(((Free) getUserAccount()).getCountNumberPlaylist()+1);
@@ -202,7 +200,7 @@ public class ListenerController {
         else if ( type.equals("G")){
             String result = "";
             for ( Audio audio : Database.getDataBase().getAudio() ){
-                if ( detail.equals( String.valueOf(audio.getGener()) ){
+                if ( detail.equals( String.valueOf(audio.getGener()) )){
                     result += "\n"+audio;
                 }
             }

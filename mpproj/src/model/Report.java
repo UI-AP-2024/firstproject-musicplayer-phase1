@@ -8,6 +8,7 @@ public class Report {
     public String toString(){
         String result = "";
         result += "Reporting user: "+getUser().getUserName()+"\tReported artist: "+getArtist().getUserName()+"\nDescription: "+getDescription();
+        return result;
     }
 
     public Report(UserAccount user, Artist artist, String description) {
