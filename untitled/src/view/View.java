@@ -34,15 +34,16 @@ public class View
                     String[] inputSplit=favInputGenre.split("-");
                     String[] genres=inputSplit[1].split(",");
                     int counter=0;
-                    while(counter<=4 && counter<genres.length)
+                    while(counter<4 && counter<genres.length)
                     {
-                        if(!ListenerController.getListenerController().addFavGenres(genres[counter]))
-                            break;
-                        counter++;
+                        if(ListenerController.getListenerController().addFavGenres(genres[counter]))
+                            counter++;
                     }
                 }
-                else
+                else if(orders[1].compareTo("S")==0 || orders[1].compareTo("P")==0)
                     System.out.println(ArtistController.getArtistController().makeNewArtist(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7],orders[8],orders[1]));
+                else
+                    System.out.println("wrong order\ntry again");
             }
             else if(orders[0].compareTo("Login")==0)
             {
@@ -53,7 +54,6 @@ public class View
                     showAdminPanel();
                 else
                     showArtistPanel();
-                break;
             }
             else if (orders[0].compareTo("Logout")==0)
             {
@@ -69,7 +69,6 @@ public class View
                     ArtistController.getArtistController().setArtist(null);
                     Controller.getController().setAccModel(null);
                 }
-                break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
             {
@@ -78,6 +77,10 @@ public class View
                 else
                     System.out.println("not logged in");
             }
+            else if(orders[0].compareTo("Exit")==0)
+                break;
+            else if(orders[0].compareTo("help")==0)
+                System.out.println(Controller.getController().help());
             else
                 System.out.println("wrong order\ntry again");
         }
@@ -127,10 +130,13 @@ public class View
             else if (orders[0].compareTo("Logout")==0)
             {
                 ListenerController.getListenerController().setListener(null);
+                Controller.getController().setAccModel(null);
                 break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
                 System.out.println(ListenerController.getListenerController().getAccInfo());
+            else if(orders[0].compareTo("help")==0)
+                System.out.println(Controller.getController().help());
             else
                 System.out.println("wrong order\ntry again");
         }
@@ -151,18 +157,23 @@ public class View
             {
                 if(orders[1].compareTo("M")==0)
                     System.out.println(ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6],orders[7]));
-                else
+                else if(orders[1].compareTo("P")==0)
                     ArtistController.getArtistController().publish(orders[2],orders[3],orders[4],orders[5],orders[6]);
+                else
+                    System.out.println("wrong order\ntry again");
             }
             else if (orders[0].compareTo("CalculateEarnings")==0)
                 System.out.println(ArtistController.getArtistController().CalculateEarnings());
             else if (orders[0].compareTo("Logout")==0)
             {
-                ListenerController.getListenerController().setListener(null);
+                ArtistController.getArtistController().setArtist(null);
+                Controller.getController().setAccModel(null);
                 break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
                 System.out.println(Controller.getController().getAccModel().toString());
+            else if(orders[0].compareTo("help")==0)
+                System.out.println(Controller.getController().help());
             else
                 System.out.println("wrong order\ntry again");
         }
@@ -187,11 +198,13 @@ public class View
                 System.out.println(AdminController.getAdminController().showStatistics());
             else if (orders[0].compareTo("Logout")==0)
             {
-                ListenerController.getListenerController().setListener(null);
+                Controller.getController().setAccModel(null);
                 break;
             }
             else if(orders[0].compareTo("AccountInfo")==0)
                 System.out.println(Controller.getController().getAccModel().toString());
+            else if(orders[0].compareTo("help")==0)
+                System.out.println(Controller.getController().help());
             else
                 System.out.println("wrong order\ntry again");
         }

@@ -48,10 +48,10 @@ public class ArtistController
     }
     public String showFollowers()
     {
-        StringBuilder answer=new StringBuilder();
+        StringBuilder answer=new StringBuilder("followers usernames:\n");
         for(AccountUserModel temp :getArtist().getFollowers())
             if(temp!=null)
-                answer.append(temp).append("\n");
+                answer.append(temp.getUserName()).append("\n");
         return answer.toString();
     }
     public String showViewsStatistics()
@@ -171,13 +171,13 @@ public class ArtistController
         long ID=0;
         for(int i=0;i<artistUserName.length;++i)
             ID+=artistUserName[i];
-        musicID=musicID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
+        musicID="1"+musicID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
         music.setAudioID(Long.parseLong(musicID));
-        Database.getDatabase().getAllAudios().add(music);
         for(AlbumModel temp:((SingerModel)getArtist()).getAlbums())
             if(temp!=null && temp.getAlbumID()==Long.parseLong(albumID))
             {
                 temp.getMusics().add(music);
+                Database.getDatabase().getAllAudios().add(music);
                 return "music published";
             }
         return "Album not found";
@@ -237,7 +237,7 @@ public class ArtistController
         long ID=0;
         for(int i=0;i<artistUserName.length;++i)
             ID+=artistUserName[i];
-        podcastID=podcastID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
+        podcastID="2"+podcastID+Long.toString(ID)+Long.toString(AudioModel.getAudioAmount());
         podcast.setAudioID(Long.parseLong(podcastID));
         Database.getDatabase().getAllAudios().add(podcast);
         ((PodcasterModel)getArtist()).getPodcasts().add(podcast);
@@ -248,7 +248,7 @@ public class ArtistController
         {
             for(PodcastModel temp:((PodcasterModel)getArtist()).getPodcasts())
                 if(temp!=null)
-                    getArtist().setIncome(getArtist().getIncome()+0.5*temp.getPlayAmount());
+                    getArtist().setIncome(getArtist().getIncome()+(0.5*temp.getPlayAmount()));
             return getArtist().getIncome();
         }
         else
@@ -258,7 +258,7 @@ public class ArtistController
                 {
                     for(MusicModel temp:albumTemp.getMusics())
                         if(temp!=null)
-                            getArtist().setIncome(getArtist().getIncome()+0.4*temp.getPlayAmount());
+                            getArtist().setIncome(getArtist().getIncome()+(0.4*temp.getPlayAmount()));
                 }
             return getArtist().getIncome();
         }

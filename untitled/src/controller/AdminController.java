@@ -6,8 +6,6 @@ import model.report.Report;
 import model.users.AccountUserModel;
 import model.users.artists.ArtistModel;
 
-import java.util.Arrays;
-
 public class AdminController
 {
     private static AdminController adminController;

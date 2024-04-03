@@ -42,6 +42,16 @@ public class Controller
     }
     public String logIn(String userName,String password)
     {
+        if(AdminModel.getAdmin().getUserName().compareTo(userName)==0)
+        {
+            if(AdminModel.getAdmin().getPassword().compareTo(password)==0)
+            {
+                setAccModel(AdminModel.getAdmin());
+                return "logged in";
+            }
+            else
+                return "wrong password";
+        }
         boolean exist=false;
         for(AccountUserModel temp: Database.getDatabase().getAllUsers())
             if(temp!=null && temp.getUserName().compareTo(userName)==0)
@@ -69,14 +79,7 @@ public class Controller
                 break;
             }
         if(!exist)
-        {
-            if(AdminModel.getAdmin().getUserName().compareTo(userName)==0 && AdminModel.getAdmin().getPassword().compareTo(password)==0)
-            {
-                setAccModel(AdminModel.getAdmin());
-                return "logged in";
-            }
             return "username doesn't exist";
-        }
         return "logged in";
     }
     public String makeNewAccount(String userName,String email, String phoneNumber, String birthDate)
@@ -97,5 +100,25 @@ public class Controller
         else if(!datePattern.matcher(birthDate).matches())
             return "birth date isn't valid";
         return "Signed up successfully";
+    }
+    public String help()
+    {
+        StringBuilder help=new StringBuilder("inputs format should be like commands bellow:\n");
+        help.append("Signup -L|S|P -[username] -[password] -[name] -[email] -[phone number] -[birth date] -[bio] (for artists)\nnew user: Listener or Singer or Podcaster\n");
+        help.append("FavouriteGenres -[favourite genres separated with comma(,)] (only for listeners, after signup)\n");
+        help.append("Login -[username] -[password]\n");
+        help.append("Logout\n");
+        help.append("AccountInfo\n");
+        help.append("for listeners only:\n");
+        help.append(" GetSuggestions\nArtists\nArtist -[username]\nFollow -[username]\nSearch -[artist name OR audio’s title]\nSort -L|P (based on Likes or Plays)\n");
+        help.append("Filter -A|G|D -[filter by (Filter by Artist, Genre or Date)\nAdd -[playlist’s name] -[audio’s ID]\nShowPlaylists\nSelectPlaylist -[playlist’s name]\n");
+        help.append("Play -[audio’s ID]\nLike -[audio’s ID]\nLyric -[audio’s ID]\nNewPlaylist -[playlist’s name]\nFollowings\nReport -[artist’s username] -[explanation]\nIncreaseCredit -[value]\nGetPremium -[package]\n");
+        help.append("for artists only:\n");
+        help.append("Followers\nViewsStatistics\nCalculateEarnings\n");
+        help.append("for singers only:\nNewAlbum -[name]\nPublish -M -[title] -[genre] -[lyric] -[link] -[cover] -[album ID ]\n");
+        help.append("for podcasters only:\nPublish -P -[title] -[genre] -[caption] -[link] -[cover]\n");
+        help.append("for admin only:\n");
+        help.append("Statistics\nAudios\nAudio -[audio’s ID]\nArtists\nArtist -[username]\nReports\n");
+        return help.toString();
     }
 }

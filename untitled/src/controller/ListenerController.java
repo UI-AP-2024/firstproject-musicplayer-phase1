@@ -107,7 +107,7 @@ public class ListenerController
     }
     public void changeToFree()
     {
-        String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+        String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString((getListener().getBirthDate().get(Calendar.MONTH)+1))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
         FreeListenerModel freeListener=new FreeListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
         freeListener.setSubscriptionExpiration(null);
         freeListener.setListenerCredit(getListener().getListenerCredit());
@@ -159,10 +159,10 @@ public class ListenerController
     }
     public String showArtists()
     {
-        StringBuilder answer=new StringBuilder();
+        StringBuilder answer=new StringBuilder("Artists usernames:\n");
         for(AccountUserModel temp:Database.getDatabase().getAllUsers())
             if(temp instanceof ArtistModel)
-                answer.append(temp).append("\n");
+                answer.append(temp.getUserName()).append("\n");
         return answer.toString();
     }
     public Object showArtist(String artistUserName)
@@ -189,19 +189,25 @@ public class ListenerController
         StringBuilder answer=new StringBuilder("");
         for(AudioModel temp:Database.getDatabase().getAllAudios())
         {
-            if(firstRound)
-                answer.append("Audios:\n");
-            if(temp!=null && temp.getAudioName().compareTo(audioOrArtistName)==0)
-                answer.append(temp).append("\n");
+            if(temp!=null)
+            {
+                if(firstRound)
+                    answer.append("Audios:\n");
+                if(temp.getAudioName().compareTo(audioOrArtistName)==0)
+                    answer.append(temp).append("\n");
+            }
             firstRound=false;
         }
         firstRound=true;
         for(AccountUserModel temp :Database.getDatabase().getAllUsers())
         {
-            if(firstRound)
-                answer.append("Artists:\n");
-            if(temp instanceof ArtistModel && temp.getFullName().compareTo(audioOrArtistName)==0)
-                answer.append(temp).append("\n");
+            if(temp!=null)
+            {
+                if(firstRound)
+                    answer.append("Artists:\n");
+                if(temp instanceof ArtistModel && temp.getFullName().compareTo(audioOrArtistName)==0)
+                    answer.append(temp).append("\n");
+            }
             firstRound=false;
         }
         if(answer.toString().compareTo("")!=0)
@@ -254,9 +260,7 @@ public class ListenerController
                 {
                     for(AlbumModel albumTemp :((SingerModel) artist).getAlbums())
                         if(albumTemp!=null)
-                            for(MusicModel musicTemp:albumTemp.getMusics())
-                                if(musicTemp!=null)
-                                    answer.append(musicTemp).append("\n");
+                            answer.append(albumTemp).append("\n");
                 }
                 else if(artist instanceof PodcasterModel)
                 {
@@ -362,6 +366,7 @@ public class ListenerController
     {
         StringBuilder answer=new StringBuilder();
         int counter=0;
+        int audioAmount=0;
         Map.Entry <Genre,Long>[] mostPlayedGenre=getTopTenMostPlayedGenre();
         Map.Entry <Genre,Long>[] likedGenres=getGenreOfLikedAudios();
         ArrayList <Genre> genres=new ArrayList<>();
@@ -379,23 +384,24 @@ public class ListenerController
             genres.add(getListener().getFavGenres().get(1));
         for(ArtistModel temp:getListener().getFollowings())
         {
-            if(counter==10)
+            if(audioAmount==10)
                 break;
             if(temp instanceof PodcasterModel)
             {
-                BREAK:
                 for(PodcastModel audioTemp:((PodcasterModel)temp).getPodcasts())
+                {
+                    if(counter>=3)
+                        break;
                     if(audioTemp!=null)
                         for(Genre genreTemp:genres)
                         {
-                            if(counter>=3)
-                                break BREAK;
                             if(genreTemp!=null && audioTemp.getGenre().compareTo(genreTemp)==0)
                             {
                                 answer.append(audioTemp).append("\n");
                                 counter++;
                             }
                         }
+                }
             }
             else
             {
@@ -415,14 +421,15 @@ public class ListenerController
                                     }
                                 }
             }
-
+            audioAmount+=counter;
+           counter=0;
         }
-        if(counter==10)
+        if(audioAmount==10)
             return answer.toString();
         else
         {
             ArrayList <AudioModel>audios=getMostPlayedAudios();
-            for(int i=0;i<10-counter;++i)
+            for(int i=0;i<10-audioAmount;++i)
                 if(audios.get(i)!=null)
                     answer.append(audios.get(i)).append("\n");
             return answer.toString();
@@ -458,7 +465,7 @@ public class ListenerController
         StringBuilder answer=new StringBuilder();
         for(PlayListModel temp: getListener().getPlayLists())
             if(temp!=null)
-                answer.append(temp).append("\n");
+                answer.append(temp.getPlayListName()).append("\n");
         return answer.toString();
     }
     public String showPlayList(String playListName)
@@ -524,7 +531,7 @@ public class ListenerController
             }
         return "Artist not found";
     }
-    public void increaseCredit(String  credit)
+    public void increaseCredit(String credit)
     {
         getListener().setListenerCredit(getListener().getListenerCredit()+Double.parseDouble(credit));
     }
@@ -541,7 +548,7 @@ public class ListenerController
             getListener().getSubscriptionExpiration().add(Calendar.DATE,30);
             if(getListener() instanceof FreeListenerModel)
             {
-                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString((getListener().getBirthDate().get(Calendar.MONTH)+1))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
                 PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
                 premiumListener.setListenerCredit(getListener().getListenerCredit());
                 premiumListener.setFollowings(getListener().getFollowings());
@@ -569,7 +576,7 @@ public class ListenerController
             getListener().getSubscriptionExpiration().add(Calendar.DATE,60);
             if(getListener() instanceof FreeListenerModel)
             {
-                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString((getListener().getBirthDate().get(Calendar.MONTH)+1))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
                 PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
                 premiumListener.setListenerCredit(getListener().getListenerCredit());
                 premiumListener.setFollowings(getListener().getFollowings());
@@ -597,7 +604,7 @@ public class ListenerController
             getListener().getSubscriptionExpiration().add(Calendar.DATE,180);
             if(getListener() instanceof FreeListenerModel)
             {
-                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.MONTH))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
+                String birthDate=Integer.toString(getListener().getBirthDate().get(Calendar.YEAR))+"/"+Integer.toString((getListener().getBirthDate().get(Calendar.MONTH)+1))+"/"+Integer.toString(getListener().getBirthDate().get(Calendar.DATE));
                 PremiumListenerModel premiumListener=new PremiumListenerModel(getListener().getUserName(),getListener().getPassword(),getListener().getFullName(),getListener().getEmail(),getListener().getPhoneNumber(),birthDate);
                 premiumListener.setListenerCredit(getListener().getListenerCredit());
                 premiumListener.setFollowings(getListener().getFollowings());
