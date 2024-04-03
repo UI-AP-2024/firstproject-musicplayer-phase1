@@ -104,4 +104,17 @@ abstract public class Audio {
                 +"Audio's musicLink : " +this.musicLink+"Audio's cover : " +this.cover;
         return result;
     }
+
+    public int compareTo1(Audio i1) {
+        if (this.getLikes() > i1.getLikes()){
+            return 1;
+        }
+        return -1;
+    }
+    public int compareTo2(Audio i1) {
+        if (this.getTimesPlayed() > i1.getTimesPlayed()){
+            return 1;
+        }
+        return -1;
+    }
 }

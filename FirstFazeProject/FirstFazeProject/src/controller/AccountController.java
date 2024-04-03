@@ -208,37 +208,17 @@ public class AccountController {
                 counter = 1;
                 ArrayList<Audio> audioArrayList = Database.getData().getAllAudios();
                 if (Objects.equals(answers[1], "L")) {
+                    List<Audio> sortedList = audioArrayList.stream().sorted((i1, i2) -> i2.compareTo1(i1)).toList();
                     result = new StringBuilder("The sorted list of audios buy number of likes : \r\n");
-                    for (int i = 0; i < audioArrayList.size() - 1; i++) {
-                        for (int j = i + 1; j < audioArrayList.size(); j++) {
-                            if (audioArrayList.get(i).getLikes() < audioArrayList.get(j).getLikes()) {
-                                Audio temp = audioArrayList.get(i);
-                                audioArrayList.remove(i);
-                                audioArrayList.add(i, audioArrayList.get(j - 1));
-                                audioArrayList.remove(j);
-                                audioArrayList.add(j, temp);
-                            }
-                        }
-                    }
-                    for (Audio audio : audioArrayList) {
+                    for (Audio audio : sortedList) {
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getLikes()).append(")").append("\r\n");
                     }
                     AccountView.getAccountView().showResult(result);
                     AccountView.getAccountView().showListenerLoginPanel(listener);
                 }else if (Objects.equals(answers[1], "P")){
                     result = new StringBuilder("The sorted list of audios buy number of plays : \r\n");
-                    for (int i = 0; i < audioArrayList.size() - 1; i++) {
-                        for (int j = i + 1; j < audioArrayList.size(); j++) {
-                            if (audioArrayList.get(i).getTimesPlayed() < audioArrayList.get(j).getTimesPlayed()) {
-                                Audio temp = audioArrayList.get(i);
-                                audioArrayList.remove(i);
-                                audioArrayList.add(i, audioArrayList.get(j - 1));
-                                audioArrayList.remove(j);
-                                audioArrayList.add(j, temp);
-                            }
-                        }
-                    }
-                    for (Audio audio : audioArrayList) {
+                    List<Audio> sortedList = audioArrayList.stream().sorted((i1, i2) -> i2.compareTo2(i1)).toList();
+                    for (Audio audio : sortedList) {
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getTimesPlayed()).append(")").append("\r\n");
                     }
                     AccountView.getAccountView().showResult(result);
