@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class Listener extends UserAccount
 {
-    private int accountCredit = 50;
+    private int accountCredit;
     private Date expirationDate = null;
     private Genre[] genres = new Genre[4];
     private ArrayList<Playlist> playlists = new ArrayList<Playlist>();
