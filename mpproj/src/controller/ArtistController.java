@@ -9,7 +9,7 @@ import model.GenreModel;
 import model.UserAccount.Artist.ArtistModel;
 import model.UserAccount.Artist.PodcasterModel;
 import model.UserAccount.Artist.SingerModel;
-import model.UserAccount.Listener.ListenerModel;
+
 import model.UserAccount.UserAccountModel;
 
 import java.time.LocalDate;

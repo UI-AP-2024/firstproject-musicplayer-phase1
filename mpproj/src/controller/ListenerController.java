@@ -4,6 +4,7 @@ import model.Audio.AudioModel;
 import model.Audio.MusicModel;
 import model.Audio.PodcastModel;
 import model.DataBase.DataBaseModel;
+import model.GenreModel;
 import model.PlaylistModel;
 import model.ReportModel;
 import model.UserAccount.Artist.ArtistModel;
@@ -13,8 +14,10 @@ import model.UserAccount.UserAccountModel;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.SplittableRandom;
 import java.util.regex.Pattern;
 
 
@@ -35,23 +38,11 @@ public class ListenerController {
                 listenerController = new ListenerController();
         return listenerController;
     }
-    public String sinUp(String username, String password, String name, String email, String phoneNumber, String birthDate) {
-        FreeListenerModel newListener;
-        for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
-            if (Objects.equals(userAccount.getUsername(), username) || Objects.equals(userAccount.getEmail(), email)) return "This username or email is already in use. Try again!";
-        Pattern phoneNumberRegex = Pattern.compile("^09[01239][0-9]{8}$");
-        if (!phoneNumberRegex.matcher(phoneNumber).matches())
-            return "Phone number format is false";
-        Pattern emailRegex = Pattern.compile("^[a-zA-Z0-9+_.\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$");
-        if (!emailRegex.matcher(email).matches())
-            return "Email format is false";
-        LocalDate b = LocalDate.parse(birthDate);
-        newListener = new FreeListenerModel(username, password, name, email, phoneNumber, b);
-        listener = newListener;
-        return "Now you can choose 4 favorite genres that you like!";
-    }
-    public String favoriteGenres() {
-
+    public void favoriteGenres(String g1, String g2, String g3, String g4) {
+        listener.getFavoriteGenres().add(GenreModel.valueOf(g1));
+        listener.getFavoriteGenres().add(GenreModel.valueOf(g2));
+        listener.getFavoriteGenres().add(GenreModel.valueOf(g3));
+        listener.getFavoriteGenres().add(GenreModel.valueOf(g4));
     }
     public String report(String artistUsername, String description) {
         for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
