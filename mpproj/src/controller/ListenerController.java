@@ -316,4 +316,32 @@ public class ListenerController {
         }
         return "The desired playlist was not found";
     }
+
+    public String suggestions(){
+        String result = "";
+        if ( getUserAccount() instanceof Listener ) {
+            String result2 = "";
+            for (Gener gener : ((Listener) getUserAccount()).getFavoriteGener()) {
+                for ( Audio audio : Database.getDataBase().getAudio()){
+                    if ( audio.getGener().equals(gener)){
+                        result2 += audio+"\n";
+                    }
+                }
+            }
+            for ( UserAccount userAccount1 : ((Listener) getUserAccount()).getFollowings()){
+                if ( userAccount1 instanceof Artist){
+                    for ( Audio audio : Database.getDataBase().getAudio()){
+                        if ( audio.getNameArtist().equals(userAccount1.getName())){
+                            result2 += audio+"\n";
+                        }
+                    }
+                }
+            }
+            if ( result2.equals(""))
+                result += "empty";
+            else
+                result += result2;
+        }
+        return result;
+    }
 }
