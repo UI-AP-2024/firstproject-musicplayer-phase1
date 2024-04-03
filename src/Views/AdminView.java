@@ -36,6 +36,9 @@ public class AdminView {
             case "Reports":
                 showReports();
                 break;
+            case "Logout":
+                adminController.logout();
+                break;
             default:
                 System.out.println("Command not found");
         }

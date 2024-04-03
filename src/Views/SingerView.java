@@ -37,6 +37,9 @@ public class SingerView {
                         inputArray[4], inputArray[5], inputArray[6],
                         Integer.parseInt(inputArray[7])); // inputArray[1] is useless since we already know we are in singer controller
                 break;
+            case "Logout":
+                singerController.logout();
+                break;
             default:
                 System.out.println("Invalid command");
         }

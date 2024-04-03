@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
 
-public abstract class ListenerController {
+public abstract class ListenerController extends UserController{
     private Database database;
     private AIRecommender aIrecommender;
 

@@ -1,23 +1,23 @@
 package Views;
 
-import Controllers.UserController;
+import Controllers.AccountController;
 import Models.Genre;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserView {
-    private UserController userController;
-    private static UserView userView;
-    public static UserView getUserView()
+public class AccountView {
+    private AccountController accountController;
+    private static AccountView accountView;
+    public static AccountView getUserView()
     {
-        if(userView == null) userView = new UserView();
-        return userView;
+        if(accountView == null) accountView = new AccountView();
+        return accountView;
     }
-    private UserView()
+    private AccountView()
     {
-        userController = UserController.getUserController();
+        accountController = AccountController.getUserController();
     }
     public void getInput()
     {
@@ -29,22 +29,19 @@ public class UserView {
             case "Signup":
                 if(inputArray[1].equals("L"))
                 {
-                    System.out.println(userController.signUp(inputArray[1],
+                    System.out.println(accountController.signUp(inputArray[1],
                             inputArray[2], inputArray[3], inputArray[4], inputArray[5],
                             inputArray[6], LocalDate.parse(inputArray[7]), null));
                 }
                 else if(inputArray[1].equals("S") || inputArray[1].equals("P"))
                 {
-                    System.out.println(userController.signUp(inputArray[1],
+                    System.out.println(accountController.signUp(inputArray[1],
                             inputArray[2], inputArray[3], inputArray[4], inputArray[5],
                             inputArray[6], LocalDate.parse(inputArray[7]), inputArray[8]));
                 }
                 break;
             case "Login":
-                System.out.println(userController.login(inputArray[1], inputArray[2]));
-                break;
-            case "Logout":
-                userController.logout();
+                System.out.println(accountController.login(inputArray[1], inputArray[2]));
                 break;
             default:
                 System.out.println("Invalid command");

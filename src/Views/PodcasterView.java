@@ -35,6 +35,9 @@ public class PodcasterView {
                 // inputArray[7] is also useless since we don't need albumId
 
                 break;
+            case "Logout":
+                podcasterController.logout();
+                break;
             default:
                 System.out.println("Invalid command");
         }

@@ -10,7 +10,7 @@ import Models.User.User;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class AdminController{
+public class AdminController extends UserController{
     private static AdminController adminController;
     private Database database;
     private Admin adminModel;

@@ -1,8 +1,8 @@
-import Views.UserView;
+import Views.AccountView;
 
 public class Main {
 
     public static void main(String[] args){
-        UserView.getUserView().getInput();
+        AccountView.getUserView().getInput();
     }
 }

@@ -98,6 +98,9 @@ public class NormalListenerView {
             case "GetPremium":
                 getPremium(PremiumPlan.valueOf(inputArray[1]));
                 break;
+            case "Logout":
+                normalListenerController.logout();
+                break;
             default:
                 System.out.println("Invalid command");
         }

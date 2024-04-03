@@ -11,7 +11,7 @@ import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Map;
 
-public abstract class ArtistController {
+public abstract class ArtistController extends UserController{
     public ArtistController()
     {
         database = Database.getInstance();
@@ -70,4 +70,5 @@ public abstract class ArtistController {
     {
         return this.getArtistModel().toString();
     }
+
 }
