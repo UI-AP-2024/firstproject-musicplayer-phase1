@@ -2,6 +2,7 @@ package controller;
 import model.*;
 import view.AccountView;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -515,11 +516,17 @@ public class AccountController {
         backUp.remove(person1);
         backUp.add(person2);
         Database.getData().setAllUsers(backUp);
+        LocalDate date1 = LocalDate.now();
+        Date date2 = new Date(date1.getYear(),date1.getMonthValue(),date1.getDayOfMonth()+premiumShare.getDays());
+        person2.setShareExpireTime(date2);
     }
 
     public void updatePremiumShare(Premium person, PremiumShare premiumShare) {
         person.setShareDaysLeft(person.getShareDaysLeft() + premiumShare.getDays());
         person.setAccountCredit(person.getAccountCredit() - premiumShare.getValue());
+        Date date1 = person.getShareExpireTime();
+        Date date2 = new Date(date1.getYear(),date1.getMonth(),date1.getDate()+premiumShare.getDays());
+        person.setShareExpireTime(date2);
     }
 
     public StringBuilder getSuggestions(Listener person) {
