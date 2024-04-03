@@ -7,6 +7,15 @@ public class Album {
     private String name;
     private String singerName;
     private ArrayList<Music> musicList;
+    private static int countId=0;
+
+    public static int getCountId() {
+        return countId;
+    }
+
+    public static void setCountId(int countId) {
+        Album.countId = countId;
+    }
 
     public Album(long id, String name, String singerName/*, ArrayList<Music> musicList*/) {
         this.id = id;
