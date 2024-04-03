@@ -146,4 +146,78 @@ public class ListenerController {
         }
         return "The desired audio file was not found";
     }
+
+    public String searchAudioFile(String name){
+        String result = "";
+        for ( Audio audio : Database.getDataBase().getAudio()){
+            if ( audio.getName().equals(name) || audio.getNameArtist().equals(name)){
+                result += "\n"+audio;
+            }
+        }
+        if (result.equals(""))
+            result = "Not found";
+        return result;
+    }
+
+    public String sortAudioFile(String type){
+        if (type.equals("L")){
+            for (int i = 0; i < Database.getDataBase().getAudio().size()-1 ; i++) {
+                for (int j = 0; j < Database.getDataBase().getAudio().size()-i-1 ; j++) {
+                    if ( Database.getDataBase().getAudio().get(j).getNumberOfLikes() < Database.getDataBase().getAudio().get(j+1).getNumberOfLikes() ){
+                        Collections.swap(Database.getDataBase().getAudio(),j,j+1);
+                    }
+                }
+            }
+            String result = "";
+            for ( Audio audio : Database.getDataBase().getAudio())
+                result += "\n"+audio;
+            return result;
+        }
+        else if (type.equals("P")){
+            for (int i = 0; i < Database.getDataBase().getAudio().size()-1 ; i++) {
+                for (int j = 0; j < Database.getDataBase().getAudio().size()-i-1 ; j++) {
+                    if ( Database.getDataBase().getAudio().get(j).getNumberOfPlays() < Database.getDataBase().getAudio().get(j+1).getNumberOfPlays() ){
+                        Collections.swap(Database.getDataBase().getAudio(),j,j+1);
+                    }
+                }
+            }
+            String result = "";
+            for ( Audio audio : Database.getDataBase().getAudio())
+                result += "\n"+audio;
+            return result;
+        }
+        return "The requested sort is not valid";
+    }
+
+    public String filterAudioFile(String type,String detail){
+        if (type.equals("A")){
+            String result = "";
+            for ( Audio audio : Database.getDataBase().getAudio() ){
+                if ( detail.equals(audio.getNameArtist()) ){
+                    result += "\n"+audio;
+                }
+            }
+            return result;
+        }
+        else if ( type.equals("G")){
+            String result = "";
+            for ( Audio audio : Database.getDataBase().getAudio() ){
+                if ( detail.equals( String.valueOf(audio.getGener()) ){
+                    result += "\n"+audio;
+                }
+            }
+            return result;
+        }
+        else if ( type.equals("D")){
+            String result = "";
+            for ( Audio audio : Database.getDataBase().getAudio() ){
+//                if ( detail.equals( String.valueOf(audio.getGener()) ){
+//                    result += "\n"+audio;
+//                }
+            }
+            return result;
+        }
+        return "The desired filter type or detail is not valid";
+    }
+    
 }
