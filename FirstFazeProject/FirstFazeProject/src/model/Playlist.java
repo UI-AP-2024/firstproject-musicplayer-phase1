@@ -44,4 +44,12 @@ public class Playlist {
     public void setAudioList(ArrayList<Audio> audioList) {
         this.audioList = audioList;
     }
+
+    @Override
+    public String toString(){
+        String result = null;
+        result += "Playlist's name : "+this.playListName+"\r\n"+"Generator user name : "+this.userGeneratorName+"\r\n"
+                +"Audios number : " +this.audioList.size();
+        return result;
+    }
 }

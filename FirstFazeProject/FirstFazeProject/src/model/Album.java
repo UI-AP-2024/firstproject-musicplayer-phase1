@@ -44,4 +44,12 @@ public class Album {
     public void setAudioList(ArrayList<Audio> audioList) {
         this.audioList = audioList;
     }
+
+    @Override
+    public String toString(){
+        String result = null;
+        result += "Album's ID : "+this.uniqueId+"\r\n"+"Album's name Artist : "+this.albumName+"\r\n"
+                +"Singer's name : " +"\r\n"+this.singerName+"Album's audios : " +this.audioList.size();
+        return result;
+    }
 }

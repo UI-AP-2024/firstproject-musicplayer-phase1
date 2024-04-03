@@ -93,4 +93,13 @@ abstract public class Audio {
     public void setCover(String cover) {
         this.cover = cover;
     }
+
+    @Override
+    public String toString(){
+        String result = null;
+        result += "Audio's ID : "+this.uniqueId+"\r\n"+"Audio's name : "+this.audioName+"\r\n"
+                +"Audio artist's name : "+this.artistName+"Audio's genre : " +this.genre
+                +"Audio's musicLink : " +this.musicLink+"Audio's cover : " +this.cover;
+        return result;
+    }
 }

@@ -34,4 +34,12 @@ public class Report {
     public void setCaption(String explanation) {
         this.explanation = explanation;
     }
+
+    @Override
+    public String toString(){
+        String result = null;
+        result += "Reporter user : "+this.reporterUser+"\r\n"+"Reported Artist : "+this.reportedArtist+"\r\n"
+                +"Explanation : " +this.explanation;
+        return result;
+    }
 }

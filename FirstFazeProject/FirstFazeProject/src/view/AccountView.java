@@ -24,6 +24,7 @@ public class AccountView {
         System.out.println("Welcome to the music player please signup or login first ❤");
         showMainMenu();
     }
+
     public void showMainMenu() {
         System.out.println("Please enter you information to signup or login\r\n" +
                 "Your password was be made of 10 to 16 characters, including lower upper case characters and numbers as well 📱\r\n" +
@@ -83,16 +84,19 @@ public class AccountView {
         System.out.println("Favorite genres were added successfully");
         showMainMenu();
     }
+
     public void showListenerLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");
         String answer = inp.nextLine();
         AccountController.getAccountController().loginListenerPanelOrders((Listener)person,answer);
     }
+
     public void showArtistLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");
         String answer = inp.nextLine();
         AccountController.getAccountController().loginArtistPanelOrders((Artist)person,answer);
     }
+
     public void showAdminLoginPanel(UserAccount person){
         System.out.println("Please Enter a command");
         String answer = inp.nextLine();

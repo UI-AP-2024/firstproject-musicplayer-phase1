@@ -66,4 +66,13 @@ abstract public class UserAccount {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+
+    @Override
+    public String toString(){
+        String result = null;
+        result += "Email : "+this.email+"\r\n"+"Full name : "+this.fullName+"\r\n"
+                +"Phone number : " +this.phoneNumber+"\r\n"+"Birth date : "
+                +this.birthDate.getYear()+"."+this.birthDate.getMonth()+"."+this.birthDate.getDate();
+        return result;
+    }
 }
