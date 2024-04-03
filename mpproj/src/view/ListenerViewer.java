@@ -165,6 +165,7 @@ public class ListenerViewer {
         print(ListenerControler.getListenerControler().likeAudio(Integer.parseInt(answers[1])));
         getAnswer();
     }
+
     public void lyric(){
         print(ListenerControler.getListenerControler().lyric(Integer.parseInt(answers[1])));
         getAnswer();
