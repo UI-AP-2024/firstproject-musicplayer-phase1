@@ -433,24 +433,24 @@ public class AccountController {
                 }
                 AccountView.getAccountView().showResult(result);
                 AccountView.getAccountView().showLoginPanel(user);
-                break;  
+                break;
             case "Report" :
-//                for (UserAccount userAccount : Database.getData().getAllUsers()) {
-//                    if (userAccount instanceof Artist) {
-//                        if (Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
-//                            Report report = new Report(user, (Artist) userAccount, answers[2]);
-//                            ArrayList<Report> backUp = Database.getData().getReports();
-//                            backUp.add(report);
-//                            Database.getData().setReports(backUp);
-//                            AccountView.getAccountView().showResult(new StringBuilder("The report was recorded successfully"));
-//                            AccountView.getAccountView().showLoginPanel(user);
-//                        }
-//                    }
-//                }
-//                AccountView.getAccountView().showResult(new StringBuilder("The report's recording failed"));
-//                AccountView.getAccountView().showLoginPanel(user);
-//                break;
-//            case "IncreaseCredit":
+                for (UserAccount userAccount : Database.getData().getAllUsers()) {
+                    if (userAccount instanceof Artist) {
+                        if (Objects.equals(userAccount.getUniqueUserName(), answers[1])) {
+                            Report report = new Report(user, (Artist) userAccount, answers[2]);
+                            ArrayList<Report> backUp = Database.getData().getReports();
+                            backUp.add(report);
+                            Database.getData().setReports(backUp);
+                            AccountView.getAccountView().showResult(new StringBuilder("The report was recorded successfully"));
+                            AccountView.getAccountView().showLoginPanel(user);
+                        }
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The report's recording failed"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "IncreaseCredit":
 
         }
     }
