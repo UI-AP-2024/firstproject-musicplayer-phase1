@@ -241,6 +241,13 @@ public class ListenerControler {
         calendar.setTime(listenerr.getEndSubDate());
         calendar.add(Calendar.DAY_OF_MONTH,-1);
         listenerr.setEndSubDate(calendar.getTime());
+        if(listenerr instanceof  PrimiumListener) {
+            ((PrimiumListener) listenerr).setNumOfSub(((PrimiumListener) listenerr).getNumOfSub() - 1);
+            if(((PrimiumListener) listenerr).getNumOfSub()<=0){
+                RegularListener tmplistenerr=new RegularListener(listenerr.getUsername(),listenerr.getPassword(),listenerr.getFullName(),listenerr.getEmail(),listenerr.getPhoneNumber(),listenerr.getDateOfBirth(),listenerr.getCredit());
+                listenerr=tmplistenerr;
+            }
+        }
         return listenerr.toString();
     }
     public String showmyPlaylist(){
