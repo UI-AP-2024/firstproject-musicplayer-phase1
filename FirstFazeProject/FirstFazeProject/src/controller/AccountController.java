@@ -360,8 +360,16 @@ public class AccountController {
             case "Play":
                 for (Audio audio : Database.getData().getAllAudios()){
                     if (audio.getUniqueId() == Integer.parseInt(answers[1])){
-                        AccountView.getAccountView().showResult(new StringBuilder("The music was played successfully"));
                         audio.setTimesPlayed((audio.getTimesPlayed()+1));
+                        Map<Audio,Integer> backUp = ((Listener)user).getAudioTimesPlayed();
+                        for (Audio audio1 : backUp.keySet()){
+                            if (audio1 == audio){
+                                backUp.put(audio1,(backUp.get(audio1)+1));
+                                break;
+                            }
+                        }
+                        ((Listener)user).setAudioTimesPlayed(backUp);
+                        AccountView.getAccountView().showResult(new StringBuilder("The music was played successfully"));
                         AccountView.getAccountView().showLoginPanel(user);
                     }
                 }
@@ -395,8 +403,8 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "NewPlaylist" :
-                if (user instanceof Free){
-                    if (((Free) user).getMaxPlaylistMade() >= 3){
+                if (user instanceof Free) {
+                    if ( ((Listener)user).getPlaylists().size() >= ((Free) user).getMaxPlaylistMade()){
                         AccountView.getAccountView().showResult(new StringBuilder("You have already made the maximum number of lists"));
                         AccountView.getAccountView().showLoginPanel(user);
                     }else{
@@ -451,8 +459,67 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "IncreaseCredit":
-
+                ((Listener)user).setAccountCredit(((Listener)user).getAccountCredit()+Double.parseDouble(answers[1]));
+                AccountView.getAccountView().showResult(new StringBuilder("Your account credit was increased"));
+                AccountView.getAccountView().showLoginPanel(user);
+                break;
+            case "GetPremium":
+                switch (answers[1]){
+                    case "ThirtyDay", "OneEightyDay", "SixtyDay":
+                        accountShareCheck(user, answers);
+                        break;
+                }
+            default:
+                AccountView.getAccountView().showResult(new StringBuilder("Your command is unable to run"));
+                AccountView.getAccountView().showLoginPanel(user);
         }
+    }
+
+    public void accountShareCheck(UserAccount user, String[] answers) {
+        if (user instanceof Free){
+            for(PremiumShare premiumShare : PremiumShare.values()){
+                if (premiumShare.name().equals(answers[1])) {
+                    if (((Listener) user).getAccountCredit() >= premiumShare.getValue()) {
+                        freeToPremium((Free) user, premiumShare);
+                        AccountView.getAccountView().showResult(new StringBuilder("Your account is now premium"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                    AccountView.getAccountView().showResult(new StringBuilder("Your credit is not enough"));
+                    AccountView.getAccountView().showLoginPanel(user);
+                }
+            }
+        }else if (user instanceof Premium){
+            for (PremiumShare premiumShare : PremiumShare.values()){
+                if (premiumShare.name().equals(answers[1])) {
+                    if (((Listener) user).getAccountCredit() >= premiumShare.getValue()) {
+                        updatePremiumShare((Premium) user, premiumShare);
+                        AccountView.getAccountView().showResult(new StringBuilder("Your account is now premium"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }else{
+                        AccountView.getAccountView().showResult(new StringBuilder("Your credit is not enough"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                }
+            }
+        }
+    }
+
+    public void freeToPremium(Free person1,PremiumShare premiumShare){
+        Premium person2 = new Premium(person1.getUniqueUserName(), person1.getPassword(),person1.getFullName(),person1.getEmail(), person1.getPhoneNumber(),person1.getBirthDate());
+        person2.setShareDaysLeft(premiumShare.getDays());
+        person2.setPlaylists(person1.getPlaylists());
+        person2.setAudioTimesPlayed(person1.getAudioTimesPlayed());
+        person2.setFavoriteGenres(person1.getFavoriteGenres());
+        person2.setAccountCredit(person1.getAccountCredit()-premiumShare.getValue());
+        ArrayList<UserAccount> backUp = Database.getData().getAllUsers();
+        backUp.remove(person1);
+        backUp.add(person2);
+        Database.getData().setAllUsers(backUp);
+    }
+
+    public void updatePremiumShare(Premium person ,PremiumShare premiumShare){
+        person.setShareDaysLeft(person.getShareDaysLeft()+premiumShare.getDays());
+        person.setAccountCredit(person.getAccountCredit()-premiumShare.getValue());
     }
 
     public StringBuilder accountInfo(UserAccount user){
