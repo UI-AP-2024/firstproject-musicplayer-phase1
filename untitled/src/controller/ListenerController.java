@@ -194,7 +194,7 @@ public class ListenerController
                 if(firstRound)
                     answer.append("Audios:\n");
                 if(temp.getAudioName().compareTo(audioOrArtistName)==0)
-                    answer.append(temp).append("\n");
+                    answer.append("Audio name: ").append(temp.getAudioName()).append("\nAudio ID: ").append(temp.getAudioID()).append("\n");
             }
             firstRound=false;
         }
@@ -206,7 +206,7 @@ public class ListenerController
                 if(firstRound)
                     answer.append("Artists:\n");
                 if(temp instanceof ArtistModel && temp.getFullName().compareTo(audioOrArtistName)==0)
-                    answer.append(temp).append("\n");
+                    answer.append("User name: ").append(temp.getUserName()).append("\nFull name: ").append(temp.getFullName()).append("\n");
             }
             firstRound=false;
         }
@@ -227,7 +227,7 @@ public class ListenerController
                     {
                         outPut=Database.getDatabase().getAllAudios().get(j);
                     }
-                answer.append(outPut).append("\n");
+                answer.append("AudioID: ").append(outPut.getAudioID()).append("\nAudio name: ").append(outPut.getAudioName()).append("\nlike amount: ").append(outPut.getLikeAmount()).append("\n");
             }
             return answer.toString();
         }
@@ -241,7 +241,7 @@ public class ListenerController
                     {
                         outPut=Database.getDatabase().getAllAudios().get(j);
                     }
-                answer.append(outPut).append("\n");
+                answer.append("AudioID: ").append(outPut.getAudioID()).append("\nAudio name: ").append(outPut.getAudioName()).append("\nplay amount: ").append(outPut.getPlayAmount()).append("\n");
             }
             return answer.toString();
         }
@@ -260,13 +260,19 @@ public class ListenerController
                 {
                     for(AlbumModel albumTemp :((SingerModel) artist).getAlbums())
                         if(albumTemp!=null)
-                            answer.append(albumTemp).append("\n");
+                        {
+                            answer.append("Album name: ").append(albumTemp.getAlbumName()).append("\nAlbum ID: ").append(albumTemp.getAlbumID()).append("\nArtist username: ").append(albumTemp.getNameOfArtist()).append("\n");
+                            for(MusicModel musicTemp:albumTemp.getMusics())
+                                if(musicTemp!=null)
+                                    answer.append("Music name: ").append(musicTemp.getAudioName()).append("\nMusic ID: ").append(musicTemp.getAudioID()).append("\n");
+                        }
                 }
                 else if(artist instanceof PodcasterModel)
                 {
+                    answer.append("Artist username: ").append(artist.getUserName()).append("\n");
                     for(PodcastModel temp:((PodcasterModel)artist).getPodcasts())
                         if(temp!=null)
-                            answer.append(temp).append("\n");
+                            answer.append("Podcast name: ").append(temp.getAudioName()).append("\nPodcast ID: ").append(temp.getAudioID()).append("\n");
                 }
                 return answer.toString();
             }
@@ -276,7 +282,7 @@ public class ListenerController
         {
             for(AudioModel temp:Database.getDatabase().getAllAudios())
                 if(temp!= null && temp.getGenre().toString().compareTo(filterBy)==0)
-                    answer.append(temp).append("\n");
+                    answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\n");
             return answer.toString();
         }
         else if(filter.compareTo("D")==0)
@@ -289,7 +295,7 @@ public class ListenerController
             date.setTime(new Date(filterBy));
             for(AudioModel temp:Database.getDatabase().getAllAudios())
                 if(temp!=null && temp.getReleaseDate().compareTo(date)==0)
-                    answer.append(temp).append("\n");
+                    answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\n");
             return answer.toString();
         }
         else
@@ -397,7 +403,7 @@ public class ListenerController
                         {
                             if(genreTemp!=null && audioTemp.getGenre().compareTo(genreTemp)==0)
                             {
-                                answer.append(audioTemp).append("\n");
+                                answer.append("AudioID: ").append(audioTemp.getAudioID()).append("\nAudio name: ").append(audioTemp.getAudioName()).append("\n");
                                 counter++;
                             }
                         }
@@ -416,7 +422,7 @@ public class ListenerController
                                         break BREAK;
                                     if(genreTemp!=null && musicTemp.getGenre().compareTo(genreTemp)==0)
                                     {
-                                        answer.append(musicTemp).append("\n");
+                                        answer.append("AudioID: ").append(musicTemp.getAudioID()).append("\nAudio name: ").append(musicTemp.getAudioName()).append("\n");
                                         counter++;
                                     }
                                 }
@@ -431,7 +437,7 @@ public class ListenerController
             ArrayList <AudioModel>audios=getMostPlayedAudios();
             for(int i=0;i<10-audioAmount;++i)
                 if(audios.get(i)!=null)
-                    answer.append(audios.get(i)).append("\n");
+                    answer.append("AudioID: ").append(audios.get(i).getAudioID()).append("\nAudio name: ").append(audios.get(i).getAudioName()).append("\n");
             return answer.toString();
         }
     }
@@ -462,7 +468,7 @@ public class ListenerController
     }
     public String showPlayLists()
     {
-        StringBuilder answer=new StringBuilder();
+        StringBuilder answer=new StringBuilder("Playlists name:\n");
         for(PlayListModel temp: getListener().getPlayLists())
             if(temp!=null)
                 answer.append(temp.getPlayListName()).append("\n");

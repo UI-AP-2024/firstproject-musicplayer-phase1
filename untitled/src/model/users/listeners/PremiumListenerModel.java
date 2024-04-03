@@ -20,6 +20,6 @@ public class PremiumListenerModel extends ListenerModel
     }
     public String toString()
     {
-        return super.toString()+"Remaining subscription days: "+this.remainingDays;
+        return super.toString()+"Remaining subscription days: "+this.getRemainingDays();
     }
 }

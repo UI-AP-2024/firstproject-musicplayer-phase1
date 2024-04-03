@@ -70,7 +70,7 @@ public class ArtistController
                     }
             for(PodcastModel temp:podcasts)
                 if(temp!=null)
-                    answer.append(temp).append("\n");
+                    answer.append("PodcastID: ").append(temp.getAudioID()).append("\nPodcast name: ").append(temp.getAudioName()).append("\nplay amount: ").append(temp.getPlayAmount()).append("\n");
             return answer.toString();
         }
         else
@@ -94,7 +94,7 @@ public class ArtistController
                     }
             for(MusicModel temp:musics)
                 if(temp!=null)
-                    answer.append(temp).append("\n");
+                    answer.append("MusicID: ").append(temp.getAudioID()).append("\nMusic name: ").append(temp.getAudioName()).append("\nplay amount: ").append(temp.getPlayAmount()).append("\n");
             return answer.toString();
         }
     }

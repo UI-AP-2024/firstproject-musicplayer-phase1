@@ -25,7 +25,6 @@ public class Database
     }
     public ArrayList<Report> getReports()
     {
-
         return this.reports;
     }
     public ArrayList<AudioModel> getAllAudios()

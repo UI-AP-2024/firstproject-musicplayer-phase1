@@ -70,7 +70,7 @@ public class AdminController
                 }
         for(AudioModel temp:audios)
             if(temp!=null)
-                answer.append(temp).append("\n");
+                answer.append("AudioID: ").append(temp.getAudioID()).append("\nAudio name: ").append(temp.getAudioName()).append("\nlike amount: ").append(temp.getLikeAmount()).append("\n");
         return answer.toString();
     }
 }

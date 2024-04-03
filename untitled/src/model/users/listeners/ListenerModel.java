@@ -84,7 +84,7 @@ public class ListenerModel extends AccountUserModel
     {
         String string= super.toString()+"\nCredit: "+this.listenerCredit+"\nSubscription expiration date: ";
         if(this.subscriptionExpiration!=null && !this.subscriptionExpiration.before(Calendar.getInstance()))
-            string=string+this.subscriptionExpiration.get(Calendar.YEAR)+"/"+this.subscriptionExpiration.get(Calendar.MONTH)+"/"+this.subscriptionExpiration.get(Calendar.DATE);
+            string=string+this.subscriptionExpiration.get(Calendar.YEAR)+"/"+(this.subscriptionExpiration.get(Calendar.MONTH)+1)+"/"+this.subscriptionExpiration.get(Calendar.DATE);
         else
             string=string+"Not a premium listener";
         StringBuilder theRestOfString=new StringBuilder("\nFavorite genres: ");

@@ -40,7 +40,7 @@ public class ArtistModel extends AccountUserModel
     }
     public String toString()
     {
-        String string=super.toString()+"Income: "+this.income+"\nBiography: "+this.bio;
+        String string=super.toString()+"\nIncome: "+this.income+"\nBiography: "+this.bio;
         StringBuilder temp=new StringBuilder("\nFollowers:\n");
         for(AccountUserModel userTemp:this.followers)
             if(userTemp!=null)
