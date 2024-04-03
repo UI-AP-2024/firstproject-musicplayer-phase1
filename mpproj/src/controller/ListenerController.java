@@ -219,5 +219,15 @@ public class ListenerController {
         }
         return "The desired filter type or detail is not valid";
     }
+
+    public String viewFollowing(){
+        String result = "";
+        for ( UserAccount userAccount1 : ((Listener) getUserAccount()).getFollowings()){
+            result += "\n"+userAccount1.getName()+"\t"+userAccount1.getUserName();
+        }
+        if ( result.equals(""))
+            result = "empty";
+        return result;
+    }
     
 }
