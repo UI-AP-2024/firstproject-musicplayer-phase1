@@ -9,28 +9,24 @@ import model.Genre;
 import java.util.Date;
 import java.util.List;
 
+
 public class SingerC {
 
-        public static int createAlbum(Singer singer, String albumName) {
-            int uniqueId = generateUniqueId();
-            Album album = new Album(uniqueId, albumName, singer.getFullName());
-            singer.getAlbums().add(albumName);
-            return uniqueId;
-        }
-        private static int generateUniqueId() {
+    public static int createAlbum(Singer singer, String albumName) {
+        int uniqueId = generateUniqueId();
+        Album album = new Album(uniqueId, albumName, singer.getFullName());
+        singer.getAlbums().add(album);
+        return uniqueId;
+    }
 
-            return (int) (Math.random() * 1000) + 1;
-        }
+    private static int generateUniqueId() {
 
-    public class AudioPublisher {
-        public static void publishAudio(Singer singer, String audioFileName, String albumName, String description) {
-            // Create the audio object
-            Audio audio = new Audio(audioFileName, description, singer.getFullName(), 0, 0, new Date(), null);
+        return (int) (Math.random() * 1000) + 1;
+    }
 
-            //
+        public static void publishAudio(Singer singer, String audioFileName, String albumName, String tite,String audioLink,String cover) {
+            Audio audio = new Audio(0, audioFileName, singer.getFullName(), 0, 0, new Date(), null,audioLink,cover);
             Database.getInstance().addrAudio(audio);
-
-            // Add the audio file to the album
             Album album = findAlbumByName(singer, albumName);
             if (album != null) {
                 album.addSong(audioFileName);
@@ -39,15 +35,15 @@ public class SingerC {
             }
         }
 
+
         private static Album findAlbumByName(Singer singer, String albumName) {
-            List<Album> albums = singer.getAlbums();
-            for (Album album : albums) {
-                if (album.getName().equals(albumName)) {
+            List<Album> albumss = singer.getAlbums();
+            for (Album album : albumss) {
+                if (album.equals(albumName)) {
                     return album;
                 }
             }
             return null;
         }
-
-
     }
+
