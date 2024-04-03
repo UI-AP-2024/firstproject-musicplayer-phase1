@@ -651,6 +651,30 @@ public class AccountController {
     }
 
     public void loginArtistPanelOrders(Artist artist, String answer){
-
+        String[] answers = answer.split(" -");
+        StringBuilder result;
+        int counter;
+        switch (answers[0]){
+            case "Followers":
+                result = new StringBuilder("The artist's followers : ");
+                counter = 1 ;
+                for (UserAccount userAccount : artist.getFollowers()){
+                    result.append(counter++).append("_").append(userAccount.getUniqueUserName()).append("\r\n");
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showArtistLoginPanel(artist);
+                break;
+            case "ViewsStatistics":
+                result = new StringBuilder("The artist's audios and their plays count : \r\n");
+                counter = 1;
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (Objects.equals(audio.getArtistName(), artist.getUniqueUserName())){
+                        result.append(counter++).append("_").append(audio.getAudioName()).append("(")
+                                .append(audio.getTimesPlayed()).append(")\r\n");
+                    }
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showArtistLoginPanel(artist);
+        }
     }
 }
