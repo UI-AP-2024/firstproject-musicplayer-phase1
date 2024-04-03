@@ -1,9 +1,6 @@
 package controller;
 
-import model.Artist;
-import model.Audio;
-import model.Database;
-import model.UserAccount;
+import model.*;
 
 public class AdminController {
     private static AdminController adminController;
@@ -64,6 +61,16 @@ public class AdminController {
             if ( userAccount1 instanceof Artist){
                 result += userAccount1+"\n";
             }
+        }
+        if ( result.equals(""))
+            result += "empty";
+        return result;
+    }
+
+    public String viewReports(){
+        String result = "";
+        for (Report report : Database.getDataBase().getReports()){
+            result += report+"\n\n";
         }
         if ( result.equals(""))
             result += "empty";
