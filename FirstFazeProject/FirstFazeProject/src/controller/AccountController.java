@@ -395,7 +395,29 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "NewPlaylist" :
-
+                if (user instanceof Free){
+                    if (((Free) user).getMaxPlaylistMade() >= 3){
+                        AccountView.getAccountView().showResult(new StringBuilder("You have already made the maximum number of lists"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }else{
+                        Playlist newPlaylist = new Playlist(answers[1], user.getUniqueUserName());
+                        ArrayList<Playlist> backUp = ((Free) user).getPlaylists();
+                        backUp.add(newPlaylist);
+                        ((Free) user).setPlaylists(backUp);
+                        AccountView.getAccountView().showResult(new StringBuilder("The playlist was successfully made"));
+                        AccountView.getAccountView().showLoginPanel(user);
+                    }
+                }else if (user instanceof Premium){
+                    Playlist newPlaylist = new Playlist(answers[1], user.getUniqueUserName());
+                    ArrayList<Playlist> backUp = ((Premium) user).getPlaylists();
+                    backUp.add(newPlaylist);
+                    ((Premium) user).setPlaylists(backUp);
+                    AccountView.getAccountView().showResult(new StringBuilder("The playlist was successfully made"));
+                    AccountView.getAccountView().showLoginPanel(user);
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The playlist can't be made"));
+                AccountView.getAccountView().showLoginPanel(user);
+            case "Followings" :
         }
     }
 

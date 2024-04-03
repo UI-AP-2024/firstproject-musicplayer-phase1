@@ -14,7 +14,7 @@ public class Free extends Listener{
         return maxAddSongToPlaylist;
     }
 
-    public static int getMaxPlaylistMade() {
+    public int getMaxPlaylistMade() {
         return maxPlaylistMade;
     }
 
