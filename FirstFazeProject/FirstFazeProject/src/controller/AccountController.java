@@ -556,17 +556,84 @@ public class AccountController {
         return result;
     }
 
-    public void loginAdminPanelOrders(Admin artist, String answer) {
+    public void loginAdminPanelOrders(Admin admin, String answer) {
         String[] answers = answer.split(" -");
+        StringBuilder result;
+        int counter;
         switch (answers[0]) {
             case "Logout":
                 AccountView.getAccountView().showMainMenu();
                 break;
             case "AccountInfo":
-                AccountView.getAccountView().showResult(accountInfo(artist));
-                AccountView.getAccountView().showAdminLoginPanel(artist);
+                AccountView.getAccountView().showResult(accountInfo(admin));
+                AccountView.getAccountView().showAdminLoginPanel(admin);
                 break;
-            case "GetSuggestions":
+            case "Statistics":
+                ArrayList<Audio> audios1 = Database.getData().getAllAudios();
+                ArrayList<Audio> audios2 = new ArrayList<>();
+                for (int i = 0 ; i < audios1.size() ; i++){
+                    Audio backUp = audios1.getFirst() ;
+                    for (Audio audio : Database.getData().getAllAudios()){
+                        if (backUp.getLikes() < audio.getLikes()){
+                            backUp = audio;
+                        }
+                    }
+                    audios1.remove(backUp);
+                    audios2.add(backUp);
+                }
+                counter = 1;
+                result = new StringBuilder("The list of audios by like ranking : \r\n");
+                for (Audio audio : audios2){
+                    result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getLikes()).append(")\r\n");
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showAdminLoginPanel(admin);
+                break;
+            case "Audios":
+                result = new StringBuilder("The list of the audios, organized by adding time : \r\n");
+                counter=1;
+                for (Audio audio : Database.getData().getAllAudios()){
+                    result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getUniqueId()).append(")\r\n");
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showAdminLoginPanel(admin);
+                break;
+            case "Audio" :
+                result = new StringBuilder("The audio's information : \r\n");
+                for (Audio audio : Database.getData().getAllAudios()){
+                    if (audio.getUniqueId() == Integer.parseInt(answers[1])){
+                        result.append("Audio's name : ").append(audio.getAudioName()).append("\r\n");
+                        result.append("Audio's likes : ").append(audio.getLikes()).append("\r\n");
+                        result.append("Audio's genre : ").append(audio.getGenre().name()).append("\r\n");
+                        result.append("Audio's times played : ").append(audio.getTimesPlayed()).append("\r\n");
+                        result.append("Audio's artist's name : ").append(audio.getArtistName()).append("\r\n");
+                        result.append("Audio's name : ").append(audio.getReleaseTime().toString()).append("\r\n");
+                    }
+                    AccountView.getAccountView().showResult(result);
+                    AccountView.getAccountView().showAdminLoginPanel(admin);
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The id was not found"));
+                AccountView.getAccountView().showAdminLoginPanel(admin);
+            case "Artists":
+                result = new StringBuilder("The list of the Artists, organized by adding time : \r\n");
+                counter = 1;
+                for (UserAccount user : Database.getData().getAllUsers()){
+                    if (user instanceof Artist) {
+                        result.append(counter++).append("_").append(user.getUniqueUserName()).append("\r\n");
+                    }
+                }
+                AccountView.getAccountView().showResult(result);
+                AccountView.getAccountView().showAdminLoginPanel(admin);
+                break;
+            case "Artist":
+                for (UserAccount userAccount : Database.getData().getAllUsers()){
+                    if (Objects.equals(userAccount.getUniqueUserName(), answers[1])){
+                        AccountView.getAccountView().showResult(accountInfo(userAccount));
+                        AccountView.getAccountView().showAdminLoginPanel(admin);
+                    }
+                }
+                AccountView.getAccountView().showResult(new StringBuilder("The username was not found"));
+                AccountView.getAccountView().showAdminLoginPanel(admin);
                 break;
         }
     }
