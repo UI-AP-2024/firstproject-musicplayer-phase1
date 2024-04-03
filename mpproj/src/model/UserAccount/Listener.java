@@ -16,7 +16,7 @@ public class Listener extends User{
     private ArrayList<Genre> favoriteGenre;
     private  int playlistcounter;
     private ArrayList<Artist>followings;
-
+    private ArrayList<Audio>likes;
     public Listener(String username, String password, String fullName, String email, String phoneNumber, Date dateOfBirth,int credit) {
         super(username, password, fullName, email, phoneNumber, dateOfBirth);
         this.credit=credit;

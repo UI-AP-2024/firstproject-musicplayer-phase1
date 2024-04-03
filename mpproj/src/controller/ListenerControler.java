@@ -82,6 +82,7 @@ public class ListenerControler {
     public void chooseFavoriteGenre(String genre1){
         chooseFavoriteGenre(genre1,"","","");
     }
+
     public String login(String username,String password){
         ArrayList<User>users=Database.getDatabase().getUsers();
         for(User user:users){
@@ -95,11 +96,13 @@ public class ListenerControler {
         }
         return "error : user name or password is wrong";
     }
+
     public String logout(){
         ArrayList<User>users=Database.getDatabase().getUsers();
         listenerr.setIsLogin(false);
         return "logout successfull";
     }
+
     public String makePlaylist(String playlistName) {
         for (Playlist playlist : listenerr.getPlaylists()) {
             if (playlist.getName().equals (playlistName)) {
@@ -115,12 +118,15 @@ public class ListenerControler {
         listenerr.getPlaylists().add(new Playlist(generateIdPlaylist(), playlistName, listenerr.getFullName()));
         return "play list added .";
     }
+
     public boolean islogin(){
         return listenerr.getIsLogin();
     }
+
     private int generateIdPlaylist(){
         return listenerr.getPlaylistcounter()+ Playlist.getIdcounter();
     }
+
     public String AddAudio(String playListname,int auidioId) {
 
         int tmpInd=0;

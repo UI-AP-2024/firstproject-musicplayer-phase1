@@ -91,12 +91,18 @@ public class MainViewer {
             if(message.equals("error : user name or password is wrong"))
                 getanswer();
             ListenerViewer.getListenerViewer().getAnswer();
-        } else if (answers[1].equals("A")) {
+        } else if (answers[1].equals("S")) {
             message=ArtistControler.getArtistControler().login(answers[2],answers[3]);
             print(message);
             if(message.equals("error : user name or password is wrong"))
                 getanswer();
             ArtistViewer.getArtistViewer().getAnswer();
+        }else if (answers[1].equals("P")) {
+            message=ArtistControler.getArtistControler().login(answers[2], answers[3]);
+            print(message);
+            if(message.equals("error : user name or password is wrong"))
+                getanswer();
+            PodcasterViewer.getPodcasterViewer().getAnswer();
         }else{
             message=AdminControler.getAdminControler().login(answers[1],answers[2]);
             print(message);
@@ -109,4 +115,3 @@ public class MainViewer {
         System.out.println(object);
     }
 }
-            //answers[0]= username, String pasword, String name, String email, String phoneNum, String birthDate

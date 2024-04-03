@@ -84,10 +84,14 @@ public class ListenerViewer {
             print(ListenerControler.getListenerControler().filterbyGenre(answers[2]));
         else if (answers[1].equals("D")) {
             String[] dateStr1 = answers[2].split("/");
-            Date startDate=new Date(Integer.parseInt(dateStr1[0]),Integer.parseInt(dateStr1[1]),Integer.parseInt(dateStr1[2]));
+            Date startDate = new Date(Integer.parseInt(dateStr1[0]), Integer.parseInt(dateStr1[1]), Integer.parseInt(dateStr1[2]));
+            if(answers.length==4) {
                 String[] dateStr2 = answers[3].split("/");
-                Date endDate=new Date(Integer.parseInt(dateStr2[0]),Integer.parseInt(dateStr2[1]),Integer.parseInt(dateStr2[2]));
-                print(ListenerControler.getListenerControler().filterDate(startDate,endDate));
+                Date endDate = new Date(Integer.parseInt(dateStr2[0]), Integer.parseInt(dateStr2[1]), Integer.parseInt(dateStr2[2]));
+                print(ListenerControler.getListenerControler().filterDate(startDate, endDate));
+            } else if (answers.length==3) {
+                print(ListenerControler.getListenerControler().filterDate(startDate));
+            }
         }
         getAnswer();
     }
