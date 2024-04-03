@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Listener extends UserAccount{
@@ -41,13 +42,17 @@ public class Listener extends UserAccount{
     }
 
 
-    public Listener(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays, Date expirationDate, ArrayList<Gener> favoriteGener) {
+    public Listener(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit/*, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays*/, Date expirationDate/*, ArrayList<Gener> favoriteGener*/) {
         super(userName, password, name, email, phoneNumber, dateOfBirth);
         this.accountCredit = accountCredit;
-        this.playlists = playlists;
-        this.numberPlays = numberPlays;
+//        this.playlists = playlists;
+        this.playlists = new ArrayList<>();
+//        this.numberPlays = numberPlays;
+        this.numberPlays = new HashMap<>();
         this.expirationDate = expirationDate;
-        this.favoriteGener = favoriteGener;
+//        this.favoriteGener = favoriteGener;
+        this.favoriteGener = new ArrayList<>();
+        this.followings = new ArrayList<>();
     }
 
     public int getAccountCredit() {

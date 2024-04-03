@@ -8,11 +8,12 @@ public class Album {
     private String singerName;
     private ArrayList<Music> musicList;
 
-    public Album(long id, String name, String singerName, ArrayList<Music> musicList) {
+    public Album(long id, String name, String singerName/*, ArrayList<Music> musicList*/) {
         this.id = id;
         this.name = name;
         this.singerName = singerName;
-        this.musicList = musicList;
+//        this.musicList = musicList;
+        this.musicList = new ArrayList<>();
     }
 
     public String toString(){

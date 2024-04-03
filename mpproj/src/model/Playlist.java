@@ -22,11 +22,12 @@ public class Playlist {
         return result;
     }
 
-    public Playlist(long id, String nameOfPlaylist, String nameOfCreator, ArrayList<Audio> listAudio) {
+    public Playlist(long id, String nameOfPlaylist, String nameOfCreator/*, ArrayList<Audio> listAudio*/) {
         this.id = id;
         this.nameOfPlaylist = nameOfPlaylist;
         this.nameOfCreator = nameOfCreator;
-        this.listAudio = listAudio;
+//        this.listAudio = listAudio;
+        this.listAudio = new ArrayList<>();
     }
 
     public long getId() {

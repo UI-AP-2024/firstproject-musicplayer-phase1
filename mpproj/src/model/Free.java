@@ -17,8 +17,8 @@ public class Free extends Listener{
         return result;
     }
 
-    public Free(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays, ArrayList<Gener> favoriteGener) {
-        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit, playlists, numberPlays, null, favoriteGener);
+    public Free(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit/*, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays, ArrayList<Gener> favoriteGener*/) {
+        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit/*, playlists, numberPlays*/, null/*, favoriteGener*/);
         limitAddSong=10;
         limitNumberPlaylist=3;
         countAddSong=0;

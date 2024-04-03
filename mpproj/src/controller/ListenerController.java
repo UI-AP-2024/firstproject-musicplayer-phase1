@@ -32,7 +32,7 @@ public class ListenerController {
     }
 
 
-    public String registration(String userName, String password, String name, String email, String number, Date birth) {
+    public String registration(String userName, String password, String name, String email, String number/*, Date birth*/,String year,String month,String day) {
         for (UserAccount tmp : Database.getDataBase().getUserAccounts()) {
             if (tmp.getUserName().equals(userName))
                 return "Username is duplicated. Please try again";
@@ -47,7 +47,10 @@ public class ListenerController {
         matcher = pattern.matcher(number);
         if (matcher.matches() == false)
             return "The phone number entered is not valid";
-        Free free = new Free(userName, password, name, email, number, birth, 50, null, null, null);
+
+        Date birth = new Date(Integer.valueOf(year)-1900,Integer.valueOf(month)-1,Integer.valueOf(day));
+
+        Free free = new Free(userName, password, name, email, number, birth, 50);
         Database.getDataBase().getUserAccounts().add(free);
         return "Account created successfully";
     }
@@ -66,7 +69,7 @@ public class ListenerController {
         if (getUserAccount() instanceof Free) {
             ((Free) getUserAccount()).setCountNumberPlaylist(((Free) getUserAccount()).getCountNumberPlaylist()+1);
             if (((Free) getUserAccount()).getCountNumberPlaylist() <= ((Free) getUserAccount()).getLimitNumberPlaylist()) {
-                Playlist playlist = new Playlist(((Free) getUserAccount()).getCountNumberPlaylist(), name, getUserAccount().getUserName(), null);
+                Playlist playlist = new Playlist(((Free) getUserAccount()).getCountNumberPlaylist(), name, getUserAccount().getUserName());
                 ((Free) getUserAccount()).getPlaylists().add(playlist);
                 return "The playlist was created successfully";
             } else {
@@ -76,7 +79,7 @@ public class ListenerController {
 
         } else if (getUserAccount() instanceof Premium) {
             ((Premium) getUserAccount()).setCountNumberPlaylistP(((Premium) getUserAccount()).getCountNumberPlaylistP()+1);
-            Playlist playlist = new Playlist(((Premium) getUserAccount()).getCountNumberPlaylistP(), name, getUserAccount().getUserName(), null);
+            Playlist playlist = new Playlist(((Premium) getUserAccount()).getCountNumberPlaylistP(), name, getUserAccount().getUserName());
             ((Premium) getUserAccount()).getPlaylists().add(playlist);
             return "The playlist was created successfully";
         } else

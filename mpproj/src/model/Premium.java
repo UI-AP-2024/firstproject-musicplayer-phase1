@@ -15,8 +15,8 @@ public class Premium extends Listener{
         return result;
     }
 
-    public Premium(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays, Date expirationDate, ArrayList<Gener> favoriteGener, int daysOfSubs) {
-        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit, playlists, numberPlays, expirationDate, favoriteGener);
+    public Premium(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth, int accountCredit/*, ArrayList<Playlist> playlists, Map<Audio, Integer> numberPlays*/, Date expirationDate/*, ArrayList<Gener> favoriteGener*/, int daysOfSubs) {
+        super(userName, password, name, email, phoneNumber, dateOfBirth, accountCredit/*, playlists, numberPlays*/, expirationDate/*, favoriteGener*/);
         this.daysOfSubs = daysOfSubs;
         countNumberPlaylistP=0;
     }
