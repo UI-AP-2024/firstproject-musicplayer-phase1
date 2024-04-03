@@ -1,5 +1,6 @@
 package controller;
 
+import model.Audio;
 import model.Database;
 import model.UserAccount;
 
@@ -35,34 +36,14 @@ public class AdminController {
         return "The username does not exist or the password is incorrect";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public String favoriteAudio(){
+        String result = "";
+        ListenerController.getListenerController().sortAudioFile("L");
+        for (Audio audio : Database.getDataBase().getAudio()){
+            result += audio+"\n";
+        }
+        if ( result.equals(""))
+            result += "empty";
+        return result;
+    }
 }
