@@ -3,8 +3,8 @@ package model;
 public class Music extends Audio{
     private String musicLyrics;
 
-    public Music(int uniqueId, String audioName, String artistName, Genre genre, String musicLink, String cover, String musicLyrics) {
-        super(uniqueId, audioName, artistName, genre, musicLink, cover);
+    public Music(String audioName, String artistName, Genre genre, String musicLink, String cover, String musicLyrics) {
+        super(0, audioName, artistName, genre, musicLink, cover);
         this.musicLyrics = musicLyrics;
     }
 

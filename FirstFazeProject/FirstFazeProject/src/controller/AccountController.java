@@ -699,7 +699,49 @@ public class AccountController {
                 AccountView.getAccountView().showResult(new StringBuilder("The album was not made cause the artist is not a singer"));
                 AccountView.getAccountView().showArtistLoginPanel(artist);
                 break;
-                
+            case "Publish":
+                switch (answers[1]){
+                    case "M":
+                        Genre musicGenre = Genre.Country;
+                        for (Genre genre : Genre.values()){
+                            if (genre.name().equals(answers[3])){
+                                musicGenre = genre;
+                                break;
+                            }
+                        }
+                        Music newMusic = new Music(answers[2],artist.getUniqueUserName(),musicGenre,answers[5],answers[6],answers[4]);
+                        ArrayList<Audio> newAudiosList = Database.getData().getAllAudios();
+                        newAudiosList.add(newMusic);
+                        Database.getData().setAllAudios(newAudiosList);
+                        for(Album album : ((Singer)artist).getAlbums()){
+                            if (album.getUniqueId() == Integer.parseInt(answers[7])){
+                                ArrayList<Audio> backUp = album.getAudioList();
+                                backUp.add(newMusic);
+                                album.setAudioList(backUp);
+                                AccountView.getAccountView().showResult(new StringBuilder("The song was published successfully"));
+                                AccountView.getAccountView().showArtistLoginPanel(artist);
+                            }
+                        }
+                        break;
+                    case "P":
+                        musicGenre = Genre.Country;
+                        for (Genre genre : Genre.values()){
+                            if (genre.name().equals(answers[3])){
+                                musicGenre = genre;
+                                break;
+                            }
+                        }
+                        Podcast newPodcast = new Podcast(answers[2],artist.getUniqueUserName(),musicGenre,answers[5],answers[6],answers[4]);
+                        newAudiosList = Database.getData().getAllAudios();
+                        newAudiosList.add(newPodcast);
+                        Database.getData().setAllAudios(newAudiosList);
+                        AccountView.getAccountView().showResult(new StringBuilder("The podcast was published successfully"));
+                        AccountView.getAccountView().showArtistLoginPanel(artist);
+                        break;
+                }
+            default:
+                AccountView.getAccountView().showResult(new StringBuilder("The order is not able to be run please try again"));
+                AccountView.getAccountView().showAdminLoginPanel(artist);
         }
     }
 }
