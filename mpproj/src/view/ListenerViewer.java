@@ -21,10 +21,10 @@ public class ListenerViewer {
     Scanner sc=new Scanner(System.in);
     private String answer;
     String[]answers;
-    public void getAnswer(){
-        answer=sc.nextLine();
-        answers=answer.split("-");
-        if(answers[0].equals("Logout"))
+    public void getAnswer() {
+        answer = sc.nextLine();
+        answers = answer.split("-");
+        if (answers[0].equals("Logout"))
             logOut(answer);
         else if (answers[0].equals("AccountInfo"))
             accountInfo(answer);
@@ -35,12 +35,15 @@ public class ListenerViewer {
         else if (answers[0].equals("Artists"))
             artists();
         else if (answers[0].equals("Sort")) {
-            //TOdo: ?
-        }else if (answers[0].equals("Search")) {
-            //TOdo: ?
-        }else if (answers[0].equals("Filter")) {
-            //TOdo: ?
-        }else if (answers[0].equals("Add"))
+            if (answers[1].equals("L"))
+                sortLike();
+            else if (answers[1].equals("P"))
+                sortPlay();
+        }else if (answers[0].equals("Search"))
+            search();
+        else if (answers[0].equals("Filter"))
+            filter();
+        else if (answers[0].equals("Add"))
             add();
         else if (answers[0].equals("ShowPLaylists"))
             showPlaylists();
@@ -68,6 +71,37 @@ public class ListenerViewer {
             getAnswer();
         }
     }
+    public void filter(){
+        if(answers[1].equals("A"))
+            print(ListenerControler.getListenerControler().filterArtist(answers[2]));
+        else if(answers[1].equals("G"))
+            print(ListenerControler.getListenerControler().filterbyGenre(answers[2]));
+        else if (answers[1].equals("D")) {
+            String[] dateStr1 = answers[2].split("/");
+            Date startDate=new Date(Integer.parseInt(dateStr1[0]),Integer.parseInt(dateStr1[1]),Integer.parseInt(dateStr1[2]));
+            if(answers[3]!=null) {
+                String[] dateStr2 = answers[3].split("/");
+                Date endDate=new Date(Integer.parseInt(dateStr2[0]),Integer.parseInt(dateStr2[1]),Integer.parseInt(dateStr2[2]));
+                print(ListenerControler.getListenerControler().filterDate(startDate,endDate));
+            } else  {
+                print(ListenerControler.getListenerControler().filterDate(startDate));
+            }
+        }
+        getAnswer();
+    }
+    public void search(){
+        print(ListenerControler.getListenerControler().searchByAudio(answers[1]));
+        print(ListenerControler.getListenerControler().searchByArtistName(answers[1]));
+        getAnswer();
+    }
+    public void sortLike(){
+        print(ListenerControler.getListenerControler().sortLikes());
+        getAnswer();
+    }
+    public void sortPlay(){
+        print(ListenerControler.getListenerControler().sortPlay());
+        getAnswer();
+    }
 
     public void getpremium(){
         print(ListenerControler.getListenerControler().buySub(SubscriptionPlan.valueOf(answers[1])));
@@ -88,7 +122,7 @@ public class ListenerViewer {
     public void logOut(String str){
         String[]results=answer.split("-");
         print(ListenerControler.getListenerControler().logout());
-        MainViewer.getMainViewer().signup();
+        MainViewer.getMainViewer().getanswer();
     }
     public void accountInfo(String str){
         String[] result=answer.split("-");
@@ -97,7 +131,7 @@ public class ListenerViewer {
     }
     public void getSuggestion(String str){
         String[] result=answer.split("-");
-        print(ListenerControler.getListenerControler().suggestAudio(Integer.parseInt(result[1])));
+   //     print(ListenerControler.getListenerControler().suggestAudio(Integer.parseInt(result[1])));
         getAnswer();
     }
     public void  artist(){

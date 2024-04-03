@@ -25,7 +25,7 @@ public class SingerControler extends ArtistControler {
         return singerControler;
     }
 
-    public  String publishMusic(String title, String genre, String caption, String link, String cover, int albumId){//todo add error
+    public  String publishMusic(String title, String genre, String caption, String link, String cover, int albumId){
         if (artist instanceof Singer){
             Music music0=new Music(Audio.getIdcounter(),title,artist.getFullName(),0,0,new Date(), Genre.valueOf(genre),link,cover,caption);
             int tmpindex=0;

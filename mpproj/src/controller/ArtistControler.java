@@ -31,6 +31,12 @@ public class ArtistControler {
     }
 
     public String signUpArtist(String username, String pasword, String name, String email, String phoneNum, Date birthDate,String bio,String type){
+        if(!Regex.emailRegex(email))
+            return "use valid email";
+        if (!Regex.passwordRegex(pasword))
+            return "use harder password";
+        if(!Regex.phoneRegex(phoneNum))
+            return "use valid phone number";
         ArrayList<User> users= Database.getDatabase().getUsers();
         for(User user:users){
             if(user.getUsername().equals(username)){
@@ -43,7 +49,7 @@ public class ArtistControler {
             Podcaster artist=new Podcaster(username,pasword,name,email,phoneNum,birthDate);
         }
         setArtist(artist);
-        //todo:add to database
+        Database.getDatabase().getUsers().add(artist);
         artist.setIsLogin(true);
         return  "artist accaount successfully created .";
     }

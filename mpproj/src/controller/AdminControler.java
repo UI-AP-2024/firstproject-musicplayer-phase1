@@ -46,7 +46,7 @@ public class AdminControler {
         setAdmin(admin);
         Database.getDatabase().getUsers().add((Admin)admin);
         admin.setIsLogin(true);
-        return  "artist accaount successfully created .";
+        return  "admin accaount successfully created .";
     }
     public String login(String username,String password){
         ArrayList<User>users=Database.getDatabase().getUsers();
