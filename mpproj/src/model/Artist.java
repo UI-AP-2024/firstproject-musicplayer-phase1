@@ -11,7 +11,7 @@ public class Artist extends UserAccount{
     @Override
     public String toString(){
         String result = "";
-        result += super.toString()+"\tBio: "+getBio();
+        result += super.toString()+"\tBio: "+getBio()+"\tIncome: "+getIncome();
         String foll = "";
         for ( UserAccount userAccount1 : getListFollowers()){
             foll += "Username: "+getUserName()+"\tname: "+getName()+"\n";

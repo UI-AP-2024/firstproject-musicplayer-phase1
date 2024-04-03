@@ -112,11 +112,33 @@ public class ArtistController {
     }
 
     public String viewInfoacc(){
+        calculateEarnings();
         String result = "";
         if ( getUserAccount() instanceof Singer)
             result += (Singer)getUserAccount();
         else
             result += (Podcaster)getUserAccount();
         return result;
+    }
+
+    public String calculateEarnings(){
+        double count=0;
+        if ( getUserAccount() instanceof Singer){
+            for ( Album album : ((Singer) getUserAccount()).getAlbumList()){
+                for ( Music music : album.getMusicList()){
+                    count+=music.getNumberOfPlays();
+                }
+            }
+            count = count*0.4;
+            ((Singer) getUserAccount()).setIncome( ((Singer) getUserAccount()).getIncome()+count );
+        }
+        else{
+            for ( Podcast podcast : ((Podcaster)getUserAccount()).getPodcastList()){
+                count += podcast.getNumberOfPlays();
+            }
+        }
+        count = count * 0.5;
+        ((Podcaster) getUserAccount()).setIncome( ((Podcaster) getUserAccount()).getIncome()+count );
+        return "Your income is $"+String.valueOf(count);
     }
 }
