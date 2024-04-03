@@ -263,10 +263,12 @@ public class AccountController {
                         AccountView.getAccountView().showLoginPanel(user);
                         break;
                     case "D" :
-                        String[] dateInfo = answers[2].split("\\.");
-                        Date date = new Date(Integer.parseInt(dateInfo[0]), Integer.parseInt(dateInfo[1]), Integer.parseInt(dateInfo[2]));
+                        String[] dateInfo1 = answers[2].split("\\.");
+                        String[] dateInfo2 = answers[3].split("\\.");
+                        Date date1 = new Date(Integer.parseInt(dateInfo1[0]), Integer.parseInt(dateInfo1[1]), Integer.parseInt(dateInfo1[2]));
+                        Date date2 = new Date(Integer.parseInt(dateInfo1[0]), Integer.parseInt(dateInfo1[1]), Integer.parseInt(dateInfo1[2]));
                         for (Audio audio : Database.getData().getAllAudios()){
-                            if (date.compareTo(audio.getReleaseTime()) <=0){
+                            if (date1.compareTo(audio.getReleaseTime()) <=0 && date2.compareTo(audio.getReleaseTime())>=0){
                                 result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
                             }
                         }
@@ -393,6 +395,7 @@ public class AccountController {
                 AccountView.getAccountView().showLoginPanel(user);
                 break;
             case "NewPlaylist" :
+
         }
     }
 
