@@ -10,11 +10,10 @@ import java.util.*;
 
 public class UserRegistration {
     private Map<String, Listener> users = new HashMap<>();
-    private Database database = new Database();
 
     //*********************************************
 
-    public  Map<String, Listener> getUsers(){
+    public Map<String, Listener> getUsers() {
         return users;
     }
 
@@ -78,7 +77,7 @@ public class UserRegistration {
         Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
         newUser.setFavoriteGenres(selectFavoriteGenres());
         newUser.setAccountBalance(50.0);
-        database.addUser(newUser);
+        Database.getDatabase().getUsers().add(newUser);
 
         users.put(userName, newUser);
     }
@@ -112,7 +111,7 @@ public class UserRegistration {
         }
         System.out.println("Enter the numbers corresponding to your favorite genres (separated by commas):");
         String input = scanner.nextLine();
-        String[] numbers = input.split(",");
+        String[] numbers = input.split("-");
         for (String number : numbers) {
             int index = Integer.parseInt(number.trim()) - 1;
             if (index >= 0 && index < genres.length && favoriteGenres.size() < 4) {
@@ -121,10 +120,34 @@ public class UserRegistration {
         }
         return favoriteGenres;
     }
+
     //*********************************************
+    private UserRegistration userRegistration;
 
-
-
-
-
+    public void AdminC(UserRegistration userRegistration) {
+        this.userRegistration = userRegistration;
     }
+
+    public void login(String username, String password) {
+        if (checkCredentials(username, password)) {
+            showUserPanel(username);
+        } else {
+            System.out.println("Invalid username or password");
+        }
+    }
+
+    private void showUserPanel(String username) {
+    }
+
+    private boolean checkCredentials(String username, String password) {
+        List<Listener> users = new ArrayList<>(userRegistration.getUsers().values());
+        for (Listener user : users) {
+            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+

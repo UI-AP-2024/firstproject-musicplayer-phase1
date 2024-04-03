@@ -10,6 +10,7 @@ import model.AccountUser.Listener.TypeOfListener.FreeListener;
 import model.AccountUser.Listener.TypeOfListener.PremiumListener;
 import model.AccountUser.Listener.TypeOfListener.premiumSub;
 import model.Audio.Audio;
+import view.Panels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class UserC {
 
-    private Map<String, Listener> users = new HashMap<>();
+    private static Map<String, Listener> users = new HashMap<>();
 
     //*********************************************
 
@@ -26,90 +27,26 @@ public class UserC {
         return users;
     }
 
-    public void registerUser() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Please enter userName: ");
-        String userName = scanner.nextLine();
-
-        if (users.containsKey(userName)) {
-            System.out.println("Error: userName already exists.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter fullName: ");
-        String fullName = scanner.nextLine();
-
-        //*********************************************
-
-        System.out.print("Please enter birthDate (yyyy-MM-dd): ");
-        String birthDateStr = scanner.nextLine();
-        Date birthDate;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            birthDate = dateFormat.parse(birthDateStr);
-        } catch (ParseException e) {
-            System.out.println("Invalid birthDate format.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter email: ");
-        String email = scanner.nextLine();
-        if (!isValidUserEmail(email)) {
-            System.out.println("Invalid email.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter password: ");
-        String password = scanner.nextLine();
-        if (!isValidPassword(password)) {
-            System.out.println("Invalid password.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter phoneNumber: ");
-        String phoneNumber = scanner.nextLine();
-        if (!isValidPhoneNumber(phoneNumber)) {
-            System.out.println("Invalid phoneNumber.");
-            return;
-        }
-
-        //*********************************************
-        Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
-        newUser.setFavoriteGenres(selectFavoriteGenres());
-        newUser.setAccountBalance(50.0);
-        Database.getDatabase().getUsers().add(newUser);
-
-        users.put(userName, newUser);
-    }
 
     //*********************************************
-    private static boolean isValidUserEmail(String email) {
+    public static boolean isValidUserEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(\\S+)$";
         return email.matches(emailRegex);
     }
 
-    private static boolean isValidPassword(String password) {
+    public static boolean isValidPassword(String password) {
         String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$";
         return password.matches(passwordRegex);
     }
 
-    private static boolean isValidPhoneNumber(String phoneNumber) {
+    public static boolean isValidPhoneNumber(String phoneNumber) {
         String phoneRegex = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$";
         return phoneNumber.matches(phoneRegex);
     }
 
     //*********************************************
 
-    private List<Genre> selectFavoriteGenres() {
+    private static List<Genre> selectFavoriteGenres() {
         List<Genre> favoriteGenres = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
@@ -118,20 +55,27 @@ public class UserC {
         for (int i = 0; i < genres.length; i++) {
             System.out.println((i + 1) + ". " + genres[i]);
         }
-        System.out.println("Enter the numbers corresponding to your favorite genres (separated by commas):");
+        System.out.println("Enter the names of your favorite genres (separated by ,):");
         String input = scanner.nextLine();
-        String[] numbers = input.split("-");
-        for (String number : numbers) {
-            int index = Integer.parseInt(number.trim()) - 1;
-            if (index >= 0 && index < genres.length && favoriteGenres.size() < 4) {
-                favoriteGenres.add(genres[index]);
+        String[] names = input.split(",");
+        for (String name : names) {
+            String trimmedName = name.trim();
+            for (Genre genre : genres) {
+                if (genre.name().equalsIgnoreCase(trimmedName) && favoriteGenres.size() < 4) {
+                    favoriteGenres.add(genre);
+                    break;
+                }
             }
         }
         return favoriteGenres;
     }
 
    //**********************************************
-    private List<Audio> likeAudis;
+    private static List<Audio> likeAudis;
+
+    public static List<Audio> getLikeAudis(){
+        return likeAudis;
+    }
 
     public void addAudio(Playlist playlist, String audio) {
         playlist.addAudio(audio);
@@ -161,9 +105,8 @@ public class UserC {
 
     //*********************************************
     public void likeAudis(Audio audio) {
-        likeAudis.add(audio);
+        getLikeAudis().add(audio);
     }
-
 
     public List<Audio> searchByKeyword(List<Audio> audioFiles, String keyword) {
         return audioFiles.stream().filter(audio -> audio.getTitle().contains(keyword) || audio.getArtist().contains(keyword)).collect(Collectors.toList());
@@ -226,7 +169,7 @@ public class UserC {
         System.out.println(" is now following " + artist.getUserName());
     }
 
-    private static List<Artist> followedArtists;
+        private static List<Artist> followedArtists;
 
     public UserC() {
         this.followedArtists = new ArrayList<>();
@@ -394,14 +337,14 @@ public class UserC {
 
     }
 
-    public static void login(String username, String password) {
+    public static void loginAll(String username, String password) {
         boolean userFound = false;
         for (AccountUser user : Database.getDatabase().getUsers()) {
             if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                 userFound = true;
                 if (user instanceof Listener) {
                     System.out.println("You are a listener. Opening listener panel...");
-                    showUserPanel();
+                    Panels.showUserPanel((Listener) user);
                 } else if (user instanceof Podcaster) {
                     System.out.println("You are a podcaster. Opening podcaster panel...");
                     showUserPanel();
@@ -415,6 +358,45 @@ public class UserC {
         if (!userFound) {
             System.out.println("Invalid username or password. Please try again.");
         }
+    }
+    public static void signUpL(String[] commands) {
+
+        String userName = commands[2];
+        if (users.containsKey(userName)) {
+            System.out.println("Error: userName already exists.");
+            return;
+        }
+        String password = commands[3];
+        if (!isValidPassword(password)) {
+            System.out.println("Invalid password.");
+        }
+        String fullName = commands[4];
+        String email = commands[5];
+        if (!isValidUserEmail(email)) {
+            System.out.println("Invalid email.");
+        }
+        String phoneNumber = commands[6];
+        if (!isValidPhoneNumber(phoneNumber)) {
+            System.out.println("Invalid phoneNumber.");
+        }
+        String dateOfBirth = commands[7];
+        Date birthDate;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            birthDate = dateFormat.parse(dateOfBirth);
+        } catch (ParseException e) {
+            System.out.println("Invalid birthDate format.");
+            return;
+        }
+        Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
+        newUser.setFavoriteGenres(selectFavoriteGenres());
+        newUser.setAccountBalance(50.0);
+        Database.getDatabase().getUsers().add(newUser);
+
+        users.put(userName, newUser);
+
+        System.out.println("Signed up successfully!");
+        Panels.showFirstMeneu();
     }
 }
 

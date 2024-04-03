@@ -2,9 +2,12 @@ package view;
 
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
+import model.AccountUser.Listener.Listener;
 import model.Audio.Audio;
+import model.Database;
 import model.Report;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -21,18 +24,39 @@ public class AdminV {
             System.out.println((i + 1) + ". " + popularAudios.get(i).getTitle());
         }
     }
-    public void displayArtists(List<Artist> artists) {
-        System.out.println("List of artists:");
-        for (Artist artist : artists) {
-            System.out.println("Username: " + artist.getUserName());
-            System.out.println("Full Name: " + artist.getFullName());
-            System.out.println("Email: " + artist.getEmail());
-            System.out.println("Phone Number: " + artist.getPhoneNumber());
-            System.out.println("Birth Date: " + artist.getBirthDate());
-            System.out.println("Income: " + artist.getIncome());
-            System.out.println("Biography: " + artist.getBiography());
-            System.out.println("Followers: " + artist.getFollowers());
-            System.out.println();
+
+    public static void displayArtistInfo(String artistUsername) {
+        boolean found = false;
+        for (AccountUser user : Database.getDatabase().getUsers()) {
+            if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
+                found = true;
+                Artist artist = (Artist) user;
+                System.out.println("Artist Information:");
+                System.out.println("Username: " + artist.getUserName());
+                System.out.println("Full Name: " + artist.getFullName());
+                System.out.println("Email: " + artist.getEmail());
+                System.out.println("Phone Number: " + artist.getPhoneNumber());
+                System.out.println("Birth Date: " + artist.getBirthDate());
+                System.out.println("Income: " + artist.getIncome());
+                System.out.println("Biography: " + artist.getBiography());
+                System.out.println("Followers: " + artist.getFollowers());
+                System.out.println();
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Artist with the username '" + artistUsername + "' not found.");
+        }
+
+    }
+
+    public static void displayArtists() {
+        for (AccountUser user : Database.getDatabase().getUsers()) {
+            if (user instanceof Artist) {
+                ArrayList<AccountUser> ar = new ArrayList<>();
+                ar.add(user);
+                System.out.println("Username: " + user.getUserName());
+            }
         }
     }
 
@@ -51,11 +75,13 @@ public class AdminV {
             System.out.println();
         }
     }
+
     public void displayReports(List<Report> reports) {
         for (Report report : reports) {
             System.out.println(report);
         }
     }
+
     public void printAccountInfo(AccountUser accountUser) {
         System.out.println("Account Information:");
         System.out.println("Username: " + accountUser.getUserName());

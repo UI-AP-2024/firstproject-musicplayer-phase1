@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArtistV {
-    public void displayArtistFollowers(Artist artist) {
+    public  void displayArtistFollowers(Artist artist) {
         List<AccountUser> followers = artist.getFollowers();
         if (followers.isEmpty()) {
             System.out.println("This artist has no followers.");
@@ -34,16 +34,6 @@ public class ArtistV {
         for (Map.Entry<String, Integer> entry : playCountMap.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-    }
-    public void displayArtistInfo(Artist artist) {
-        System.out.println("Artist Information:");
-        System.out.println("Username: " + artist.getUserName());
-        System.out.println("Full Name: " + artist.getFullName());
-        System.out.println("Email: " + artist.getEmail());
-        System.out.println("Phone Number: " + artist.getPhoneNumber());
-        System.out.println("Birth Date: " + artist.getBirthDate());
-        System.out.println("Biography: " + artist.getBiography());
-        System.out.println("Income: $" + artist.getIncome());
     }
 
 }

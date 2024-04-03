@@ -2,10 +2,12 @@ package controller;
 
 import model.AccountUser.Artist.TypeOfArtist.Podcaster;
 import model.AccountUser.Artist.TypeOfArtist.Singer;
+import model.AccountUser.Listener.Listener;
 import model.Album;
 import model.Audio.Audio;
 import model.Database;
 import model.Genre;
+import view.Panels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +16,7 @@ import java.util.*;
 
 public class SingerC {
 
-    private Map<String, Singer>  singer= new HashMap<>();
+    private static Map<String, Singer> singer = new HashMap<>();
 
     //*********************************************
 
@@ -22,72 +24,6 @@ public class SingerC {
         return singer;
     }
 
-    public void registerUser() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Please enter userName: ");
-        String userName = scanner.nextLine();
-
-        if (singer.containsKey(userName)) {
-            System.out.println("Error: userName already exists.");
-            return;
-        }
-        //*********************************************
-
-        System.out.print("Please enter fullName: ");
-        String fullName = scanner.nextLine();
-
-        //*********************************************
-
-        System.out.print("Please enter birthDate (yyyy-MM-dd): ");
-        String birthDateStr = scanner.nextLine();
-        Date birthDate;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            birthDate = dateFormat.parse(birthDateStr);
-        } catch (ParseException e) {
-            System.out.println("Invalid birthDate format.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter email: ");
-        String email = scanner.nextLine();
-        if (!isValidUserEmail(email)) {
-            System.out.println("Invalid email.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter password: ");
-        String password = scanner.nextLine();
-        if (!isValidPassword(password)) {
-            System.out.println("Invalid password.");
-            return;
-        }
-
-        //*********************************************
-
-        System.out.print("Please enter phoneNumber: ");
-        String phoneNumber = scanner.nextLine();
-        if (!isValidPhoneNumber(phoneNumber)) {
-            System.out.println("Invalid phoneNumber.");
-            return;
-        }
-
-        //*********************************************
-        System.out.print("Please enter biography: ");
-        String biography = scanner.nextLine();
-
-        //*********************************************
-
-        Singer newUser = new Singer(userName, password, fullName, email, phoneNumber, birthDate, 0.0, biography);
-        Database.getDatabase().getUsers().add(newUser);
-
-        singer.put(userName, newUser);
-    }
 
     //*********************************************
     private static boolean isValidUserEmail(String email) {
@@ -139,6 +75,46 @@ public class SingerC {
             }
         }
         return null;
+    }
+
+    public static void signUpS(String[] commands) {
+
+        String userName = commands[2];
+        if (singer.containsKey(userName)) {
+            System.out.println("Error: userName already exists.");
+            return;
+        }
+        String password = commands[3];
+        if (!isValidPassword(password)) {
+            System.out.println("Invalid password.");
+        }
+        String fullName = commands[4];
+        String email = commands[5];
+        if (!isValidUserEmail(email)) {
+            System.out.println("Invalid email.");
+        }
+        String phoneNumber = commands[6];
+        if (!isValidPhoneNumber(phoneNumber)) {
+            System.out.println("Invalid phoneNumber.");
+        }
+        String dateOfBirth = commands[7];
+        Date birthDate;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            birthDate = dateFormat.parse(dateOfBirth);
+        } catch (ParseException e) {
+            System.out.println("Invalid birthDate format.");
+            return;
+        }
+        String biography = commands[8];
+        Singer newUser = new Singer(userName, password, fullName, email, phoneNumber, birthDate, 0.0, biography);
+        Database.getDatabase().getUsers().add(newUser);
+
+        singer.put(userName, newUser);
+
+        System.out.println("Signed up successfully!");
+        Panels.showFirstMeneu();
+
     }
 }
 
