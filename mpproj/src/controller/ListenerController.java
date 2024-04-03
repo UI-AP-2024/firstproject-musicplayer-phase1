@@ -273,4 +273,19 @@ public class ListenerController {
         else
             return result;
     }
+
+    public String followArtist(String userName){
+        for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
+            if ( userAccount1.getUserName().equals(userName)){
+                if ( userAccount1 instanceof Artist ){
+                    ((Artist) userAccount1).getListFollowers().add(getUserAccount());
+                    if ( getUserAccount() instanceof Listener){
+                        ((Listener) getUserAccount()).getFollowings().add(userAccount1);
+                    }
+                    return "The desired artist was followed";
+                }
+            }
+        }
+        return "The username entered is not valid";
+    }
 }
