@@ -26,7 +26,7 @@ public class ListenerView {
         String txt;
         int a =10;
         // String type=null;
-        while (a!=0) {
+        while (true) {
             command = sc.nextLine();
             String [] spltCmd = command.split("-");
             switch (spltCmd[0]) {
@@ -135,7 +135,7 @@ public class ListenerView {
                     break;
             
                 case "Like":
-                txt= ListenerController.getListenerController().addAudioLikes(Long.parseLong(spltCmd[1]));
+                txt= ListenerController.getListenerController().likeAudio(Long.parseLong(spltCmd[1]));
                 System.out.println(txt);
                     
                     break;

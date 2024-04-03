@@ -119,7 +119,7 @@ public class UserController {
         if(user instanceof Admin){
             return "Admin";
         }
-        return null;
+        return "null";
     }
 
     public User findUser(String username){

@@ -59,7 +59,7 @@ public class SingerController {
         for(Album album : getSinger().getAlbumList()){
             txt+=album.getAlbumName()+"\n";
             for(Music music:album.getMusicList()){
-                txt+=music.getAudioName()+"\n";
+                txt+="-"+music.getAudioName()+"(id:"+String.valueOf(music.getId())+")\n";
             }
         }
         
@@ -72,7 +72,11 @@ public class SingerController {
             return txt;
         }
         for(Album album : getSinger().getAlbumList()){
-            txt+=album.getAlbumName()+"\n";
+            txt+=album.getAlbumName()+"(id:"+String.valueOf(album.getId())+")\n";
+            if(album.getMusicList().size()==0){
+                txt+="no music is published in this album yet";
+                return txt;
+            }
             for(Music music:album.getMusicList()){
                 txt+="-"+music.getAudioName()+"("+String.valueOf(music.getNumberOfPlays())+")\n";
             }

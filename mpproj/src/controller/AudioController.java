@@ -168,14 +168,14 @@ public class AudioController {
         return "enter a valid id";
     }
 
-    public String likeAudio(long audioId){
+    public boolean likeAudio(long audioId){
         for(Audio audio : Database.getDatabase().getAllAudio()){
             if(audio.getId()==audioId){
                 audio.setNumberOfLikes(audio.getNumberOfLikes()+1);
-                return null;
+                return true;
             }
         }
-        return "enter a valid id";
+        return false;
     }
 
     public String showLyric(long audioId){

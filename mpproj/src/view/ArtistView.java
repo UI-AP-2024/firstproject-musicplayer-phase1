@@ -25,12 +25,13 @@ public class ArtistView {
         String txt;
         int a =10;
         // String type=null;
-        while (a!=0) {
+        while (true) {
             command = sc.nextLine();
             String [] spltCmd = command.split("-");
             switch (spltCmd[0]) {
                 case "AccountInfo":
-                MainView.getMainView().mainView();
+                txt = ArtistController.getArtistController().ShowAccountInfo();
+                System.out.println(txt);
                     
                     break;
                 case "Followers":
@@ -52,7 +53,7 @@ public class ArtistView {
                     
                     break;
                 case "Publish":
-                txt = ArtistController.getArtistController().publishAudio(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],Long.parseLong(spltCmd[1]));
+                txt = ArtistController.getArtistController().publishAudio(spltCmd[1],spltCmd[2],spltCmd[3],spltCmd[4],spltCmd[5],spltCmd[6],Long.parseLong(spltCmd[7]));
                 System.out.println(txt);
                     
                     break;

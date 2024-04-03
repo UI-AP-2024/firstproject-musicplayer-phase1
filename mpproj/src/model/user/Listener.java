@@ -12,7 +12,7 @@ public class Listener extends User{
     private double accountCredit;
     private ArrayList<PlayList> listOfPlayLists;
     private Map<Long,Long> audioPlays;
-    private Map<Long,Long> audioLikes;
+    private ArrayList<Long> likedAudios;
     private Date premiumExpirationDate;
     private ArrayList<Genre> favoriteGenres;
     private long numberOfFollowing;
@@ -22,8 +22,8 @@ public class Listener extends User{
         this.accountCredit = accountCredit;//not sure where to initilaze it
         listOfPlayLists = new ArrayList<>();
         audioPlays = new HashMap<>();
-        audioLikes = new HashMap<>();
         favoriteGenres = new ArrayList<>();
+        likedAudios = new ArrayList<>();
         this.numberOfFollowing=0;
     }
     public double getAccountCredit() {
@@ -59,6 +59,9 @@ public class Listener extends User{
     public void addToListOfPlayLists(PlayList PlayList) {
         this.listOfPlayLists.add(PlayList);
     }
+    public void addToLikedAudios(Long id) {
+        this.likedAudios.add(id);
+    }
     public void addToAudioPlays(long audioId,long audioPlays) {
         this.audioPlays.put(audioId, audioPlays);
     }
@@ -71,12 +74,13 @@ public class Listener extends User{
     public long getNumberOfFollowing() {
         return numberOfFollowing;
     }
-    public Map<Long, Long> getAudioLikes() {
-        return audioLikes;
+    public ArrayList<Long> getLikedAudios() {
+        return likedAudios;
     }
-    public void setAudioLikes(Map<Long, Long> audioLikes) {
-        this.audioLikes = audioLikes;
+    public void setLikedAudios(ArrayList<Long> likedAudios) {
+        this.likedAudios = likedAudios;
     }
+    
     
     
     

@@ -48,7 +48,7 @@ public class PodcasterController {
             return txt;
         }
         for(Podcast podcast : getPodcaster().getPodcastList()){
-            txt+=podcast.getAudioName()+"\n";
+            txt+="-"+podcast.getAudioName()+"(id:"+String.valueOf(podcast.getId())+")\n";
             
         }
         

@@ -94,17 +94,21 @@ public class ArtistController {
 
         Date currentDate = new Date();
         if(type.equals("P")){
+            System.out.println("was P");
             if(getArtist() instanceof Podcaster){
-                Podcast tmp = new Podcast(title,getArtist().getName(),currentDate,Genre.valueOf(genre),cover,lyricsCaption);
+                Podcast tmp = new Podcast(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
                 Database.getDatabase().addToAllAudio(tmp);
                 ((Podcaster)getArtist()).addToPodcastList(tmp);
                 return "your podcast published succesfully";
             }
-            else return "you are not a Podcaster You cant publish a podcast";
+            else 
+            {
+                return "you are not a Podcaster You cant publish a podcast";
+            }
         }
         if(type.equals("M")){
             if(getArtist() instanceof Singer){
-                Music tmp = new Music(title,getArtist().getName(),currentDate,Genre.valueOf(genre),cover,lyricsCaption);
+                Music tmp = new Music(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
                 Database.getDatabase().addToAllAudio(tmp);
                 for(Album album : ((Singer)getArtist()).getAlbumList())
                 {

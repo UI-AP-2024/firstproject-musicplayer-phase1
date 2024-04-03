@@ -1,12 +1,17 @@
 package view;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import controller.ArtistController;
 import controller.AudioController;
 import controller.ListenerController;
 import controller.SingerController;
 import controller.UserController;
+import model.user.Admin;
 import model.user.Artist;
 import model.user.Listener;
 import model.user.Podcaster;
@@ -27,6 +32,9 @@ public class MainView {
         return mainView;
     }
     public void mainView() throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        Date dateOfbirth = formatter.parse("12/5/2000");
+        Admin admin = Admin.getAdmin("Pkjhgyt4321#","isAdmin","AdminName","emailAdmin@gmail.com","09876543215",dateOfbirth);
         Scanner sc = new Scanner(System.in);
         String command;
         String txt;
@@ -39,7 +47,7 @@ public class MainView {
         // boolean a =true;
         int a =10;
         String type=null;
-        while (a!=0) {
+        while (true) {
             command = sc.nextLine();
             String [] spltCmd = command.split("-");
             if(spltCmd[0].equals("Signup")){
@@ -57,6 +65,7 @@ public class MainView {
                     for(String string : genres){
                         genre.add(string);
                     }
+                    //
                     ListenerController.getListenerController().getFavoriteGenres(genre);
                     ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
                     System.out.println(t);
@@ -70,9 +79,11 @@ public class MainView {
                     ListenerView.getListenerView().ListenerView();
                 }
                 if(charachter.equals("A")){
+                    System.out.println("you've loged in successfully");
                     ArtistView.getArtistView().ArtistView();
                 }
-                if(charachter.equals("Admin")){
+                if(charachter.equals("null")){
+                    System.out.println("null");
                 }
                 else{
                     System.out.println("not a valid username or password try again");

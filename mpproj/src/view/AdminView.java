@@ -27,7 +27,7 @@ public class AdminView {
         String txt;
         int a =10;
         // String type=null;
-        while (a!=0) {
+        while (true) {
             command = sc.nextLine();
             String [] spltCmd = command.split("-");
             switch (spltCmd[0]) {

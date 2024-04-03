@@ -46,7 +46,7 @@ public class ListenerController {
  
     public void getFavoriteGenres(ArrayList<String> genres){
         for (String string : genres) {
-            getListener().addToFavoriteGenres(Genre.valueOf(string));
+            getListener().addToFavoriteGenres(Genre.valueOf(string.toUpperCase()));
         }  
     }
 
@@ -177,6 +177,7 @@ public class ListenerController {
         {
             if(entry.getKey()==(Long)id){
                 entry.setValue(entry.getValue()+1);
+                return AudioController.getAudioController().playAudio(id);
             }
         }
         getListener().getAudioPlays().put(id, (long)1);
@@ -184,15 +185,16 @@ public class ListenerController {
     
     }
     
-    public String addAudioLikes(long id){
-        for(Map.Entry<Long,Long> entry : getListener().getAudioLikes().entrySet())
-        {
-            if(entry.getKey()==(Long)id){
-                entry.setValue(entry.getValue()+1);
-            }
+    public String likeAudio(long id){
+        getListener().addToLikedAudios(id);
+        boolean check = AudioController.getAudioController().likeAudio(id);
+        if(check){
+            getListener().addToLikedAudios(id);
+            return "thanks for your feedback";
         }
-        getListener().getAudioLikes().put(id, (long)1);
-        return AudioController.getAudioController().likeAudio(id);
+        else{
+            return "not a valid audio id";
+        }
         
     }
 
