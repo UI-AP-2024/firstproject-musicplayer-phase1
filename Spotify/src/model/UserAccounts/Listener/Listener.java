@@ -16,19 +16,12 @@ public class Listener extends userAccount {
     private double credit;
     private ArrayList<Playlist> playlists;
     private Map<Audio,Integer> playFiles;
-
     private ArrayList<Artist> followings;
-
-    public ArrayList<Artist> getFollowings() {
-        return followings;
-    }
-
-    public void setFollowings(ArrayList<Artist> followings) {
-        this.followings = followings;
-    }
-
-    private Date dateOfEndSubscription;
+    private Date dateOfEndSubscription=null;
     private ArrayList<Genre> favouriteGenres;
+
+
+
     public Listener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday,double credit,ArrayList<Playlist> playlists,ArrayList<Genre> favouriteGenres) {
         super(userId, password, fullName, email, phoneNumber, birthday);
         this.credit = credit;
@@ -55,6 +48,15 @@ public class Listener extends userAccount {
         context.append("\n");
         return context.toString();
     }
+
+    public ArrayList<Artist> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(ArrayList<Artist> followings) {
+        this.followings = followings;
+    }
+
     public double getCredit() {
         return credit;
     }

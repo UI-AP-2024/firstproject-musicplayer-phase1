@@ -5,17 +5,17 @@ import model.Audio.Podcast;
 import model.Database.Database;
 import model.Genre.Genre;
 import model.Playlist.Playlist;
+import model.PremiumPackages.PremiumSubscriptionPackages;
 import model.Report.Report;
 import model.UserAccounts.Artist.Artist;
 import model.UserAccounts.Listener.Free;
 import model.UserAccounts.Listener.Listener;
+import model.UserAccounts.Listener.Premium;
 import model.UserAccounts.userAccount;
 import sun.font.TrueTypeFont;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class listenerController {
     private static listenerController listenerC;
@@ -45,6 +45,7 @@ public class listenerController {
     public void setListenerM(Listener listenerM) {
         this.listenerM = listenerM;
     }
+
 
     //// Register free listener
     public boolean registerListener(String userId, String password, String fullName, String email, String phoneNumber, Date birthday, double credit, ArrayList<Playlist> playlists, ArrayList<Genre> favouriteGenres){
@@ -190,5 +191,126 @@ public class listenerController {
     public void increaseCredit(double value){
         listenerM.setCredit(listenerM.getCredit()+value);
     }
+
+    /// buy premium account:
+
+    public void getPremium(PremiumSubscriptionPackages type){
+        if (listenerM.getCredit()>=type.getValue()){
+            Premium premium = (Premium) listenerM;
+            if (type==PremiumSubscriptionPackages.THIRTYDAYS){
+                premium.setLeftOverDays(30);
+            }
+            else if (type==PremiumSubscriptionPackages.SIXTYDAYS){
+                premium.setLeftOverDays(60);
+            }
+            else if (type==PremiumSubscriptionPackages.ONEHUNDREDEIGHTYDAYS){
+                premium.setLeftOverDays(100);
+            }
+            Database.getDatabase().getAllUsersList().remove(listenerM);
+            listenerM = premium;
+            Database.getDatabase().getAllUsersList().add(listenerM);
+        }
+    }
+
+
+
+    //// show playlists
+    public String showPlaylist(){
+        StringBuilder context= new StringBuilder();
+        for(Playlist playlist:listenerM.getPlaylists()){
+            context.append(playlist.toString());
+            context.append("\n");
+        }
+        return context.toString();
+    }
+
+    /// select playlist
+    public String selectPlaylist(String name){
+        StringBuilder context= new StringBuilder();
+        for(Playlist playlist:listenerM.getPlaylists()){
+            if (playlist.getPlayListName().equals(name)){
+                context.append(playlist.toString());
+                return context.toString();
+            }
+        }
+        return "Not found";
+    }
+
+    /// show all artist
+    public String artistsList(){
+        StringBuilder context= new StringBuilder();
+        for (userAccount user : Database.getDatabase().getAllUsersList()){
+            if (user instanceof Artist){
+                context.append(((Artist) user).toString());
+                context.append("\n");
+            }
+        }
+        return context.toString();
+    }
+
+    /// show one artis
+    public String artist(String userId){
+        StringBuilder context= new StringBuilder();
+        for (userAccount user : Database.getDatabase().getAllUsersList()){
+            if (user instanceof Artist){
+                if (user.getUserId().equals(userId)){
+                    context.append(((Artist) user).toString());
+                    return context.toString();
+                }
+            }
+        }
+        return "Artist not found";
+    }
+
+
+    /// GetSuggestion
+    public String getSuggestion(int n){
+        StringBuilder context= new StringBuilder();
+        return context.toString();
+    }
+
+    /// Sort
+    public String Sort(String by){
+        StringBuilder context= new StringBuilder();
+        if (by.equals("L")){
+            List<Audio> sortedList=Database.getDatabase().getAllAudiosList().stream().sorted(Comparator.comparingInt(Audio::getNumberOfLikes).reversed()).collect(Collectors.toList());;
+            for (Audio audio : sortedList){
+                context.append(audio.toString());
+            }
+        }
+        else if(by.equals("P")){
+            List<Audio> sortedList=Database.getDatabase().getAllAudiosList().stream().sorted(Comparator.comparingInt(Audio::getNumberOfPlays).reversed()).collect(Collectors.toList());;
+            for (Audio audio : sortedList){
+                context.append(audio.toString());
+            }
+        }
+        return context.toString();
+    }
+
+    /// Search
+    public String Search(String name){
+        StringBuilder context= new StringBuilder();
+        List<Audio> searchList1= Database.getDatabase().getAllAudiosList().stream().filter(obj -> obj.getFileName().equals(name)).collect(Collectors.toList());
+        List<Artist> searchList2 = new ArrayList<>();
+        for (userAccount user: Database.getDatabase().getAllUsersList()){
+            if (user instanceof Artist){
+                searchList2.add((Artist) user);
+            }
+        }
+        searchList2 = searchList2.stream().filter(obj -> obj.getUserId().equals(name)).collect(Collectors.toList());
+        for (Artist artist : searchList2){
+            context.append(artist.toString());
+        }
+        for (Audio audio:searchList1){
+            context.append(audio.toString());
+        }
+        return context.toString();
+    }
+
+    /// filter todo
+//    public String filter(String by,Object it){
+//
+//    }
+
 
 }

@@ -13,11 +13,11 @@ public class Premium extends Listener {
     private int leftOverDays;
     public Premium(String userId, String password, String fullName, String email, String phoneNumber, Date birthday, double credit, ArrayList<Playlist> playlists, ArrayList<Genre> favouriteGenres,int leftOverDays) {
         super(userId, password, fullName, email, phoneNumber,birthday,credit, playlists, favouriteGenres);
-        this.leftOverDays = leftOverDays;
-        calendar=Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.DAY_OF_YEAR,leftOverDays);
-        super.setDateOfEndSubscription(calendar.getTime());
+//        this.leftOverDays = leftOverDays;
+//        calendar=Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.add(Calendar.DAY_OF_YEAR,leftOverDays);
+//        super.setDateOfEndSubscription(calendar.getTime());
 
     }
 
@@ -27,6 +27,10 @@ public class Premium extends Listener {
 
     public void setLeftOverDays(int leftOverDays) {
         this.leftOverDays = leftOverDays;
+        calendar=Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.DAY_OF_YEAR,leftOverDays);
+        super.setDateOfEndSubscription(calendar.getTime());
     }
     @Override
     public String toString(){
