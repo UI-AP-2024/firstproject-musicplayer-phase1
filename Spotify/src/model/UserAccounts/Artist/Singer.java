@@ -10,9 +10,9 @@ import java.util.Date;
 public class Singer extends Artist{
     private ArrayList<Album> albumsList;
 
-    public Singer(String userId,String password, String fullName, String email, String phoneNumber, Date birthday, double income, ArrayList<userAccount> followersList, String biograghy,ArrayList<Album> albumsList) {
-        super(userId,password, fullName, email, phoneNumber, birthday, income, followersList, biograghy);
-        this.albumsList = albumsList;
+    public Singer(String userId,String password, String fullName, String email, String phoneNumber, Date birthday,String biograghy) {
+        super(userId,password, fullName, email, phoneNumber, birthday,biograghy);
+        this.albumsList = new ArrayList<Album>();
     }
 
     @Override
