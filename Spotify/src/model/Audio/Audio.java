@@ -1,11 +1,17 @@
 package model.Audio;
 import java.util.Date;
+
+import model.Database.Database;
 import model.Genre.Genre;
+import model.UserAccounts.Artist.Artist;
+import model.UserAccounts.userAccount;
+
 public abstract class Audio {
     private int audioId;
     private static int audioIdCounter=0;
     private String fileName;
     private String artistName;
+    private Artist artist;
     private int numberOfPlays;
     private int numberOfLikes;
     private Date dateOfRelease;
@@ -23,6 +29,11 @@ public abstract class Audio {
         this.genre = genre;
         this.fileLink = fileLink;
         this.cover = cover;
+        for (userAccount user: Database.getDatabase().getAllUsersList()){
+            if (user.getFullName().equals(artistName)){
+                this.artist = (Artist) user;
+            }
+        }
     }
     @Override
     public String toString(){
@@ -115,5 +126,13 @@ public abstract class Audio {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 }

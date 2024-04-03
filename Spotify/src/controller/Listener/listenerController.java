@@ -8,6 +8,7 @@ import model.Playlist.Playlist;
 import model.PremiumPackages.PremiumSubscriptionPackages;
 import model.Report.Report;
 import model.UserAccounts.Artist.Artist;
+import model.UserAccounts.Artist.Singer;
 import model.UserAccounts.Listener.Free;
 import model.UserAccounts.Listener.Listener;
 import model.UserAccounts.Listener.Premium;
@@ -127,6 +128,12 @@ public class listenerController {
     public String playAudio(int audioId){
         for (Audio audio:Database.getDatabase().getAllAudiosList()){
             if (audio.getAudioId()==audioId){
+                if (audio instanceof Podcast){
+                    audio.getArtist().setIncome(audio.getArtist().getIncome()+.5);
+                }
+                else if (audio instanceof Music){
+                    audio.getArtist().setIncome(audio.getArtist().getIncome()+.4);
+                }
                 if (listenerM.getPlayFiles().containsKey(audio)){
                     listenerM.getPlayFiles().put(audio,listenerM.getPlayFiles().get(audio)+1);
                 }

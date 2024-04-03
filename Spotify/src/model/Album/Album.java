@@ -9,11 +9,11 @@ public class Album {
     private String singerName;
     private ArrayList<Music> musicList;
 
-    public Album(String albumName, String singerName, ArrayList<Music> musicList) {
+    public Album(String albumName, String singerName) {
         this.albumId = ++albumIdCounter;
         this.albumName = albumName;
         this.singerName = singerName;
-        this.musicList = musicList;
+        this.musicList = new ArrayList<Music>();
     }
 
     @Override

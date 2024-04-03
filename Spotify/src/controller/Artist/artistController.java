@@ -1,6 +1,11 @@
 package controller.Artist;
 
+import model.Album.Album;
+import model.Audio.Audio;
+import model.Audio.Music;
+import model.Audio.Podcast;
 import model.Database.Database;
+import model.Genre.Genre;
 import model.UserAccounts.Artist.Artist;
 import model.UserAccounts.Artist.Podcaster;
 import model.UserAccounts.Artist.Singer;
@@ -73,6 +78,48 @@ public class artistController  {
         return false;
     }
 
-    ///
+    ///show followers
+    public String showFollowers(){
+        StringBuilder context = new StringBuilder();
+        for (userAccount user : artistM.getFollowersList()){
+            context.append(user.toString());
+            context.append("\n");
+        }
+        return context.toString();
+    }
+
+    /// view plays
+    public String ViewsStatistics(){
+        StringBuilder context = new StringBuilder();
+        for (Audio audio:Database.getDatabase().getAllAudiosList()){
+            if (audio.getArtistName().equals(artistM.getFullName())){
+                context.append(audio.getFileName());
+                context.append(" : ");
+                context.append(audio.getNumberOfPlays());
+            }
+            context.append("\n");
+        }
+        return context.toString();
+    }
+
+
+    /// share podcast
+    public void sharePodcast(String podcastName, Genre genre,String caption,String link,String cover){
+        Podcast podcast = new Podcast(podcastName,artistM.getFullName(),new Date(),genre,link,cover,caption);
+        Database.getDatabase().getAllAudiosList().add(podcast);
+    }
+
+    // Create new Album
+    public void createAlbum(String name){
+        Album album = new Album(name,artistM.getFullName());
+        ((Singer) artistM).getAlbumsList().add(album);
+    }
+
+    /// share music
+    public void shareMusic(String musicName,Genre genre,String lyric,String link,String cover,int albumId){
+        Music music = new Music(musicName,artistM.getFullName(),new Date(),genre,link,cover,lyric);
+        ((Singer)artistM).getAlbumsList().get(albumId).getMusicList().add(music);
+        Database.getDatabase().getAllAudiosList().add(music);
+    }
 
 }
