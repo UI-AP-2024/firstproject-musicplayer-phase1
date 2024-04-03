@@ -77,6 +77,12 @@ public class listenerController {
     public boolean loginListener(String userId,String password){
         for(userAccount userAccount:Database.getDatabase().getAllUsersList()){
             if (userAccount.getUserId().equals(userId)&&userAccount.getPassword().equals(password)){
+                if (userAccount instanceof Free){
+                    listenerM = (Free) userAccount;
+                }
+                else if (userAccount instanceof Premium){
+                    listenerM = (Premium) userAccount;
+                }
                 return true;
             }
         }
@@ -311,6 +317,7 @@ public class listenerController {
 //    public String filter(String by,Object it){
 //
 //    }
+
 
 
 }
