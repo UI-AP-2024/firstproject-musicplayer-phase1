@@ -344,4 +344,10 @@ public class ListenerController {
         }
         return result;
     }
+
+    public String accountInfo(){
+        String result = "";
+        result += getUserAccount();
+        return result;
+    }
 }
