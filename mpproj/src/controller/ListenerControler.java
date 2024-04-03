@@ -56,15 +56,15 @@ public class ListenerControler {
         return Genre.Country+","+Genre.Pop+","+Genre.HipHop+","+Genre.History+","+Genre.Interview+","+Genre.Jazz+","+Genre.TrueCrime+","+Genre.Society+","+Genre.Rock;
     }
     public String chooseFavoriteGenre(String genre1,String genre2,String genre3,String genre4){
-        if(genre4.equals("")){
+        if(genre2.equals("")&&genre3.equals("")&&genre4.equals("")){
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
-            listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
-            listenerr.getFavoriteGenre().add(Genre.valueOf(genre3));
         } else if (genre3.equals("")&&genre4.equals("")) {
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
-        } else if (genre2.equals("")&&genre3.equals("")&&genre4.equals("")){
+        } else if (genre4.equals("")){
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));
+            listenerr.getFavoriteGenre().add(Genre.valueOf(genre3));
         }else {
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre1));
             listenerr.getFavoriteGenre().add(Genre.valueOf(genre2));

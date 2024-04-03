@@ -52,7 +52,14 @@ public class MainViewer {
                 getanswer();
             String favGenre=sc.nextLine();
             String[] favgenres=favGenre.split(",");
+            if(favgenres.length==4)
             print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],favgenres[1],favgenres[2],favgenres[3]));
+            else if(favgenres.length==3)
+                print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],favgenres[1],favgenres[2],""));
+            else if(favgenres.length==2)
+                print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],favgenres[1],"",""));
+            else if(favgenres.length==1)
+                print(ListenerControler.getListenerControler().chooseFavoriteGenre(favgenres[0],"","",""));
             ListenerViewer.getListenerViewer().getAnswer();
         }else if(answers[1].equals("P")){
             massage=ArtistControler.getArtistControler().signUpArtist(answers[2], answers[3], answers[4], answers[5], answers[6], date,answers[8],"P");
