@@ -1,17 +1,18 @@
 package model.UserAccount;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public abstract class UserAccountModel {
     private String username;
     private String password;
-    private StringBuilder name;
+    private String name;
     private String email;
     private String phoneNumber;
-    private Date birthday;
+    private LocalDate birthday;
 
 
-    public UserAccountModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
+    public UserAccountModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -37,7 +38,7 @@ public abstract class UserAccountModel {
         return password;
     }
 
-    public StringBuilder getName() {
+    public String getName() {
         return name;
     }
 
@@ -48,7 +49,7 @@ public abstract class UserAccountModel {
         return phoneNumber;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
@@ -60,7 +61,7 @@ public abstract class UserAccountModel {
         this.password = password;
     }
 
-    public void setName(StringBuilder name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -72,7 +73,7 @@ public abstract class UserAccountModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 }

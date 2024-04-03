@@ -7,6 +7,7 @@ import model.PlaylistModel;
 import model.UserAccount.Artist.ArtistModel;
 import model.UserAccount.UserAccountModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,15 +17,14 @@ public abstract class ListenerModel extends UserAccountModel {
     private double accountCredit;
     private ArrayList<PlaylistModel> playlists;
     private Map<AudioModel, Integer> playsCount;
-    private final Date subscriptionExpirationDate;
+    private LocalDate subscriptionExpirationDate;
     private ArrayList<GenreModel> favoriteGenres;
     private ArrayList<ArtistModel> followings;
-    public ListenerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double accountCredit) {
+    public ListenerModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday) {
         super(username, password, name, email, phoneNumber, birthday);
         this.accountCredit = 50;
         this.playlists = new ArrayList<PlaylistModel>();
         this.playsCount = new HashMap<AudioModel, Integer>();
-        this.subscriptionExpirationDate = new Date();
         this.favoriteGenres = new ArrayList<GenreModel>();
         this.followings = new ArrayList<ArtistModel>();
     }
@@ -47,7 +47,7 @@ public abstract class ListenerModel extends UserAccountModel {
         return playsCount;
     }
 
-    public Date getSubscriptionExpirationDate() {
+    public LocalDate getSubscriptionExpirationDate() {
         return subscriptionExpirationDate;
     }
 
@@ -77,5 +77,9 @@ public abstract class ListenerModel extends UserAccountModel {
 
     public void setFollowings(ArrayList<ArtistModel> followings) {
         this.followings = followings;
+    }
+
+    public void setSubscriptionExpirationDate(LocalDate subscriptionExpirationDate) {
+        this.subscriptionExpirationDate = subscriptionExpirationDate;
     }
 }

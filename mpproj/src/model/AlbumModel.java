@@ -11,7 +11,7 @@ public class AlbumModel {
     private String artistName;
     private ArrayList<MusicModel> musics;
 
-    public AlbumModel(int id, String albumName, String artistName) {
+    public AlbumModel(String albumName, String artistName) {
         this.id = ++tempID;
         this.albumName = albumName;
         this.artistName = artistName;

@@ -1,23 +1,27 @@
 package model.UserAccount.Artist;
 
+import model.Audio.AudioModel;
 import model.UserAccount.UserAccountModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class ArtistModel extends UserAccountModel {
     private double income;
     private ArrayList<UserAccountModel> followers;
     private String biography;
-    public ArtistModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, String biography) {
+    private Map<AudioModel, Integer> audiosPlayCount;
+    private int playsCount;
+    public ArtistModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday, String biography) {
         super(username, password, name, email, phoneNumber, birthday);
         this.followers = new ArrayList<UserAccountModel>();
         this.income = 0;
         this.biography = biography;
-    }
-
-    public ArtistModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
-        super(username, password, name, email, phoneNumber, birthday);
+        this.audiosPlayCount = new HashMap<AudioModel, Integer>();
+        this.playsCount = 0;
     }
 
     @Override
@@ -38,6 +42,14 @@ public abstract class ArtistModel extends UserAccountModel {
         return biography;
     }
 
+    public Map<AudioModel, Integer> getAudiosPlayCount() {
+        return audiosPlayCount;
+    }
+
+    public int getPlaysCount() {
+        return playsCount;
+    }
+
     public void setIncome(double income) {
         this.income = income;
     }
@@ -48,5 +60,12 @@ public abstract class ArtistModel extends UserAccountModel {
 
     public void setFollowers(ArrayList<UserAccountModel> followers) {
         this.followers = followers;
+    }
+
+    public void setAudiosPlayCount(Map<AudioModel, Integer> audiosPlayCount) {
+        this.audiosPlayCount = audiosPlayCount;
+    }
+    public void setPlaysCount(int playsCount) {
+        this.playsCount = playsCount;
     }
 }

@@ -1,11 +1,12 @@
 package model.UserAccount;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AdminModel extends UserAccountModel{
     private static AdminModel admin;
 
-    private AdminModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
+    private AdminModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday) {
         super(username, password, name, email, phoneNumber, birthday);
     }
 
@@ -14,7 +15,7 @@ public class AdminModel extends UserAccountModel{
         return super.toString();
     }
 
-    public static AdminModel getAdmin(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday) {
+    public static AdminModel getAdmin(String username, String password, String name, String email, String phoneNumber, LocalDate birthday) {
         if (admin == null)
             admin = new AdminModel(username, password, name, email, phoneNumber, birthday);
         return admin;

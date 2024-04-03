@@ -2,12 +2,12 @@ package model.Audio;
 
 import model.GenreModel;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class PodcastModel extends AudioModel{
     private String caption;
-    public PodcastModel(int id, String audioTitle, String artistName, Date releaseDate, GenreModel genre, String audioLink, String cover, String caption) {
-        super(id, audioTitle, artistName, releaseDate, genre, audioLink, cover);
+    public PodcastModel(String audioTitle, String artistName, LocalDate releaseDate, GenreModel genre, String audioLink, String cover, String caption) {
+        super(audioTitle, artistName, releaseDate, genre, audioLink, cover);
         this.caption = caption;
     }
 

@@ -2,12 +2,13 @@ package model.UserAccount.Artist;
 
 import model.AlbumModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class SingerModel extends ArtistModel{
     private ArrayList<AlbumModel> albums;
-    public SingerModel(String username, String password, StringBuilder name, String email, String phoneNumber, Date birthday, double income, String biography) {
+    public SingerModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday, String biography) {
         super(username, password, name, email, phoneNumber, birthday, biography);
         this.albums = new ArrayList<AlbumModel>();
     }

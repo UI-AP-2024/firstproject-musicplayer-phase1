@@ -11,7 +11,7 @@ public class PlaylistModel {
     private String creatorName;
     private ArrayList<AudioModel> audios;
 
-    public PlaylistModel(int id, String playlistName, String creatorName) {
+    public PlaylistModel(String playlistName, String creatorName) {
         this.id = ++tempID;
         this.playlistName = playlistName;
         this.creatorName = creatorName;
