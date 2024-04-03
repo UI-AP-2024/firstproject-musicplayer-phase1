@@ -3,22 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public class Playlist {
-    private int id;
+    private int uniqueId;
+    private static int idMaker = 1;
     private String playListName;
     private String userGeneratorName;
     private ArrayList<Audio> audioList = new ArrayList<>();
 
     public Playlist(String playListName, String userGeneratorName) {
+        this.uniqueId = idMaker;
         this.playListName = playListName;
         this.userGeneratorName = userGeneratorName;
+        idMaker++;
     }
 
     public int getId() {
-        return id;
+        return uniqueId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.uniqueId = id;
     }
 
     public String getPlayListName() {

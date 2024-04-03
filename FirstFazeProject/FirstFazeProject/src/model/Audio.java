@@ -4,6 +4,7 @@ import java.util.Date;
 
 abstract public class Audio {
     private int uniqueId;
+    private static int idMaker = 1;
     private String audioName;
     private String artistName;
     private int timesPlayed;
@@ -13,13 +14,14 @@ abstract public class Audio {
     private String musicLink;
     private String cover;
 
-    public Audio(int uniqueId, String audioName, String artistName, Genre genre, String musicLink, String cover) {
-        this.uniqueId = uniqueId;
+    public Audio(String audioName, String artistName, Genre genre, String musicLink, String cover) {
+        this.uniqueId = idMaker;
         this.audioName = audioName;
         this.artistName = artistName;
         this.genre = genre;
         this.musicLink = musicLink;
         this.cover = cover;
+        idMaker++;
     }
 
     public int getUniqueId() {
