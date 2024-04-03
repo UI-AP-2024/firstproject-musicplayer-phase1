@@ -10,6 +10,7 @@ import Models.User.Artist;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PremiumListenerView {
     private PremiumListenerController premiumListenerController;
@@ -17,8 +18,10 @@ public class PremiumListenerView {
     {
         premiumListenerController = new PremiumListenerController();
     }
-    public void getInput(String input)
+    public void getInput()
     {
+        Scanner jin = new Scanner(System.in);
+        String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]){
             case "GetSuggestions":

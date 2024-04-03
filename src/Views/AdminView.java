@@ -4,17 +4,18 @@ import Controllers.AdminController;
 import Models.Audio.Audio;
 import Models.Report;
 import Models.User.Artist;
-
 import java.util.ArrayList;
-
+import java.util.Scanner;
 public class AdminView {
     private AdminController adminController;
     public AdminView()
     {
         adminController = AdminController.getAdminController();
     }
-    public void getInput(String input)
+    public void getInput()
     {
+        Scanner jin = new Scanner(System.in);
+        String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]){
             case "Statistics":

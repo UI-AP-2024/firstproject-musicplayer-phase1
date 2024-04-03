@@ -5,6 +5,7 @@ import Models.Genre;
 import Models.User.User;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PodcasterView {
     private PodcasterController podcasterController;
@@ -13,7 +14,9 @@ public class PodcasterView {
         podcasterController = new PodcasterController();
     }
 
-    public void getInput(String input) {
+    public void getInput() {
+        Scanner jin = new Scanner(System.in);
+        String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]) {
             case "Followers":
