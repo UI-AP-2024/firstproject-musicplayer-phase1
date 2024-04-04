@@ -6,6 +6,7 @@ import controller.SingerC;
 import controller.UserC;
 import model.AccountUser.Admin;
 import model.AccountUser.Artist.Artist;
+import model.AccountUser.Artist.TypeOfArtist.Podcaster;
 import model.AccountUser.Artist.TypeOfArtist.Singer;
 import model.AccountUser.Listener.Listener;
 import model.Audio.Music;
@@ -68,6 +69,8 @@ public class Panels {
 
     public static void showUserPanel(Listener user) {
         System.out.println("welcome to listener panel");
+        System.out.println("GetSeggestions\nArtists\nArtist\nFollow\nSearch\nFilter\nSort\nShowPlaylists\nSelectPlaylists\nPlay\\nLike\nLyric\\nNewPlaylist\nAdd\nFollowing\nReport\nIncreasrCredit\nGetPremium\nenter 0 for showFirstMene");
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
@@ -173,6 +176,7 @@ public class Panels {
                     showUserPanel(user);
                     break;
 
+
                 case "NewPlaylist":
                     String playlistId = commits[1];
                     UserC.createPlaylist(playlistId, user);
@@ -209,6 +213,12 @@ public class Panels {
                     UserC.purchasePremiumSubscription(Integer.parseInt(pakage), user);
                     showUserPanel(user);
                     break;
+
+                case "0":
+                    showFirstMeneu();
+                    break;
+
+
                 default:
                     System.out.println("Invalid command!");
 
@@ -219,6 +229,9 @@ public class Panels {
 
     public static void showAdminPanel(Admin admin) {
         System.out.println("welcome to Admin panel");
+        System.out.println("Statistics\nAudios\nAudio\nArtists\nArtist\nReports\nenter 0 for showFirstMenu");
+
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
@@ -256,6 +269,10 @@ public class Panels {
                     AdminV.displayReports(Database.getInstance().getReports());
                     break;
 
+                case "0":
+                    showFirstMeneu();
+                    break;
+
                 default:
                     System.out.println("Invalid command!");
             }
@@ -263,14 +280,16 @@ public class Panels {
     }
 
     public static void showArtistPanel(Artist artist) {
-        System.out.println("welcome to singer panel");
+        System.out.println("welcome to Artist panel");
+        System.out.println("Followes\nViewStatistics\nCalculateEarning\nNewAlbum\nPublish\nenter 0 for showFirstMeneu");
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
             String[] commits = input.split(" -");
             switch (commits[0]) {
 
-                case "Followes":
+                case "Followers":
                     ArtistV.displayArtistFollowers(artist);
                     showArtistPanel(artist);
                     break;
@@ -291,10 +310,16 @@ public class Panels {
                     showArtistPanel(artist);
                     break;
 
-                case "Publish":
-                    String PublishType = commits[1];
+                case "viewAlbumId":
+                    SingerV.printAlbumIds((Singer) artist);
+                    showArtistPanel(artist);
+                    break;
 
-                    switch (PublishType) {
+
+                case "Publish":
+                    String publishType = commits[1];
+
+                    switch (publishType) {
                         case "M":
                             String title = commits[2];
                             String genre = commits[3];
@@ -303,20 +328,40 @@ public class Panels {
                             String cover = commits[6];
                             String albumId = commits[7];
 
-                            SingerC.publishMusic((Singer) artist, title, Genre.valueOf(genre), Integer.parseInt(albumId), link, cover,lyric );
-                            showArtistPanel(artist);
+                            if (artist instanceof Singer) {
+                                SingerC.publishMusic((Singer) artist, title, Genre.valueOf(genre), Integer.parseInt(albumId), link, cover, lyric);
+                                showArtistPanel(artist);
+                            } else {
+                                System.out.println("Invalid artist type for publishing music.");
+                            }
                             break;
 
                         case "P":
+                            String titlep = commits[2];
+                            String genrep = commits[3];
+                            String lyricp = commits[4];
+                            String linkp = commits[5];
+                            String coverp = commits[6];
 
-                            System.out.println(UserC.sortByPlayCount(Database.getInstance().getAudiofiles()));
-                            showArtistPanel(artist);
+                            if (artist instanceof Podcaster) {
+                                PodcasterC.publishPodcast((Podcaster) artist, titlep, Genre.valueOf(genrep), linkp, coverp, lyricp);
+                                showArtistPanel(artist);
+                            } else {
+
+                                System.out.println("Invalid artist type for publishing podcast.");
+                            }
                             break;
+
+                        default:
+                            System.out.println("Invalid command!");
+                            break;
+
                     }
-                    showArtistPanel(artist);
                     break;
 
-
+                case "0":
+                    showFirstMeneu();
+                    break;
                 default:
                     System.out.println("Invalid command!");
             }

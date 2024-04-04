@@ -26,7 +26,7 @@ public class PodcasterC {
 
     //*********************************************
     public static boolean isValidUserEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo)\\.com$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo|example)\\.com$";
         return email.matches(emailRegex);
     }
 
@@ -42,8 +42,8 @@ public class PodcasterC {
 
     //************************************************************************
 
-        public static void publishPodcast(Podcaster podcaster, int uniqueId, String title, int playCount, int likes, Date releaseDate, Genre genre, String audioLink, String cover,String caption) {
-            Podcast podcast = new Podcast(uniqueId, title, podcaster.getFullName(), playCount, likes, releaseDate, genre, audioLink, cover,caption);
+        public static void publishPodcast(Podcaster podcaster, String title, Genre genre, String audioLink, String cover,String caption) {
+            Podcast podcast = new Podcast(SingerC.generateUniqueId(), title, podcaster.getFullName(), 0, 0, new Date(), genre, audioLink, cover,caption);
             Database.getInstance().getAudiofiles().add(podcast);
 
             System.out.println("Podcast '" + title + "' published successfully by " + podcaster.getFullName() + ".");
@@ -54,25 +54,27 @@ public class PodcasterC {
         String userName = commands[2];
         if (podcaster.containsKey(userName)) {
             System.out.println("Error: userName already exists.");
-            return;
+            Panels.showFirstMeneu();
+
         }
         String password = commands[3];
         if (!isValidPassword(password)) {
             System.out.println("Invalid password.");
-            return;
+            Panels.showFirstMeneu();
+
 
         }
         String fullName = commands[4];
         String email = commands[5];
         if (!isValidUserEmail(email)) {
             System.out.println("Invalid email.");
-            return;
+            Panels.showFirstMeneu();
 
         }
         String phoneNumber = commands[6];
         if (!isValidPhoneNumber(phoneNumber)) {
             System.out.println("Invalid phoneNumber.");
-            return;
+            Panels.showFirstMeneu();
 
         }
         String dateOfBirth = commands[7];

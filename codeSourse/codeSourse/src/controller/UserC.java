@@ -33,7 +33,7 @@ public class UserC {
 
     //*********************************************
     public static boolean isValidUserEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo)\\.com$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo|example)\\.com$";
         return email.matches(emailRegex);
     }
 
@@ -420,10 +420,10 @@ public class UserC {
                     Panels.showUserPanel((Listener) user);
                 } else if (user instanceof Podcaster) {
                     System.out.println("You are a podcaster. Opening podcaster panel...");
-                    showUserPanel();
+                    Panels.showArtistPanel((Artist) user);
                 } else if (user instanceof Singer) {
                     System.out.println("You are a singer. Opening singer panel...");
-                    showUserPanel();
+                    Panels.showArtistPanel((Artist) user);
                 }else if (user instanceof Admin) {
                         System.out.println("You are a Admin. Opening Admin panel...");
                     showAdminPanel((Admin) user);
@@ -441,23 +441,23 @@ public class UserC {
         String userName = commands[2];
         if (users.containsKey(userName)) {
             System.out.println("Error: userName already exists.");
-            return;
+            Panels.showFirstMeneu();
         }
         String password = commands[3];
         if (!isValidPassword(password)) {
             System.out.println("Invalid password.");
-            return;
+            Panels.showFirstMeneu();
         }
         String fullName = commands[4];
         String email = commands[5];
         if (!isValidUserEmail(email)) {
             System.out.println("Invalid email.");
-            return;
+            Panels.showFirstMeneu();
         }
         String phoneNumber = commands[6];
         if (!isValidPhoneNumber(phoneNumber)) {
             System.out.println("Invalid phoneNumber.");
-            return;
+            Panels.showFirstMeneu();
 
         }
         String dateOfBirth = commands[7];
@@ -467,6 +467,8 @@ public class UserC {
             birthDate = dateFormat.parse(dateOfBirth);
         } catch (ParseException e) {
             System.out.println("Invalid birthDate format.");
+            Panels.showFirstMeneu();
+
             return;
         }
         Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
