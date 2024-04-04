@@ -41,8 +41,8 @@ public class firstPage {
                         commands[3],
                         commands[4],commands[5],commands[6],date,commands[8]);
                 if (ok==3){
-                    //todo;
                     System.out.println("Registering was successful!!!");
+                    artistView.getArtistVi().artistCommands();
                 }
             }
             switch (ok){
@@ -68,6 +68,7 @@ public class firstPage {
                     listenerView.getListenerV().listenerCommands();
                 case "Artist":
                     System.out.println("welcome");
+                    artistView.getArtistVi().artistCommands();
                 case "Admin":
                     System.out.println("welcome");
                     adminView.getAdminVi().adminCommands();
