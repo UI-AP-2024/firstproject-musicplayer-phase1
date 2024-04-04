@@ -3,18 +3,10 @@ package view;
 import controller.PodcasterC;
 import controller.SingerC;
 import controller.UserC;
-import controller.UserRegistration;
-import model.AccountUser.AccountUser;
-import model.AccountUser.Admin;
-import model.AccountUser.Artist.Artist;
 import model.AccountUser.Listener.Listener;
-import model.Audio.Audio;
+import model.Audio.Music;
 import model.Database;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
 public class Panels {
     public static void showFirstMeneu() {
         System.out.println("Signup\nLogin");
@@ -171,11 +163,70 @@ public class Panels {
                     UserV.viewPlaylists(Listener.getPlaylists());
                     showUserPanelLibrary(user);
                     break;
+
                 case "SelectPlaylists":
                     String playlistName = commits[1];
                     UserV.viewPlaylistContents(playlistName);
                     showUserPanelLibrary(user);
+                    break;
+
+                case "Play":
+                    String playId = commits[1];
+                    UserV.playAudio(Integer.parseInt(playId));
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "Like":
+                    String LikeId = commits[1];
+                    UserC.likeAudio(Integer.parseInt(LikeId));
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "Lyric":
+                    String lyrcId = commits[1];
+                    System.out.println(Music.getLyrics());
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "NewPlaylist":
+                    String playlistId = commits[1];
+                    UserC.createPlaylist(playlistId, user);
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "Add":
+                    String playlistname = commits[1];
+                    String AudioId = commits[2];
+                    UserC.addMusicToPlaylist(playlistname, Integer.parseInt(AudioId));
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "Following":
+                    UserV.displayFollowedArtists();
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "Report":
+                    String userArtist = commits[1];
+                    String description = commits[2];
+                    UserC.reportUser(user, userArtist, description);
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "IncreasrCredit":
+                    String value = commits[1];
+                    UserC.increaseAccountBalance(user, Double.parseDouble(value));
+                    showUserPanelLibrary(user);
+                    break;
+
+                case "GetPremium":
+                    String pakage = commits[1];
+                    UserC.purchasePremiumSubscription(Integer.parseInt(pakage),user);
+                    showUserPanelLibrary(user);
+                    break;
 
 
-
-}}}}
+            }
+        }
+    }
+}

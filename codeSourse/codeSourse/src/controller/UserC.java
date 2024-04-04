@@ -1,5 +1,4 @@
 package controller;
-
 import model.*;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
@@ -11,8 +10,6 @@ import model.AccountUser.Listener.TypeOfListener.PremiumListener;
 import model.AccountUser.Listener.TypeOfListener.premiumSub;
 import model.Audio.Audio;
 import view.Panels;
-import model.AccountUser.Listener.TypeOfListener.PremiumListener;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -73,12 +70,26 @@ public class UserC {
         return favoriteGenres;
     }
 
+
     //**********************************************
     private static List<Audio> likeAudis;
 
     public static List<Audio> getLikeAudis() {
         return likeAudis;
     }
+
+
+
+        public static void likeAudio(int audioId) {
+            Audio audio = findAudioById(audioId);
+            if (audio != null) {
+                audio.setLikes(audio.getLikes() + 1);
+                likeAudis.add(audio);
+                System.out.println("Audio with ID " + audioId + " liked successfully.");
+            } else {
+                System.out.println("Error: Audio not found.");
+            }
+        }
 
     public void addAudio(Playlist playlist, String audio) {
         playlist.addAudio(audio);
@@ -109,7 +120,7 @@ public class UserC {
             return null;
         }
 
-        private static Audio findAudioById(int musicId){
+        public static Audio findAudioById(int musicId){
             for (Audio audio : Database.getDatabase().getAudiofiles()) {
                 if (audio.getUniqeId() == musicId) {
                     return audio;
@@ -152,9 +163,7 @@ public class UserC {
 
 
     //*********************************************
-    public void likeAudis(Audio audio) {
-        getLikeAudis().add(audio);
-    }
+
 
     public static List<Audio> searchByKeyword(List<Audio> audioFiles, String keyword) {
         return audioFiles.stream().filter(audio -> audio.getTitle().contains(keyword) || audio.getArtist().contains(keyword)).collect(Collectors.toList());
@@ -234,27 +243,34 @@ public class UserC {
     public UserC() {
         this.followedArtists = new ArrayList<>();
     }
-
-    public void displayFollowedArtists() {
-        if (followedArtists.isEmpty()) {
-            System.out.println("You are not following any artists.");
-        } else {
-            System.out.println("Artists you are following:");
-            for (Artist artist : followedArtists) {
-                System.out.println(artist.getUserName());
-            }
-        }
+    public static List<Artist> getFollowedArtists(){
+        return followedArtists;
     }
 
 
-    public void reportUser(Report report) {
-        Report userReport = new Report();
 
-        userReport.setReportingUser(report.getReportingUser());
-        userReport.setReportedArtist(report.getReportedArtist());
-        userReport.setDescription(report.getDescription());
-        Database.getDatabase().getReports().add(userReport);
+    public static void reportUser(AccountUser reportingUser, String artistUsername, String description) {
+        Artist reportedArtist = findArtistByUsername(artistUsername);
 
+        if (reportedArtist != null) {
+            Report userReport = new Report();
+            userReport.setReportingUser(reportingUser);
+            userReport.setReportedArtist(reportedArtist);
+            userReport.setDescription(description);
+            Database.getDatabase().getReports().add(userReport);
+            System.out.println("Report submitted successfully.");
+        } else {
+            System.out.println("Error: Artist not found.");
+        }
+    }
+
+    private static Artist findArtistByUsername(String artistUsername) {
+        for (AccountUser user : Database.getDatabase().getUsers()) {
+            if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
+                return (Artist) user;
+            }
+        }
+        return null;
     }
 
 
@@ -264,24 +280,20 @@ public class UserC {
     }
 
 
-    public void purchasePremiumSubscription(int packageChoice, Listener listener) {
+    public static void purchasePremiumSubscription(int daysToAdd, Listener listener) {
         double price;
-        int daysToAdd;
-        switch (packageChoice) {
-            case 1:
-                price = premiumSub.ThirtyDays.getPrice();
-                daysToAdd = 30;
+        switch (daysToAdd) {
+            case 30:
+                price = premiumSub.ThirtyDays.getPrice();;
                 break;
-            case 2:
+            case 60:
                 price = premiumSub.SixtyDays.getPrice();
-                daysToAdd = 60;
                 break;
-            case 3:
+            case 180:
                 price = premiumSub.OneHundredEightyDays.getPrice();
-                daysToAdd = 180;
                 break;
             default:
-                System.out.println("Invalid package choice.");
+                System.out.println("Invalid number of days.");
                 return;
         }
 
@@ -327,7 +339,6 @@ public class UserC {
             System.out.println("Insufficient account balance.");
         }
     }
-
 
     public static List<Audio> recommendSongs(Listener user, List<Audio> allAudios, List<Audio> likeAudis) {
         List<Audio> recommendedSongs = new ArrayList<>();
@@ -384,7 +395,7 @@ public class UserC {
         return selectedSongs;
     }
 
-    public void increaseAccountBalance(Listener listener, double amount) {
+    public static void increaseAccountBalance(Listener listener, double amount) {
         if (listener != null && listener instanceof Listener) {
             ((Listener) listener).setAccountBalance(((Listener) listener).getAccountBalance() + amount);
         } else {
@@ -462,6 +473,7 @@ public class UserC {
         System.out.println("Signed up successfully!");
         Panels.showFirstMeneu();
     }
+
 }
 
 

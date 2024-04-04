@@ -1,5 +1,6 @@
 package view;
 
+import controller.UserC;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
 import model.AccountUser.Listener.Listener;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class UserV {
     public static void playAudio(int musicId) {
-        Audio audio = findAudioById(musicId);
+        Audio audio = UserC.findAudioById(musicId);
 
         if (audio != null) {
             System.out.println("Information of audio with ID " + musicId + ":");
@@ -29,14 +30,7 @@ public class UserV {
         }
     }
 
-    private static Audio findAudioById(int musicId) {
-        for (Audio audio : Database.getDatabase().getAudiofiles()) {
-            if (audio.getUniqeId() == musicId) {
-                return audio;
-            }
-        }
-        return null;
-    }
+
     public void displayArtistFollowings(Artist artist) {
         List<AccountUser> followers = artist.getFollowers();
         System.out.println("Followers of " + artist.getUserName() + ":");
@@ -86,5 +80,16 @@ public class UserV {
         System.out.println("Email: " + user.getEmail());
         System.out.println("Phone Number: " + user.getPhoneNumber());
         System.out.println("Birth Date: " + user.getBirthDate());
+    }
+
+    public static void displayFollowedArtists() {
+        if (UserC.getFollowedArtists().isEmpty()) {
+            System.out.println("You are not following any artists.");
+        } else {
+            System.out.println("Artists you are following:");
+            for (Artist artist : UserC.getFollowedArtists()) {
+                System.out.println(artist.getUserName());
+            }
+        }
     }
 }
