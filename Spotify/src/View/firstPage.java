@@ -65,10 +65,12 @@ public class firstPage {
             switch (log){
                 case "Listener":
                     System.out.println("welcome");
+                    listenerView.getListenerV().listenerCommands();
                 case "Artist":
                     System.out.println("welcome");
                 case "Admin":
                     System.out.println("welcome");
+                    adminView.getAdminVi().adminCommands();
                 case "0":
                     System.out.println("user not found");
                     firstView();
