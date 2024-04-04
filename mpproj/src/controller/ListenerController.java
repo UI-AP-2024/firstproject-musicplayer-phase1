@@ -55,7 +55,7 @@ public class ListenerController {
     public String ShowAccountInfo() {
         String txt = "Account info:" +
                 "\nuser name : " + getListener().getUsername() +
-                "\nFirst name : " + getListener().getName() +
+                "\nName : " + getListener().getName() +
                 "\nemail address: " + getListener().getEmailAddress() +
                 "\npassword : " + getListener().getPassword() +
                 "\nbirth date : " + String.valueOf(getListener().getBirthDate()) +

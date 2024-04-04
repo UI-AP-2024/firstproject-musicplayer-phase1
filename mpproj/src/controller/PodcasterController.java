@@ -35,7 +35,7 @@ public class PodcasterController {
     public String ShowPodcasterInfo() {
         String txt = "Podcaster info:" +
                 "\nuser name : " + getPodcaster().getUsername() +
-                "\nFirst name : " + getPodcaster().getName() +
+                "\nName : " + getPodcaster().getName() +
                 "\nFollowers : " + String.valueOf(getPodcaster().getFollowers().size()) +
                 "\nBiographi : " + getPodcaster().getBiographi() + "\n\n";
         if (getPodcaster().getPodcastList().size() == 0) {

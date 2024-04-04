@@ -45,7 +45,7 @@ public class SingerController {
     public String ShowSingerInfo() {
         String txt = "Singer info:" +
                 "\nuser name : " + getSinger().getUsername() +
-                "\nFirst name : " + getSinger().getName() +
+                "\nName : " + getSinger().getName() +
                 "\nFollowers : " + String.valueOf(getSinger().getFollowers().size()) +
                 "\nBiographi : " + getSinger().getBiographi() + "\n\n";
         if (getSinger().getAlbumList().size() == 0) {

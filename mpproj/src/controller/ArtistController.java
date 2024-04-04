@@ -50,7 +50,7 @@ public class ArtistController {
         calculateIncome();
         String txt = "Account info:" +
                 "\nuser name : " + getArtist().getUsername() +
-                "\nFirst name : " + getArtist().getName() +
+                "\nName : " + getArtist().getName() +
                 "\nemail address: " + getArtist().getEmailAddress() +
                 "\npassword : " + getArtist().getPassword() +
                 "\nbirth date : " + String.valueOf(getArtist().getBirthDate()) +

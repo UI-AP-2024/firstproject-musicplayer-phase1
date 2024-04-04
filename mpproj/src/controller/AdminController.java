@@ -33,7 +33,7 @@ public class AdminController {
     public String ShowAccountInfo() {
         String txt = "Account info:" +
                 "\nuser name : " + Admin.getAdmin().getUsername() +
-                "\nFirst name : " + Admin.getAdmin().getName() +
+                "\nName : " + Admin.getAdmin().getName() +
                 "\nemail address: " + Admin.getAdmin().getEmailAddress() +
                 "\npassword : " + Admin.getAdmin().getPassword() +
                 "\nbirth date : " + String.valueOf(Admin.getAdmin().getBirthDate());
