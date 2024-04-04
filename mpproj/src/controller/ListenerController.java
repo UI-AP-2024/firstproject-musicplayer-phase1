@@ -8,14 +8,12 @@ import model.GenreModel;
 import model.PlaylistModel;
 import model.ReportModel;
 import model.UserAccount.Artist.ArtistModel;
-import model.UserAccount.Listener.FreeListenerModel;
 import model.UserAccount.Listener.ListenerModel;
 import model.UserAccount.UserAccountModel;
 
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.regex.Pattern;
 
 
 public class ListenerController {

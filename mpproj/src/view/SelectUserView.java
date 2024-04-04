@@ -2,6 +2,10 @@ package view;
 
 import controller.ListenerController;
 import controller.SignInOutController;
+import model.UserAccount.AdminModel;
+import model.UserAccount.Artist.ArtistModel;
+import model.UserAccount.Listener.ListenerModel;
+import view.ListenerView;
 
 
 import java.util.Objects;
@@ -42,15 +46,11 @@ public class SelectUserView {
                             signUpLogInOut();
                         }
                     case "S" :
-                        if(Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "Phone number format is false") || Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "Email format is false") || Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "This username or email is already in use. Try again!"))
-                            signUpLogInOut();
-                        else
-                            signUpLogInOut();
+                        SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]);
+                        signUpLogInOut();
                     case "P" :
-                        if(Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "Phone number format is false") || Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "Email format is false") || Objects.equals(SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), "This username or email is already in use. Try again!"))
-                            signUpLogInOut();
-                        else
-                            signUpLogInOut();
+                        SignInOutController.getUserAccountController().sinUpListener(strings[2], strings[3], strings[4], strings[5], strings[6], strings[7])
+                        signUpLogInOut();
                     default:
                         System.out.println("This type of account is invalid");
                         signUpLogInOut();
@@ -59,10 +59,16 @@ public class SelectUserView {
                 if (Objects.equals(SignInOutController.getUserAccountController().login(strings[1], strings[2]), "Password is incorrect") || Objects.equals(SignInOutController.getUserAccountController().login(strings[1], strings[2]), "username not found"))
                     signUpLogInOut();
                 else {
-                    user = SignInOutController.getUserAccountController();
+                    if (SignInOutController.getUserAccountController().getUserAccount() instanceof ListenerModel)
+                        ListenerView.getListenerView().methods();
+
+                    else if (SignInOutController.getUserAccountController().getUserAccount() instanceof ArtistModel)
+                        ArtistView.getArtistView().methods();
+                    else if (SignInOutController.getUserAccountController().getUserAccount() instanceof AdminModel)
+                        AdminView.getAdminView().methods();
                 }
-
+            case "Logout" :
+                signUpLogInOut();
         }
-
     }
 }

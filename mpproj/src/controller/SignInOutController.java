@@ -81,10 +81,18 @@ public class SignInOutController {
         for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
             if (Objects.equals(userAccount.getUsername(), username)) {
                 if (Objects.equals(userAccount.getPassword(), password)){
-                    user = userAccount;
-                    if (userAccount instanceof ArtistModel) user = ArtistController.getArtistController().getArtist();
-                    if (userAccount instanceof ListenerModel) user = ListenerController.getListenerController().getListener();
-                    if (userAccount instanceof AdminModel) user = AdminController.getAdminController().getAdmin();
+                    if (userAccount instanceof ArtistModel){
+                        ArtistController.getArtistController().setArtist((ArtistModel) userAccount);
+                        user = (ArtistModel)userAccount;
+                    }
+                    if (userAccount instanceof ListenerModel) {
+                        ListenerController.getListenerController().setListener((ListenerModel) userAccount);
+                        user = (ListenerModel)userAccount;
+                    }
+                    if (userAccount instanceof AdminModel){
+                        AdminController.getAdminController().setAdmin((AdminModel) userAccount);
+                        user = (AdminModel)userAccount;
+                    }
                     return "You are logged in now";
                 }
                 return "Password is incorrect";

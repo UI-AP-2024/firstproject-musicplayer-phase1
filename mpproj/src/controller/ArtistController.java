@@ -21,7 +21,7 @@ public class ArtistController {
     public ArtistModel getArtist() {
         return artist;
     }
-    public void setListener(ArtistModel artist) {
+    public void setArtist(ArtistModel artist) {
         this.artist = artist;
     }
 
