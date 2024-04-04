@@ -104,9 +104,10 @@ public class artistController {
     }
 
     // Create new Album
-    public void createAlbum(String name) {
+    public String createAlbum(String name) {
         Album album = new Album(name, artistM.getFullName());
         ((Singer) artistM).getAlbumsList().add(album);
+        return "New Album was created;";
     }
 
     /// share music
