@@ -23,7 +23,7 @@ public class Podcaster extends Artist{
     public double audiosTimesPlayed() {
         int counter = 0;
         for (Audio audio : Database.getData().getAllAudios()){
-            if (Objects.equals(audio.getArtistName(), this.getUniqueUserName())){
+            if (Objects.equals(audio.getArtistName(), this.getFullName())){
                 counter += audio.getTimesPlayed();
             }
         }

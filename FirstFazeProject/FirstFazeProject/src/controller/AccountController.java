@@ -30,16 +30,17 @@ public class AccountController {
                         return 0;
                     }
                 }
-                String passwordRegex = "(?=.*[a-z])(?=.*\\d)[a-z0-9A-Z]{10,16}";
+                String passwordRegex = "(?=.*[a-z])(?=.*\\d)[a-z0-9A-Z\\W]{5,16}";
                 boolean result1 = Pattern.compile(passwordRegex).matcher(answers[3]).find();
                 if (!result1)
                     return -1;
-                String emailRegex = "\\w{8,50}@(gmail|yahoo|hotmail|aol)\\.com$";
+                String emailRegex = "(\\w|\\W){5,50}@(gmail|yahoo|hotmail|aol)\\.com$";
+//                "\\w{8,50}@(gmail|yahoo|hotmail|aol)\\.com$"
                 boolean result2 = Pattern.compile(emailRegex).matcher(answers[5]).find();
                 if (!result2)
                     return -2;
-                String phoneNumberRegex = "^([0][9]|[\\+][9][8][9])(([1][0-9])|([2][0-2])|([0][0-5])|([3][0])|([3][3])|([3][5-9])|([4][1]))(\\d){7}$";
-//              can be replaced by this  ->  ^(09|\+989)((1[0-9])|(2[0-2])|(0[0-5])|(30)|(33)|(3[5-9])|(41))(\d){7}$
+                String phoneNumberRegex = "^([0][9]|[\\+][9][8][9])(([1][0-9])|([2][0-3])|([0][0-5])|([3][1-4])|([3][5-9])|([4][1-2])|([9][0-4])|([9][8]))(\\d){7}$";
+//              can be replaced by this  ->  ^(09|\+989)((1[0-9])|(2[0-3])|(0[0-5])|(3[1-4])|(3[5-9])|(4[1-2])|(9[0-4])|(98))(\d){7}$
                 boolean result3 = Pattern.compile(phoneNumberRegex).matcher(answers[6]).find();
                 if (!result3)
                     return -3;
@@ -52,10 +53,12 @@ public class AccountController {
                     case "S":
                         Singer singerPerson = new Singer(answers[2], answers[3], answers[4], answers[5], answers[6], date, answers[8]);
                         addUserToDatabase(singerPerson);
+                        singerPerson.setIncome(0D);
                         return 2;
                     case "P":
                         Podcaster podcastPerson = new Podcaster(answers[2], answers[3], answers[4], answers[5], answers[6], date, answers[8]);
                         addUserToDatabase(podcastPerson);
+                        podcastPerson.setIncome(0D);
                         return 3;
                 }
             case "Login":
@@ -109,11 +112,12 @@ public class AccountController {
 
     public void addFavoriteGenres(String answer) {
         Listener person = (Listener) Database.getData().getAllUsers().getLast();
-        String[] answers = answer.split(",");
+        String[] answers1 = answer.split(" -");
+        String[] answers2 = answers1[1].split(",");
         ArrayList<Genre> result = person.getFavoriteGenres();
         for (int i = 0; i < 4; i++) {
             for (Genre genre : Genre.values()) {
-                if (genre.name().equals(answers[i])) {
+                if (genre.name().equals(answers2[i])) {
                     result.add(genre);
                     break;
                 }
@@ -135,7 +139,7 @@ public class AccountController {
                 AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "GetSuggestions":
-                    AccountView.getAccountView().showResult(getSuggestions((Listener) listener));
+                    AccountView.getAccountView().showResult(getSuggestions(listener));
                     AccountView.getAccountView().showListenerLoginPanel(listener);
                 break;
             case "Artists":
@@ -189,7 +193,7 @@ public class AccountController {
                 result = new StringBuilder("Artists you might be searching for : \r\n");
                 for (UserAccount userAccount : Database.getData().getAllUsers()) {
                     if (userAccount instanceof Artist) {
-                        if (userAccount.getUniqueUserName().contains(answers[1])) {
+                        if (userAccount.getFullName().contains(answers[1])) {
                             result.append(counter++).append("_").append(userAccount.getUniqueUserName()).append(" ");
                         }
                     }
@@ -253,8 +257,13 @@ public class AccountController {
                         Date date1 = new Date(Integer.parseInt(dateInfo1[0]), Integer.parseInt(dateInfo1[1]), Integer.parseInt(dateInfo1[2]));
                         Date date2 = new Date(Integer.parseInt(dateInfo2[0]), Integer.parseInt(dateInfo2[1]), Integer.parseInt(dateInfo2[2]));
                         for (Audio audio : Database.getData().getAllAudios()) {
-                            if (date1.compareTo(audio.getReleaseTime()) <= 0 && date2.compareTo(audio.getReleaseTime()) >= 0) {
-                                result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                            if (audio.getReleaseTime() != null) {
+                                if (date1.getTime() <= audio.getReleaseTime().getTime() && date2.getTime() >= audio.getReleaseTime().getTime()) {
+                                    result.append(counter++).append("_").append(audio.getAudioName()).append(" ");
+                                }
+                            }else {
+                                AccountView.getAccountView().showResult(new StringBuilder("The date is of release time is not recognizable"));
+                                AccountView.getAccountView().showListenerLoginPanel(listener);
                             }
                         }
                         AccountView.getAccountView().showResult(result);
@@ -446,7 +455,7 @@ public class AccountController {
                 break;
             case "GetPremium":
                 switch (answers[1]) {
-                    case "ThirtyDay", "OneEightyDay", "SixtyDay":
+                    case "Day30", "Day60", "Day180":
                         accountShareCheck(listener, answers);
                         break;
                 }
@@ -549,8 +558,8 @@ public class AccountController {
                 }
                 counter = 1;
                 result = new StringBuilder("The list of audios by like ranking : \r\n");
-                for (Audio audio : audios2){
-                    result.append(counter++).append("_").append(audio.getAudioName()).append("(").append(audio.getLikes()).append(")\r\n");
+                for (int i = 0 ; i<audios1.size() ; i++){
+                    result.append(counter++).append("_").append(audios2[i].getAudioName()).append("(").append(audios2[i].getLikes()).append(")\r\n");
                 }
                 AccountView.getAccountView().showResult(result);
                 AccountView.getAccountView().showAdminLoginPanel(admin);
@@ -621,6 +630,13 @@ public class AccountController {
         StringBuilder result;
         int counter;
         switch (answers[0]){
+            case "Logout":
+                AccountView.getAccountView().showMainMenu();
+                break;
+            case "AccountInfo":
+                AccountView.getAccountView().showResult(accountInfo(artist));
+                AccountView.getAccountView().showArtistLoginPanel(artist);
+                break;
             case "Followers":
                 result = new StringBuilder("The artist's followers : ");
                 counter = 1 ;
@@ -634,7 +650,7 @@ public class AccountController {
                 result = new StringBuilder("The artist's audios and their plays count : \r\n");
                 counter = 1;
                 for (Audio audio : Database.getData().getAllAudios()){
-                    if (Objects.equals(audio.getArtistName(), artist.getUniqueUserName())){
+                    if (Objects.equals(audio.getArtistName(), artist.getFullName())){
                         result.append(counter++).append("_").append(audio.getAudioName()).append("(")
                                 .append(audio.getTimesPlayed()).append(")\r\n");
                     }
@@ -654,7 +670,7 @@ public class AccountController {
                 }
                 break;
             case "NewAlbum" :
-                Album newAlbum = new Album(answers[1] , artist.getUniqueUserName());
+                Album newAlbum = new Album(answers[1] , artist.getFullName());
                 if (artist instanceof Singer){
                     ArrayList<Album> backUp = ((Singer) artist).getAlbums();
                     backUp.add(newAlbum);
@@ -675,12 +691,12 @@ public class AccountController {
                                 break;
                             }
                         }
-                        Music newMusic = new Music(answers[2],artist.getUniqueUserName(),musicGenre,answers[5],answers[6],answers[4]);
+                        Music newMusic = new Music(answers[2],artist.getFullName(),musicGenre,answers[5],answers[6],answers[4]);
                         ArrayList<Audio> newAudiosList = Database.getData().getAllAudios();
                         newAudiosList.add(newMusic);
                         Database.getData().setAllAudios(newAudiosList);
                         for(Album album : ((Singer)artist).getAlbums()){
-                            if (album.getUniqueId() == Integer.parseInt(answers[7])){
+                            if (Objects.equals(album.getUniqueId(), answers[7])){
                                 ArrayList<Audio> backUp = album.getAudioList();
                                 backUp.add(newMusic);
                                 album.setAudioList(backUp);
@@ -710,7 +726,7 @@ public class AccountController {
                 }
             default:
                 AccountView.getAccountView().showResult(new StringBuilder("The order is not able to be run please try again"));
-                AccountView.getAccountView().showAdminLoginPanel(artist);
+                AccountView.getAccountView().showArtistLoginPanel(artist);
         }
     }
 

@@ -3,24 +3,24 @@ package model;
 import java.util.ArrayList;
 
 public class Album {
-    private int uniqueId;
+    private String uniqueId;
     private static int idMaker = 1;
     private String albumName;
     private String singerName;
     private ArrayList<Audio> audioList = new ArrayList<>();
 
     public Album(String albumName, String singerName) {
-        this.uniqueId = idMaker;
+        this.uniqueId = singerName+albumName+idMaker;
         this.albumName = albumName;
         this.singerName = singerName;
         idMaker++;
     }
 
-    public int getUniqueId() {
+    public String getUniqueId() {
         return uniqueId;
     }
 
-    public void setUniqueId(int uniqueId) {
+    public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
