@@ -353,4 +353,94 @@ public class ListenerController {
         result += getUserAccount();
         return result;
     }
+
+    public String increaseCredit(String value){
+        ((Listener) getUserAccount()).setAccountCredit( ((Listener) getUserAccount()).getAccountCredit() + Integer.valueOf(value) );
+        return "Account balance is $"+String.valueOf(((Listener) getUserAccount()).getAccountCredit());
+    }
+
+    public String getPremium(String type) {
+        if (type.equals(String.valueOf(PremiumPkg.ONE_MONTH))) {
+            if (((Listener) getUserAccount()).getAccountCredit() < PremiumPkg.ONE_MONTH.getCount())
+                return "Your account balance is insufficient";
+            ((Listener) getUserAccount()).setAccountCredit(((Listener) getUserAccount()).getAccountCredit() - PremiumPkg.ONE_MONTH.getCount());
+            if (getUserAccount() instanceof Premium) {
+                ((Premium) getUserAccount()).setDaysOfSubs(((Premium) getUserAccount()).getDaysOfSubs() + 30);
+                Date date = new Date(((Premium) getUserAccount()).getExpirationDate().getYear(), ((Premium) getUserAccount()).getExpirationDate().getMonth(), ((Premium) getUserAccount()).getExpirationDate().getDate() + 30);
+                ((Premium) getUserAccount()).setExpirationDate(date);
+                return "Your account has been renewed";
+            }
+            else {
+                Date now = new Date();
+                Date date = new Date(now.getYear(), now.getMonth(), now.getDate() + 30);
+                Premium premium = new Premium(getUserAccount().getUserName(), getUserAccount().getPassword(), getUserAccount().getName(), getUserAccount().getEmail(), getUserAccount().getPhoneNumber(), getUserAccount().getDateOfBirth(), ((Listener) getUserAccount()).getAccountCredit(), date, 30);
+                premium.setCountNumberPlaylistP(((Free) getUserAccount()).getCountNumberPlaylist());
+                premium.setPlaylists(((Free) getUserAccount()).getPlaylists());
+                premium.setNumberPlays(((Free) getUserAccount()).getNumberPlays());
+                premium.setFavoriteGener(((Free) getUserAccount()).getFavoriteGener());
+                premium.setFollowings(((Free) getUserAccount()).getFollowings());
+                Database.getDataBase().getUserAccounts().remove(getUserAccount());
+                Database.getDataBase().getUserAccounts().add(premium);
+                setUserAccount(premium);
+                return "Your account has become premium";
+            }
+        }
+
+        else if (type.equals(String.valueOf(PremiumPkg.TWO_MONTH))) {
+            if (((Listener) getUserAccount()).getAccountCredit() < PremiumPkg.TWO_MONTH.getCount())
+                return "Your account balance is insufficient";
+            ((Listener) getUserAccount()).setAccountCredit(((Listener) getUserAccount()).getAccountCredit() - PremiumPkg.TWO_MONTH.getCount());
+            if (getUserAccount() instanceof Premium) {
+                ((Premium) getUserAccount()).setDaysOfSubs(((Premium) getUserAccount()).getDaysOfSubs() + 60);
+                Date date = new Date(((Premium) getUserAccount()).getExpirationDate().getYear(), ((Premium) getUserAccount()).getExpirationDate().getMonth(), ((Premium) getUserAccount()).getExpirationDate().getDate() + 60);
+                ((Premium) getUserAccount()).setExpirationDate(date);
+                return "Your account has been renewed";
+            }
+            else {
+                Date now = new Date();
+                Date date = new Date(now.getYear(), now.getMonth(), now.getDate() + 60);
+                Premium premium = new Premium(getUserAccount().getUserName(), getUserAccount().getPassword(), getUserAccount().getName(), getUserAccount().getEmail(), getUserAccount().getPhoneNumber(), getUserAccount().getDateOfBirth(), ((Listener) getUserAccount()).getAccountCredit(), date, 60);
+                premium.setCountNumberPlaylistP(((Free) getUserAccount()).getCountNumberPlaylist());
+                premium.setPlaylists(((Free) getUserAccount()).getPlaylists());
+                premium.setNumberPlays(((Free) getUserAccount()).getNumberPlays());
+                premium.setFavoriteGener(((Free) getUserAccount()).getFavoriteGener());
+                premium.setFollowings(((Free) getUserAccount()).getFollowings());
+                Database.getDataBase().getUserAccounts().remove(getUserAccount());
+                Database.getDataBase().getUserAccounts().add(premium);
+                setUserAccount(premium);
+                return "Your account has become premium";
+            }
+        }
+
+        else if (type.equals(String.valueOf(PremiumPkg.SIX_MONTH))) {
+            if (((Listener) getUserAccount()).getAccountCredit() < PremiumPkg.SIX_MONTH.getCount())
+                return "Your account balance is insufficient";
+            ((Listener) getUserAccount()).setAccountCredit(((Listener) getUserAccount()).getAccountCredit() - PremiumPkg.SIX_MONTH.getCount());
+            if (getUserAccount() instanceof Premium) {
+                ((Premium) getUserAccount()).setDaysOfSubs(((Premium) getUserAccount()).getDaysOfSubs() + 180);
+                Date date = new Date(((Premium) getUserAccount()).getExpirationDate().getYear(), ((Premium) getUserAccount()).getExpirationDate().getMonth(), ((Premium) getUserAccount()).getExpirationDate().getDate() + 180);
+                ((Premium) getUserAccount()).setExpirationDate(date);
+                return "Your account has been renewed";
+            }
+            else {
+                Date now = new Date();
+                Date date = new Date(now.getYear(), now.getMonth(), now.getDate() + 180);
+                Premium premium = new Premium(getUserAccount().getUserName(), getUserAccount().getPassword(), getUserAccount().getName(), getUserAccount().getEmail(), getUserAccount().getPhoneNumber(), getUserAccount().getDateOfBirth(), ((Listener) getUserAccount()).getAccountCredit(), date, 180);
+                premium.setCountNumberPlaylistP(((Free) getUserAccount()).getCountNumberPlaylist());
+                premium.setPlaylists(((Free) getUserAccount()).getPlaylists());
+                premium.setNumberPlays(((Free) getUserAccount()).getNumberPlays());
+                premium.setFavoriteGener(((Free) getUserAccount()).getFavoriteGener());
+                premium.setFollowings(((Free) getUserAccount()).getFollowings());
+                Database.getDataBase().getUserAccounts().remove(getUserAccount());
+                Database.getDataBase().getUserAccounts().add(premium);
+                setUserAccount(premium);
+                return "Your account has become premium";
+            }
+        }
+
+        else
+            return "The imported package is not valid";
+    }
+
+    
 }

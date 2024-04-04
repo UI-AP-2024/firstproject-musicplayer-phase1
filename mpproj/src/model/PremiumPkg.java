@@ -6,4 +6,8 @@ public enum PremiumPkg {
     PremiumPkg(int count) {
         this.count = count;
     }
+
+    public int getCount() {
+        return count;
+    }
 }
