@@ -15,8 +15,8 @@ public class SingerView {
     {
         singerController = new SingerController();
     }
-    public void getInput() {
-        Scanner jin = new Scanner(System.in);
+    public void getInput(Scanner jin) {
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]) {
@@ -33,17 +33,20 @@ public class SingerView {
                 makeNewAlbum(inputArray[1]);
                 break;
             case "Publish":
-                publishAudio(inputArray[2], Genre.valueOf(inputArray[3]),
+                publishAudio(inputArray[2], Genre.fromString(inputArray[3]),
                         inputArray[4], inputArray[5], inputArray[6],
                         Integer.parseInt(inputArray[7])); // inputArray[1] is useless since we already know we are in singer controller
                 break;
             case "Logout":
                 singerController.logout();
                 return;
+            case "AccountInfo":
+                System.out.println(singerController.accountInfo());
+                break;
             default:
                 System.out.println("Invalid command");
         }
-        getInput();
+        getInput(jin);
     }
     private void publishAudio(String title, Genre genre, String lyrics, String link, String cover, int albumId)
     {

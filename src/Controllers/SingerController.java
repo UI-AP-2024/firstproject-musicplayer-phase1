@@ -36,6 +36,7 @@ public class SingerController extends ArtistController {
         Song song = new Song(title, this.getArtistModel().getName(), 0, 0, LocalDate.now(), genre,
                 link, cover, lyrics);
         selectedAlbumSongs.add(song);
+        this.getDatabase().getAudios().add(song);
         return "song added to the album successfully";
     }
 
@@ -45,4 +46,5 @@ public class SingerController extends ArtistController {
         this.getArtistModel().setIncome(0.4 * playedCount);
         return this.getArtistModel().getIncome();
     }
+
 }

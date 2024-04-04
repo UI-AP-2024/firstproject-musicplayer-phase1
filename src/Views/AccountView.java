@@ -19,9 +19,8 @@ public class AccountView {
     {
         accountController = AccountController.getUserController();
     }
-    public void getInput()
+    public void getInput(Scanner jin)
     {
-        Scanner jin = new Scanner(System.in);
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0])
@@ -31,32 +30,32 @@ public class AccountView {
                 {
                     System.out.println(accountController.signUp(inputArray[1],
                             inputArray[2], inputArray[3], inputArray[4], inputArray[5],
-                            inputArray[6], LocalDate.parse(inputArray[7]), null));
+                            inputArray[6], LocalDate.parse(inputArray[7]), null, jin));
                 }
                 else if(inputArray[1].equals("S") || inputArray[1].equals("P"))
                 {
                     System.out.println(accountController.signUp(inputArray[1],
                             inputArray[2], inputArray[3], inputArray[4], inputArray[5],
-                            inputArray[6], LocalDate.parse(inputArray[7]), inputArray[8]));
+                            inputArray[6], LocalDate.parse(inputArray[7]), inputArray[8], jin));
                 }
                 break;
             case "Login":
-                System.out.println(accountController.login(inputArray[1], inputArray[2]));
+                System.out.println(accountController.login(inputArray[1], inputArray[2], jin));
                 break;
             default:
                 System.out.println("Invalid command");
         }
-        getInput();
+        getInput(jin);
     }
 
-    public ArrayList<Genre> getGenres()
+    public ArrayList<Genre> getGenres(Scanner jin)
     {
         System.out.println("Enter your favourite genres");
         for(Genre genre : Genre.values())
         {
             System.out.println(genre.getAsString());
         }
-        Scanner jin = new Scanner(System.in);
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -"); // spliting command name and genres
         String[] genreArray = inputArray[1].split(" ,");

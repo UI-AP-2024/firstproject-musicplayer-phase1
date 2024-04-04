@@ -18,9 +18,9 @@ public class PremiumListenerView {
     {
         premiumListenerController = new PremiumListenerController();
     }
-    public void getInput()
+    public void getInput(Scanner jin)
     {
-        Scanner jin = new Scanner(System.in);
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]){
@@ -58,13 +58,14 @@ public class PremiumListenerView {
                         filter(inputArray[2], null, null, null);
                         break;
                     case "G":
-                        filter(null, Genre.valueOf(inputArray[2]), null, null);
+                        filter(null, Genre.fromString(inputArray[2]), null, null);
                         break;
                     case "D":
                         filter(null, null, LocalDate.parse(inputArray[2], DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                                 LocalDate.parse(inputArray[3], DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                         break;
                 }
+                break;
             case "Add":
                 addToPlaylist(inputArray[1], Integer.parseInt(inputArray[2]));
                 break;
@@ -101,10 +102,13 @@ public class PremiumListenerView {
             case "Logout":
                 premiumListenerController.logout();
                 return;
+            case "AccountInfo":
+                System.out.println(premiumListenerController.accountInfo());
+                break;
             default:
                 System.out.println("Invalid command");
         }
-        getInput();
+        getInput(jin);
     }
     private void getPremium(PremiumPlan plan)
     {
@@ -154,7 +158,7 @@ public class PremiumListenerView {
         if(playlists.size() == 0) System.out.println("You have no playlists");
         for(Playlist tmpPlaylist : playlists)
         {
-            tmpPlaylist.toString();
+            System.out.println(tmpPlaylist.toString());
         }
     }
     private void getLyric(int audioId)

@@ -12,9 +12,9 @@ public class AdminView {
     {
         adminController = AdminController.getAdminController();
     }
-    public void getInput()
+    public void getInput(Scanner jin)
     {
-        Scanner jin = new Scanner(System.in);
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]){
@@ -39,10 +39,13 @@ public class AdminView {
             case "Logout":
                 adminController.logout();
                 return;
+            case "AccountInfo":
+                System.out.println(adminController.accountInfo());
+                break;
             default:
                 System.out.println("Command not found");
         }
-        getInput();
+        getInput(jin);
     }
     private void showReports()
     {

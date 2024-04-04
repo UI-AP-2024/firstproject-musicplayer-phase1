@@ -15,6 +15,7 @@ public class PodcasterController extends ArtistController{
         Podcast podcast = new Podcast(title, this.getArtistModel().getName(), 0, 0, LocalDate.now(), genre, link, cover, caption);
         ArrayList<Podcast> podcasts = podcasterModel.getPodcasts();
         podcasts.add(podcast);
+        this.getDatabase().getAudios().add(podcast);
     }
 
     public double calculateIncome()

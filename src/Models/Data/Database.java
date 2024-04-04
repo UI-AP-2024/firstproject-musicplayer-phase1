@@ -2,8 +2,10 @@ package Models.Data;
 
 import Models.Audio.Audio;
 import Models.Report;
+import Models.User.Admin;
 import Models.User.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database {
@@ -90,6 +92,7 @@ public class Database {
 
     public Database() {
         users = new ArrayList<User>();
+        users.add(Admin.getInstance("admin", "admin", "admin", "admin@admin.admin", "09999999999", LocalDate.now()));
         reports = new ArrayList<Report>();
         audios = new ArrayList<Audio>();
     }

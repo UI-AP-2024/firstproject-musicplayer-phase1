@@ -18,9 +18,9 @@ public class NormalListenerView {
     {
         normalListenerController = new NormalListenerController();
     }
-    public void getInput()
+    public void getInput(Scanner jin)
     {
-        Scanner jin = new Scanner(System.in);
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]){
@@ -58,13 +58,14 @@ public class NormalListenerView {
                         filter(inputArray[2], null, null, null);
                         break;
                     case "G":
-                        filter(null, Genre.valueOf(inputArray[2]), null, null);
+                        filter(null, Genre.fromString(inputArray[2]), null, null);
                         break;
                     case "D":
                         filter(null, null, LocalDate.parse(inputArray[2], DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                                 LocalDate.parse(inputArray[3], DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                         break;
                 }
+                break;
             case "Add":
                 addToPlaylist(inputArray[1], Integer.parseInt(inputArray[2]));
                 break;
@@ -77,7 +78,7 @@ public class NormalListenerView {
             case "Play":
                 play(Integer.parseInt(inputArray[1]));
                 break;
-            case "Audio":
+            case "Like":
                 like(Integer.parseInt(inputArray[1]));
                 break;
             case "Lyric":
@@ -101,10 +102,13 @@ public class NormalListenerView {
             case "Logout":
                 normalListenerController.logout();
                 return;
+            case "AccountInfo":
+                System.out.println(normalListenerController.accountInfo());
+                break;
             default:
                 System.out.println("Invalid command");
         }
-        getInput();
+        getInput(jin);
     }
     private void getPremium(PremiumPlan plan)
     {
@@ -158,7 +162,7 @@ public class NormalListenerView {
         if(playlists.size() == 0) System.out.println("You have no playlists");
         for(Playlist tmpPlaylist : playlists)
         {
-            tmpPlaylist.toString();
+            System.out.println(tmpPlaylist.toString());
         }
     }
     private void addToPlaylist(String playlistName, int audioId)

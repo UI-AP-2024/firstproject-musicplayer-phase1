@@ -14,8 +14,8 @@ public class PodcasterView {
         podcasterController = new PodcasterController();
     }
 
-    public void getInput() {
-        Scanner jin = new Scanner(System.in);
+    public void getInput(Scanner jin) {
+
         String input = jin.nextLine();
         String[] inputArray = input.split(" -");
         switch (inputArray[0]) {
@@ -29,7 +29,7 @@ public class PodcasterView {
                 calculateEarnings();
                 break;
             case "Publish":
-                publishAudio(inputArray[2], Genre.valueOf(inputArray[3]),
+                publishAudio(inputArray[2], Genre.fromString(inputArray[3]),
                         inputArray[4], inputArray[5], inputArray[6]);
                 // inputArray[1] is useless since we already know we are in podcaster controller
                 // inputArray[7] is also useless since we don't need albumId
@@ -38,10 +38,13 @@ public class PodcasterView {
             case "Logout":
                 podcasterController.logout();
                 return;
+            case "AccountInfo":
+                System.out.println(podcasterController.accountInfo());
+                break;
             default:
                 System.out.println("Invalid command");
         }
-        getInput();
+        getInput(jin);
     }
 
     private void publishAudio(String title, Genre genre, String caption, String link, String cover)

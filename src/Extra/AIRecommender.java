@@ -52,9 +52,12 @@ public class AIRecommender {
         // A.B / ||A||B||
         // we should calculate the above formula for each dimension and then sum them up
         //
+        if(listener1.equals(listener2)) return 0.1; // reducing the chance of suggesting songs that user have already heard
+        if(usersRatings.get(listener1) == null) usersRatings.put(listener1, new HashMap<>());
+        if(usersRatings.get(listener2) == null) usersRatings.put(listener2, new HashMap<>());
         Map<Audio, Double> user1Ratings = usersRatings.get(listener1);
         Map<Audio, Double> user2Ratings = usersRatings.get(listener2);
-        if(user1Ratings.size() == 0 || user2Ratings.size() == 0) return 0; // since on of them is a zero-vector, the formula gives us 0
+        if(user1Ratings.size() == 0 || user2Ratings.size() == 0) return 0; // since one of them is a zero-vector, the formula gives us 0
         double avgRating1 = 0.0;
         double avgRating2 = 0.0;
         int cnt1 = 0;
@@ -96,19 +99,22 @@ public class AIRecommender {
         {
             if(tmpUser instanceof Listener)
             {
-                Listener otherListener = (Listener) tmpUser;
-                double similarity = computeSimilarity(listener, otherListener);
-                Map<Audio, Double> otherListenerRatings = usersRatings.get(otherListener);
 
-                for(Audio tmpAudio : otherListenerRatings.keySet())
-                {
-                    if(!recommendedScores.containsKey(tmpAudio))
-                    {
-                        recommendedScores.put(tmpAudio, 0.0);
+                Listener otherListener = (Listener) tmpUser;
+                //if(!otherListener.equals(listener))
+                //{
+                    double similarity = computeSimilarity(listener, otherListener);
+
+                    Map<Audio, Double> otherListenerRatings = usersRatings.get(otherListener);
+
+                    for (Audio tmpAudio : otherListenerRatings.keySet()) {
+                        if (!recommendedScores.containsKey(tmpAudio)) {
+                            recommendedScores.put(tmpAudio, 0.0);
+                        }
+                        recommendedScores.put(tmpAudio, recommendedScores.get(tmpAudio) +
+                                otherListenerRatings.get(tmpAudio) * similarity);
                     }
-                    recommendedScores.put(tmpAudio, recommendedScores.get(tmpAudio) +
-                            otherListenerRatings.get(tmpAudio) * similarity);
-                }
+                //}
             }
         }
         ArrayList<Map.Entry<Audio, Double>> scoresArray = new ArrayList<>(recommendedScores.entrySet());
@@ -118,7 +124,7 @@ public class AIRecommender {
         int indx = 0;
         for(Map.Entry<Audio, Double> tmpEntry : scoresArray)
         {
-            if(indx == n) break;
+            if((indx++) == n) break;
             finalResult.add(tmpEntry.getKey());
         }
         return finalResult;

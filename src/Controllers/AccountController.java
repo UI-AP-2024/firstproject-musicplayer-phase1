@@ -7,6 +7,7 @@ import Views.*;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class AccountController {
     // Made this class follow the Singleton pattern cuz we only need one instance
@@ -35,7 +36,7 @@ public class AccountController {
         return false;
     }
 
-    public String signUp(String userType, String userName, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth, String bio)
+    public String signUp(String userType, String userName, String password, String name, String email, String phoneNumber, LocalDate dateOfBirth, String bio, Scanner jin)
     {
         for(User tmpUser : database.getUsers())
         {
@@ -51,7 +52,7 @@ public class AccountController {
         switch (userType)
         {
             case "L":
-                ArrayList<Genre> genres = AccountView.getUserView().getGenres();
+                ArrayList<Genre> genres = AccountView.getUserView().getGenres(jin);
                 database.addUser(new NormalListener(userName, password, name, email, phoneNumber, dateOfBirth, 50, null, genres));
                 break;
             case "S":
@@ -79,25 +80,29 @@ public class AccountController {
         return switchResult;
     }
 
-    public String login(String userName, String password)
+    public String login(String userName, String password, Scanner jin)
     {
+        boolean flg = false;
         for(User tmpUser : database.getUsers())
         {
             if(tmpUser.getUsername().equals(userName))
             {
                 if(tmpUser.getPassword().equals(password))
                 {
+                    flg = true;
                     database.setLogedInUser(tmpUser);
-                    if(tmpUser instanceof NormalListener) new NormalListenerView().getInput();
-                    else if(tmpUser instanceof PremiumListener) new PremiumListenerView().getInput();
-                    else if(tmpUser instanceof Singer) new SingerView().getInput();
-                    else if(tmpUser instanceof Podcaster) new PodcasterView().getInput();
-                    else if(tmpUser instanceof Admin) new AdminView().getInput();
+                    if(tmpUser instanceof NormalListener) new NormalListenerView().getInput(jin);
+                    else if(tmpUser instanceof PremiumListener) new PremiumListenerView().getInput(jin);
+                    else if(tmpUser instanceof Singer) new SingerView().getInput(jin);
+                    else if(tmpUser instanceof Podcaster) new PodcasterView().getInput(jin);
+                    else if(tmpUser instanceof Admin) new AdminView().getInput(jin);
+                    break;
                 }
-                return "Wrong password";
+                else return "Wrong password";
             }
         }
-        return "Wrong username";
+        if(!flg) return "Wrong username";
+        return "";
     }
 
     public String showAccountInfo()

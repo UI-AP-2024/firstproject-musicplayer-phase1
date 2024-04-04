@@ -9,4 +9,8 @@ public abstract class UserController {
     {
         Database.getInstance().setLogedInUser(null);
     }
+    public String accountInfo()
+    {
+        return Database.getInstance().getLogedInUser().toString();
+    }
 }

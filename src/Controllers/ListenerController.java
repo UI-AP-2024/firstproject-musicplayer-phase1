@@ -82,7 +82,7 @@ public abstract class ListenerController extends UserController{
         ArrayList<Audio> result = database.getAudios();
         if(artistName != null)
         {
-            result = result.stream()
+           result = result.stream()
                     .filter(aud -> aud.getArtistName().equals(artistName))
                     .collect(Collectors.toCollection(ArrayList::new));
         }
@@ -166,8 +166,11 @@ public abstract class ListenerController extends UserController{
         for(User tmpUser : database.getUsers()) if(tmpUser instanceof Artist)
         {
             Artist tmpArtist = (Artist) tmpUser;
-            if(tmpArtist.getUsername().equals(userName)) selectedArtist = tmpArtist;
-            break;
+            if(tmpArtist.getUsername().equals(userName))
+            {
+                selectedArtist = tmpArtist;
+                break;
+            }
         }
         return selectedArtist;
     }
