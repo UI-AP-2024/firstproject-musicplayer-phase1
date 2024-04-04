@@ -122,4 +122,10 @@ public class artistController  {
         Database.getDatabase().getAllAudiosList().add(music);
     }
 
+    ///AccountInfo
+    public String AccountInfo()
+    {
+        return artistM.toString();
+    }
+
 }

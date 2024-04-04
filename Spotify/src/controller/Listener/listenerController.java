@@ -15,6 +15,8 @@ import model.UserAccounts.Listener.Premium;
 import model.UserAccounts.userAccount;
 import sun.font.TrueTypeFont;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -282,6 +284,35 @@ public class listenerController {
 
     /// GetSuggestion
     public String getSuggestion(int n){
+        Audio[] suggestions = new Audio[n];
+        int i=0;
+        Map<Audio,Integer> map = new HashMap<>();
+        map=listenerM.getPlayFiles().entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())
+        ).collect(LinkedHashMap::new,(map1,entry)->map1.put(entry.getKey(),entry.getValue()),Map::putAll);
+        for (Audio audio: map.keySet()){
+            if (i >= n-1)break;
+            for (Artist artist:listenerM.getFollowings()){
+                if (artist.equals(audio.getArtist())){
+                    suggestions[i++] = audio;
+                }
+            }
+        }
+        if (i<n-1){
+            for (Audio audio : map.keySet()){
+                if (i>=n-1) break;
+                suggestions[i++]= audio;
+            }
+        }
+        if (i<n-1){
+            for (Audio audio :Database.getDatabase().getAllAudiosList()){
+                if (i>=n-1) break;
+                for (Artist artist:listenerM.getFollowings()){
+                    if (artist.equals(audio.getArtist())){
+                        suggestions[i++] = audio;
+                    }
+                }
+            }
+        }
         StringBuilder context= new StringBuilder();
         return context.toString();
     }
@@ -324,10 +355,35 @@ public class listenerController {
         return context.toString();
     }
 
-    /// filter todo
-//    public String filter(String by,Object it){
-//
-//    }
+
+    public String filter(Object first,Object last){
+        StringBuilder context = new StringBuilder();
+        List<Audio> audioList = Database.getDatabase().getAllAudiosList();
+        if (last != null){
+            audioList = audioList.stream().filter(obj-> obj.getDateOfRelease().after((Date) first)
+                    && obj.getDateOfRelease().before((Date) last)).collect(Collectors.toList());
+        }
+        else if (first instanceof String){
+            audioList = audioList.stream().filter(obj-> obj.getArtistName().equals((String) first)
+            ).collect(Collectors.toList());
+        }
+        else if(first instanceof Genre){
+            audioList = audioList.stream().filter(obj-> obj.getGenre().equals((Genre) first)
+            ).collect(Collectors.toList());
+        }
+        for (Audio audio:audioList){
+            context.append(audio.toString());
+            context.append("\n");
+        }
+        return context.toString();
+    }
+
+
+    ///AccountInfo
+    public String AccountInfo()
+    {
+        return listenerM.toString();
+    }
 
 
 

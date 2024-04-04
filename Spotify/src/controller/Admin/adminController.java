@@ -117,4 +117,10 @@ public class adminController {
         }
         return context.toString();
     }
+
+    ///AccountInfo
+    public String AccountInfo()
+    {
+        return adminM.toString();
+    }
 }
