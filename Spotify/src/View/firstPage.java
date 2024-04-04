@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class firstPage {
-    private firstPage first;
+    private static firstPage first;
 
     private firstPage(){
     }
-    public firstPage getFirst(){
+    public static firstPage getFirst(){
         if (first==null){
             first = new firstPage();
         }
@@ -32,8 +32,8 @@ public class firstPage {
                 ok=listenerController.getListenerC().registerListener(commands[2],commands[3],
                         commands[4],commands[5],commands[6],date);
                 if (ok==3){
-                    //todo;
                     System.out.println("Registering was successful!!!");
+                    listenerView.getListenerV().showGenres();
                 }
             }
             else if (commands[1].equals("P") || commands[1].equals("S")){

@@ -89,15 +89,15 @@ public class listenerController {
 
 
     /// Create playlist
-    public boolean createPlaylist(String name) {
+    public String createPlaylist(String name) {
         if (listenerM instanceof Free) {
             if (listenerM.getPlaylists().size() >= 3) {
-                return false;
+                return "Error! you can not create mort than 3 playlist; because you are a free listener";
             }
         }
         Playlist playlist = new Playlist(name, listenerM.getUserId(), new ArrayList<Audio>());
         listenerM.getPlaylists().add(playlist);
-        return true;
+        return "Your playlist was created";
     }
 
     // Add audio to playlist
@@ -143,12 +143,14 @@ public class listenerController {
     }
 
     /// like audio
-    public void likeAudio(int audioId) {
+    public String likeAudio(int audioId) {
         for (Audio audio : Database.getDatabase().getAllAudiosList()) {
             if (audio.getAudioId() == audioId) {
                 audio.setNumberOfLikes(audio.getNumberOfLikes() + 1);
+                return "You liked this audio";
             }
         }
+        return "Audio not found!";
     }
 
     /// show lyric
@@ -166,15 +168,17 @@ public class listenerController {
     }
 
     /// follow artist
-    public void followArtist(String userId) {
+    public String followArtist(String userId) {
         for (userAccount user : Database.getDatabase().getAllUsersList()) {
             if (user.getUserId().equals(userId)) {
                 if (user instanceof Artist) {
                     ((Artist) user).getFollowersList().add(listenerM);
                     listenerM.getFollowings().add((Artist) user);
+                    return "following was successful.";
                 }
             }
         }
+        return "user not found or not an artist";
     }
 
     //// show followings
@@ -192,22 +196,27 @@ public class listenerController {
 
     /// report artist
 
-    public void reportArtist(String userId, String explanation) {
+    public String reportArtist(String userId, String explanation) {
         for (userAccount user : Database.getDatabase().getAllUsersList()) {
             if (user instanceof Artist && user.getUserId().equals(userId)) {
                 Database.getDatabase().getReportsList().add(new Report(listenerM, (Artist) user, explanation));
+                return "report was send";
             }
         }
+        return "user not found!";
     }
 
     /// increase credit
-    public void increaseCredit(double value) {
+    public String increaseCredit(double value) {
         listenerM.setCredit(listenerM.getCredit() + value);
+        String res="your credit upgraded to : ";
+        res= res+ listenerM.getCredit();
+        return res;
     }
 
     /// buy premium account:
 
-    public void getPremium(PremiumSubscriptionPackages type) {
+    public String getPremium(PremiumSubscriptionPackages type) {
         if (listenerM.getCredit() >= type.getValue()) {
             Premium premium = (Premium) listenerM;
             if (type == PremiumSubscriptionPackages.THIRTYDAYS) {
@@ -220,12 +229,14 @@ public class listenerController {
             Database.getDatabase().getAllUsersList().remove(listenerM);
             listenerM = premium;
             Database.getDatabase().getAllUsersList().add(listenerM);
+            return "You now are a premium listener;";
         }
+        return "Your credit is not enough!";
     }
 
 
     //// show playlists
-    public String showPlaylist() {
+    public String showPlaylists() {
         StringBuilder context = new StringBuilder();
         for (Playlist playlist : listenerM.getPlaylists()) {
             context.append(playlist.toString());
