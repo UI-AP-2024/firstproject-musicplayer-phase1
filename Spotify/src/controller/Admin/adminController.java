@@ -37,16 +37,9 @@ public class adminController {
 
 
     /// Login admin
-    public boolean loginListener(String userId, String password) {
-        for (model.UserAccounts.userAccount userAccount : Database.getDatabase().getAllUsersList()) {
-            if (userAccount.getUserId().equals(userId) && userAccount.getPassword().equals(password)) {
-                if (userAccount instanceof Admin) {
-                    adminM = (Admin) userAccount;
-                    return true;
-                }
-            }
-        }
-        return false;
+    public void loginAdmin(userAccount userAccount) {
+
+        adminM = (Admin) userAccount;
     }
 
     //// favorites Statistics
@@ -62,9 +55,9 @@ public class adminController {
     }
 
     /// Show audios
-    public String showAudios(){
+    public String showAudios() {
         StringBuilder context = new StringBuilder();
-        for (Audio audio:Database.getDatabase().getAllAudiosList()){
+        for (Audio audio : Database.getDatabase().getAllAudiosList()) {
             context.append(audio.toString());
             context.append("\n");
         }
@@ -72,10 +65,10 @@ public class adminController {
     }
 
     // Show one select audio
-    public String showSelectAudio(int audioId){
+    public String showSelectAudio(int audioId) {
         StringBuilder context = new StringBuilder();
-        for (Audio audio:Database.getDatabase().getAllAudiosList()){
-            if (audio.getAudioId()==audioId){
+        for (Audio audio : Database.getDatabase().getAllAudiosList()) {
+            if (audio.getAudioId() == audioId) {
                 context.append(audio.toString());
             }
         }
@@ -83,11 +76,11 @@ public class adminController {
     }
 
     /// Show Artists
-    public String showArtists(){
+    public String showArtists() {
         StringBuilder context = new StringBuilder();
-        for (userAccount user :Database.getDatabase().getAllUsersList()){
-            if (user instanceof Artist){
-                context.append(((Artist)user).toString());
+        for (userAccount user : Database.getDatabase().getAllUsersList()) {
+            if (user instanceof Artist) {
+                context.append(((Artist) user).toString());
                 context.append("\n");
             }
         }
@@ -95,12 +88,12 @@ public class adminController {
     }
 
     /// Show one select Artist
-    public String showSelectArtist(String userId){
+    public String showSelectArtist(String userId) {
         StringBuilder context = new StringBuilder();
-        for (userAccount user :Database.getDatabase().getAllUsersList()){
-            if (user instanceof Artist){
-                if (user.getUserId().equals(userId)){
-                    context.append(((Artist)user).toString());
+        for (userAccount user : Database.getDatabase().getAllUsersList()) {
+            if (user instanceof Artist) {
+                if (user.getUserId().equals(userId)) {
+                    context.append(((Artist) user).toString());
                     return context.toString();
                 }
             }
@@ -109,9 +102,9 @@ public class adminController {
     }
 
     //Show Reports
-    public String showReports(){
+    public String showReports() {
         StringBuilder context = new StringBuilder();
-        for (Report report:Database.getDatabase().getReportsList()){
+        for (Report report : Database.getDatabase().getReportsList()) {
             context.append(report.toString());
             context.append("\n");
         }
@@ -119,8 +112,7 @@ public class adminController {
     }
 
     ///AccountInfo
-    public String AccountInfo()
-    {
+    public String AccountInfo() {
         return adminM.toString();
     }
 }
