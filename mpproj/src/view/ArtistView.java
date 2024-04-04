@@ -29,28 +29,31 @@ public class ArtistView {
         String[] strings = string.split(" -");
         switch (strings[0]) {
             case "Followers" :
-                ArtistController.getArtistController().showFollowers();
+                System.out.println(ArtistController.getArtistController().showFollowers());
                 methods();
             case "ViewStatistics" :
-                ArtistController.getArtistController().viewsStatistics();
+                System.out.println(ArtistController.getArtistController().viewsStatistics());
                 methods();
             case "CalculateEarnings" :
-                ArtistController.getArtistController().calculateEarnings();
+                System.out.println(ArtistController.getArtistController().calculateEarnings());
                 methods();
             case "NewAlbum" :
-                ArtistController.getArtistController().newAlbum(strings[1]);
+                System.out.println(ArtistController.getArtistController().newAlbum(strings[1]));
+                methods();
+            case "AccountInfo" :
+                System.out.println(ArtistController.getArtistController().showAccountInfo());
                 methods();
             case "Publish" :
                 switch (strings[1]) {
                     case "M" :
-                        ArtistController.getArtistController().publishMusic(strings[2], strings[3], strings[4], strings[5], strings[6], Integer.parseInt(strings[7]));
+                        System.out.println(ArtistController.getArtistController().publishMusic(strings[2], strings[3], strings[4], strings[5], strings[6], Integer.parseInt(strings[7])));
                         methods();
                     case "P" :
-                        ArtistController.getArtistController().publishPodcast(strings[2], strings[3], strings[4], strings[5], strings[6]);
+                        System.out.println(ArtistController.getArtistController().publishPodcast(strings[2], strings[3], strings[4], strings[5], strings[6]));
                         methods();
                 }
             case "Logout" :
-                ArtistController.getArtistController().setArtist(null);
+                System.out.println("Logged out");
                 SelectUserView.getSelectUserView().signUpLogInOut();
             default :
                 System.out.println("This method is not available for you!!!");

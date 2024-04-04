@@ -29,54 +29,58 @@ public class ListenerView {
         String[] strings = string.split(" -");
         switch (strings[0]) {
             case "Artists":
-                ListenerController.getListenerController().showArtists();
+                System.out.println(ListenerController.getListenerController().showArtists());
                 methods();
             case "Artist" :
-                ListenerController.getListenerController().showArtist(strings[1]);
+                System.out.println(ListenerController.getListenerController().showArtist(strings[1]));
                 methods();
             case "Follow" :
-                ListenerController.getListenerController().followArtist(strings[1]);
+                System.out.println(ListenerController.getListenerController().followArtist(strings[1]));
                 methods();
             case "Search" :
-                ListenerController.getListenerController().searchAudioOrArtist(strings[1]);
+                System.out.println(ListenerController.getListenerController().searchAudioOrArtist(strings[1]));
                 methods();
             case "Sort" :
-                ListenerController.getListenerController().sortAudios(strings[1]);
+                System.out.println(ListenerController.getListenerController().sortAudios(strings[1]));
                 methods();
             case "Filter" :
-                ListenerController.getListenerController().filterAudios(strings[1], strings[2]);
+                System.out.println(ListenerController.getListenerController().filterAudios(strings[1], strings[2]));
                 methods();
             case "Add" :
-                ListenerController.getListenerController().addAudioToPlaylist(strings[1], Integer.parseInt(strings[2]));
+                System.out.println(ListenerController.getListenerController().addAudioToPlaylist(strings[1], Integer.parseInt(strings[2])));
                 methods();
             case "ShowPlaylists" :
-                ListenerController.getListenerController().showPlaylists();
+                System.out.println(ListenerController.getListenerController().showPlaylists());
                 methods();
             case "SelectPlaylist" :
-                ListenerController.getListenerController().showPlaylist(strings[1]);
+                System.out.println(ListenerController.getListenerController().showPlaylist(strings[1]));
                 methods();
             case "Play" :
-                ListenerController.getListenerController().playAudio(Integer.parseInt(strings[1]));
+                System.out.println(ListenerController.getListenerController().playAudio(Integer.parseInt(strings[1])));
                 methods();
             case "Like" :
-                ListenerController.getListenerController().likeAudio(Integer.parseInt(strings[1]));
+                System.out.println(ListenerController.getListenerController().likeAudio(Integer.parseInt(strings[1])));
+                methods();
+            case "AccountInfo" :
+                System.out.println(ListenerController.getListenerController().showAccountInfo());
                 methods();
             case "Lyric" :
-                ListenerController.getListenerController().showLyrics(Integer.parseInt(strings[1]));
+                System.out.println(ListenerController.getListenerController().showLyrics(Integer.parseInt(strings[1])));
                 methods();
             case "NewPlaylist" :
-                ListenerController.getListenerController().newPlaylist(strings[1]);
+                System.out.println(ListenerController.getListenerController().newPlaylist(strings[1]));
                 methods();
             case "Followings" :
-                ListenerController.getListenerController().showFollowings();
+                System.out.println(ListenerController.getListenerController().showFollowings());
                 methods();
             case "Report" :
-                ListenerController.getListenerController().report(strings[1], strings[2]);
+                System.out.println(ListenerController.getListenerController().report(strings[1], strings[2]));
                 methods();
             case "IncreaseCredit" :
-                ListenerController.getListenerController().increaseCredit(Double.parseDouble(strings[1]));
+                System.out.println(ListenerController.getListenerController().increaseCredit(Double.parseDouble(strings[1])));
                 methods();
             case "Logout" :
+                System.out.println("Logged out");
                 SelectUserView.getSelectUserView().signUpLogInOut();
             default :
                 System.out.println("This method is not available for you!!!");

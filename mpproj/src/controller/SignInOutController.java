@@ -43,6 +43,9 @@ public class SignInOutController {
         LocalDate b = LocalDate.parse(birthDate);
         newListener = new FreeListenerModel(username, password, name, email, phoneNumber, b);
         DataBaseModel.getDataBase().getUsers().add(newListener);
+        ListenerController.getListenerController().setListener(newListener);
+        user = newListener;
+
         return "Now you can choose 4 favorite genres that you like!";
     }
     public String sinUpPodcaster(String username, String password, String name, String email, String phoneNumber, String birthDate, String bio) {

@@ -29,24 +29,28 @@ public class AdminView {
         String[] strings = string.split(" -");
         switch (strings[0]) {
             case "Statistics" :
-                AdminController.getAdminController().showPopularAudios();
+                System.out.println(AdminController.getAdminController().showPopularAudios());
                 methods();
             case "Audios" :
-                AdminController.getAdminController().showAudios();
+                System.out.println(AdminController.getAdminController().showAudios());
                 methods();
             case "Audio" :
-                AdminController.getAdminController().showAudioInfo(Integer.parseInt(strings[1]));
+                System.out.println(AdminController.getAdminController().showAudioInfo(Integer.parseInt(strings[1])));
                 methods();
             case "Artists" :
-                AdminController.getAdminController().showArtists();
+                System.out.println(AdminController.getAdminController().showArtists());
                 methods();
             case "Artist" :
-                AdminController.getAdminController().showArtistInfo(strings[1]);
+                System.out.println(AdminController.getAdminController().showArtistInfo(strings[1]));
                 methods();
             case "Reports" :
-                AdminController.getAdminController().showReports();
+                System.out.println(AdminController.getAdminController().showReports());
+                methods();
+            case "AccountInfo" :
+                System.out.println(AdminController.getAdminController().showAccountInfo());
                 methods();
             case "Logout" :
+                System.out.println("Logged out");
                 SelectUserView.getSelectUserView().signUpLogInOut();
             default :
                 System.out.println("This method is not available for you!!!");

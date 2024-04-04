@@ -33,11 +33,12 @@ public class ListenerController {
                 listenerController = new ListenerController();
         return listenerController;
     }
-    public void favoriteGenres(String g1, String g2, String g3, String g4) {
+    public String favoriteGenres(String g1, String g2, String g3, String g4) {
         listener.getFavoriteGenres().add(GenreModel.valueOf(g1));
         listener.getFavoriteGenres().add(GenreModel.valueOf(g2));
         listener.getFavoriteGenres().add(GenreModel.valueOf(g3));
         listener.getFavoriteGenres().add(GenreModel.valueOf(g4));
+        return "Favorite genres added";
     }
     public String report(String artistUsername, String description) {
         for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
@@ -112,6 +113,7 @@ public class ListenerController {
                     if (Objects.equals(playlist.getPlaylistName(), playlistName)) {
                         for (AudioModel audio : playlist.getAudios())
                             if (audio.getId() == audioID) return "This audio is currently in this playlist";
+                        playlist.getAudios().add(audioModel);
                         return "The audio was added to the playlist";
                     }
                 return "Playlist not found";
@@ -120,8 +122,10 @@ public class ListenerController {
     }
     public String likeAudio(int audioID) {
         for (AudioModel audio : DataBaseModel.getDataBase().getAudios())
-            if (audio.getId() == audioID)
+            if (audio.getId() == audioID) {
+                audio.setLikesCount(audio.getLikesCount() + 1);
                 return "The audio was liked";
+            }
         return "Audio not found";
     }
     public String showLyrics(int audioID) {
@@ -221,4 +225,5 @@ public class ListenerController {
         }
         return str;
     }
+
 }
