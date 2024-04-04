@@ -93,10 +93,12 @@ public class ArtistController {
         if ( type.equals("S")){
             Singer singer = new Singer(userName,password,name,email,number,birth,bio);
             Database.getDataBase().getUserAccounts().add(singer);
+            setUserAccount(singer);
         }
         else{
             Podcaster podcaster = new Podcaster(userName,password,name,email,number,birth,bio);
             Database.getDataBase().getUserAccounts().add(podcaster);
+            setUserAccount(podcaster);
         }
         return "Account created successfully";
     }

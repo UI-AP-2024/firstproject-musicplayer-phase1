@@ -30,7 +30,7 @@ public class AdminController {
         for ( UserAccount userAccount1 : Database.getDataBase().getUserAccounts()){
             if ( userAccount1.getUserName().equals(username) && userAccount1.getPassword().equals(password)){
                 setUserAccount(userAccount1);
-                return "Account created successfully";
+                return "Login successfully";
             }
         }
         return "The username does not exist or the password is incorrect";
