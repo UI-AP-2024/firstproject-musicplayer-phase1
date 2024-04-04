@@ -14,10 +14,7 @@ import model.UserAccount.UserAccountModel;
 
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.SplittableRandom;
+import java.util.*;
 import java.util.regex.Pattern;
 
 
@@ -173,5 +170,57 @@ public class ListenerController {
                     str.append(userAccount.toString()).append("\n");
         return str;
     }
-
+    public StringBuilder sortAudios(String sortBy) {
+        StringBuilder str = new StringBuilder();
+        ArrayList<AudioModel> audios = DataBaseModel.getDataBase().getAudios();
+        if (Objects.equals(sortBy, "L")) {
+            for (int i = 0; i < audios.size(); i++) {
+                for (int j = i + 1; j < audios.size(); j++) {
+                    if (audios.get(i).getLikesCount() > audios.get(j).getLikesCount()) {
+                        AudioModel tmp = audios.get(i);
+                        audios.set(i, audios.get(j));
+                        audios.set(j, tmp);
+                    }
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < audios.size(); i++) {
+                for (int j = i + 1; j < audios.size(); j++) {
+                    if (audios.get(i).getPlaysCount() > audios.get(j).getPlaysCount()) {
+                        AudioModel tmp = audios.get(i);
+                        audios.set(i, audios.get(j));
+                        audios.set(j, tmp);
+                    }
+                }
+            }
+        }
+        for (AudioModel audio : audios)
+            str.append(audio.toString());
+        return str;
+    }
+    public StringBuilder filterAudios(String filter, String filterBy) {
+        StringBuilder str = new StringBuilder();
+        ArrayList<AudioModel> audios = DataBaseModel.getDataBase().getAudios();
+        if (Objects.equals(filter, "A")) {
+            for (AudioModel audio : audios)
+                if (Objects.equals(audio.getArtistName(), filterBy))
+                    str.append("\nName : ").append(audio.getAudioTitle())
+                            .append(", id : ").append(audio.getId());
+        }
+        else if (Objects.equals(filter, "G")) {
+            for (AudioModel audio : audios)
+                if (audio.getGenre() == GenreModel.valueOf(filterBy))
+                    str.append("\nName : ").append(audio.getAudioTitle())
+                            .append(", id : ").append(audio.getId());
+        }
+        else {
+            LocalDate date = LocalDate.parse(filterBy);
+            for (AudioModel audio : audios)
+                if (audio.getReleaseDate().getDayOfMonth() == date.getDayOfMonth() && audio.getReleaseDate().getMonth() == date.getMonth() && audio.getReleaseDate().getYear() == date.getYear())
+                    str.append("\nName : ").append(audio.getAudioTitle())
+                            .append(", id : ").append(audio.getId());
+        }
+        return str;
+    }
 }

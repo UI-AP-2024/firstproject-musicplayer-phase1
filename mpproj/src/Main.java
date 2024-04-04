@@ -1,6 +1,7 @@
+import view.SelectUserView;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hi there :)");
-        // comment
+        SelectUserView.getSelectUserView().signUpLogInOut();
     }
 }

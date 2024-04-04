@@ -32,7 +32,8 @@ public class SignInOutController {
     public String sinUpListener(String username, String password, String name, String email, String phoneNumber, String birthDate) {
         FreeListenerModel newListener;
         for (UserAccountModel userAccount : DataBaseModel.getDataBase().getUsers())
-            if (Objects.equals(userAccount.getUsername(), username) || Objects.equals(userAccount.getEmail(), email)) return "This username or email is already in use. Try again!";
+            if (Objects.equals(userAccount.getUsername(), username) || Objects.equals(userAccount.getEmail(), email))
+                return "This username or email is already in use. Try again!";
         Pattern phoneNumberRegex = Pattern.compile("^09[01239][0-9]{8}$");
         if (!phoneNumberRegex.matcher(phoneNumber).matches())
             return "Phone number format is false";
