@@ -320,7 +320,7 @@ public class ListenerController {
         return "you dont have a play list with this name , make sure you typed it correctly";
     }
 
-    public void suggestion(){
+    public String suggestion(int count){
         Map<Long,Long> map = getListener().getAudioPlays();
         Map.Entry<Long,Long>[] arrmap =map.entrySet().toArray(new Map.Entry[map.size()]);
         for (int i = 0; i < arrmap.length-1; i++) {
@@ -332,8 +332,76 @@ public class ListenerController {
                 }
             }
         }
-        ArrayList<Long> artists = new ArrayList<>();
-        
+        ArrayList<Long> suggestId = new ArrayList<>();
+        int c =count;
+        if(arrmap.length>=(count/4)+1){
+            for(int i = 0; i <(count/4)+1; i++){
+                suggestId.add(arrmap[i].getKey());
+                c--;
+            }
+        }
+        else{
+            for(int i = 0; i <arrmap.length; i++){
+                suggestId.add(arrmap[i].getKey());
+                c--;
+            }
+        }
+        if(getListener().getLikedAudios().size()>=(count/4)){
+            for(int i = 0; i <(count/4); i++){
+                suggestId.add(getListener().getLikedAudios().get(i));
+                c--;
+            }
+        }
+        else{
+            for(Long id : getListener().getLikedAudios()){
+                suggestId.add(id);
+                c--;
+            }
+        }
+
+        ArrayList<String> followings =new ArrayList<>();
+
+        for(User user : Database.getDatabase().getAllUsers()){
+            if(user instanceof Artist){
+                Artist artist = (Artist)user;
+                for(User listenerp : artist.getFollowers()){
+                    if(listenerp.getUsername().equals(getListener().getUsername())){
+                        followings.add(artist.getName());
+                    }
+
+                }
+            }
+        }
+        int counter = (count/4)+1;
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(followings.contains(audio.getArtistName())){
+                if(!(suggestId.contains(audio.getId()))){
+                    suggestId.add(audio.getId());
+                    counter--;
+                    c--;
+                    if(counter==0){
+                        break;
+                    }
+                }
+            }
+        }
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(getListener().getFavoriteGenres().contains(audio.getGenre())){
+                if(!(suggestId.contains(audio.getId()))){
+                    suggestId.add(audio.getId());
+                    c--;
+                    if(c==0){
+                        break;
+                    }
+                }
+            }
+        }String txt = "suggestion Audios for you\n";
+        for(Audio audio : Database.getDatabase().getAllAudio()){
+            if(suggestId.contains(audio.getId())){
+                txt+="-"+audio.getAudioName()+"\n";
+            }
+        }
+        return txt;
 
 
     }

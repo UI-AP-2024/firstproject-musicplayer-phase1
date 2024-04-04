@@ -141,6 +141,11 @@ public class ListenerView {
             System.out.println(txt);
                 
                 break;
+            case "GetSuggestions":
+            txt= ListenerController.getListenerController().suggestion(Integer.parseInt(spltCmd[1]));
+            System.out.println(txt);
+                
+                break;
             case "Logout":
             MainView.getMainView().mainView();
                 
