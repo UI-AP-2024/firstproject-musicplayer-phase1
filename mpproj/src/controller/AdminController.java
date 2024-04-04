@@ -5,11 +5,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import model.audio.Album;
 import model.audio.Audio;
+import model.audio.Music;
+import model.audio.Podcast;
 import model.database.Database;
 import model.user.Admin;
+import model.user.Artist;
+import model.user.Podcaster;
 import model.user.PremiumListener;
 import model.user.Report;
+import model.user.Singer;
+import model.user.User;
 
 public class AdminController {
     private static AdminController adminController;
@@ -49,6 +56,22 @@ public class AdminController {
     }
     ///artists and audios 
 
+    public String showAudioInfo(long audioId){
+        String txt ="Information of Audio with Id :"+String.valueOf(audioId)+"\n";
+        for(Audio audio:Database.getDatabase().getAllAudio()){
+            if(audio.getId()==audioId){
+                txt+="Title : "+audio.getAudioName()+"\n"+
+                "Artist : "+audio.getArtistName()+"\n"+
+                "Genre : "+String.valueOf(audio.getGenre())+"\n"+
+                "Likes : "+String.valueOf(audio.getNumberOfLikes())+"\n"+
+                "Plays : "+String.valueOf(audio.getNumberOfPlays())+"\n"+
+                "release Date : "+String.valueOf(audio.getReleaseDate())+"\n"+
+                "Link : "+String.valueOf(audio.getLink())+"\n";
+            }
+        }
+        return txt;
+    }
+
     public String reports(){
         String txt = "All reports\n";
         if(Database.getDatabase().getAllReports().size()==0){
@@ -59,6 +82,74 @@ public class AdminController {
             "reporting user : " + report.getReportingUser()+"\n"+
             "Description : "+ report.getDescription()+"\n";
         }
+        return txt;
+    }
+    public String showArtistsAll(){
+        String txt = "All artists\n";
+        for(User user : Database.getDatabase().getAllUsers()){
+            if(user instanceof Singer){
+                txt+="<Singer>\t"+user.getUsername()+"("+user.getName()+")\n";
+            }
+            if(user instanceof Podcaster){
+                txt+="<Podcaster>\t"+user.getUsername()+"("+user.getName()+")\n";
+            }
+            
+        }
+        return txt;
+
+    }
+
+    public String showArtistFullInfo(String username){
+        User user =UserController.getUserController().findUser(username);
+        
+        if(user instanceof Singer){
+            return showArtistFullInfo((Singer)user, username);
+        }
+        if(user instanceof Podcaster){
+            return showArtistFullInfo((Podcaster)user, username);
+        }
+           
+        return null;
+    }
+    private String showArtistFullInfo(Singer singer,String username){
+        String txt="Singer info:"+
+        "\nuser name : "+singer.getUsername()+
+        "\nFirst name : "+singer.getName()+
+        "\nemail address: "+singer.getEmailAddress()+
+        "\npassword : "+singer.getPassword()+
+        "\nbirth date : "+String.valueOf(singer.getBirthDate())+
+        "\nFollowers : "+String.valueOf(singer.getFollowers().size())+
+        "\nBiographi : "+singer.getBiographi()+"\n\n";
+        if(singer.getAlbumList().size()==0){
+            txt+="No album found!!";
+            return txt;
+        }
+        for(Album album : singer.getAlbumList()){
+            txt+=album.getAlbumName()+"\n";
+            for(Music music:album.getMusicList()){
+                txt+="-"+music.getAudioName()+"(id:"+String.valueOf(music.getId())+")\n";
+            }
+        }
+        
+        return txt;
+    }
+    private String showArtistFullInfo(Podcaster podcaster,String username){
+        String txt="Podcaster info:"+
+        "\nuser name : "+podcaster.getUsername()+
+        "\nFirst name : "+podcaster.getName()+
+        "\nemail address: "+podcaster.getEmailAddress()+
+        "\npassword : "+podcaster.getPassword()+
+        "\nbirth date : "+String.valueOf(podcaster.getBirthDate())+
+        "\nFollowers : "+String.valueOf(podcaster.getFollowers().size())+
+        "\nBiographi : "+podcaster.getBiographi()+"\n\n";
+        if(podcaster.getPodcastList().size()==0){
+            txt+="No podcast found!!";
+            return txt;
+        }
+        for(Podcast podcast : podcaster.getPodcastList()){
+                txt+="-"+podcast.getAudioName()+"(id:"+String.valueOf(podcast.getId())+")\n";
+        }
+        
         return txt;
     }
     

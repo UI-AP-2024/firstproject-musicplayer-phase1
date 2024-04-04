@@ -42,17 +42,17 @@ public class AdminView {
                 
                 break;
             case "Audio":
-            txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
+            txt =AdminController.getAdminController().showAudioInfo(Long.parseLong(spltCmd[1]));
             System.out.println(txt);
                 
                 break;
             case "Artists":
-            txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
+            txt =AdminController.getAdminController().showArtistsAll();
             System.out.println(txt);
                 
                 break;
             case "Artist":
-            txt = ArtistController.getArtistController().createNewAlbum(spltCmd[1]);
+            txt =AdminController.getAdminController().showArtistFullInfo(spltCmd[1]);
             System.out.println(txt);
                 
                 break;

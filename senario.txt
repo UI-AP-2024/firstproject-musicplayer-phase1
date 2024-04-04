@@ -142,5 +142,10 @@ Logout
 Login-isAdmin-Pkjhgyt4321#
 Statistics
 Reports
+Audio-6
+Audio-2
+Artist-singerone
+Artist-Podcasterone
+Artists
 AccountInfo
 Logout
