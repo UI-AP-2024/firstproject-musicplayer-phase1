@@ -3,15 +3,16 @@ package controller;
 import model.AccountUser.Artist.Artist;
 import model.Audio.Audio;
 import model.Audio.Podcast;
+import model.Database;
 
 import java.util.List;
 
 public class ArtistC {
 
-        public void updateArtistIncome(Artist artist, List<Audio> audios) {
+        public static void updateArtistIncome(Artist artist) {
             double totalIncome = 0;
 
-            for (Audio audio : audios) {
+            for (Audio audio : Database.getInstance().getAudiofiles()) {
                 if (audio.getArtist().equals(artist.getFullName())) {
                     int playCount = audio.getPlayCount();
                     if (audio instanceof Podcast) {
@@ -21,7 +22,6 @@ public class ArtistC {
                     }
                 }
             }
-
             artist.setIncome(totalIncome);
         }
     }

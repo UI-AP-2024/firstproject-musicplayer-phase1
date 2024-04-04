@@ -1,12 +1,19 @@
 package view;
 
+import controller.ArtistC;
 import controller.PodcasterC;
 import controller.SingerC;
 import controller.UserC;
+import model.AccountUser.Admin;
+import model.AccountUser.Artist.Artist;
+import model.AccountUser.Artist.TypeOfArtist.Singer;
 import model.AccountUser.Listener.Listener;
 import model.Audio.Music;
 import model.Database;
+import model.Genre;
+
 import java.util.Scanner;
+
 public class Panels {
     public static void showFirstMeneu() {
         System.out.println("Signup\nLogin");
@@ -67,7 +74,7 @@ public class Panels {
             String[] commits = input.split(" -");
             switch (commits[0]) {
                 case "GetSeggestions":
-                    System.out.println(UserC.recommendSongs(user, Database.getDatabase().getAudiofiles(), UserC.getLikeAudis()));
+                    System.out.println(UserC.recommendSongs(user, Database.getInstance().getAudiofiles(), UserC.getLikeAudis()));
                     break;
 
                 case "Artists":
@@ -91,10 +98,8 @@ public class Panels {
 
                 case "Search":
                     String keyword = commits[1];
-                    System.out.println(UserC.searchByKeyword(Database.getDatabase().getAudiofiles(), keyword));
+                    System.out.println(UserC.searchByKeyword(Database.getInstance().getAudiofiles(), keyword));
                     showUserPanel(user);
-
-
                     break;
 
                 case "Filter":
@@ -103,20 +108,20 @@ public class Panels {
                     switch (filterType) {
                         case "A":
                             String input2 = commits[2];
-                            System.out.println(UserC.filterByArtist(Database.getDatabase().getAudiofiles(), input2));
+                            System.out.println(UserC.filterByArtist(Database.getInstance().getAudiofiles(), input2));
                             showUserPanel(user);
                             break;
 
                         case "G":
                             String input3 = commits[2];
-                            System.out.println(UserC.filterByGenre(Database.getDatabase().getAudiofiles(), input3));
+                            System.out.println(UserC.filterByGenre(Database.getInstance().getAudiofiles(), input3));
                             showUserPanel(user);
                             break;
 
                         case "D":
                             String input4 = commits[2];
                             String input5 = commits[3];
-                            System.out.println(UserC.filterByReleaseDate(Database.getDatabase().getAudiofiles(), input4, input5));
+                            System.out.println(UserC.filterByReleaseDate(Database.getInstance().getAudiofiles(), input4, input5));
 
                             showUserPanel(user);
 
@@ -128,22 +133,127 @@ public class Panels {
 
                     switch (sortType) {
                         case "L":
-                            System.out.println(UserC.sortByPopularity(Database.getDatabase().getAudiofiles()));
+                            System.out.println(UserC.sortByPopularity(Database.getInstance().getAudiofiles()));
                             showUserPanel(user);
                             break;
 
                         case "P":
-                            System.out.println(UserC.sortByPlayCount(Database.getDatabase().getAudiofiles()));
+                            System.out.println(UserC.sortByPlayCount(Database.getInstance().getAudiofiles()));
                             showUserPanel(user);
                             break;
                     }
                     break;
 
-                case "Add":
-                    String playlistName = commits[1];
-                    String AudioId = commits[2];
-                    UserC.addMusicToPlaylist(playlistName, Integer.parseInt(AudioId));
+                case "ShowPlaylists":
+                    UserV.viewPlaylists(Listener.getPlaylists());
                     showUserPanel(user);
+                    break;
+
+                case "SelectPlaylists":
+                    String playName = commits[1];
+                    UserV.viewPlaylistContents(playName);
+                    showUserPanel(user);
+                    break;
+
+                case "Play":
+                    String playId = commits[1];
+                    UserV.playAudio(Integer.parseInt(playId));
+                    showUserPanel(user);
+                    break;
+
+                case "Like":
+                    String LikeId = commits[1];
+                    UserC.likeAudio(Integer.parseInt(LikeId));
+                    showUserPanel(user);
+                    break;
+
+                case "Lyric":
+                    String lyrcId = commits[1];
+                    System.out.println(Music.getLyrics());
+                    showUserPanel(user);
+                    break;
+
+                case "NewPlaylist":
+                    String playlistId = commits[1];
+                    UserC.createPlaylist(playlistId, user);
+                    showUserPanel(user);
+                    break;
+
+                case "Add":
+                    String playlistname = commits[1];
+                    String inp = commits[2];
+                    UserC.addMusicToPlaylist(playlistname, Integer.parseInt(inp));
+                    showUserPanel(user);
+                    break;
+
+                case "Following":
+                    UserV.displayFollowedArtists();
+                    showUserPanel(user);
+                    break;
+
+                case "Report":
+                    String userArtist = commits[1];
+                    String description = commits[2];
+                    UserC.reportUser(user, userArtist, description);
+                    showUserPanel(user);
+                    break;
+
+                case "IncreasrCredit":
+                    String value = commits[1];
+                    UserC.increaseAccountBalance(user, Double.parseDouble(value));
+                    showUserPanel(user);
+                    break;
+
+                case "GetPremium":
+                    String pakage = commits[1];
+                    UserC.purchasePremiumSubscription(Integer.parseInt(pakage), user);
+                    showUserPanel(user);
+                    break;
+                default:
+                    System.out.println("Invalid command!");
+
+
+            }
+        }
+    }
+
+    public static void showAdminPanel(Admin admin) {
+        System.out.println("welcome to Admin panel");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            String[] commits = input.split(" -");
+            switch (commits[0]) {
+
+                case "Statistics":
+                    AdminV.displayPopularAudios(UserC.getLikeAudis(), Listener.getPlayCountByAudio());
+                    showAdminPanel(admin);
+                    break;
+
+                case "Audios":
+                    AdminV.displayAudios();
+                    showAdminPanel(admin);
+                    break;
+
+                case "Audio":
+                    String audioId = commits[1];
+                    AdminV.displayAudio(Integer.parseInt(audioId));
+                    showAdminPanel(admin);
+                    break;
+
+                case "Artists":
+                    AdminV.displayArtists();
+                    showAdminPanel(admin);
+                    break;
+
+                case "Artist":
+                    String artistUsername = commits[1];
+                    AdminV.displayArtistInfo(artistUsername);
+                    showAdminPanel(admin);
+                    break;
+
+                case "Reports":
+                    AdminV.displayReports(Database.getInstance().getReports());
                     break;
 
                 default:
@@ -152,80 +262,63 @@ public class Panels {
         }
     }
 
-    public static void showUserPanelLibrary(Listener user) {
-        System.out.println("welcome to Library panel");
+    public static void showArtistPanel(Artist artist) {
+        System.out.println("welcome to singer panel");
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
             String[] commits = input.split(" -");
             switch (commits[0]) {
-                case "ShowPlaylists":
-                    UserV.viewPlaylists(Listener.getPlaylists());
-                    showUserPanelLibrary(user);
+
+                case "Followes":
+                    ArtistV.displayArtistFollowers(artist);
+                    showArtistPanel(artist);
                     break;
 
-                case "SelectPlaylists":
-                    String playlistName = commits[1];
-                    UserV.viewPlaylistContents(playlistName);
-                    showUserPanelLibrary(user);
+                case "ViewStatistics":
+                    ArtistV.displayPlayCount(artist);
+                    showArtistPanel(artist);
                     break;
 
-                case "Play":
-                    String playId = commits[1];
-                    UserV.playAudio(Integer.parseInt(playId));
-                    showUserPanelLibrary(user);
+                case "CalculateEarning":
+                    ArtistC.updateArtistIncome(artist);
+                    showArtistPanel(artist);
                     break;
 
-                case "Like":
-                    String LikeId = commits[1];
-                    UserC.likeAudio(Integer.parseInt(LikeId));
-                    showUserPanelLibrary(user);
+                case "NewAlbum":
+                    String albumName = commits[1];
+                    SingerC.createAlbum((Singer) artist, albumName);
+                    showArtistPanel(artist);
                     break;
 
-                case "Lyric":
-                    String lyrcId = commits[1];
-                    System.out.println(Music.getLyrics());
-                    showUserPanelLibrary(user);
-                    break;
+                case "Publish":
+                    String PublishType = commits[1];
 
-                case "NewPlaylist":
-                    String playlistId = commits[1];
-                    UserC.createPlaylist(playlistId, user);
-                    showUserPanelLibrary(user);
-                    break;
+                    switch (PublishType) {
+                        case "M":
+                            String title = commits[2];
+                            String genre = commits[3];
+                            String lyric = commits[4];
+                            String link = commits[5];
+                            String cover = commits[6];
+                            String albumId = commits[7];
 
-                case "Add":
-                    String playlistname = commits[1];
-                    String AudioId = commits[2];
-                    UserC.addMusicToPlaylist(playlistname, Integer.parseInt(AudioId));
-                    showUserPanelLibrary(user);
-                    break;
+                            SingerC.publishMusic((Singer) artist, title, Genre.valueOf(genre), Integer.parseInt(albumId), link, cover,lyric );
+                            showArtistPanel(artist);
+                            break;
 
-                case "Following":
-                    UserV.displayFollowedArtists();
-                    showUserPanelLibrary(user);
-                    break;
+                        case "P":
 
-                case "Report":
-                    String userArtist = commits[1];
-                    String description = commits[2];
-                    UserC.reportUser(user, userArtist, description);
-                    showUserPanelLibrary(user);
-                    break;
-
-                case "IncreasrCredit":
-                    String value = commits[1];
-                    UserC.increaseAccountBalance(user, Double.parseDouble(value));
-                    showUserPanelLibrary(user);
-                    break;
-
-                case "GetPremium":
-                    String pakage = commits[1];
-                    UserC.purchasePremiumSubscription(Integer.parseInt(pakage),user);
-                    showUserPanelLibrary(user);
+                            System.out.println(UserC.sortByPlayCount(Database.getInstance().getAudiofiles()));
+                            showArtistPanel(artist);
+                            break;
+                    }
+                    showArtistPanel(artist);
                     break;
 
 
+                default:
+                    System.out.println("Invalid command!");
             }
         }
     }

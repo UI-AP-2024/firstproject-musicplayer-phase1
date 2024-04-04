@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AdminV {
-    public void displayPopularAudios(List<Audio> likedAudios, Map<Audio, Integer> playCountByAudio) {
+    public static void displayPopularAudios(List<Audio> likedAudios, Map<Audio, Integer> playCount) {
         List<Audio> popularAudios = likedAudios.stream()
-                .sorted(Comparator.comparingInt(playCountByAudio::get).reversed())
+                .sorted(Comparator.comparingInt(playCount::get).reversed())
                 .limit(10)
                 .collect(Collectors.toList());
         System.out.println("Top 10 popular audios based on likes:");
@@ -27,7 +27,7 @@ public class AdminV {
 
     public static void displayArtistInfo(String artistUsername) {
         boolean found = false;
-        for (AccountUser user : Database.getDatabase().getUsers()) {
+        for (AccountUser user : Database.getInstance().getUsers()) {
             if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
                 found = true;
                 Artist artist = (Artist) user;
@@ -51,32 +51,45 @@ public class AdminV {
     }
 
     public static void displayArtists() {
-        for (AccountUser user : Database.getDatabase().getUsers()) {
+        for (AccountUser user : Database.getInstance().getUsers()) {
             if (user instanceof Artist) {
-                ArrayList<AccountUser> ar = new ArrayList<>();
-                ar.add(user);
                 System.out.println("Username: " + user.getUserName());
             }
         }
     }
+    public static void displayAudios() {
+        for(Audio audio : Database.getInstance().getAudiofiles()){
+            System.out.println("Audio: " + audio.getTitle());
+        }
 
-    public void displayAudios(List<Audio> audios) {
-        System.out.println("List of audios:");
+    }
+
+
+    public static void displayAudio(int audioId) {
+        List<Audio> audios = Database.getInstance().getAudiofiles();
+        boolean found = false;
         for (Audio audio : audios) {
-            System.out.println("Unique ID: " + audio.getUniqeId());
-            System.out.println("Title: " + audio.getTitle());
-            System.out.println("Artist: " + audio.getArtist());
-            System.out.println("Play Count: " + audio.getPlayCount());
-            System.out.println("Likes: " + audio.getLikes());
-            System.out.println("Release Date: " + audio.getReleaseDate());
-            System.out.println("Genre: " + audio.getGenre());
-            System.out.println("Audio Link: " + audio.getAudioLink());
-            System.out.println("Cover: " + audio.getCover());
-            System.out.println();
+            if (audio.getUniqeId() == audioId) {
+                found = true;
+                System.out.println("Unique ID: " + audio.getUniqeId());
+                System.out.println("Title: " + audio.getTitle());
+                System.out.println("Artist: " + audio.getArtist());
+                System.out.println("Play Count: " + audio.getPlayCount());
+                System.out.println("Likes: " + audio.getLikes());
+                System.out.println("Release Date: " + audio.getReleaseDate());
+                System.out.println("Genre: " + audio.getGenre());
+                System.out.println("Audio Link: " + audio.getAudioLink());
+                System.out.println("Cover: " + audio.getCover());
+                System.out.println();
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Audio with ID " + audioId + " not found.");
         }
     }
 
-    public void displayReports(List<Report> reports) {
+    public static void displayReports(List<Report> reports) {
         for (Report report : reports) {
             System.out.println(report);
         }

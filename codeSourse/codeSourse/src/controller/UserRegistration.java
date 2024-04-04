@@ -77,7 +77,7 @@ public class UserRegistration {
         Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
         newUser.setFavoriteGenres(selectFavoriteGenres());
         newUser.setAccountBalance(50.0);
-        Database.getDatabase().getUsers().add(newUser);
+        Database.getInstance().getUsers().add(newUser);
 
         users.put(userName, newUser);
     }

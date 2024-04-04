@@ -10,8 +10,8 @@ import java.util.*;
 
 public class Listener extends AccountUser {
     private double accountBalance;
-    private List<Playlist> playlists;
-    private Map<Audio, Integer> playCount;
+    private static List<Playlist> playlists;
+    private static Map<Audio, Integer> playCount;
     private Date subEndDate;
     private List<Genre> favoriteGenres;
 
@@ -30,11 +30,11 @@ public class Listener extends AccountUser {
         return accountBalance;
     }
 
-    public List<Playlist> getPlaylists() {
+    public static List<Playlist> getPlaylists() {
         return playlists;
     }
 
-    public Map<Audio, Integer> getPlayCountByAudio() {
+    public static Map<Audio, Integer> getPlayCountByAudio() {
         return playCount;
     }
 

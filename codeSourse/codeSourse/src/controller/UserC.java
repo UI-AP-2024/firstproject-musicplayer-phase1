@@ -1,6 +1,7 @@
 package controller;
 import model.*;
 import model.AccountUser.AccountUser;
+import model.AccountUser.Admin;
 import model.AccountUser.Artist.Artist;
 import model.AccountUser.Artist.TypeOfArtist.Podcaster;
 import model.AccountUser.Artist.TypeOfArtist.Singer;
@@ -16,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static view.Panels.showAdminPanel;
 
 public class UserC {
 
@@ -121,7 +124,7 @@ public class UserC {
         }
 
         public static Audio findAudioById(int musicId){
-            for (Audio audio : Database.getDatabase().getAudiofiles()) {
+            for (Audio audio : Database.getInstance().getAudiofiles()) {
                 if (audio.getUniqeId() == musicId) {
                     return audio;
                 }
@@ -229,7 +232,7 @@ public class UserC {
 
 
     public static void followArtistByUsername(String artistUsername) {
-        for (AccountUser user : Database.getDatabase().getUsers()) {
+        for (AccountUser user : Database.getInstance().getUsers()) {
             if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
                 followedArtists.add((Artist) user);
                 System.out.println(user.getUserName() + " is now following " + artistUsername);
@@ -257,7 +260,7 @@ public class UserC {
             userReport.setReportingUser(reportingUser);
             userReport.setReportedArtist(reportedArtist);
             userReport.setDescription(description);
-            Database.getDatabase().getReports().add(userReport);
+            Database.getInstance().getReports().add(userReport);
             System.out.println("Report submitted successfully.");
         } else {
             System.out.println("Error: Artist not found.");
@@ -265,7 +268,7 @@ public class UserC {
     }
 
     private static Artist findArtistByUsername(String artistUsername) {
-        for (AccountUser user : Database.getDatabase().getUsers()) {
+        for (AccountUser user : Database.getInstance().getUsers()) {
             if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
                 return (Artist) user;
             }
@@ -409,7 +412,7 @@ public class UserC {
 
     public static void loginAll(String username, String password) {
         boolean userFound = false;
-        for (AccountUser user : Database.getDatabase().getUsers()) {
+        for (AccountUser user : Database.getInstance().getUsers()) {
             if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                 userFound = true;
                 if (user instanceof Listener) {
@@ -421,6 +424,9 @@ public class UserC {
                 } else if (user instanceof Singer) {
                     System.out.println("You are a singer. Opening singer panel...");
                     showUserPanel();
+                }else if (user instanceof Admin) {
+                        System.out.println("You are a Admin. Opening Admin panel...");
+                    showAdminPanel((Admin) user);
                 }
                 break;
             }
@@ -466,7 +472,7 @@ public class UserC {
         Listener newUser = new Listener(userName, password, fullName, email, phoneNumber, birthDate, 0.0, null);
         newUser.setFavoriteGenres(selectFavoriteGenres());
         newUser.setAccountBalance(50.0);
-        Database.getDatabase().getUsers().add(newUser);
+        Database.getInstance().getUsers().add(newUser);
 
         users.put(userName, newUser);
 

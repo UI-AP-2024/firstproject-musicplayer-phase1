@@ -31,13 +31,7 @@ public class UserV {
     }
 
 
-    public void displayArtistFollowings(Artist artist) {
-        List<AccountUser> followers = artist.getFollowers();
-        System.out.println("Followers of " + artist.getUserName() + ":");
-        for (AccountUser follower : followers) {
-            System.out.println(follower.getUserName());
-        }
-    }
+
     public void displayArtistInfoAndWorks(Artist artist) {
         System.out.println("Artist Information:");
         System.out.println("Username: " + artist.getUserName());

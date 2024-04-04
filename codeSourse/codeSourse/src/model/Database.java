@@ -3,53 +3,52 @@ package model;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Listener.Listener;
 import model.Audio.Audio;
-
-import java.util.*;
+import java.util.ArrayList;
 
 public class Database {
-    private static Database database;
-    private  static ArrayList<AccountUser> users;
-    private static ArrayList<Audio> audiofiles;
-    private static ArrayList<Report> reports;
+    private static Database instance;
+    private ArrayList<AccountUser> users;
+    private ArrayList<Audio> audiofiles;
+    private ArrayList<Report> reports;
 
-    //*********************************************
-    public Database() {
+    private Database() {
         this.users = new ArrayList<>();
         this.audiofiles = new ArrayList<>();
         this.reports = new ArrayList<>();
-
     }
-    //*********************************************
 
-    public static Database getDatabase() {
-        if (database == null) {
-            database = new Database();
+    public static Database getInstance() {
+        if (instance == null) {
+            synchronized (Database.class) {
+                if (instance == null) {
+                    instance = new Database();
+                }
+            }
         }
-        return database;
+        return instance;
     }
 
-    //*********************************************
-
-    public ArrayList<AccountUser> getUsers(){
+    public ArrayList<AccountUser> getUsers() {
         return users;
     }
-    public void setUsers(ArrayList<AccountUser> users){
+
+    public void setUsers(ArrayList<AccountUser> users) {
         this.users = users;
     }
+
     public ArrayList<Audio> getAudiofiles() {
         return audiofiles;
     }
-    public void setAudiofiles(ArrayList<Audio> audiofiles){
+
+    public void setAudiofiles(ArrayList<Audio> audiofiles) {
         this.audiofiles = audiofiles;
     }
-    public ArrayList<Report> getReports(){
+
+    public ArrayList<Report> getReports() {
         return reports;
     }
-    public void setReports(ArrayList<Report> reports){
+
+    public void setReports(ArrayList<Report> reports) {
         this.reports = reports;
     }
-
-
-
-
 }

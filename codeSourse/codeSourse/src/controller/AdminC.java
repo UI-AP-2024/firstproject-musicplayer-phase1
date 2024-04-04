@@ -20,13 +20,6 @@ public class AdminC {
         this.userRegistration = userRegistration;
     }
 
-    public void login(String username, String password) {
-        if (checkCredentials(username, password)) {
-            showUserPanel(username);
-        } else {
-            System.out.println("Invalid username or password");
-        }
-    }
 
     private void showUserPanel(String username) {
     }

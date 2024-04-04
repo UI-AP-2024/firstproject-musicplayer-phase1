@@ -1,5 +1,7 @@
 package model.AccountUser;
 
+import model.Database;
+
 import java.util.Date;
 
 public class Admin extends AccountUser {
@@ -13,10 +15,12 @@ public class Admin extends AccountUser {
 
     public static Admin getInstance() {
         if (instance == null) {
-            instance = new Admin("admin", "admin123", "Admin User", "admin@example.com", "1234567890", new Date());
+            instance = new Admin("admin", "admin123", "Admin User", "aAdmi23n@gmail.com", "09134567723", new Date());
         }
+        Database.getInstance().getUsers().add(instance);
         return instance;
     }
+
     @Override
     public String toString() {
         return "Admin{" +
