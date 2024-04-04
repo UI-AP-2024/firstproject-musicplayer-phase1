@@ -38,8 +38,8 @@ public class AdminView {
                 
                 break;
             case "Audios":
-            ArtistController.getArtistController().calculateIncome();
-                
+            txt = AdminController.getAdminController().showAllAudios(Integer.parseInt(spltCmd[1]));
+            System.out.println(txt);   
                 break;
             case "Audio":
             txt =AdminController.getAdminController().showAudioInfo(Long.parseLong(spltCmd[1]));
@@ -63,6 +63,7 @@ public class AdminView {
         
 
             default:
+            System.out.println("not a valid command or you dont have access to this command");
                 break;
         }
     }

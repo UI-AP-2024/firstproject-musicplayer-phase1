@@ -56,6 +56,29 @@ public class AdminController {
     }
     ///artists and audios 
 
+    public String showAllAudios(int page){
+        int audiosPerPage = 5;
+        String txt ="All Audios Page "+String.valueOf(page)+"\n";
+        //first 1 last 5/ first 6 last 10
+        int first = (audiosPerPage*page) - (audiosPerPage-1);
+        int last = (audiosPerPage*page);
+        if(first>Database.getDatabase().getAllAudio().size()){
+            txt+="no song found on this page";
+            return txt;
+        }
+        int counter = 1;
+        for(Audio audio:Database.getDatabase().getAllAudio()){
+            if(counter>=first && counter<=last){
+                txt+="Title : "+audio.getAudioName()+"\t"+
+                "Likes : "+String.valueOf(audio.getNumberOfLikes())+"\t"+
+                "Plays : "+String.valueOf(audio.getNumberOfPlays())+"\n";
+            }
+            counter++;
+        }
+        return txt;
+
+    }
+
     public String showAudioInfo(long audioId){
         String txt ="Information of Audio with Id :"+String.valueOf(audioId)+"\n";
         for(Audio audio:Database.getDatabase().getAllAudio()){

@@ -6,6 +6,7 @@ public abstract class Audio {
     private final long id;
     private String audioName;
     private String artistName;
+    private String artistUsername;
     private long numberOfPlays;
     private long numberOfLikes;
     private final Date releaseDate;
@@ -13,17 +14,18 @@ public abstract class Audio {
     private String link;
     private String cover;
     private static long audioCounter=0;
-    public Audio(String audioName, String artistName, Date releaseDate, Genre genre, String cover) {
+    public Audio(String audioName, String artistName, String artistUsername,Date releaseDate, Genre genre,String link, String cover) {
         audioCounter++;
         this.audioName = audioName;
         this.artistName = artistName;
+        this.artistUsername = artistUsername;
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.cover = cover;
         this.numberOfLikes=0;
         this.numberOfPlays=0;
         this.id=audioCounter;
-        this.link = "htpps://fakepotify.com/Audio/"+String.valueOf(id)+"/"+audioName+String.valueOf(id);
+        this.link = link;
     }
     public void setAudioName(String audioName) {
         this.audioName = audioName;
@@ -75,6 +77,12 @@ public abstract class Audio {
     }
     public long getNumberOfPlays() {
         return numberOfPlays;
+    }
+    public String getArtistUsername() {
+        return artistUsername;
+    }
+    public void setArtistUsername(String artistUsername) {
+        this.artistUsername = artistUsername;
     }
     
     

@@ -5,8 +5,8 @@ import java.util.Date;
 public class Music extends Audio{
     private String lyrics;
 
-    public Music(String audioName, String artistName, Date releaseDate, Genre genre, String cover, String lyrics) {
-        super(audioName, artistName, releaseDate, genre, cover);
+    public Music(String audioName, String artistName, String artistUsername, Date releaseDate, Genre genre,String link, String cover, String lyrics) {
+        super(audioName, artistName,artistUsername, releaseDate, genre,link, cover);
         this.lyrics = lyrics;
     }
 

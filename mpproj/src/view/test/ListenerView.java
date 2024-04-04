@@ -153,6 +153,7 @@ public class ListenerView {
         
 
             default:
+            System.out.println("not a valid command or you dont have access to this command");
                 break;
         }
     }

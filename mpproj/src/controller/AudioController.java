@@ -90,7 +90,7 @@ public class AudioController {
         String txt = " Audios filtered by artist\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()
-            .filter(Audio -> Audio.getArtistName().equals(key))
+            .filter(Audio -> Audio.getArtistUsername().equals(key))
             .collect(Collectors.toCollection(ArrayList::new));
             if(filtered.size()==0){
                 return "this artist may not be valid or no audio was published by the Artist, enter another name!";
@@ -163,8 +163,6 @@ public class AudioController {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date date1 = formatter.parse(dateone);
         Date date2 = formatter.parse(datetwo);
-        // LocalDate localDate1 = LocalDate.parse(dateone, formatter);
-        // LocalDate localDate2 = LocalDate.parse(datetwo, formatter);
         String txt = "Audios filtered between two dates\n";
         ArrayList <Audio> filtered = Database.getDatabase().getAllAudio()
             .stream()

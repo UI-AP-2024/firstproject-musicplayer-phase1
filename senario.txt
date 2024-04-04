@@ -51,7 +51,7 @@ Follow-singerone
 Follow-singerthree
 Follow-Podcasterone
 Filter-G-POP
-Filter-A-singerlopi
+Filter-A-singerone
 Filter-D-3/4/2024
 Filter-D-31/3/2024
 Filter-D-2/4/2024-4/4/2024
@@ -102,7 +102,6 @@ Add-playlistone-10
 GetPremium-30
 NewPlaylist-playlistfour
 AccountInfo
-
 GetPremium-60
 AccountInfo
 IncreaseCredit-14
@@ -111,7 +110,7 @@ Sort-P
 Sort-L
 Logout
 Signup-L-listenertwo-Listenertwo#2-listenerlopii-listener@gmail.com-09123456789-12/12/1990
-FavouriteGenres-POP,JAZZ,HIPHOP
+FavouriteGenres-POP,HIPHOP
 Login-listenertwo-Listenertwo#2
 Play-1
 Play-2
@@ -120,6 +119,10 @@ Play-4
 Play-5
 Play-6
 Play-7
+Play-8
+Play-8
+Play-8
+Play-8
 Play-8
 Play-9
 Play-10
@@ -140,6 +143,8 @@ Report-singerone-explanation is long
 Sort-P
 Sort-L
 Artist-singerone
+Filter-A-singerone
+GetSuggestions-8
 Logout
 Login-isAdmin-Pkjhgyt4321#
 Statistics
@@ -150,4 +155,8 @@ Artist-singerone
 Artist-Podcasterone
 Artists
 AccountInfo
-Logout
+Audios-1
+Audios-2
+Audios-3
+Audios-4
+Audios-5

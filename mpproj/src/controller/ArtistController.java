@@ -100,7 +100,7 @@ public class ArtistController {
         if(type.equals("P")){
             System.out.println("was P");
             if(getArtist() instanceof Podcaster){
-                Podcast tmp = new Podcast(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
+                Podcast tmp = new Podcast(title,getArtist().getName(),getArtist().getUsername(),currentDate,Genre.valueOf(genre.toUpperCase()),link,cover,lyricsCaption);
                 Database.getDatabase().addToAllAudio(tmp);
                 ((Podcaster)getArtist()).addToPodcastList(tmp);
                 return "your podcast published succesfully";
@@ -115,7 +115,7 @@ public class ArtistController {
                 for(Album album : ((Singer)getArtist()).getAlbumList())
                 {
                     if(album.getId()==albumId){
-                        Music tmp = new Music(title,getArtist().getName(),currentDate,Genre.valueOf(genre.toUpperCase()),cover,lyricsCaption);
+                        Music tmp = new Music(title,getArtist().getName(),getArtist().getUsername(),currentDate,Genre.valueOf(genre.toUpperCase()),link,cover,lyricsCaption);
                         Database.getDatabase().addToAllAudio(tmp);
                         album.addToMusicList(tmp);
                         return "your Music published succesfully";

@@ -341,9 +341,104 @@ public class ListenerController {
         }
         return "you dont have a play list with this name , make sure you typed it correctly";
     }
-
-    public String suggestion(int count){
-        Map<Long,Long> map = getListener().getAudioPlays();
+    private int suggestByViews(int count,ArrayList<Long> suggestId,Map.Entry<Long,Long>[] arrmap){
+        int c=0;
+        for(int i = 0; i <arrmap.length; i++){
+            if((suggestId.contains(arrmap[i].getKey())==false)){
+                            System.out.println(suggestId.contains(arrmap[i].getKey()));
+                            System.out.println("not contain view "+arrmap[i].getKey());
+                            suggestId.add(arrmap[i].getKey());
+                            c++;
+                            count--;
+                            if(count==0){
+                                break;
+                            }
+                        }
+                }
+        // if(arrmap.length>=count){
+        //     for(int i = 0; i <count; i++){
+        //         if((suggestId.contains(arrmap[i].getKey())==false)){
+        //             System.out.println(suggestId.contains(arrmap[i].getKey()));
+        //             System.out.println("not contain view "+arrmap[i].getKey());
+        //             suggestId.add(arrmap[i].getKey());
+        //             c++;
+        //         }
+                
+        //     }
+        // }
+        // else{
+        //     for(int i = 0; i <arrmap.length; i++){
+        //         suggestId.add(arrmap[i].getKey());
+        //         c++;
+        //     }
+        // }
+        return c;
+    }
+    private int suggestByLikes(int count,ArrayList<Long> suggestId){
+        int c=0;
+        for(Long id : getListener().getLikedAudios()){
+            if((suggestId.contains(id))==false){
+                            System.out.println(suggestId.contains(id));
+                            System.out.println("not contain like "+id);
+                            suggestId.add(id);
+                            c++;
+                            count--;
+                            if (count==0) {
+                                break;
+                            }
+                        }
+        }
+        // if(getListener().getLikedAudios().size()>=count){
+        //     for(int i = 0; i <count; i++){
+        //         if((suggestId.contains(getListener().getLikedAudios().get(i)))==false){
+        //             System.out.println(suggestId.contains(getListener().getLikedAudios().get(i)));
+        //             System.out.println("not contain like "+getListener().getLikedAudios().get(i));
+        //             suggestId.add(getListener().getLikedAudios().get(i));
+        //             c++;
+        //         }
+        //     }
+        // }
+        // else{
+        //     for(Long id : getListener().getLikedAudios()){
+        //         suggestId.add(id);
+        //         c++;
+        //     }
+        // }
+        return c;
+    }
+    private int suggestByArtist(int count,ArrayList<Long> suggestId,ArrayList<Long> artistAudio){
+        int c=0;
+        for(Long id : artistAudio){
+            if((suggestId.contains(id))==false){
+                System.out.println(suggestId.contains(id));
+                System.out.println("not contain artist "+id);
+                suggestId.add(id);
+                count--;
+                c++;
+                if(count==0){
+                    break;
+                }
+            }
+        }
+        return c;
+    }
+    private int suggestByGenre(int count,ArrayList<Long> suggestId,ArrayList<Long> genreAudio){
+        int c=0;
+        for(Long id : genreAudio){
+            if((suggestId.contains(id))==false){
+                System.out.println(suggestId.contains(id));
+                System.out.println("not contain genre "+id);
+                suggestId.add(id);
+                count--;
+                c++;
+                if(count==0){
+                    break;
+                }
+            }
+        }
+        return c;
+    }
+    private Map.Entry<Long,Long>[] sortAudioPlaysMap(Map<Long,Long> map){
         Map.Entry<Long,Long>[] arrmap =map.entrySet().toArray(new Map.Entry[map.size()]);
         for (int i = 0; i < arrmap.length-1; i++) {
             for (int j = i+1; j < arrmap.length; j++) {
@@ -354,70 +449,100 @@ public class ListenerController {
                 }
             }
         }
-        ArrayList<Long> suggestId = new ArrayList<>();
-        int c =count;
-        if(arrmap.length>=(count/4)+1){
-            for(int i = 0; i <(count/4)+1; i++){
-                suggestId.add(arrmap[i].getKey());
-                c--;
-            }
-        }
-        else{
-            for(int i = 0; i <arrmap.length; i++){
-                suggestId.add(arrmap[i].getKey());
-                c--;
-            }
-        }
-        if(getListener().getLikedAudios().size()>=(count/4)){
-            for(int i = 0; i <(count/4); i++){
-                suggestId.add(getListener().getLikedAudios().get(i));
-                c--;
-            }
-        }
-        else{
-            for(Long id : getListener().getLikedAudios()){
-                suggestId.add(id);
-                c--;
-            }
-        }
-
+        return arrmap;
+    }
+    private ArrayList<Long> getArtistAudioArr(){
         ArrayList<String> followings =new ArrayList<>();
-
         for(User user : Database.getDatabase().getAllUsers()){
             if(user instanceof Artist){
                 Artist artist = (Artist)user;
                 for(User listenerp : artist.getFollowers()){
                     if(listenerp.getUsername().equals(getListener().getUsername())){
-                        followings.add(artist.getName());
+                        followings.add(artist.getUsername());
                     }
 
                 }
             }
         }
-        int counter = (count/4)+1;
+        ArrayList<Long> artistAudio =new ArrayList<>();
         for(Audio audio : Database.getDatabase().getAllAudio()){
-            if(followings.contains(audio.getArtistName())){
-                if(!(suggestId.contains(audio.getId()))){
-                    suggestId.add(audio.getId());
-                    counter--;
-                    c--;
-                    if(counter==0){
-                        break;
-                    }
-                }
+            if(followings.contains(audio.getArtistUsername())){
+                artistAudio.add(audio.getId());
             }
         }
+        return artistAudio;
+
+    }
+    
+    private ArrayList<Long> getGenreAudioArr(){
+        ArrayList<Long> genreAudio =new ArrayList<>();
         for(Audio audio : Database.getDatabase().getAllAudio()){
             if(getListener().getFavoriteGenres().contains(audio.getGenre())){
-                if(!(suggestId.contains(audio.getId()))){
-                    suggestId.add(audio.getId());
-                    c--;
-                    if(c==0){
-                        break;
-                    }
+                    genreAudio.add(audio.getId());
+                }
+        }
+        return genreAudio;
+    }
+    
+    //get sort audio plays
+    //get artist audio 
+    //get genre audio
+
+
+    public String suggestion(int n){
+        Map<Long,Long> map = getListener().getAudioPlays();
+        Map.Entry<Long,Long>[] arrmap = sortAudioPlaysMap(map);
+        ArrayList<Long> artistAudio = getArtistAudioArr();
+        ArrayList<Long> genreAudio = getGenreAudioArr();
+        ArrayList<Long> suggestId = new ArrayList<>();
+        Map<Long,Long> order = new HashMap<>();
+        order.put(1L, (long)arrmap.length);
+        order.put(2L, (long)artistAudio.size());
+        order.put(3L, (long)genreAudio.size());
+        order.put(4L, (long)getListener().getLikedAudios().size());
+        Map.Entry<Long,Long>[] arrOrder =order.entrySet().toArray(new Map.Entry[order.size()]);
+        for (int i = 0; i < arrOrder.length-1; i++) {
+            for (int j = i+1; j < arrOrder.length; j++) {
+                if(arrOrder[j].getValue()<= arrOrder[i].getValue()){
+                    Map.Entry<Long,Long> tmp = arrOrder[i];
+                    arrOrder[i] = arrOrder[j];
+                    arrOrder[j] =tmp;
                 }
             }
-        }String txt = "suggestion Audios for you\n";
+        }int c=0;
+        int count = n/4;
+        int tmp = n;
+
+        for (int i = 0; i < 4; i++) {
+            count = tmp/(4-i);
+            if(arrOrder[i].getKey()==1L){
+                c = suggestByViews(count, suggestId, arrmap);
+                tmp-=c;
+            }
+            if(arrOrder[i].getKey()==2L){
+                c = suggestByLikes(count, suggestId);
+                tmp-=c;
+            }
+            if(arrOrder[i].getKey()==3L){
+                c = suggestByArtist(count, suggestId, artistAudio);
+                tmp-=c;
+            }
+            if(arrOrder[i].getKey()==4L){
+                c = suggestByGenre(count, suggestId, genreAudio);
+                tmp-=c;
+            }
+        }
+        System.out.println("view");
+        for(int i = 0; i <arrmap.length; i++){
+            System.out.print(arrmap[i].getKey()+",");
+           
+        }
+        System.out.println();
+        System.out.println("artist "+artistAudio);
+        System.out.println("genre "+genreAudio);
+        System.out.println("like "+getListener().getLikedAudios());
+        System.out.println("suggest "+suggestId);
+        String txt = "suggestion Audios for you\n";
         for(Audio audio : Database.getDatabase().getAllAudio()){
             if(suggestId.contains(audio.getId())){
                 txt+="-"+audio.getAudioName()+"\n";

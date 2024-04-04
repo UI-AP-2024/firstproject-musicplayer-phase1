@@ -5,8 +5,8 @@ import java.util.Date;
 public class Podcast extends Audio{
     private String caption;
 
-    public Podcast(String audioName, String artistName, Date releaseDate, Genre genre, String cover, String caption) {
-        super(audioName, artistName, releaseDate, genre, cover);
+    public Podcast(String audioName, String artistName, String artistUsername, Date releaseDate, Genre genre, String link, String cover, String caption) {
+        super(audioName, artistName, artistUsername, releaseDate, genre, link, cover);
         this.caption = caption;
     }
 
