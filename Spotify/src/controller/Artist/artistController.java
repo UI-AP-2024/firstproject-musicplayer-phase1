@@ -50,7 +50,7 @@ public class artistController {
         if (!phoneRegex.matcher(phoneNumber).matches()) {
             return 1; // phone number is not true!
         }
-        Pattern emailRegex = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,}$");
+        Pattern emailRegex = Pattern.compile("^[a-zA-Z]+@[a-zA-Z]+.[a-zA-Z]{2,}$");
         if (!emailRegex.matcher(email).matches()) {
             return 2; //email is not true
         }
