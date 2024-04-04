@@ -11,7 +11,10 @@ import model.AccountUser.Listener.TypeOfListener.PremiumListener;
 import model.AccountUser.Listener.TypeOfListener.premiumSub;
 import model.Audio.Audio;
 import view.Panels;
+import model.AccountUser.Listener.TypeOfListener.PremiumListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,17 +33,17 @@ public class UserC {
 
     //*********************************************
     public static boolean isValidUserEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(\\S+)$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo)\\.com$";
         return email.matches(emailRegex);
     }
 
     public static boolean isValidPassword(String password) {
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9.@_-]{8,16}$";
         return password.matches(passwordRegex);
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$";
+        String phoneRegex = "^09[0-9]{9}$";
         return phoneNumber.matches(phoneRegex);
     }
 
@@ -70,10 +73,10 @@ public class UserC {
         return favoriteGenres;
     }
 
-   //**********************************************
+    //**********************************************
     private static List<Audio> likeAudis;
 
-    public static List<Audio> getLikeAudis(){
+    public static List<Audio> getLikeAudis() {
         return likeAudis;
     }
 
@@ -82,25 +85,70 @@ public class UserC {
     }
 
     //*********************************************
-    public static Playlist createPlaylist(int id, String name, String userName, boolean isPremium) {
-        if (!isPremium) {
-            if (id > 3) {
-                System.out.println("Error: Maximum number of playlists reached for a normal user.");
+
+
+        public static void addMusicToPlaylist ( String playlistName, int musicId) {
+            Playlist playlist = findPlaylistById(playlistName);
+
+            Audio audio = findAudioById(musicId);
+
+            if (playlist != null && audio != null) {
+                playlist.addAudio(audio.getTitle());
+                System.out.println("Music '" + audio.getTitle() + "' added to playlist '" + playlist.getName() + "'.");
+            } else {
+                System.out.println("Error: Playlist or music not found.");
+            }
+        }
+
+        private static Playlist findPlaylistById(String playlistName){
+            for (Playlist playlist :Listener.getPlaylists() ) {
+                if (playlist.getName() == playlistName) {
+                    return playlist;
+                }
+            }
+            return null;
+        }
+
+        private static Audio findAudioById(int musicId){
+            for (Audio audio : Database.getDatabase().getAudiofiles()) {
+                if (audio.getUniqeId() == musicId) {
+                    return audio;
+                }
+            }
+            return null;
+        }
+
+
+        public static Playlist createPlaylist(String playlistName,  Listener user) {
+            if (user instanceof PremiumListener || (user instanceof FreeListener && ((FreeListener) user).getPlaylists().size() < 3)) {
+                int playlistId = generatePlaylistId(playlistName, user.getUserName());
+                Playlist playlist = new Playlist(playlistId, playlistName, user.getUserName());
+                Listener.getPlaylists().add(playlist);
+                System.out.println("Playlist created successfully: " + playlistName);
+                return playlist;
+            } else {
+                System.out.println("Error: You have reached the maximum limit of playlists.");
                 return null;
             }
         }
 
-        return new Playlist(id, name, userName);
-    }
+        private static int generatePlaylistId(String playlistName, String username) {
+            try {
+                String combinedString = playlistName + username;
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                byte[] hash = digest.digest(combinedString.getBytes());
 
-    public void addAudioToPlaylist(Playlist playlist, String audio, boolean isPremiumUser) {
-        if (!isPremiumUser && playlist.getAudios().size() >= 10) {
-            System.out.println("Error: Maximum number of audio files reached for a free user.");
-            return;
+                int playlistId = 0;
+                for (int i = 0; i < Math.min(hash.length, 4); i++) {
+                    playlistId += (hash[i] & 0xFF) << (8 * i);
+                }
+                return playlistId;
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                return 0;
+            }
         }
 
-        playlist.addAudio(audio);
-    }
 
 
     //*********************************************
@@ -108,43 +156,48 @@ public class UserC {
         getLikeAudis().add(audio);
     }
 
-    public List<Audio> searchByKeyword(List<Audio> audioFiles, String keyword) {
+    public static List<Audio> searchByKeyword(List<Audio> audioFiles, String keyword) {
         return audioFiles.stream().filter(audio -> audio.getTitle().contains(keyword) || audio.getArtist().contains(keyword)).collect(Collectors.toList());
     }
 
-    public List<Audio> sortByPopularity(List<Audio> audioFiles) {
+    public static List<Audio> sortByPopularity(List<Audio> audioFiles) {
         return audioFiles.stream()
                 .sorted(Comparator.comparingInt(Audio::getLikes).reversed())
                 .collect(Collectors.toList());
     }
 
-    public List<Audio> sortByPlayCount(List<Audio> audioFiles) {
+    public static List<Audio> sortByPlayCount(List<Audio> audioFiles) {
         return audioFiles.stream()
                 .sorted(Comparator.comparingInt(Audio::getPlayCount).reversed())
                 .collect(Collectors.toList());
+
+
     }
 
-    public List<Audio> filterByArtist(List<Audio> audios, String artistName) {
+    public static List<Audio> filterByArtist(List<Audio> audios, String artistName) {
         List<Audio> filteredAudios = new ArrayList<>();
         for (Audio audio : audios) {
             if (audio.getArtist().equals(artistName)) {
                 filteredAudios.add(audio);
             }
         }
+        System.out.println("done successfully.");
+
         return filteredAudios;
     }
 
-    public List<Audio> filterByGenre(List<Audio> audios, String genre) {
+    public static List<Audio> filterByGenre(List<Audio> audios, String genre) {
         List<Audio> filteredAudios = new ArrayList<>();
         for (Audio audio : audios) {
             if (audio.getGenre().equals(genre)) {
                 filteredAudios.add(audio);
             }
         }
+        System.out.println("done successfully.");
         return filteredAudios;
     }
 
-    public List<Audio> filterByReleaseDate(List<Audio> audios, String startDate, String endDate) {
+    public static List<Audio> filterByReleaseDate(List<Audio> audios, String startDate, String endDate) {
         List<Audio> filteredAudios = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -159,17 +212,24 @@ public class UserC {
         } catch (ParseException e) {
             System.out.println("Error parsing dates: " + e.getMessage());
         }
+        System.out.println("done successfully.");
+
         return filteredAudios;
     }
     //*********************************************
 
 
-    public void followArtist(Artist artist) {
-        followedArtists.add(artist);
-        System.out.println(" is now following " + artist.getUserName());
+    public static void followArtistByUsername(String artistUsername) {
+        for (AccountUser user : Database.getDatabase().getUsers()) {
+            if (user instanceof Artist && user.getUserName().equals(artistUsername)) {
+                followedArtists.add((Artist) user);
+                System.out.println(user.getUserName() + " is now following " + artistUsername);
+            }
+        }
+        System.out.println("No artist found with username: " + artistUsername);
     }
 
-        private static List<Artist> followedArtists;
+    private static List<Artist> followedArtists;
 
     public UserC() {
         this.followedArtists = new ArrayList<>();
@@ -269,61 +329,60 @@ public class UserC {
     }
 
 
+    public static List<Audio> recommendSongs(Listener user, List<Audio> allAudios, List<Audio> likeAudis) {
+        List<Audio> recommendedSongs = new ArrayList<>();
 
-        public static List<Audio> recommendSongs(Listener user, List<Audio> allAudios, List<Audio> likeAudis) {
-            List<Audio> recommendedSongs = new ArrayList<>();
+        List<Genre> favoriteGenres = user.getFavoriteGenres();
 
-            List<Genre> favoriteGenres = user.getFavoriteGenres();
+        Map<Audio, Integer> playCountByAudio = user.getPlayCountByAudio();
 
-            Map<Audio, Integer> playCountByAudio = user.getPlayCountByAudio();
+        List<Artist> artistsWithBestMatch = findArtistsWithBestMatch(user, allAudios);
 
-            List<Artist> artistsWithBestMatch = findArtistsWithBestMatch(user, allAudios);
+        List<Audio> likedAudios = likeAudis;
 
-            List<Audio> likedAudios = likeAudis;
+        recommendedSongs.addAll(selectSongsWithBestMatch(allAudios, favoriteGenres, artistsWithBestMatch, likedAudios));
 
-            recommendedSongs.addAll(selectSongsWithBestMatch(allAudios, favoriteGenres, artistsWithBestMatch, likedAudios));
+        return recommendedSongs.subList(0, Math.min(10, recommendedSongs.size()));
+    }
 
-            return recommendedSongs.subList(0, Math.min(10, recommendedSongs.size()));
-        }
+    public static List<Artist> findArtistsWithBestMatch(Listener user, List<Audio> allAudios) {
+        List<Artist> artistsWithBestMatch = new ArrayList<>();
 
-        public static List<Artist> findArtistsWithBestMatch(Listener user, List<Audio> allAudios) {
-            List<Artist> artistsWithBestMatch = new ArrayList<>();
+        List<Artist> followingArtists = followedArtists;
 
-            List<Artist> followingArtists = followedArtists;
+        List<Genre> favoriteGenres = user.getFavoriteGenres();
 
-            List<Genre> favoriteGenres = user.getFavoriteGenres();
-
-            for (Artist followingArtist : followingArtists) {
-                if (artistHasMatchingGenres(followingArtist, favoriteGenres, allAudios)) {
-                    artistsWithBestMatch.add(followingArtist);
-                }
+        for (Artist followingArtist : followingArtists) {
+            if (artistHasMatchingGenres(followingArtist, favoriteGenres, allAudios)) {
+                artistsWithBestMatch.add(followingArtist);
             }
-
-            return artistsWithBestMatch;
         }
 
-        private static boolean artistHasMatchingGenres(Artist artist, List<Genre> favoriteGenres, List<Audio> allAudios) {
-            for (Audio audio : allAudios) {
-                if (artist.equals(audio.getArtist()) && favoriteGenres.contains(audio.getGenre())) {
-                    return true;
-                }
+        return artistsWithBestMatch;
+    }
+
+    private static boolean artistHasMatchingGenres(Artist artist, List<Genre> favoriteGenres, List<Audio> allAudios) {
+        for (Audio audio : allAudios) {
+            if (artist.equals(audio.getArtist()) && favoriteGenres.contains(audio.getGenre())) {
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        private static List<Audio> selectSongsWithBestMatch(List<Audio> allAudios, List<Genre> favoriteGenres, List<Artist> artistsWithBestMatch, List<Audio> likedAudios) {
-            List<Audio> selectedSongs = new ArrayList<>();
+    private static List<Audio> selectSongsWithBestMatch(List<Audio> allAudios, List<Genre> favoriteGenres, List<Artist> artistsWithBestMatch, List<Audio> likedAudios) {
+        List<Audio> selectedSongs = new ArrayList<>();
 
-            for (Audio audio : allAudios) {
-                if (favoriteGenres.contains(audio.getGenre()) &&
-                        artistsWithBestMatch.contains(audio.getArtist()) &&
-                        likedAudios.contains(audio)) {
-                    selectedSongs.add(audio);
-                }
+        for (Audio audio : allAudios) {
+            if (favoriteGenres.contains(audio.getGenre()) &&
+                    artistsWithBestMatch.contains(audio.getArtist()) &&
+                    likedAudios.contains(audio)) {
+                selectedSongs.add(audio);
             }
-
-            return selectedSongs;
         }
+
+        return selectedSongs;
+    }
 
     public void increaseAccountBalance(Listener listener, double amount) {
         if (listener != null && listener instanceof Listener) {
@@ -359,6 +418,7 @@ public class UserC {
             System.out.println("Invalid username or password. Please try again.");
         }
     }
+
     public static void signUpL(String[] commands) {
 
         String userName = commands[2];
@@ -369,15 +429,19 @@ public class UserC {
         String password = commands[3];
         if (!isValidPassword(password)) {
             System.out.println("Invalid password.");
+            return;
         }
         String fullName = commands[4];
         String email = commands[5];
         if (!isValidUserEmail(email)) {
             System.out.println("Invalid email.");
+            return;
         }
         String phoneNumber = commands[6];
         if (!isValidPhoneNumber(phoneNumber)) {
             System.out.println("Invalid phoneNumber.");
+            return;
+
         }
         String dateOfBirth = commands[7];
         Date birthDate;
