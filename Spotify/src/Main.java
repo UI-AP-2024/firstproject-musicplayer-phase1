@@ -8,7 +8,7 @@ public class Main {
         Database.getDatabase().getAllUsersList().add(Admin.getAdmin("Admin","1234","first admin","test@gmail.com","09905854478",
                 new Date(2005,4,13)));
 
-        firstPage.getFirst();
+        firstPage.getFirst().firstView();
 
     }
 }
