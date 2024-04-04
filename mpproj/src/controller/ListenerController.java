@@ -60,6 +60,7 @@ public class ListenerController {
         "\nAccount Credit : "+String.valueOf(getListener().getAccountCredit())+"\n";
         if(getListener() instanceof PremiumListener){
             txt+="Premium Expiration Date : "+String.valueOf(((PremiumListener)getListener()).getPremiumExpirationDate());
+            txt+="RemainingDaysOfPremium : "+String.valueOf(((PremiumListener)getListener()).getRemainingDaysOfPremium());
         }
         return txt;
     }
@@ -72,6 +73,27 @@ public class ListenerController {
                 cal.add(Calendar.DAY_OF_MONTH, days);
                 Date expDate = cal.getTime(); 
                 PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(), getListener().getName(), getListener().getEmailAddress(), getListener().getPhoneNumber(), getListener().getBirthDate(), getListener().getAccountCredit(),days,expDate);
+                tmp.setAudioPlays(getListener().getAudioPlays());
+                tmp.setFavoriteGenres(getListener().getFavoriteGenres());
+                tmp.setLikedAudios(getListener().getLikedAudios());
+                tmp.setListOfPlayLists(getListener().getListOfPlayLists());
+                for(User user : Database.getDatabase().getAllUsers()){
+                    if(user instanceof Artist){
+                        if(((Artist)user).getFollowers().contains(getListener())){
+                            ((Artist)user).getFollowers().remove(getListener());
+                            ((Artist)user).getFollowers().add(tmp);
+                        }
+                    }
+                }
+                if(Database.getDatabase().getAllUsers().contains(getListener())){
+                    boolean a =(Database.getDatabase().getAllUsers().remove(getListener()));
+                    a = (Database.getDatabase().getAllUsers().add(tmp));
+                }
+                for(Report report : Database.getDatabase().getAllReports()){
+                    if(report.getReportingUser().getUsername().equals(getListener().getUsername())){
+                        report.setReportingUser(tmp);
+                    }
+                }
                 setListener(tmp);
                 //change the method with type casting?to nut remove user
                 //exchanging two listeners in all felds they are in->database,artist,report

@@ -30,11 +30,15 @@ public class PremiumListener extends Listener{
 			@Override
 			public void run() {
 				remainingDaysOfPremium--;
+                if(remainingDaysOfPremium==0){
+                    System.out.println("your premium account has been expired, get your account premium");
+                }
 			}		
 		};
 
         timer.scheduleAtFixedRate(task, 0, 24*60*60000);
         //every one day after calling the method
+        //24*60*60000
     }
     
     
