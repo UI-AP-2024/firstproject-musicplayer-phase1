@@ -18,137 +18,130 @@ import model.user.User;
 
 public class UserController {
     private static UserController userController;
-    private UserController(){
+
+    private UserController() {
 
     }
-    public static UserController getUserController(){
-        if(userController==null){
+
+    public static UserController getUserController() {
+        if (userController == null) {
             userController = new UserController();
         }
         return userController;
     }
-    public boolean emailPassRegex(String email){
+
+    public boolean emailPassRegex(String email) {
         Pattern pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-    public boolean DatePassRegex(String birthDate){
+
+    public boolean DatePassRegex(String birthDate) {
         Pattern pattern = Pattern.compile("(^0[1-9]|[12][0-9]|3[01])/([1-9]|1[0-2])/(19[0-9]{2}|2[0-9]{3}$)");
         Matcher matcher = pattern.matcher(birthDate);
         return matcher.matches();
     }
-    public boolean phoneNumPassRegex(String phoneNumber){
+
+    public boolean phoneNumPassRegex(String phoneNumber) {
         Pattern pattern = Pattern.compile("^09[0-9]{9}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         return matcher.matches();
     }
-    public boolean passwordPassRegex(String password){
+
+    public boolean passwordPassRegex(String password) {
         Pattern pattern = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
-    public boolean usernameIsUnic(String username){
-        for(User user : Database.getDatabase().getAllUsers()){
-            if(user.getUsername().equals(username))
+
+    public boolean usernameIsUnic(String username) {
+        for (User user : Database.getDatabase().getAllUsers()) {
+            if (user.getUsername().equals(username))
                 return false;
         }
         return true;
     }
-    public String signupNewUser(String type,String username,String password, String name, String emailAddress, String phoneNumber,
-    String birthDate,String bio) throws ParseException{
-        if(!(emailPassRegex(emailAddress))){
-            return"Please enter a valid email address";
+
+    public String signupNewUser(String type, String username, String password, String name, String emailAddress,
+            String phoneNumber,
+            String birthDate, String bio) throws ParseException {
+        if (!(emailPassRegex(emailAddress))) {
+            return "Please enter a valid email address";
         }
-        if(!(phoneNumPassRegex(phoneNumber))){
-            return"Please enter a valid phone Number";
+        if (!(phoneNumPassRegex(phoneNumber))) {
+            return "Please enter a valid phone Number";
         }
-        if(!(passwordPassRegex(password))){
-            return"Not a strong password!! Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.";
+        if (!(passwordPassRegex(password))) {
+            return "Not a strong password!! Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.";
         }
-        if(!(usernameIsUnic(username))){
-            return"This username is alredy taken ! Please enter another one";
+        if (!(usernameIsUnic(username))) {
+            return "This username is alredy taken ! Please enter another one";
         }
-        if(!(DatePassRegex(birthDate))){
-            return"This Date is not valid !please enter a valid one";
+        if (!(DatePassRegex(birthDate))) {
+            return "This Date is not valid !please enter a valid one";
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date dateOfbirth = formatter.parse(birthDate);
         switch (type) {
             case "L":
-            FreeListener listener = new FreeListener(password,username,name, emailAddress, phoneNumber, dateOfbirth, 50);
-            Database.getDatabase().addToAllUsers(listener);
-            ListenerController.getListenerController().setListener(listener);
-                
+                FreeListener listener = new FreeListener(password, username, name, emailAddress, phoneNumber,
+                        dateOfbirth, 50);
+                Database.getDatabase().addToAllUsers(listener);
+                ListenerController.getListenerController().setListener(listener);
+
                 break;
-        
+
             case "S":
-            Singer singer = new Singer(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
-            Database.getDatabase().addToAllUsers(singer);
+                Singer singer = new Singer(password, username, name, emailAddress, phoneNumber, dateOfbirth, bio);
+                Database.getDatabase().addToAllUsers(singer);
                 break;
-        
+
             case "P":
-            Podcaster podcaster = new Podcaster(password,username, name, emailAddress, phoneNumber, dateOfbirth,bio);
-            Database.getDatabase().addToAllUsers(podcaster);
+                Podcaster podcaster = new Podcaster(password, username, name, emailAddress, phoneNumber, dateOfbirth,
+                        bio);
+                Database.getDatabase().addToAllUsers(podcaster);
                 break;
-        
+
             default:
                 break;
         }
         return "Thanks for signing up. Your account has been created";
     }
-    public User findUser(String username,String password){
-        for(User user : Database.getDatabase().getAllUsers()){
-            if(user.getUsername().equals(username)){
-                if(user.getPassword().equals(password)){
+
+    public User findUser(String username, String password) {
+        for (User user : Database.getDatabase().getAllUsers()) {
+            if (user.getUsername().equals(username)) {
+                if (user.getPassword().equals(password)) {
                     return user;
                 }
             }
         }
         return null;
     }
-    public String loginUser(String username,String password){
+
+    public String loginUser(String username, String password) {
         User user = findUser(username, password);
-        if(user instanceof Listener){
-            ListenerController.getListenerController().loginListener((Listener)user);
+        if (user instanceof Listener) {
+            ListenerController.getListenerController().loginListener((Listener) user);
             return "L";
         }
-        if(user instanceof Artist){
-            ArtistController.getArtistController().loginArtist((Artist)user);
+        if (user instanceof Artist) {
+            ArtistController.getArtistController().loginArtist((Artist) user);
             return "A";
         }
-        if(user instanceof Admin){
+        if (user instanceof Admin) {
             return "Admin";
         }
         return "null";
     }
 
-    public User findUser(String username){
-        for(User user : Database.getDatabase().getAllUsers()){
-            if(user.getUsername().equals(username)){
+    public User findUser(String username) {
+        for (User user : Database.getDatabase().getAllUsers()) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
         return null;
 
     }
-    // public String showArtistInfo(String username){
-    //     User user = findUser(username);
-        
-    //     if(user instanceof Singer){
-    //         SingerController.getSingerController().setSinger((Singer)user);
-    //         String txt = SingerController.getSingerController().ShowSingerInfo();
-    //         return txt;
-    //     }
-    //     if(user instanceof Podcaster){
-    //         PodcasterController.getPodcasterController().setPodcaster((Podcaster)user);
-    //         String txt =PodcasterController.getPodcasterController().ShowPodcasterInfo();
-    //         return txt;
-    //     }
-           
-    //     return null;
-    // }
-
-    // public String calculate(Artist artist){
-    //     artist.calculate();
-    // }
 }

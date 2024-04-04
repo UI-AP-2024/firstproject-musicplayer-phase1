@@ -14,108 +14,113 @@ import model.user.User;
 
 public class ArtistController {
     private static ArtistController artistController;
-    private ArtistController(){
+
+    private ArtistController() {
 
     }
-    public static ArtistController getArtistController(){
-        if(artistController==null){
+
+    public static ArtistController getArtistController() {
+        if (artistController == null) {
             artistController = new ArtistController();
         }
         return artistController;
     }
 
     private static Artist artist;
+
     public static Artist getArtist() {
         return artist;
     }
+
     public static void setArtist(Artist artist) {
         ArtistController.artist = artist;
     }
 
-    public void loginArtist(Artist artist){
+    public void loginArtist(Artist artist) {
         setArtist(artist);
-        if(artist instanceof Singer){
-            SingerController.getSingerController().setSinger((Singer)artist);
+        if (artist instanceof Singer) {
+            SingerController.getSingerController().setSinger((Singer) artist);
         }
-        if(artist instanceof Podcaster){
-            PodcasterController.getPodcasterController().setPodcaster((Podcaster)artist);
+        if (artist instanceof Podcaster) {
+            PodcasterController.getPodcasterController().setPodcaster((Podcaster) artist);
         }
     }
 
-    public String ShowAccountInfo(){
+    public String ShowAccountInfo() {
         calculateIncome();
-        String txt="Account info:"+
-        "\nuser name : "+getArtist().getUsername()+
-        "\nFirst name : "+getArtist().getName()+
-        "\nemail address: "+getArtist().getEmailAddress()+
-        "\npassword : "+getArtist().getPassword()+
-        "\nbirth date : "+String.valueOf(getArtist().getBirthDate())+
-        "\nIncome : "+String.valueOf(getArtist().getIncome());
+        String txt = "Account info:" +
+                "\nuser name : " + getArtist().getUsername() +
+                "\nFirst name : " + getArtist().getName() +
+                "\nemail address: " + getArtist().getEmailAddress() +
+                "\npassword : " + getArtist().getPassword() +
+                "\nbirth date : " + String.valueOf(getArtist().getBirthDate()) +
+                "\nIncome : " + String.valueOf(getArtist().getIncome());
         return txt;
     }
 
-    public String showFollowers(){
-        String txt ="All Followers\n";
-        if(getArtist().getFollowers().size()==0){
-            txt+="you dont have any followers yet!";
+    public String showFollowers() {
+        String txt = "All Followers\n";
+        if (getArtist().getFollowers().size() == 0) {
+            txt += "you dont have any followers yet!";
             return txt;
         }
-        for(User user : getArtist().getFollowers()){
-            txt+="-"+user.getUsername()+"\n";
+        for (User user : getArtist().getFollowers()) {
+            txt += "-" + user.getUsername() + "\n";
         }
         return txt;
     }
 
-    public String showArtistInfo(){
-        if(getArtist() instanceof Singer){
+    public String showArtistInfo() {
+        if (getArtist() instanceof Singer) {
             String txt = SingerController.getSingerController().ShowSingerInfo();
             return txt;
         }
-        if(getArtist() instanceof Podcaster){
+        if (getArtist() instanceof Podcaster) {
             String txt = PodcasterController.getPodcasterController().ShowPodcasterInfo();
             return txt;
-        }
-        else return null;
+        } else
+            return null;
 
     }
 
-    public String showViewsStatics(){
-        if(getArtist() instanceof Singer){
+    public String showViewsStatics() {
+        if (getArtist() instanceof Singer) {
             String txt = SingerController.getSingerController().showViewsStatics();
             return txt;
         }
-        if(getArtist() instanceof Podcaster){
+        if (getArtist() instanceof Podcaster) {
             String txt = PodcasterController.getPodcasterController().showViewsStatics();
             return txt;
-        }
-        else return null;
+        } else
+            return null;
     }
 
-    public String createNewAlbum(String albumName){
+    public String createNewAlbum(String albumName) {
         return SingerController.getSingerController().createNewAlbum(albumName);
     }
-    public String publishAudio(String type, String title, String genre,String lyricsCaption,String link,String cover, long albumId){
+
+    public String publishAudio(String type, String title, String genre, String lyricsCaption, String link, String cover,
+            long albumId) {
 
         Date currentDate = new Date();
-        if(type.equals("P")){
+        if (type.equals("P")) {
             System.out.println("was P");
-            if(getArtist() instanceof Podcaster){
-                Podcast tmp = new Podcast(title,getArtist().getName(),getArtist().getUsername(),currentDate,Genre.valueOf(genre.toUpperCase()),link,cover,lyricsCaption);
+            if (getArtist() instanceof Podcaster) {
+                Podcast tmp = new Podcast(title, getArtist().getName(), getArtist().getUsername(), currentDate,
+                        Genre.valueOf(genre.toUpperCase()), link, cover, lyricsCaption);
                 Database.getDatabase().addToAllAudio(tmp);
-                ((Podcaster)getArtist()).addToPodcastList(tmp);
+                ((Podcaster) getArtist()).addToPodcastList(tmp);
                 return "your podcast published succesfully";
-            }
-            else 
-            {
+            } else {
                 return "you are not a Podcaster You cant publish a podcast";
             }
         }
-        if(type.equals("M")){
-            if(getArtist() instanceof Singer){
-                for(Album album : ((Singer)getArtist()).getAlbumList())
-                {
-                    if(album.getId()==albumId){
-                        Music tmp = new Music(title,getArtist().getName(),getArtist().getUsername(),currentDate,Genre.valueOf(genre.toUpperCase()),link,cover,lyricsCaption);
+        if (type.equals("M")) {
+            if (getArtist() instanceof Singer) {
+                for (Album album : ((Singer) getArtist()).getAlbumList()) {
+                    if (album.getId() == albumId) {
+                        Music tmp = new Music(title, getArtist().getName(), getArtist().getUsername(), currentDate,
+                                Genre.valueOf(genre.toUpperCase()), link, cover, lyricsCaption);
                         Database.getDatabase().addToAllAudio(tmp);
                         album.addToMusicList(tmp);
                         return "your Music published succesfully";
@@ -123,39 +128,39 @@ public class ArtistController {
                 }
 
                 return "you dont have access to this album , enter one of your own album id";
+            } else
+                return "you are not a Singer You Cant publish a music ";
+
+        } else
+            return "this type of audio is not valid enter a valid type\n 'M' for Music & 'P' for podcast";
+    }
+
+    public void calculateIncome() {
+        if (getArtist() instanceof Singer) {
+            calculateIncome((Singer) getArtist());
+        }
+        if (getArtist() instanceof Podcaster) {
+            calculateIncome((Podcaster) getArtist());
+        }
+
+    }
+
+    public void calculateIncome(Singer singer) {
+        long view = 0;
+        for (Album album : singer.getAlbumList()) {
+            for (Music music : album.getMusicList()) {
+                view += music.getNumberOfPlays();
             }
-            else return "you are not a Singer You Cant publish a music ";
-
         }
-        else return "this type of audio is not valid enter a valid type\n 'M' for Music & 'P' for podcast";
+        getArtist().setIncome(view * 0.4);
     }
 
-    public void calculateIncome(){
-        if(getArtist() instanceof Singer){
-            calculateIncome((Singer)getArtist());
+    public void calculateIncome(Podcaster podcaster) {
+        long view = 0;
+        for (Podcast podcast : podcaster.getPodcastList()) {
+            view += podcast.getNumberOfPlays();
         }
-        if(getArtist() instanceof Podcaster){
-            calculateIncome((Podcaster)getArtist());
-        }
-
-    }
-    public void calculateIncome(Singer singer){
-        long view =0;
-        for(Album album :singer.getAlbumList()){
-            for(Music music : album.getMusicList()){
-                view+=music.getNumberOfPlays();
-            }
-        }
-        getArtist().setIncome(view*0.4);
-    }
-    public void calculateIncome(Podcaster podcaster){
-        long view =0;
-        for(Podcast podcast :podcaster.getPodcastList()){
-            view+=podcast.getNumberOfPlays();
-        }
-        getArtist().setIncome(view*0.5);
+        getArtist().setIncome(view * 0.5);
     }
 
-
-    
 }
