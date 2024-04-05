@@ -91,13 +91,18 @@ public class MainView {
 
                     break;
                 case "Login":
-
-                    character = UserController.getUserController().loginUser(spltCmd[1], spltCmd[2]);
-                    if (character.equals("null")) {
-                        System.out.println("not a valid username or password try again");
-                    } else {
-                        System.out.println("you've loged in successfully");
+                    if(character.equals("out")){
+                        character = UserController.getUserController().loginUser(spltCmd[1], spltCmd[2]);
+                        if (character.equals("null")) {
+                            System.out.println("not a valid username or password try again");
+                        } else {
+                            System.out.println("you've loged in successfully");
+                        }
                     }
+                    else{
+                        System.out.println("you have to logout first to have access to login command");
+                    }
+                    
                     break;
                 case "Logout":
                     character = "out";

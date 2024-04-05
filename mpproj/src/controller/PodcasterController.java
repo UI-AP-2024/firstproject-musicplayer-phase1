@@ -1,5 +1,11 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import model.audio.Music;
 import model.audio.Podcast;
 import model.user.Podcaster;
 
@@ -51,12 +57,20 @@ public class PodcasterController {
     }
 
     public String showViewsStatics() {
+        ArrayList <Podcast> podcasts = new ArrayList<>();
         String txt = "Podcasts\n";
         if (getPodcaster().getPodcastList().size() == 0) {
             txt += "No Podcast found!!";
             return txt;
         }
-        for (Podcast podcast : getPodcaster().getPodcastList()) {
+        List<Podcast> sorted = getPodcaster().getPodcastList()
+                    .stream()
+                    .sorted(Comparator.comparing(Podcast -> Podcast.getNumberOfPlays()))
+                    .collect(Collectors.toCollection(ArrayList::new))
+                    .reversed();
+
+            ArrayList<Podcast> sortedPods = new ArrayList<Podcast>(sorted);
+        for (Podcast podcast : sortedPods) {
             txt += "-" + podcast.getAudioName() + "(" + String.valueOf(podcast.getNumberOfPlays()) + ")\n";
         }
 

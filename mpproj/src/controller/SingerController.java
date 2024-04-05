@@ -1,7 +1,14 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import model.audio.Album;
+import model.audio.Audio;
 import model.audio.Music;
+import model.database.Database;
 import model.user.Singer;
 import model.user.User;
 
@@ -63,21 +70,32 @@ public class SingerController {
     }
 
     public String showViewsStatics() {
-        String txt = "Albums\n";
+        ArrayList<Music> musics =new ArrayList<>();
+        String txt = "View\n";
         if (getSinger().getAlbumList().size() == 0) {
             txt += "No album found!!";
             return txt;
         }
         for (Album album : getSinger().getAlbumList()) {
-            txt += album.getAlbumName() + "(id:" + String.valueOf(album.getId()) + ")\n";
-            if (album.getMusicList().size() == 0) {
-                txt += "no music is published in this album yet";
-                return txt;
-            }
             for (Music music : album.getMusicList()) {
-                txt += "-" + music.getAudioName() + "(" + String.valueOf(music.getNumberOfPlays()) + ")\n";
+                musics.add(music);
             }
         }
+        if(musics.size()==0){
+            txt+="no music found";
+            return txt;
+        }
+        List<Music> sorted = musics
+                    .stream()
+                    .sorted(Comparator.comparing(Music -> Music.getNumberOfPlays()))
+                    .collect(Collectors.toCollection(ArrayList::new))
+                    .reversed();
+
+            ArrayList<Music> sortedMusics = new ArrayList<Music>(sorted);
+            for (Music music :sortedMusics) {
+                txt += "-" + music.getAudioName() + "(" + String.valueOf(music.getNumberOfPlays()) + ")\n";
+            }
+
 
         return txt;
     }

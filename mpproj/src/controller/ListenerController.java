@@ -17,6 +17,8 @@ import model.user.PremiumListener;
 import model.user.Report;
 import model.user.Singer;
 import model.user.User;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ListenerController {
     private static ListenerController listenerController;
@@ -79,6 +81,7 @@ public class ListenerController {
                 PremiumListener tmp = new PremiumListener(getListener().getPassword(), getListener().getUsername(),
                         getListener().getName(), getListener().getEmailAddress(), getListener().getPhoneNumber(),
                         getListener().getBirthDate(), getListener().getAccountCredit(), days, expDate);
+
                 tmp.setAudioPlays(getListener().getAudioPlays());
                 tmp.setFavoriteGenres(getListener().getFavoriteGenres());
                 tmp.setLikedAudios(getListener().getLikedAudios());
@@ -101,6 +104,7 @@ public class ListenerController {
                     }
                 }
                 setListener(tmp);
+                shortenRemainingDays();
                 // change the method with type casting?to nut remove user
                 // exchanging two listeners in all felds they are in->database,artist,report
             } else {
@@ -120,6 +124,56 @@ public class ListenerController {
         }
         return "you dont have enough credit to get premium";
 
+    }
+
+    public void shortenRemainingDays() {
+        Timer timer = new Timer();
+        PremiumListener tmp = ((PremiumListener) getListener());
+
+        TimerTask task = new TimerTask() {
+
+            @Override
+            public void run() {
+                tmp.setRemainingDaysOfPremium(tmp.getRemainingDaysOfPremium() - 1);
+                if (tmp.getRemainingDaysOfPremium() == 0) {
+                    System.out.println("your premium account has been expired, get your account premium");
+                    changeListenerAcc();
+                    
+
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 1000);
+        //24*60*60000
+    }
+
+    public void changeListenerAcc() {
+        FreeListener tmp = new FreeListener(getListener().getPassword(), getListener().getUsername(),
+                getListener().getName(), getListener().getEmailAddress(), getListener().getPhoneNumber(),
+                getListener().getBirthDate(), getListener().getAccountCredit());
+
+        tmp.setAudioPlays(getListener().getAudioPlays());
+        tmp.setFavoriteGenres(getListener().getFavoriteGenres());
+        tmp.setLikedAudios(getListener().getLikedAudios());
+        tmp.setListOfPlayLists(getListener().getListOfPlayLists());
+        for (User user : Database.getDatabase().getAllUsers()) {
+            if (user instanceof Artist) {
+                if (((Artist) user).getFollowers().contains(getListener())) {
+                    ((Artist) user).getFollowers().remove(getListener());
+                    ((Artist) user).getFollowers().add(tmp);
+                }
+            }
+        }
+        if (Database.getDatabase().getAllUsers().contains(getListener())) {
+            boolean a = (Database.getDatabase().getAllUsers().remove(getListener()));
+            a = (Database.getDatabase().getAllUsers().add(tmp));
+        }
+        for (Report report : Database.getDatabase().getAllReports()) {
+            if (report.getReportingUser().getUsername().equals(getListener().getUsername())) {
+                report.setReportingUser(tmp);
+            }
+        }
+        setListener(tmp);
     }
 
     public String showAllArtists() {
@@ -190,7 +244,7 @@ public class ListenerController {
     public String reportArtist(String username, String explanation) {
         User user = UserController.getUserController().findUser(username);
         if (user instanceof Artist) {
-            Report tmp = new Report(getListener(), (Artist)user, explanation);
+            Report tmp = new Report(getListener(), (Artist) user, explanation);
             Database.getDatabase().addToAllReports(tmp);
             return "thanks for your feedback , your report has been recieved!";
         } else {

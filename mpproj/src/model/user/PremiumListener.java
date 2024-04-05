@@ -12,7 +12,6 @@ public class PremiumListener extends Listener{
         super(password,username, name, emailAddress, phoneNumber, birthDate, accountCredit);
         this.remainingDaysOfPremium = remainingDaysOfPremium;
         super.setPremiumExpirationDate(premiumExpirationDate);
-        shortenRemainingDays();
     }
 
     public int getRemainingDaysOfPremium() {
@@ -22,24 +21,5 @@ public class PremiumListener extends Listener{
     public void setRemainingDaysOfPremium(int remainingDaysOfPremium) {
         this.remainingDaysOfPremium = remainingDaysOfPremium;
     }
-    private void shortenRemainingDays(){
-        Timer timer = new Timer();
-		
-		TimerTask task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				remainingDaysOfPremium--;
-                if(remainingDaysOfPremium==0){
-                    System.out.println("your premium account has been expired, get your account premium");
-                }
-			}		
-		};
 
-        timer.scheduleAtFixedRate(task, 0, 24*60*60000);
-        //every one day after calling the method
-        //24*60*60000
-    }
-    
-    
 }
