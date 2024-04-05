@@ -72,7 +72,7 @@ public class UserController {
             return "Please enter a valid phone Number";
         }
         if (!(passwordPassRegex(password))) {
-            return "Not a strong password!! Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.";
+            return "Not a strong password!!\nYour password must be at least 8 characters long, \ncontain at least one number and\nhave a mixture of uppercase and lowercase letters.";
         }
         if (!(usernameIsUnic(username))) {
             return "This username is alredy taken ! Please enter another one";

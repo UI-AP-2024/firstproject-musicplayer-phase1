@@ -1,5 +1,5 @@
 id final build 
-toString *
+toString *0
 data base control
 set array list -> insert to arraylist
 album artist name -> artist username or artist itself

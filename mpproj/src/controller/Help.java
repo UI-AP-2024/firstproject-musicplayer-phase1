@@ -9,7 +9,7 @@ public class Help {
         "-[birth date] -[bio ]\n"+
         "(L for Listener, S for Singer, P for Podcaster)\n\n"+
         "<-->FavouriteGenres-[favourite genres separated with comma(,)]\n"+
-        "(make sure you set your favoriteGenres after your Sign up)\n\n"+
+        "(make sure you set your favoriteGenres after your Sign up, at most four genre)\n\n"+
         "<-->Login -[username] -[password]\n\n"+
         "<-->Logout\n\n\n"+
         "[when you are logged in]\n\n"+

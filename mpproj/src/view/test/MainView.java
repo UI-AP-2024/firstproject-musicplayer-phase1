@@ -61,16 +61,20 @@ public class MainView {
                     }
                     break;
                 case "FavouriteGenres":
-                    if (type.equals("L")) {
+                    if (type.equals("L")||character.equals("L")) {
                         String[] genres = spltCmd[1].split(",");
                         ArrayList<String> genre = new ArrayList<>();
                         for (String string : genres) {
                             genre.add(string);
                         }
-                        //
-                        ListenerController.getListenerController().getFavoriteGenres(genre);
-                        ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
-                        System.out.println(t);
+                        if(genre.size()>4){
+                            System.out.println("you can at most select 4 genres!");
+                        }
+                        else{
+                            ListenerController.getListenerController().getFavoriteGenres(genre);
+                            ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
+                            System.out.println(t);
+                        }
                     } else
                         System.out.println("only listeners can choose FavouriteGenres!");
 
