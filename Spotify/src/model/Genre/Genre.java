@@ -1,5 +1,5 @@
 package model.Genre;
 
 public enum Genre {
-    ROCK, POP ,JAZZ ,HIPHOP ,COUNTRY,TRUE_CRIME, SOCIETY,INTERVIEW, HISTORY
+    Rock, Pop ,Jazz ,HiPHop ,Country,TrueCrime, Society,Interview, History
 }
