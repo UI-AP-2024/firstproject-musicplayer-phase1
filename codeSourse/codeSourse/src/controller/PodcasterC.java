@@ -17,13 +17,6 @@ import java.util.*;
 public class PodcasterC {
 
     private static Map<String, Podcaster> podcaster = new HashMap<>();
-
-    //*********************************************
-
-    public Map<String, Podcaster> getUsers() {
-        return podcaster;
-    }
-
     //*********************************************
     public static boolean isValidUserEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo|example)\\.com$";
@@ -31,7 +24,7 @@ public class PodcasterC {
     }
 
     public static boolean isValidPassword(String password) {
-        String passwordRegex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9.@_-]{8,16}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9.@!#$%^&*_-]{8,16}$";
         return password.matches(passwordRegex);
     }
 
@@ -55,13 +48,14 @@ public class PodcasterC {
         if (podcaster.containsKey(userName)) {
             System.out.println("Error: userName already exists.");
             Panels.showFirstMeneu();
+            return;
 
         }
         String password = commands[3];
         if (!isValidPassword(password)) {
             System.out.println("Invalid password.");
             Panels.showFirstMeneu();
-
+            return;
 
         }
         String fullName = commands[4];
@@ -69,12 +63,14 @@ public class PodcasterC {
         if (!isValidUserEmail(email)) {
             System.out.println("Invalid email.");
             Panels.showFirstMeneu();
+            return;
 
         }
         String phoneNumber = commands[6];
         if (!isValidPhoneNumber(phoneNumber)) {
             System.out.println("Invalid phoneNumber.");
             Panels.showFirstMeneu();
+            return;
 
         }
         String dateOfBirth = commands[7];

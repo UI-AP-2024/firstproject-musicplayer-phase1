@@ -28,12 +28,12 @@ public class SingerC {
 
     //*********************************************
     public static boolean isValidUserEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo)\\.com$";
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@(gmail|email|yahoo|example)\\.com$";
         return email.matches(emailRegex);
     }
 
     public static boolean isValidPassword(String password) {
-        String passwordRegex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9.@_-]{8,16}$";
+        String passwordRegex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])[A-Za-z0-9.@!#$%^&*_-]{8,16}$";
         return password.matches(passwordRegex);
     }
 
@@ -47,41 +47,33 @@ public class SingerC {
         int uniqueId = generateUniqueId();
         Album album = new Album(uniqueId, albumName, singer.getFullName());
         singer.getAlbums().add(album);
+        System.out.println("done successfully.");
         return uniqueId;
     }
 
-    private static int generateUniqueId() {
 
+
+    public static int generateUniqueId() {
         return (int) (Math.random() * 1000) + 1;
     }
 
-        public static void publishMusic(Singer singer, String title, Genre genre, int albumId, String audioLink, String cover, String lyrics) {
-            Music audio = new Music(generateUniqueId(), title, singer.getFullName(), 0, 0, new Date(), genre, audioLink, cover, lyrics);
-            Database.getInstance().getAudiofiles().add(audio);
-            Album album = findAlbumById(singer, albumId);
-            if (album != null) {
-                album.addSong(title);
-            } else {
-                System.out.println("Album not found!");
-            }
+    public static void publishMusic(Singer singer, String title, Genre genre, int albumId, String audioLink, String cover, String lyrics) {
+        Album album = findAlbumById(singer, albumId);
+        if (album == null) {
+            System.out.println("Album not found!");
+            return;
         }
 
+        Music audio = new Music(generateUniqueId(), title, singer.getFullName(), 0, 0, new Date(), genre, audioLink, cover, lyrics);
+        Database.getInstance().getAudiofiles().add(audio);
+        album.addSong(title);
+        System.out.println("done successfully.");
+    }
 
-        private static Album findAlbumById(Singer singer, int albumId) {
-            List<Album> albums = singer.getAlbums();
-            for (Album album : albums) {
-                if (album.getUniqeId() == albumId) {
-                    return album;
-                }
-            }
-            return null;
-        }
-
-
-    private static Album findAlbumByName(Singer singer, String albumName) {
-        List<Album> albumss = singer.getAlbums();
-        for (Album album : albumss) {
-            if (album.equals(albumName)) {
+    private static Album findAlbumById(Singer singer, int albumId) {
+        List<Album> albums = singer.getAlbums();
+        for (Album album : albums) {
+            if (album.getUniqeId() == albumId) {
                 return album;
             }
         }
@@ -93,11 +85,13 @@ public class SingerC {
         String userName = commands[2];
         if (singer.containsKey(userName)) {
             System.out.println("Error: userName already exists.");
+            Panels.showFirstMeneu();
             return;
         }
         String password = commands[3];
         if (!isValidPassword(password)) {
             System.out.println("Invalid password.");
+            Panels.showFirstMeneu();
             return;
 
         }
@@ -105,12 +99,14 @@ public class SingerC {
         String email = commands[5];
         if (!isValidUserEmail(email)) {
             System.out.println("Invalid email.");
+            Panels.showFirstMeneu();
             return;
 
         }
         String phoneNumber = commands[6];
         if (!isValidPhoneNumber(phoneNumber)) {
             System.out.println("Invalid phoneNumber.");
+            Panels.showFirstMeneu();
             return;
 
         }
@@ -134,4 +130,3 @@ public class SingerC {
 
     }
 }
-

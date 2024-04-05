@@ -9,16 +9,18 @@ import model.AccountUser.Artist.Artist;
 import model.AccountUser.Artist.TypeOfArtist.Podcaster;
 import model.AccountUser.Artist.TypeOfArtist.Singer;
 import model.AccountUser.Listener.Listener;
+import model.Audio.Audio;
 import model.Audio.Music;
 import model.Database;
 import model.Genre;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Panels {
     public static void showFirstMeneu() {
         System.out.println("Signup\nLogin");
-        System.out.println("Please enter your choice:");
+        System.out.println("Please enter your choice:\n\n");
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
@@ -69,7 +71,7 @@ public class Panels {
 
     public static void showUserPanel(Listener user) {
         System.out.println("welcome to listener panel");
-        System.out.println("GetSeggestions\nArtists\nArtist\nFollow\nSearch\nFilter\nSort\nShowPlaylists\nSelectPlaylists\nPlay\\nLike\nLyric\\nNewPlaylist\nAdd\nFollowing\nReport\nIncreasrCredit\nGetPremium\nenter 0 for showFirstMene");
+        System.out.println("GetSeggestions\nArtists\nArtist\nFollow\nSearch\nFilter\nSort\nShowPlaylists\nSelectPlaylists\nPlay\nLike\nLyric\nNewPlaylist\nAdd\nFollowing\nReport\nIncreasrCredit\nAudioId\nGetPremium\nAccountInfo\nLogout\n\n");
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -89,12 +91,12 @@ public class Panels {
                     String userName = commits[1];
                     AdminV.displayArtistInfo(userName);
                     showUserPanel(user);
-
                     break;
+
 
                 case "Follow":
                     String artistUsername = commits[1];
-                    UserC.followArtistByUsername(artistUsername);
+                    UserC.followArtistByUsername(artistUsername, user);
                     showUserPanel(user);
 
                     break;
@@ -111,23 +113,45 @@ public class Panels {
                     switch (filterType) {
                         case "A":
                             String input2 = commits[2];
-                            System.out.println(UserC.filterByArtist(Database.getInstance().getAudiofiles(), input2));
+                            List<Audio> filteredByArtist = UserC.filterByArtist(Database.getInstance().getAudiofiles(), input2);
+                            if (!filteredByArtist.isEmpty()) {
+                                System.out.println("Filtered audios by artist:");
+                                for (Audio audio : filteredByArtist) {
+                                    System.out.println(audio.getTitle() + " by " + audio.getArtist());
+                                }
+                            } else {
+                                System.out.println("No audio found for the specified artist.");
+                            }
                             showUserPanel(user);
                             break;
 
                         case "G":
                             String input3 = commits[2];
-                            System.out.println(UserC.filterByGenre(Database.getInstance().getAudiofiles(), input3));
+                            List<Audio> filteredByGenre = UserC.filterByGenre(Database.getInstance().getAudiofiles(), input3);
+                            if (!filteredByGenre.isEmpty()) {
+                                System.out.println("Filtered audios by genre:");
+                                for (Audio audio : filteredByGenre) {
+                                    System.out.println(audio.getTitle() + " (" + audio.getGenre() + ")");
+                                }
+                            } else {
+                                System.out.println("No audio found for the specified genre.");
+                            }
                             showUserPanel(user);
                             break;
 
                         case "D":
                             String input4 = commits[2];
                             String input5 = commits[3];
-                            System.out.println(UserC.filterByReleaseDate(Database.getInstance().getAudiofiles(), input4, input5));
-
+                            List<Audio> filteredByReleaseDate = UserC.filterByReleaseDate(Database.getInstance().getAudiofiles(), input4, input5);
+                            if (!filteredByReleaseDate.isEmpty()) {
+                                System.out.println("Filtered audios by release date:");
+                                for (Audio audio : filteredByReleaseDate) {
+                                    System.out.println(audio.getTitle() + " (Release Date: " + audio.getReleaseDate() + ")");
+                                }
+                            } else {
+                                System.out.println("No audio found for the specified release date range.");
+                            }
                             showUserPanel(user);
-
                             break;
                     }
                     break;
@@ -214,10 +238,19 @@ public class Panels {
                     showUserPanel(user);
                     break;
 
-                case "0":
-                    showFirstMeneu();
+                case "AccountInfo":
+                    UserV.printAccountInfo(user);
+                    showUserPanel(user);
                     break;
 
+                case "AudioId":
+                    SingerV.displayAudioIdsAndTitles();
+                    showUserPanel(user);
+                    break;
+
+                case "Logout":
+                    showFirstMeneu();
+                    break;
 
                 default:
                     System.out.println("Invalid command!");
@@ -229,7 +262,7 @@ public class Panels {
 
     public static void showAdminPanel(Admin admin) {
         System.out.println("welcome to Admin panel");
-        System.out.println("Statistics\nAudios\nAudio\nArtists\nArtist\nReports\nenter 0 for showFirstMenu");
+        System.out.println("Statistics\nAudios\nAudio\nArtists\nArtist\nReports\nAccountInfo\nLogout\n\n");
 
 
         Scanner scanner = new Scanner(System.in);
@@ -267,9 +300,21 @@ public class Panels {
 
                 case "Reports":
                     AdminV.displayReports(Database.getInstance().getReports());
+                    showAdminPanel(admin);
+
                     break;
 
-                case "0":
+                case "AccountInfo":
+                    UserV.printAccountInfo(admin);
+                    showAdminPanel(admin);
+                    break;
+
+                case "AudioId":
+                    SingerV.displayAudioIdsAndTitles();
+                    showAdminPanel(admin);
+                    break;
+
+                case "Logout":
                     showFirstMeneu();
                     break;
 
@@ -281,7 +326,7 @@ public class Panels {
 
     public static void showArtistPanel(Artist artist) {
         System.out.println("welcome to Artist panel");
-        System.out.println("Followes\nViewStatistics\nCalculateEarning\nNewAlbum\nPublish\nenter 0 for showFirstMeneu");
+        System.out.println("Followes\nViewStatistics\nCalculateEarning\nNewAlbum\nviewAlbumId\nPublish\nAccountInfo\nLogout\n\n");
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -311,10 +356,9 @@ public class Panels {
                     break;
 
                 case "viewAlbumId":
-                    SingerV.printAlbumIds((Singer) artist);
+                    SingerV.printAlbumInfo((Singer) artist);
                     showArtistPanel(artist);
                     break;
-
 
                 case "Publish":
                     String publishType = commits[1];
@@ -349,17 +393,25 @@ public class Panels {
                             } else {
 
                                 System.out.println("Invalid artist type for publishing podcast.");
+                                showArtistPanel(artist);
+
                             }
                             break;
 
                         default:
                             System.out.println("Invalid command!");
-                            break;
+                            showArtistPanel(artist);
 
+                            break;
                     }
                     break;
 
-                case "0":
+                case "AccountInfo":
+                    UserV.printAccountInfo(artist);
+                    showArtistPanel(artist);
+                    break;
+
+                case "Logout":
                     showFirstMeneu();
                     break;
                 default:

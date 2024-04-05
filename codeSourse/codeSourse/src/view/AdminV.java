@@ -1,5 +1,6 @@
 package view;
 
+import controller.UserC;
 import model.AccountUser.AccountUser;
 import model.AccountUser.Artist.Artist;
 import model.AccountUser.Listener.Listener;
@@ -39,7 +40,6 @@ public class AdminV {
                 System.out.println("Birth Date: " + artist.getBirthDate());
                 System.out.println("Income: " + artist.getIncome());
                 System.out.println("Biography: " + artist.getBiography());
-                System.out.println("Followers: " + artist.getFollowers());
                 System.out.println();
                 break;
             }
@@ -93,15 +93,6 @@ public class AdminV {
         for (Report report : reports) {
             System.out.println(report);
         }
-    }
-
-    public void printAccountInfo(AccountUser accountUser) {
-        System.out.println("Account Information:");
-        System.out.println("Username: " + accountUser.getUserName());
-        System.out.println("Full Name: " + accountUser.getFullName());
-        System.out.println("Email: " + accountUser.getEmail());
-        System.out.println("Phone Number: " + accountUser.getPhoneNumber());
-        System.out.println("Birth Date: " + accountUser.getBirthDate());
     }
 }
 

@@ -15,6 +15,8 @@ public class UserV {
         Audio audio = UserC.findAudioById(musicId);
 
         if (audio != null) {
+            audio.setPlayCount(audio.getPlayCount() + 1);
+
             System.out.println("Information of audio with ID " + musicId + ":");
             System.out.println("Unique ID: " + audio.getUniqeId());
             System.out.println("Title: " + audio.getTitle());
@@ -31,15 +33,6 @@ public class UserV {
     }
 
 
-
-    public void displayArtistInfoAndWorks(Artist artist) {
-        System.out.println("Artist Information:");
-        System.out.println("Username: " + artist.getUserName());
-        System.out.println("Full Name: " + artist.getFullName());
-        System.out.println("Income: $" + artist.getIncome());
-        System.out.println("Biography: " + artist.getBiography());
-        System.out.println("\nArtworks by " + artist.getUserName() + ":");
-    }
     public static void viewPlaylists(List<Playlist> playlists) {
         System.out.println("Playlists created by the listener:");
         for (Playlist playlist : playlists) {
@@ -77,11 +70,11 @@ public class UserV {
     }
 
     public static void displayFollowedArtists() {
-        if (UserC.getFollowedArtists().isEmpty()) {
+        if (UserC.getInstance().getFollowedArtists().isEmpty()) {
             System.out.println("You are not following any artists.");
         } else {
             System.out.println("Artists you are following:");
-            for (Artist artist : UserC.getFollowedArtists()) {
+            for (Artist artist : UserC.getInstance().getFollowedArtists()) {
                 System.out.println(artist.getUserName());
             }
         }

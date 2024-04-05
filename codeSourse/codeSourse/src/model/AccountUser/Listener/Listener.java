@@ -1,6 +1,7 @@
 package model.AccountUser.Listener;
 
 import model.AccountUser.AccountUser;
+import model.AccountUser.Listener.TypeOfListener.SubscriptionType;
 import model.Audio.Audio;
 import model.Genre;
 import model.Playlist;
@@ -14,6 +15,8 @@ public class Listener extends AccountUser {
     private static Map<Audio, Integer> playCount;
     private Date subEndDate;
     private List<Genre> favoriteGenres;
+     private SubscriptionType subscriptionType;
+
 
     //*********************************************
     public Listener(String userName, String password, String fullName, String email, String phoneNumber, Date birthDate,double accountBalance,Date subEndDate) {
@@ -23,6 +26,8 @@ public class Listener extends AccountUser {
         this.playCount = new HashMap<>();
         this.favoriteGenres = new ArrayList<>();
         this.subEndDate = null;
+        this.subscriptionType = SubscriptionType.FREE;
+
     }
 
     //*********************************************
@@ -44,6 +49,13 @@ public class Listener extends AccountUser {
 
     public List<Genre> getFavoriteGenres() {
         return favoriteGenres;
+    }
+
+    public SubscriptionType getSubscriptionType() {
+        return subscriptionType;
+    }
+    public void upgradeSubscription() {
+        this.subscriptionType = SubscriptionType.PREMIUM;
     }
 
     //*********************************************
