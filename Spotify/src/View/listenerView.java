@@ -48,6 +48,7 @@ public class listenerView {
             listenerCo.chooseFourGenres(Genre.valueOf(genres[0]),
                     Genre.valueOf(genres[1]),Genre.valueOf(genres[2]),
                     Genre.valueOf(genres[3]));
+            listenerCommands();
         }
         /// Logout command
         if (commands[0].equals("Logout")){
