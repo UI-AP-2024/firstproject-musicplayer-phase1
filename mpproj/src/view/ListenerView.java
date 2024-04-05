@@ -76,6 +76,9 @@ public class ListenerView {
             case "Report" :
                 System.out.println(ListenerController.getListenerController().report(strings[1], strings[2]));
                 methods();
+            case "GetPremium" :
+                System.out.println(ListenerController.getListenerController().getPremiumPackage(Integer.parseInt(strings[1])));
+                methods();
             case "IncreaseCredit" :
                 System.out.println(ListenerController.getListenerController().increaseCredit(Double.parseDouble(strings[1])));
                 methods();

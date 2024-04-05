@@ -6,9 +6,12 @@ import model.Audio.PodcastModel;
 import model.DataBase.DataBaseModel;
 import model.GenreModel;
 import model.PlaylistModel;
+import model.PremiumPackagesModel;
 import model.ReportModel;
 import model.UserAccount.Artist.ArtistModel;
+import model.UserAccount.Listener.FreeListenerModel;
 import model.UserAccount.Listener.ListenerModel;
+import model.UserAccount.Listener.PremiumListenerModel;
 import model.UserAccount.UserAccountModel;
 
 
@@ -76,7 +79,7 @@ public class ListenerController {
                             int p = ((ArtistModel) userAccount).getPlaysCount() + 1;
                             ((ArtistModel) userAccount).setPlaysCount(p);
                         }
-                    return audio.toString();
+                return audio.toString();
             }
         return "Audio not found";
     }
@@ -159,6 +162,16 @@ public class ListenerController {
         return "Artist not found";
     }
     public String showAccountInfo() {
+        if (listener instanceof PremiumListenerModel) {
+            ((PremiumListenerModel) listener).setRemainingSubscriptionDays(((PremiumListenerModel) listener).getRemainingSubscriptionDays() - 1);
+            if (((PremiumListenerModel) listener).getRemainingSubscriptionDays() == 0) {
+                FreeListenerModel freeListener = new FreeListenerModel(listener.getUsername(), listener.getPassword(), listener.getName(), listener.getEmail(), listener.getPhoneNumber(), listener.getBirthday());
+                DataBaseModel.getDataBase().getUsers().remove(listener);
+                DataBaseModel.getDataBase().getUsers().add(freeListener);
+                listener = freeListener;
+                return "You are not premium listener anymore!\n" + listener.toString();
+            }
+        }
         return listener.toString();
     }
     public StringBuilder searchAudioOrArtist(String name) {
@@ -201,6 +214,63 @@ public class ListenerController {
             str.append(audio.toString());
         return str;
     }
+    public String getPremiumPackage(int days) {
+        PremiumPackagesModel premiumPackage;
+        if (days == 30) {
+            premiumPackage = PremiumPackagesModel.FIRST;
+            if (listener.getAccountCredit() < premiumPackage.getCash())
+                return "Your credit is not enough";
+            if (listener instanceof PremiumListenerModel) {
+                ((PremiumListenerModel) listener).setRemainingSubscriptionDays(30);
+                ((PremiumListenerModel) listener).setSubscriptionExpirationDate(((PremiumListenerModel) listener).getStartPremium().plusDays(30));
+                return "Remaining Subscription Days Updated";
+            }
+            PremiumListenerModel premiumListener = new PremiumListenerModel(listener.getUsername(), listener.getPassword(), listener.getName(), listener.getEmail(), listener.getPhoneNumber(), listener.getBirthday(), LocalDate.now());
+            premiumListener.setRemainingSubscriptionDays(premiumPackage.getDays());
+            premiumListener.setSubscriptionExpirationDate(premiumListener.getStartPremium().plusDays(30));
+            DataBaseModel.getDataBase().getUsers().remove(listener);
+            DataBaseModel.getDataBase().getUsers().add(premiumListener);
+            listener = premiumListener;
+            return "Premium pack applied";
+        }
+        if (days == 60) {
+            premiumPackage = PremiumPackagesModel.FIRST;
+            if (listener.getAccountCredit() < premiumPackage.getCash())
+                return "Your credit is not enough";
+            if (listener instanceof PremiumListenerModel) {
+                ((PremiumListenerModel) listener).setRemainingSubscriptionDays(60);
+                ((PremiumListenerModel) listener).setSubscriptionExpirationDate(((PremiumListenerModel) listener).getStartPremium().plusDays(60));
+
+                return "Remaining Subscription Days Updated";
+            }
+            PremiumListenerModel premiumListener = new PremiumListenerModel(listener.getUsername(), listener.getPassword(), listener.getName(), listener.getEmail(), listener.getPhoneNumber(), listener.getBirthday(), LocalDate.now());
+            premiumListener.setRemainingSubscriptionDays(premiumPackage.getDays());
+            premiumListener.setSubscriptionExpirationDate(premiumListener.getStartPremium().plusDays(60));
+            DataBaseModel.getDataBase().getUsers().remove(listener);
+            DataBaseModel.getDataBase().getUsers().add(premiumListener);
+            listener = premiumListener;
+
+            return "Premium pack applied";
+        }
+        if (days == 180) {
+            premiumPackage = PremiumPackagesModel.FIRST;
+            if (listener.getAccountCredit() < premiumPackage.getCash())
+                return "Your credit is not enough";
+            if (listener instanceof PremiumListenerModel) {
+                ((PremiumListenerModel) listener).setRemainingSubscriptionDays(180);
+                ((PremiumListenerModel) listener).setSubscriptionExpirationDate(((PremiumListenerModel) listener).getStartPremium().plusDays(180));
+                return "Remaining Subscription Days Updated";
+            }
+            PremiumListenerModel premiumListener = new PremiumListenerModel(listener.getUsername(), listener.getPassword(), listener.getName(), listener.getEmail(), listener.getPhoneNumber(), listener.getBirthday(), LocalDate.now());
+            premiumListener.setRemainingSubscriptionDays(premiumPackage.getDays());
+            premiumListener.setSubscriptionExpirationDate(premiumListener.getStartPremium().plusDays(180));
+            DataBaseModel.getDataBase().getUsers().remove(listener);
+            DataBaseModel.getDataBase().getUsers().add(premiumListener);
+            listener = premiumListener;
+            return "Premium pack applied";
+        }
+        return "Premium pack not found";
+    }
     public StringBuilder filterAudios(String filter, String filterBy) {
         StringBuilder str = new StringBuilder();
         ArrayList<AudioModel> audios = DataBaseModel.getDataBase().getAudios();
@@ -225,5 +295,4 @@ public class ListenerController {
         }
         return str;
     }
-
 }

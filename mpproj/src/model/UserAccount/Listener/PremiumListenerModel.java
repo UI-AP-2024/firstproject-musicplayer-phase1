@@ -5,10 +5,12 @@ import java.util.Date;
 
 public class PremiumListenerModel extends ListenerModel{
     private int remainingSubscriptionDays;
+    private LocalDate startPremium;
 
-    public PremiumListenerModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday, LocalDate date) {
+
+    public PremiumListenerModel(String username, String password, String name, String email, String phoneNumber, LocalDate birthday, LocalDate startPremium) {
         super(username, password, name, email, phoneNumber, birthday);
-        this.setSubscriptionExpirationDate(date);
+        this.startPremium = LocalDate.now();
     }
 
     @Override
@@ -23,5 +25,12 @@ public class PremiumListenerModel extends ListenerModel{
 
     public void setRemainingSubscriptionDays(int remainingSubscriptionDays) {
         this.remainingSubscriptionDays = remainingSubscriptionDays;
+    }
+
+    public LocalDate getStartPremium() {
+        return startPremium;
+    }
+    public void setStartPremium(LocalDate startPremium) {
+        this.startPremium = startPremium;
     }
 }

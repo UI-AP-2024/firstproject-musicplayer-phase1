@@ -31,7 +31,7 @@ public class ArtistView {
             case "Followers" :
                 System.out.println(ArtistController.getArtistController().showFollowers());
                 methods();
-            case "ViewStatistics" :
+            case "ViewsStatistics" :
                 System.out.println(ArtistController.getArtistController().viewsStatistics());
                 methods();
             case "CalculateEarnings" :

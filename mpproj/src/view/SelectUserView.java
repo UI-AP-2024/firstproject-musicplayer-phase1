@@ -78,6 +78,9 @@ public class SelectUserView {
             case "Logout" :
                 System.out.println("Logged out");
                 signUpLogInOut();
+            default :
+                System.out.println("Your are not logged in!");
+                signUpLogInOut();
         }
     }
 }

@@ -31,8 +31,7 @@ public abstract class ListenerModel extends UserAccountModel {
     @Override
     public String toString() {
         return super.toString() +
-                ", accountCredit = " + accountCredit +
-                ", subscriptionExpirationDate = " + subscriptionExpirationDate;
+                ", accountCredit = " + accountCredit;
     }
 
     public double getAccountCredit() {
