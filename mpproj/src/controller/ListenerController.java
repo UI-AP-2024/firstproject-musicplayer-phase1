@@ -404,8 +404,6 @@ public class ListenerController {
         int c = 0;
         for (int i = 0; i < arrmap.length; i++) {
             if ((suggestId.contains(arrmap[i].getKey()) == false)) {
-                System.out.println(suggestId.contains(arrmap[i].getKey()));
-                System.out.println("not contain view " + arrmap[i].getKey());
                 suggestId.add(arrmap[i].getKey());
                 c++;
                 count--;
@@ -421,9 +419,7 @@ public class ListenerController {
         int c = 0;
         for (Long id : getListener().getLikedAudios()) {
             if ((suggestId.contains(id)) == false) {
-                System.out.println(suggestId.contains(id));
-                System.out.println("not contain like " + id);
-                suggestId.add(id);
+                 suggestId.add(id);
                 c++;
                 count--;
                 if (count == 0) {
@@ -438,8 +434,6 @@ public class ListenerController {
         int c = 0;
         for (Long id : artistAudio) {
             if ((suggestId.contains(id)) == false) {
-                System.out.println(suggestId.contains(id));
-                System.out.println("not contain artist " + id);
                 suggestId.add(id);
                 count--;
                 c++;
@@ -455,8 +449,6 @@ public class ListenerController {
         int c = 0;
         for (Long id : genreAudio) {
             if ((suggestId.contains(id)) == false) {
-                System.out.println(suggestId.contains(id));
-                System.out.println("not contain genre " + id);
                 suggestId.add(id);
                 count--;
                 c++;
@@ -563,21 +555,24 @@ public class ListenerController {
                 tmp -= c;
             }
         }
-        System.out.println("view");
-        for (int i = 0; i < arrmap.length; i++) {
-            System.out.print(arrmap[i].getKey() + ",");
+        // System.out.println("view");
+        // for (int i = 0; i < arrmap.length; i++) {
+        //     System.out.print(arrmap[i].getKey() + ",");
 
-        }
-        System.out.println();
-        System.out.println("artist " + artistAudio);
-        System.out.println("genre " + genreAudio);
-        System.out.println("like " + getListener().getLikedAudios());
-        System.out.println("suggest " + suggestId);
+        // }
+        // System.out.println();
+        // System.out.println("artist " + artistAudio);
+        // System.out.println("genre " + genreAudio);
+        // System.out.println("like " + getListener().getLikedAudios());
+        // System.out.println("suggest " + suggestId);
         String txt = "suggestion Audios for you\n";
         for (Audio audio : Database.getDatabase().getAllAudio()) {
             if (suggestId.contains(audio.getId())) {
-                txt += "-" + audio.getAudioName() + "\n";
+                txt += "-" + audio.getAudioName() +" by "+audio.getArtistUsername()+"\n";
             }
+        }
+        if(tmp!=0){
+            txt+= "sorry for not giving you  the number of suggestion you wanted\nbe more active so we can help you more precisely";
         }
         return txt;
 

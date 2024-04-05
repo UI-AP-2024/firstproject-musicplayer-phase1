@@ -4,7 +4,7 @@ data base control
 set array list -> insert to arraylist
 album artist name -> artist username or artist itself
 listener -> abstract ? first sign up -> free listener?
-Strong password builder ad offer to user 
+Strong password builder ad offer to user (sandalimo azam gereftanTT)
 //////////////
 for view :help
 Your password must be have at least
