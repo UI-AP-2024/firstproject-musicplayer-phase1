@@ -21,6 +21,7 @@ public class Database {
     private final List<FreeListener> freeListeners;
     private final List<PremiumListener> premiumListeners;
     private final List<Singer> singers;
+    private final List<Podcaster> pocasters;
     private final List<String> audioFiles;
     private final List<Report> reports;
 
@@ -37,6 +38,7 @@ public class Database {
         music = new ArrayList<>();
         podcasts = new ArrayList<>();
         singers = new ArrayList<>();
+        pocasters =new ArrayList<>();
         initialSequence();
     }
 
@@ -290,6 +292,10 @@ public class Database {
     public void saveSigner(final Singer singer) {
         usernames.add(singer.getUsername());
         singers.add(singer);
+    }
+    public void savePodcaster(final Podcaster podcaster) {
+        usernames.add(podcaster.getUsername());
+        pocasters.add(podcaster);
     }
 
     public Singer fetchSingerByUsername(final String singerUsername) {

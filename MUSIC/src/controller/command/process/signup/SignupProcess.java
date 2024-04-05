@@ -21,7 +21,7 @@ public class SignupProcess implements Process {
             case "S":
                 return ProcessName.SIGNUP_SINGER.process.exec(commands);
             case "P":
-                return "NOT";
+                return ProcessName.SIGNUP_PODCASTER.process.exec(commands);
             default:
                 return "";
         }

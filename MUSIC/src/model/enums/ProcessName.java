@@ -22,6 +22,7 @@ public enum ProcessName {
     SIGNUP("Signup", new SignupProcess(), true),
     SIGNUP_LISTENER("SignupListener", new SignupListenerProcess(), false),
     SIGNUP_SINGER("SignupSinger", new SignupSingerProcess(), false),
+   SIGNUP_PODCASTER("SignupPodcaster" , new SignupPodcasterProcess(),false),
     LOGIN("Login", new LoginProcess(), true),
     LOGOUT("Logout", new LogoutProcess(), true),
     ACCOUNT_INFO("AccountInfo", new AccountInfoProcess(), true),
