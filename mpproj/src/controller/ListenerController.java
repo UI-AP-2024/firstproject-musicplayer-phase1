@@ -555,16 +555,6 @@ public class ListenerController {
                 tmp -= c;
             }
         }
-        // System.out.println("view");
-        // for (int i = 0; i < arrmap.length; i++) {
-        //     System.out.print(arrmap[i].getKey() + ",");
-
-        // }
-        // System.out.println();
-        // System.out.println("artist " + artistAudio);
-        // System.out.println("genre " + genreAudio);
-        // System.out.println("like " + getListener().getLikedAudios());
-        // System.out.println("suggest " + suggestId);
         String txt = "suggestion Audios for you\n";
         for (Audio audio : Database.getDatabase().getAllAudio()) {
             if (suggestId.contains(audio.getId())) {
