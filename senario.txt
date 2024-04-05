@@ -42,7 +42,8 @@ Publish-P-podcast history-HISTORY-this is lyric-https://musicLink-cover.png
 ViewsStatistics
 Logout
 Signup-L-listenerone-Listenerone#1-listenerlopi-listener@gmail.com-09123456789-12/12/1990
-FavouriteGenres-POP,JAZZ,HIPHOP
+FavouriteGenres-POP,JAZZ,HIPHOP,COUNTRY,HISTORY
+FavouriteGenres-POP,JAZZ,HIPHOP,Country
 Login-listenerone-Listenerone#1
 AccountInfo
 Artists

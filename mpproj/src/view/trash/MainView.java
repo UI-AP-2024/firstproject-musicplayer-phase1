@@ -71,7 +71,7 @@ public class MainView {
                         genre.add(string);
                     }
                     //
-                    ListenerController.getListenerController().getFavoriteGenres(genre);
+                    ListenerController.getListenerController().setFavoriteGenres(genre);
                     ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
                     System.out.println(t);
                 }

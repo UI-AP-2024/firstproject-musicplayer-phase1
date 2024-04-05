@@ -46,7 +46,7 @@ public class ListenerController {
         setListener(listener);
     }
 
-    public void getFavoriteGenres(ArrayList<String> genres) {
+    public void setFavoriteGenres(ArrayList<String> genres) {
         for (String string : genres) {
             getListener().addToFavoriteGenres(Genre.valueOf(string.toUpperCase()));
         }

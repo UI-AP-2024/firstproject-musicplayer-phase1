@@ -49,16 +49,22 @@ public class MainView {
             }
             switch (spltCmd[0]) {
                 case "Signup":
-                    if (spltCmd.length == 9) {
-                        txt = UserController.getUserController().signupNewUser(spltCmd[1], spltCmd[2], spltCmd[3],
-                                spltCmd[4], spltCmd[5], spltCmd[6], spltCmd[7], spltCmd[8]);
-                        System.out.println(txt);
+                    if(character.equals("out")){
+                        if (spltCmd.length == 9) {
+                            txt = UserController.getUserController().signupNewUser(spltCmd[1], spltCmd[2], spltCmd[3],
+                                    spltCmd[4], spltCmd[5], spltCmd[6], spltCmd[7], spltCmd[8]);
+                            System.out.println(txt);
+                        }
+                        if (spltCmd.length == 8) {
+                            txt = UserController.getUserController().signupNewUser(spltCmd[1], spltCmd[2], spltCmd[3],
+                                    spltCmd[4], spltCmd[5], spltCmd[6], spltCmd[7], null);
+                            System.out.println(txt);
+                        }
                     }
-                    if (spltCmd.length == 8) {
-                        txt = UserController.getUserController().signupNewUser(spltCmd[1], spltCmd[2], spltCmd[3],
-                                spltCmd[4], spltCmd[5], spltCmd[6], spltCmd[7], null);
-                        System.out.println(txt);
+                    else{
+                        System.out.println("you have to logout first to have access to signup command ");
                     }
+                    
                     break;
                 case "FavouriteGenres":
                     if (type.equals("L")||character.equals("L")) {
@@ -71,9 +77,14 @@ public class MainView {
                             System.out.println("you can at most select 4 genres!");
                         }
                         else{
-                            ListenerController.getListenerController().getFavoriteGenres(genre);
-                            ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
-                            System.out.println(t);
+                            if(ListenerController.getListenerController().getListener().getFavoriteGenres().size()!=0){
+                                System.out.println("you can select your favoriteGenres only one time");
+                            }
+                            else{
+                                ListenerController.getListenerController().setFavoriteGenres(genre);
+                                ArrayList t = ListenerController.getListenerController().getListener().getFavoriteGenres();
+                                System.out.println(t);
+                            }
                         }
                     } else
                         System.out.println("only listeners can choose FavouriteGenres!");
