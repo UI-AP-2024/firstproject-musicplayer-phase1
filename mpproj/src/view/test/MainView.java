@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import controller.Help;
 import controller.ListenerController;
 import controller.UserController;
 import model.database.Database;
@@ -86,6 +88,10 @@ public class MainView {
                     character = "out";
                     System.out.println("you've logged out");
 
+                    break;
+                case "help":
+                    txt = Help.help();
+                    System.out.println(txt);
                     break;
                 case "toString":
                     System.out.println(Database.getDatabase().getAllAudio().get(0));

@@ -1,0 +1,57 @@
+[ when you are not logged in ]
+<-->Signup-L|S|P -[username] -[password] -[name] -[email] -[phone number]
+-[birth date] -[bio ]
+(L for Listener, S for Singer, P for Podcaster)
+<-->FavouriteGenres-[favourite genres separated with comma(,)]
+(make sure you set your favoriteGenres after your Sign up)
+<-->Login -[username] -[password]
+<-->Logout
+
+[when you are logged in]
+<-->AccountInfo
+[when you are logged in as Listener]
+<-->GetSuggestions-n
+(number of Audios you want to get suggestion)
+<-->Artists
+<-->Artist-[username]
+<-->Follow-[username]
+<-->Search-[artist name OR audio’s title]
+<-->Sort-L|P 
+(L:based on Likes / P:based on Plays)
+<-->Filter-A|G|D-[filter by] 
+(Filter by Artist username, Genre or releaseDate)
+<-->Filter-D-[first date]-[second date] 
+(Filter between first date & second date)
+<-->Add-[playlist’s name] -[audio’s ID]
+<-->ShowPlaylists
+<-->SelectPlaylist-[playlist’s name]
+<-->Play-[audio’s ID]
+<-->Like-[audio’s ID]
+<-->Lyric-[audio’s ID]
+<-->NewPlaylist -[playlist’s name]
+<-->Followings
+<-->Report-[artist’s username]-[explanation]
+<-->IncreaseCredit-[value]
+<-->GetPremium-[package]
+(30 days(5$) enter package=30
+60 days(9$) enter package=60
+180 days(14$)enter package=180)
+<-->Logout
+
+[when you are logged in as Artist]
+<-->Followers
+<-->ViewsStatistics
+<-->CalculateEarnings
+<-->NewAlbum-[album name]
+<-->Publish-M|P-[title]-[genre]-[lyric|caption]-[link]-[cover]-[album ID]
+(M for Music / P for Podcast/albumId if you are publishing a Music)
+<-->Logout
+
+[when you are logged in as Admin]
+<-->Statistics
+<-->Audios-[page number]
+<-->Audio-[audio’s ID]
+<-->Artists
+<-->Artist-[username]
+<-->Reports
+<-->Logout
