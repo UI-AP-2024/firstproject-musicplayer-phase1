@@ -160,3 +160,5 @@ Audios-2
 Audios-3
 Audios-4
 Audios-5
+Logout
+toString

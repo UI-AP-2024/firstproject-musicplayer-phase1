@@ -10,6 +10,8 @@ import controller.ListenerController;
 import controller.UserController;
 import model.database.Database;
 import model.user.Admin;
+import model.user.Listener;
+import model.user.Singer;
 
 public class MainView {
     private static MainView mainView;
@@ -83,6 +85,20 @@ public class MainView {
                 case "Logout":
                     character = "out";
                     System.out.println("you've logged out");
+
+                    break;
+                case "toString":
+                    System.out.println(Database.getDatabase().getAllAudio().get(0));
+                    System.out.println(Database.getDatabase().getAllAudio().get(9));
+                    System.out.println(Database.getDatabase().getAllUsers().get(0));
+                    System.out.println(Database.getDatabase().getAllUsers().get(1));
+                    System.out.println(Database.getDatabase().getAllUsers().get(5));
+                    System.out.println(Database.getDatabase().getAllUsers().get(7));
+                    System.out.println(Database.getDatabase().getAllReports().get(0));
+                    Singer singer = (Singer)(Database.getDatabase().getAllUsers().get(1));
+                    Listener listener = (Listener)(Database.getDatabase().getAllUsers().get(6));
+                    System.out.println(singer.getAlbumList().get(0));
+                    System.out.println(listener.getListOfPlayLists().get(0));
 
                     break;
 

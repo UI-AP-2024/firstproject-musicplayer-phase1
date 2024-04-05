@@ -17,7 +17,5 @@ public class Music extends Audio{
     public String getLyrics() {
         return lyrics;
     }
-    public String toString(){
-        return "Music/"+super.getArtistName()+"/"+super.getAudioName();
-    }
+
 }

@@ -84,7 +84,10 @@ public abstract class Audio {
     public void setArtistUsername(String artistUsername) {
         this.artistUsername = artistUsername;
     }
-    
+    @Override
+    public String toString(){
+        return audioName +" By "+artistUsername;
+    }
     
 
     

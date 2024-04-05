@@ -190,7 +190,7 @@ public class ListenerController {
     public String reportArtist(String username, String explanation) {
         User user = UserController.getUserController().findUser(username);
         if (user instanceof Artist) {
-            Report tmp = new Report(getListener(), null, explanation);
+            Report tmp = new Report(getListener(), (Artist)user, explanation);
             Database.getDatabase().addToAllReports(tmp);
             return "thanks for your feedback , your report has been recieved!";
         } else {

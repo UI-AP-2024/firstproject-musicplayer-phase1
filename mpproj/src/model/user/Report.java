@@ -27,5 +27,8 @@ public class Report {
     public void setDescription(String description) {
         Description = description;
     }
-    
+    @Override
+    public String toString(){
+        return "User : "+reportingUser.getUsername()+" / Artist : "+reportedArtist.getUsername()+"\n";
+    }
 }

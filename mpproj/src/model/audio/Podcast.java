@@ -17,9 +17,5 @@ public class Podcast extends Audio{
     public String getCaption() {
         return caption;
     }
-    @Override
-    public String toString(){
-        return "podcast/"+super.getArtistName()+"/"+super.getAudioName();
-    }
     
 }

@@ -44,7 +44,14 @@ public class PlayList {
     public void addToAudioList(Audio audio) {
         this.audioList.add(audio);
     }
-    
+    @Override
+    public String toString(){
+        String txt="playlist "+playListName+" By "+createrName+"\n";
+        for(Audio audio : audioList){
+            txt+="-"+audio.getAudioName()+"\n";
+        }
+        return txt;
+    }
     
     
 }

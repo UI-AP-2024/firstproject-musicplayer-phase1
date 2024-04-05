@@ -45,6 +45,14 @@ public class Album {
     public static void setAlbumCounter(long albumCounter) {
         Album.albumCounter = albumCounter;
     }
+    @Override
+    public String toString(){
+        String txt =  "Album : "+albumName+" By: "+artistName;
+        for(Music music : musicList){
+            txt+="-"+music.getAudioName()+"\n";
+        }
+        return txt;
+    }
     
     
 }
