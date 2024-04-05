@@ -27,10 +27,12 @@ public class Premium extends Listener {
 
     public void setLeftOverDays(int leftOverDays) {
         this.leftOverDays = leftOverDays;
-        calendar=Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.DAY_OF_YEAR,leftOverDays);
-        super.setDateOfEndSubscription(calendar.getTime());
+        if (getDateOfEndSubscription()==null){
+            calendar=Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.add(Calendar.DAY_OF_YEAR,leftOverDays);
+            super.setDateOfEndSubscription(calendar.getTime());
+        }
     }
     @Override
     public String toString(){

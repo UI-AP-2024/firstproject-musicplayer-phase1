@@ -42,6 +42,13 @@ public class listenerView {
         Scanner sc = new Scanner(System.in);
         String[] commands = sc.nextLine().split(" -");
 
+        /// FavouriteGenres -[favourite genres separated with comma(,)]
+        if (commands[0].equals("FavouriteGenres")){
+            String[] genres =commands[1].split(",");
+            listenerCo.chooseFourGenres(Genre.valueOf(genres[0]),
+                    Genre.valueOf(genres[1]),Genre.valueOf(genres[2]),
+                    Genre.valueOf(genres[3]));
+        }
         /// Logout command
         if (commands[0].equals("Logout")){
             System.out.println("you loged out now!");

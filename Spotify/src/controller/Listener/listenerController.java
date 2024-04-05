@@ -382,6 +382,14 @@ public class listenerController {
 
     ///AccountInfo
     public String AccountInfo() {
+        if (listenerM instanceof Premium){
+            ((Premium) listenerM).setLeftOverDays(((Premium)listenerM).getLeftOverDays()-1);
+            if (((Premium)listenerM).getLeftOverDays()==0){
+                Listener free = (Free) listenerM;
+                Database.getDatabase().getAllUsersList().remove(listenerM);
+                listenerM=free;
+            }
+        }
         return listenerM.toString();
     }
 
