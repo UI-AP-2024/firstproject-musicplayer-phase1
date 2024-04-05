@@ -18,13 +18,13 @@ public class SingerController {
         return singerController;
     }
 
-    private UserAccount userAccount;
+    private Singer userAccount;
 
-    public UserAccount getUserAccount(){
+    public Singer getUserAccount(){
         return userAccount;
     }
 
-    public void setUserAccount(UserAccount userAccount){
+    public void setUserAccount(Singer userAccount){
         this.userAccount = userAccount;
     }
 
@@ -46,6 +46,6 @@ public class SingerController {
                 break;
             }
         }
-        return "Podcast successfully added";
+        return "Music successfully added";
     }
 }

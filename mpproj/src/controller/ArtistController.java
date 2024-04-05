@@ -19,13 +19,13 @@ public class ArtistController {
         return artistController;
     }
 
-    private UserAccount userAccount;
+    private Artist userAccount;
 
-    public UserAccount getUserAccount() {
+    public Artist getUserAccount() {
         return userAccount;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
+    public void setUserAccount(Artist userAccount) {
         this.userAccount = userAccount;
     }
 
@@ -94,11 +94,13 @@ public class ArtistController {
             Singer singer = new Singer(userName,password,name,email,number,birth,bio);
             Database.getDataBase().getUserAccounts().add(singer);
             setUserAccount(singer);
+            SingerController.getSingerController().setUserAccount(singer);
         }
         else{
             Podcaster podcaster = new Podcaster(userName,password,name,email,number,birth,bio);
             Database.getDataBase().getUserAccounts().add(podcaster);
             setUserAccount(podcaster);
+            PodcasterController.getPodcasterController().setUserAccount(podcaster);
         }
         return "Account created successfully";
     }
@@ -106,7 +108,11 @@ public class ArtistController {
     public String login(String userName, String password) {
         for (UserAccount tmp : Database.getDataBase().getUserAccounts()) {
             if (tmp.getUserName().equals(userName) && tmp.getPassword().equals(password)) {
-                setUserAccount(tmp);
+                setUserAccount((Artist) tmp);
+                if ( tmp instanceof Singer)
+                    SingerController.getSingerController().setUserAccount((Singer) tmp);
+                else if ( tmp instanceof Podcaster)
+                    PodcasterController.getPodcasterController().setUserAccount((Podcaster) tmp);
                 return "Login successfully";
             }
         }
@@ -138,9 +144,17 @@ public class ArtistController {
             for ( Podcast podcast : ((Podcaster)getUserAccount()).getPodcastList()){
                 count += podcast.getNumberOfPlays();
             }
+            count = count * 0.5;
+            ((Podcaster) getUserAccount()).setIncome( ((Podcaster) getUserAccount()).getIncome()+count );
         }
-        count = count * 0.5;
-        ((Podcaster) getUserAccount()).setIncome( ((Podcaster) getUserAccount()).getIncome()+count );
         return "Your income is $"+String.valueOf(count);
+    }
+
+    public void logoutArtist(){
+        if ( getUserAccount() instanceof Podcaster)
+            PodcasterController.getPodcasterController().setUserAccount(null);
+        else if ( getUserAccount() instanceof Singer)
+            SingerController.getSingerController().setUserAccount(null);
+        ArtistController.getArtistController().setUserAccount(null);
     }
 }

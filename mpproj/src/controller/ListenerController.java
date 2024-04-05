@@ -21,13 +21,13 @@ public class ListenerController {
         return listenerController;
     }
 
-    private UserAccount userAccount;
+    private Listener userAccount;
 
-    public UserAccount getUserAccount() {
+    public Listener getUserAccount() {
         return userAccount;
     }
 
-    public void setUserAccount(UserAccount userAccount) {
+    public void setUserAccount(Listener userAccount) {
         this.userAccount = userAccount;
     }
 
@@ -56,10 +56,14 @@ public class ListenerController {
         return "Account created successfully";
     }
 
+    public String showGener(){
+        return "Choose up to 4 of your favorite genres: ROCK, POP ,JAZZ ,HIPHOP ,COUNTRY,TRUE_CRIME, SOCIETY,INTERVIEW, HISTORY";
+    }
+
     public String login(String userName, String password) {
         for (UserAccount tmp : Database.getDataBase().getUserAccounts()) {
             if (tmp.getUserName().equals(userName) && tmp.getPassword().equals(password)) {
-                setUserAccount(tmp);
+                setUserAccount((Listener) tmp);
                 return "Login successfully";
             }
         }
@@ -91,7 +95,7 @@ public class ListenerController {
         if (getUserAccount() instanceof Free) {
             for (Playlist playlist : ((Free) getUserAccount()).getPlaylists()) {
                 if (playlist.getNameOfPlaylist().equals(nameOfPlaylist) && ((Free) getUserAccount()).getCountAddSong() < ((Free) getUserAccount()).getLimitAddSong()) {
-                    for (Audio audio : playlist.getListAudio()) {
+                    for (Audio audio : Database.getDataBase().getAudio()) {
                         if (audio.getId() == id ) {
                             for ( Audio audio1 : playlist.getListAudio()){
                                 if ( audio1.getId()==id)
@@ -225,7 +229,7 @@ public class ListenerController {
         }
         else if ( type.equals("D")){
             String result = "";
-            String[] str = detail.split("/");
+            String[] str = detail.split("-");
             Date date = new Date(Integer.valueOf(str[0])-1900,Integer.valueOf(str[1])-1,Integer.valueOf(str[2]));
             for ( Audio audio : Database.getDataBase().getAudio() ){
                 if ( audio.getDateOfRelease().getYear()==date.getYear() && audio.getDateOfRelease().getMonth()==date.getMonth() && audio.getDateOfRelease().getDay()==date.getDay()){
@@ -336,71 +340,97 @@ public class ListenerController {
 
     public String suggestions(){
         String result = "";
-        Audio[] audioArr = new Audio[10];
-        int i=0;
-        int num=0;
-        int count =0;
-        if ( getUserAccount() instanceof Listener ) {
-//            String result2 = "";
-            for (Gener gener : ((Listener) getUserAccount()).getFavoriteGener()) {
-                if ( num > 5)
-                    break;
-                for ( Audio audio : Database.getDataBase().getAudio()){
-                    if ( num > 5)
-                        break;
-                    if ( audio.getGener().equals(gener)){
-                        for ( Audio audio1 : audioArr){
-                            if ( audio1.getId()==audio.getId()) {
-                                count = -1;
-                                break;
-                            }
-                        }
-                        if ( count==0) {
-                            audioArr[i]=audio;
-                            i++;
-                            num++;
+        String tmp = sortAudioFile("L");
+        int count = 0;
+        for ( Audio audio : Database.getDataBase().getAudio()){
+            labale1:
+            for ( Gener gener : getUserAccount().getFavoriteGener() ) {
+                for (UserAccount userAccount1 : getUserAccount().getFollowings()){
+                    if ( audio.getNameArtist().equals(   userAccount1.getName()   ) || audio.getGener()==gener ){
+                        if ( count<10){
+                            result += audio+"\n";
+                            count++;
+                            break labale1;
                         }
                         else
-                            count=0;
-//                        result2 += audio+"\n";
+                            return result;
                     }
                 }
-            }
-
-            for ( UserAccount userAccount1 : ((Listener) getUserAccount()).getFollowings()){
-                if ( num > 10)
-                    break;
-                if ( userAccount1 instanceof Artist){
-                    for ( Audio audio : Database.getDataBase().getAudio()){
-                        if ( num > 10)
-                            break;
-                        if ( audio.getNameArtist().equals(userAccount1.getName())){
-                            for ( Audio audio1 : audioArr){
-                                if ( audio1.getId()==audio.getId()) {
-                                    count = -1;
-                                    break;
-                                }
-                            }
-                            if ( count==0) {
-                                audioArr[i]=audio;
-                                i++;
-                                num++;
-                            }
-                            else
-                                count=0;
-//                            result2 += audio+"\n";
-                        }
-                    }
-                }
-            }
-            if ( audioArr.length==0 )
-                result += "empty";
-            else {
-                for ( Audio audio : audioArr )
-                    result += audio+"\n";
             }
         }
-        return result;
+        if ( result.equals(""))
+            return  "Empty";
+        else
+            return result;
+//        Audio[] audioArr = new Audio[10];
+//        int i=0;
+//        int num=0;
+//        int count =0;
+//        if ( getUserAccount() instanceof Listener ) {
+////            String result2 = "";
+//            for (Gener gener : ((Listener) getUserAccount()).getFavoriteGener()) {
+//                if ( num > 5)
+//                    break;
+//                for ( Audio audio : Database.getDataBase().getAudio()){
+//                    if ( num > 5)
+//                        break;
+//                    if ( audio.getGener().equals(gener)){
+//                        for ( Audio audio1 : audioArr){
+//                            if ( audio1 == null)
+//                                break;
+//                            else if ( audio1.getId()==audio.getId()) {
+//                                count = -1;
+//                                break;
+//                            }
+//                        }
+//                        if ( count==0) {
+//                            audioArr[i]=audio;
+//                            i++;
+//                            num++;
+//                        }
+//                        else
+//                            count=0;
+////                        result2 += audio+"\n";
+//                    }
+//                }
+//            }
+//
+//            for ( UserAccount userAccount1 : ((Listener) getUserAccount()).getFollowings()){
+//                if ( num > 10)
+//                    break;
+//                if ( userAccount1 instanceof Artist){
+//                    for ( Audio audio : Database.getDataBase().getAudio()){
+//                        if ( num > 10)
+//                            break;
+//                        if ( audio.getNameArtist().equals(userAccount1.getName())){
+//                            for ( Audio audio1 : audioArr){
+//                                if ( audio1 == null)
+//                                    break;
+//                                if ( audio1.getId()==audio.getId()) {
+//                                    count = -1;
+//                                    break;
+//                                }
+//                            }
+//                            if ( count==0) {
+//                                audioArr[i]=audio;
+//                                i++;
+//                                num++;
+//                            }
+//                            else
+//                                count=0;
+////                            result2 += audio+"\n";
+//                        }
+//                    }
+//                }
+//            }
+//            if ( audioArr.length==0 )
+//                result += "empty";
+//            else {
+//                for ( Audio audio : audioArr )
+//                    result += audio+"\n";
+//            }
+//        }
+//        return result;
     }
 
     public String accountInfo(){
@@ -528,5 +558,24 @@ public class ListenerController {
             ((Listener)getUserAccount()).getFavoriteGener().add(Gener.valueOf(answers[3]));
         }
         return "done successfully";
+    }
+
+    public String lyricAudio(String audioId){
+        for ( Audio audio : Database.getDataBase().getAudio()){
+            if ( audio.getId() == Integer.valueOf(audioId)){
+                if ( audio instanceof Music)
+                    return ((Music) audio).getMusicText();
+                else if ( audio instanceof Podcast)
+                    return ((Podcast) audio).getCaption();
+            }
+        }
+        return "The entered ID is not valid";
+    }
+
+    public String showPremium(){
+        String result = "";
+        result += "You can choose one of the following packages to have a premium account:\n";
+        result += "1)ONE_MONTH("+PremiumPkg.ONE_MONTH.getCount()+")\t2)TWO_MONTH("+PremiumPkg.TWO_MONTH.getCount()+")\t3)SIX_MONTH("+PremiumPkg.SIX_MONTH.getCount()+")";
+        return result;
     }
 }

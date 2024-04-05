@@ -20,7 +20,7 @@ public class Artist extends UserAccount{
             result += "\nFollowers: empty";
         else
             result += "\nFollowers:\n"+foll;
-        return foll;
+        return result;
     }
 
     public Artist(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth/*, double income, ArrayList<UserAccount> listFollowers*/, String bio) {

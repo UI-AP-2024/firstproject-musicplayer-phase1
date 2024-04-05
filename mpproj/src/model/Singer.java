@@ -12,7 +12,7 @@ public class Singer extends Artist{
         result += super.toString();
         String alb = "";
         for (Album album : getAlbumList()){
-            alb += "Album Id: "+album.getId()+"\tAlbum Name: "+album.getName()+"\n";
+            alb += "Album Id: "+album.getId()+"\t\tAlbum Name: "+album.getName()+"\n";
         }
         if ( alb.equals(""))
             result += "\nAlbums: empty";

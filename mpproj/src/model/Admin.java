@@ -12,9 +12,13 @@ public class Admin extends UserAccount {
         return result;
     }
 
-    public static Admin getAdmin(String userName, String password, String name, String email, String phoneNumber, Date dateOfBirth) {
-        if (admin == null)
-            admin = new Admin(userName,password,name,email,phoneNumber,dateOfBirth);
+    public static Admin getAdmin(String userName, String password, String name, String email, String phoneNumber, String dateOfBirth) {
+        if (admin == null) {
+            String[] tmp = dateOfBirth.split("-");
+            Date birth = new Date(Integer.valueOf(tmp[0])-1900,Integer.valueOf(tmp[1])-1,Integer.valueOf(tmp[2]));
+            admin = new Admin(userName, password, name, email, phoneNumber,birth);
+            Database.getDataBase().getUserAccounts().add(admin);
+        }
         return admin;
     }
 

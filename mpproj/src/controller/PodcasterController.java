@@ -17,13 +17,13 @@ public class PodcasterController {
         return podcasterController;
     }
 
-    private UserAccount userAccount;
+    private Podcaster userAccount;
 
-    public UserAccount getUserAccount(){
+    public Podcaster getUserAccount(){
         return userAccount;
     }
 
-    public void setUserAccount(UserAccount userAccount){
+    public void setUserAccount(Podcaster userAccount){
         this.userAccount = userAccount;
     }
 
