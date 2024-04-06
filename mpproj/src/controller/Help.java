@@ -5,8 +5,9 @@ public class Help {
     public static String help(){
         String txt = "[Help]\n\n";
         txt+="[ when you are not logged in ]\n\n"+
-        "<-->Signup-L|S|P -[username] -[password] -[name] -[email] -[phone number]\n"+
-        "-[birth date] -[bio ]\n"+
+        "<-->Signup-L|S|P-[username]-[password]-[name]-[email]-[phone number]"+
+        "-[birth date]-[bio ]\n"+
+        "(the date shoud be in dd/mm/yyyy format like 1/1/2000)\n"+
         "(L for Listener, S for Singer, P for Podcaster)\n\n"+
         "<-->FavouriteGenres-[favourite genres separated with comma(,)]\n"+
         "(make sure you set your favoriteGenres after your Sign up, at most four genre)\n\n"+

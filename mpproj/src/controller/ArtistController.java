@@ -104,7 +104,6 @@ public class ArtistController {
 
         Date currentDate = new Date();
         if (type.equals("P")) {
-            System.out.println("was P");
             if (getArtist() instanceof Podcaster) {
                 Podcast tmp = new Podcast(title, getArtist().getName(), getArtist().getUsername(), currentDate,
                         Genre.valueOf(genre.toUpperCase()), link, cover, lyricsCaption);

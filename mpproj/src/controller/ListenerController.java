@@ -2,8 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import model.audio.Audio;
 import model.audio.Genre;
@@ -19,6 +21,7 @@ import model.user.Singer;
 import model.user.User;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 public class ListenerController {
     private static ListenerController listenerController;
@@ -64,7 +67,7 @@ public class ListenerController {
                 "\nAccount Credit : " + String.valueOf(getListener().getAccountCredit()) + "\n";
         if (getListener() instanceof PremiumListener) {
             txt += "Premium Expiration Date : "
-                    + String.valueOf(((PremiumListener) getListener()).getPremiumExpirationDate());
+                    + String.valueOf(((PremiumListener) getListener()).getPremiumExpirationDate())+"\n";
             txt += "RemainingDaysOfPremium : "
                     + String.valueOf(((PremiumListener) getListener()).getRemainingDaysOfPremium());
         }
@@ -143,7 +146,7 @@ public class ListenerController {
                 }
             }
         };
-        timer.scheduleAtFixedRate(task, 0, 1000);
+        timer.scheduleAtFixedRate(task, 0, 24*60*60000);
         //24*60*60000
     }
 
@@ -555,15 +558,39 @@ public class ListenerController {
                 tmp -= c;
             }
         }
+        
+        if(tmp!=0){
+            List<Audio> sorted = Database.getDatabase().getAllAudio()
+                    .stream()
+                    .sorted(Comparator.comparing(Audio -> Audio.getNumberOfPlays()))
+                    .collect(Collectors.toCollection(ArrayList::new))
+                    .reversed();
+
+            ArrayList<Audio> sortedArr = new ArrayList<Audio>(sorted);
+
+            for (Audio audio : sortedArr) {
+                if(suggestId.contains(audio.getId())==false){
+                    suggestId.add(audio.getId());
+                    tmp--;
+                    if(tmp==0){
+                        break;
+                    }
+                }
+            }
+        }
         String txt = "suggestion Audios for you\n";
         for (Audio audio : Database.getDatabase().getAllAudio()) {
             if (suggestId.contains(audio.getId())) {
                 txt += "-" + audio.getAudioName() +" by "+audio.getArtistUsername()+"\n";
             }
         }
+        
         if(tmp!=0){
-            txt+= "sorry for not giving you  the number of suggestion you wanted\nbe more active so we can help you more precisely";
+            txt+= "the number of audios in data base is less than the number you want for suggest";
         }
+        // if(tmp!=0){
+        //     txt+= "sorry for not giving you  the number of suggestion you wanted\nbe more active so we can help you more precisely";
+        // }
         return txt;
 
     }
